@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tasker.Core.BussinessLogic.Contracts
+namespace Tasker.Core.BL.Contracts
 {
     public abstract class BaseBusinessEntity : IBusinessEntity
     {

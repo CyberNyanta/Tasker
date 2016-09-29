@@ -1,6 +1,6 @@
-﻿using Tasker.Core.DataLayer.Entities;
+﻿using Tasker.Core.DL.Entities;
 
-namespace Tasker.Core.DataAccessLayer
+namespace Tasker.Core.DAL
 {
     public class ProjectsRepository : BaseRepository<Project>
     {

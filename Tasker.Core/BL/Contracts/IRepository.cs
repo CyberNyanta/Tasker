@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Tasker.Core.BussinessLogic.Contracts
+namespace Tasker.Core.BL.Contracts
 {
     public interface IRepository<T> where T : class
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using SQLite;
-using Tasker.Core.BussinessLogic.Contracts;
+using Tasker.Core.BL.Contracts;
 
-namespace Tasker.Core.DataLayer.Entities
+namespace Tasker.Core.DL.Entities
 {
     public class Task : BaseBusinessEntity
     {

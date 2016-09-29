@@ -37,15 +37,15 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BussinessLogic\Contracts\BaseBusinessEntity.cs" />
-    <Compile Include="DataAccessLayer\BaseRepository.cs" />
-    <Compile Include="BussinessLogic\Contracts\IBusinessEntity.cs" />
-    <Compile Include="BussinessLogic\Contracts\IRepository.cs" />
-    <Compile Include="DataAccessLayer\ProjectsRepository.cs" />
-    <Compile Include="DataAccessLayer\TaskRepository.cs" />
-    <Compile Include="DataLayer\Entities\Project.cs" />
-    <Compile Include="DataLayer\Entities\Task.cs" />
-    <Compile Include="DataLayer\TaskDatabase.cs" />
+    <Compile Include="BL\Contracts\BaseBusinessEntity.cs" />
+    <Compile Include="DAL\BaseRepository.cs" />
+    <Compile Include="BL\Contracts\IBusinessEntity.cs" />
+    <Compile Include="BL\Contracts\IRepository.cs" />
+    <Compile Include="DAL\ProjectsRepository.cs" />
+    <Compile Include="DAL\TaskRepository.cs" />
+    <Compile Include="DL\Entities\Project.cs" />
+    <Compile Include="DL\Entities\Task.cs" />
+    <Compile Include="DL\TaskDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

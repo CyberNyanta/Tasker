@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using Tasker.Core.DataLayer;
+using Tasker.Core.DL;
 using System.IO;
-using Tasker.Core.DataLayer.Entities;
-using Tasker.Core.BussinessLogic.Contracts;
+using Tasker.Core.DL.Entities;
+using Tasker.Core.BL.Contracts;
 
-namespace Tasker.Core.DataAccessLayer
+namespace Tasker.Core.DAL
 {
     public abstract class BaseRepository<T> : IRepository<T> where T : class, IBusinessEntity, new()
     {

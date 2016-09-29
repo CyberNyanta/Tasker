@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SQLite;
-using Tasker.Core.DataLayer.Entities;
-using Tasker.Core.BussinessLogic.Contracts;
+using Tasker.Core.DL.Entities;
+using Tasker.Core.BL.Contracts;
 
-namespace Tasker.Core.DataLayer
+namespace Tasker.Core.DL
 {
     public class TaskDatabase: SQLiteConnection
     {
