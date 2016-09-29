@@ -38,6 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\Contracts\BaseBusinessEntity.cs" />
+    <Compile Include="BL\Managers\ProjectsManager.cs" />
+    <Compile Include="BL\Managers\TaskManeger.cs" />
     <Compile Include="DAL\BaseRepository.cs" />
     <Compile Include="BL\Contracts\IBusinessEntity.cs" />
     <Compile Include="BL\Contracts\IRepository.cs" />
