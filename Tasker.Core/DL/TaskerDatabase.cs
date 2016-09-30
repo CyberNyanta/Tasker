@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using SQLite;
-using Tasker.Core.DL.Entities;
-using Tasker.Core.BL.Contracts;
+using Tasker.Core.DAL.Entities;
+using Tasker.Core.DAL.Contracts;
 
 namespace Tasker.Core.DL
 {
-    public class TaskDatabase: SQLiteConnection
+    public class TaskerDatabase : SQLiteConnection
     {
 
-        static object locker = new object();
+        private static object locker = new object();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Tasker.DataLayer.TaskDatabase"/> TaskDatabase. 
@@ -20,12 +19,10 @@ namespace Tasker.Core.DL
         /// <param name='path'>
         /// Path.
         /// </param>
-        public TaskDatabase(string path) : base(path)
-        {
-                        
+        public TaskerDatabase(string path) : base(path)
+        {                        
             CreateTable<Task>();
-            CreateTable<Project>();
-           
+            CreateTable<Project>();           
         }
 
         public IEnumerable<T> GetItems<T>() where T : IBusinessEntity, new()
@@ -35,7 +32,6 @@ namespace Tasker.Core.DL
                 return (from i in Table<T>() select i).ToList();
             }
         }
-
 
         public IEnumerable<T> FindAll<T>(Func<T, bool> predicate) where T : IBusinessEntity, new()
         {
@@ -71,14 +67,51 @@ namespace Tasker.Core.DL
         public int DeleteItem<T>(int id) where T : IBusinessEntity, new()
         {
             lock (locker)
-            {
+            {                
                 return Delete(new T() { ID = id });
             }
         }
 
         public int DeleteItem<T>(T item) where T : IBusinessEntity
-        {
+        {            
             return DeleteItem(item);
+        }
+
+        /// <summary>
+        /// Delete every object from Table that fits the condition of predicate.
+        /// </summary>
+        /// <param name="predicate">
+        /// Condition for items that need to be removed.
+        /// </param>
+        /// <returns>
+        /// Count of deleted items
+        /// </returns>
+        /// <exception cref="Exception">Thrown when delete transaction failed</exception>
+        public int DeleteGroupBy<T>(Func<T,bool> predicate) where T : IBusinessEntity, new()
+        {
+            lock (locker)
+            {
+                var count = 0;
+                BeginTransaction();   
+                     
+                try
+                {
+                    var listOfItems = FindAll<T>(predicate).ToList();
+                    for (int i = 0; i < listOfItems.Count; i++, count++)
+                    {
+                        Delete(listOfItems[i]);
+                    }
+
+                    Commit();
+
+                    return count;
+                }
+                catch (Exception ex)
+                {                    
+                    Rollback();
+                    throw;
+                }
+            }
         }
     }
 }

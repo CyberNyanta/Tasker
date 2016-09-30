@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
-namespace Tasker.Core.BL.Contracts
+namespace Tasker.Core.DAL.Contracts
 {
     public interface IRepository<T> where T : class
     {
@@ -12,11 +11,12 @@ namespace Tasker.Core.BL.Contracts
 
         IEnumerable<T> Find(Func<T, bool> predicate);
 
-
         int Save(T item);
 
         int Delete(int id);
 
         int Delete(T item);
+
+        int DeleteGroupBy(Func<T, bool> predicate);
     }
 }

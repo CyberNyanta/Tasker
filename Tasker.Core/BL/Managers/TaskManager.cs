@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Tasker.Core.BL.Contracts;
-using Tasker.Core.DAL;
-using Tasker.Core.DL.Entities;
+using Tasker.Core.DAL.Contracts;
+using Tasker.Core.DAL.Entities;
 
 namespace Tasker.Core.BL.Managers
 {
-    public class TaskManager
+    public class TaskManager:ITaskManager
     {
-        IRepository<Task> taskRepository;
-        IRepository<Project> projectRepository;
+        private IRepository<Task> taskRepository;
+        private IRepository<Project> projectRepository;
 
         public TaskManager(IUnitOfWork unitOfWork)
         {
@@ -19,27 +16,27 @@ namespace Tasker.Core.BL.Managers
             projectRepository = unitOfWork.Projects;
         }
 
-        public Task GetTask(int id)
+        public Task Get(int id)
         {            
             return taskRepository.GetById(id);
         }
 
-        public IList<Task> GetTasks()
+        public List<Task> GetAll()
         {
             return new List<Task>(taskRepository.GetAll());
         }
 
-        public IList<Task> GetProjectTasks(int projectID)
+        public List<Task> GetProjectTasks(int projectID)
         {
             return new List<Task>(taskRepository.Find(x=>x.ProjectID == projectID));
         }
 
-        public int SaveTask(Task item)
+        public int SaveItem(Task item)
         {
             return taskRepository.Save(item);
         }
 
-        public int DeleteTask(int id)
+        public int Delete(int id)
         {
             return taskRepository.Delete(id);
         }

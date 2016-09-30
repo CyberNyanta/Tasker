@@ -4,19 +4,21 @@ using System.Linq;
 using System.Text;
 using Tasker.Core.BL.Contracts;
 using Tasker.Core.DL;
-using Tasker.Core.DL.Entities;
+using Tasker.Core.DAL.Entities;
+using Tasker.Core.DAL.Repositories;
+using Tasker.Core.DAL.Contracts;
 
 namespace Tasker.Core.DAL
 {
     class UnitOfWork : Disposable, IUnitOfWork
     {
-        TaskDatabase db;
+        TaskerDatabase db;
         IRepository<Project> projectRepository;
-        IRepository<DL.Entities.Task> tasksRepository;
+        IRepository<Task> tasksRepository;
 
         public UnitOfWork(string path)
         {
-            db = new TaskDatabase(path);
+            db = new TaskerDatabase(path);
             projectRepository = new ProjectsRepository(db);
             tasksRepository = new TaskRepository(db);
         }

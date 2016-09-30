@@ -1,27 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using Tasker.Core.DL;
-using System.IO;
-using Tasker.Core.DL.Entities;
-using Tasker.Core.BL.Contracts;
+using Tasker.Core.DAL.Contracts;
 
-namespace Tasker.Core.DAL
+namespace Tasker.Core.DAL.Repositories
 {
     public abstract class BaseRepository<T> : IRepository<T> where T : class, IBusinessEntity, new()
     {
-        TaskDatabase db;
+        private TaskerDatabase db;
 
-        public BaseRepository(TaskDatabase db)
+        public BaseRepository(TaskerDatabase db)
         {            
             this.db = db;
         }
 
       
         public int Save(T item)
-        {
+        {           
            return db.SaveItem<T>(item);
         }
 
@@ -34,7 +29,11 @@ namespace Tasker.Core.DAL
         {
             return db.DeleteItem<T>(id);
         }
-
+        /// <exception cref="Exception">Thrown when delete transaction failed</exception>
+        public int DeleteGroupBy(Func<T,bool> predicate)
+        {
+            return db.DeleteGroupBy<T>(predicate);
+        }
 
         public IEnumerable<T> Find(Func<T, bool> predicate)
         {

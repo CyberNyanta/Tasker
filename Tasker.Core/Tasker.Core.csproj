@@ -37,20 +37,23 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BL\Contracts\BaseBusinessEntity.cs" />
-    <Compile Include="BL\Contracts\IUnitOfWork.cs" />
-    <Compile Include="BL\Managers\ProjectsManager.cs" />
+    <Compile Include="DAL\Contracts\BaseBusinessEntity.cs" />
+    <Compile Include="BL\Contracts\IManager.cs" />
+    <Compile Include="BL\Contracts\IProjectManager.cs" />
+    <Compile Include="BL\Contracts\ITaskManager.cs" />
+    <Compile Include="DAL\Contracts\IUnitOfWork.cs" />
+    <Compile Include="BL\Managers\ProjectManager.cs" />
     <Compile Include="BL\Managers\TaskManager.cs" />
-    <Compile Include="DAL\BaseRepository.cs" />
-    <Compile Include="BL\Contracts\IBusinessEntity.cs" />
-    <Compile Include="BL\Contracts\IRepository.cs" />
+    <Compile Include="DAL\Repositories\BaseRepository.cs" />
+    <Compile Include="DAL\Contracts\IBusinessEntity.cs" />
+    <Compile Include="DAL\Contracts\IRepository.cs" />
     <Compile Include="DAL\Disposable.cs" />
-    <Compile Include="DAL\ProjectsRepository.cs" />
-    <Compile Include="DAL\TaskRepository.cs" />
+    <Compile Include="DAL\Repositories\ProjectsRepository.cs" />
+    <Compile Include="DAL\Repositories\TaskRepository.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
-    <Compile Include="DL\Entities\Project.cs" />
-    <Compile Include="DL\Entities\Task.cs" />
-    <Compile Include="DL\TaskDatabase.cs" />
+    <Compile Include="DAL\Entities\Project.cs" />
+    <Compile Include="DAL\Entities\Task.cs" />
+    <Compile Include="DL\TaskerDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
