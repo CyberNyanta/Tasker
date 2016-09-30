@@ -6,6 +6,9 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using TinyIoC;
+using Tasker.Core.BL.Managers;
+using Tasker.Core.DAL.Entities;
 
 namespace Tasker.Droid
 {
@@ -28,7 +31,13 @@ namespace Tasker.Droid
 			button.Click += delegate {
 				button.Text = string.Format ("{0} clicks!", count++);
 			};
-		}
+
+            var taskManager = TinyIoCContainer.Current.Resolve<TaskManager>();
+            taskManager.SaveItem(new Task { Title = "asd", Description = "fgjh" });
+            var r = taskManager.GetAll();
+            //var ut = new Core.DAL.UnitOfWork(new Utils.DatabasePath());
+            //var taskManager = new TaskManager(ut);
+        }
 	}
 }
 

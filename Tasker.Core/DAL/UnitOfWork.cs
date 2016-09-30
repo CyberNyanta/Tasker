@@ -7,18 +7,19 @@ using Tasker.Core.DL;
 using Tasker.Core.DAL.Entities;
 using Tasker.Core.DAL.Repositories;
 using Tasker.Core.DAL.Contracts;
+using Tasker.Core.AL.Utils;
 
 namespace Tasker.Core.DAL
 {
-    class UnitOfWork : Disposable, IUnitOfWork
+    public class UnitOfWork : Disposable, IUnitOfWork
     {
         TaskerDatabase db;
         IRepository<Project> projectRepository;
         IRepository<Task> tasksRepository;
 
-        public UnitOfWork(string path)
+        public UnitOfWork(IDatabasePath path)
         {
-            db = new TaskerDatabase(path);
+            db = new TaskerDatabase(path.GetDatabasePath());
             projectRepository = new ProjectsRepository(db);
             tasksRepository = new TaskRepository(db);
         }

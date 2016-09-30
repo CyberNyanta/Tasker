@@ -74,7 +74,7 @@ namespace Tasker.Core.DL
 
         public int DeleteItem<T>(T item) where T : IBusinessEntity
         {            
-            return DeleteItem(item);
+            return DeleteItem(item);         
         }
 
         /// <summary>
