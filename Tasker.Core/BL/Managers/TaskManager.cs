@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Tasker.Core.BL.Contracts;
 using Tasker.Core.DAL;
 using Tasker.Core.DL.Entities;
 
 namespace Tasker.Core.BL.Managers
 {
-    public class TaskManeger
+    public class TaskManager
     {
-        TaskRepository taskRepository;
-        ProjectsRepository projectRepository;
+        IRepository<Task> taskRepository;
+        IRepository<Project> projectRepository;
 
-        public TaskManeger(string dbPatch)
+        public TaskManager(IUnitOfWork unitOfWork)
         {
-            taskRepository = new TaskRepository(dbPatch);
-            projectRepository = new ProjectsRepository(dbPatch);
+            taskRepository = unitOfWork.Tasks;
+            projectRepository = unitOfWork.Projects;
         }
 
         public Task GetTask(int id)

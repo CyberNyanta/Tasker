@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Tasker.Core.BL.Contracts;
 using Tasker.Core.DAL;
 using Tasker.Core.DL.Entities;
 
@@ -9,13 +10,13 @@ namespace Tasker.Core.BL.Managers
 {
     public class ProjectsManager
     {
-        TaskRepository taskRepository;
-        ProjectsRepository projectRepository;
+        IRepository<Task> taskRepository;
+        IRepository<Project> projectRepository;
 
-        public ProjectsManager(string dbPatch)
+        public ProjectsManager(IUnitOfWork unitOfWork)
         {
-            taskRepository = new TaskRepository(dbPatch);
-            projectRepository = new ProjectsRepository(dbPatch);
+            taskRepository = unitOfWork.Tasks;
+            projectRepository = unitOfWork.Projects;
         }
 
         public Project GetProject(int id)

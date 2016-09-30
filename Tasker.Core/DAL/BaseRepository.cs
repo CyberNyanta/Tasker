@@ -12,12 +12,11 @@ namespace Tasker.Core.DAL
 {
     public abstract class BaseRepository<T> : IRepository<T> where T : class, IBusinessEntity, new()
     {
-        static TaskDatabase db;
+        TaskDatabase db;
 
-        public BaseRepository(string dbLocation)
-        {
-            if(db==null)
-            db = new TaskDatabase(dbLocation);
+        public BaseRepository(TaskDatabase db)
+        {            
+            this.db = db;
         }
 
       

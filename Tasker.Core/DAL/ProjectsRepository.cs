@@ -1,10 +1,11 @@
-﻿using Tasker.Core.DL.Entities;
+﻿using Tasker.Core.DL;
+using Tasker.Core.DL.Entities;
 
 namespace Tasker.Core.DAL
 {
     public class ProjectsRepository : BaseRepository<Project>
     {
-        public ProjectsRepository(string dbLocation) : base(dbLocation)
+        public ProjectsRepository(TaskDatabase db) : base(db)
         {
         }
     }
