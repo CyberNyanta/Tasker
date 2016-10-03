@@ -32,6 +32,8 @@ namespace Tasker.Droid
             container.Register<IProjectManager, ProjectManager>();
             container.Register<IProjectListViewModel, ProjectListViewModel>();
             container.Register<ITaskListViewModel, TaskListViewModel>();
+            container.Register<IProjectDetailsViewModel, ProjectDetailsViewModel>();
+            container.Register<ITaskDetailsViewModel, TaskDetailsViewModel>();
         }
 
 
