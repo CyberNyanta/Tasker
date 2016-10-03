@@ -18,5 +18,7 @@ namespace Tasker.Core.DAL.Contracts
         int Delete(T item);
 
         int DeleteGroupBy(Func<T, bool> predicate);
+
+        int DeleteGroup(IList<T> group);
     }
 }

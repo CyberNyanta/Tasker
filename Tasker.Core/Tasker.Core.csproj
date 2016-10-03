@@ -35,6 +35,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AL\Utils\IDatabasePath.cs" />
+    <Compile Include="AL\ViewModels\Contracts\IListViewModel.cs" />
+    <Compile Include="AL\ViewModels\Contracts\IProjectListViewModel.cs" />
+    <Compile Include="AL\ViewModels\Contracts\ITaskListViewModel.cs" />
+    <Compile Include="AL\ViewModels\Contracts\BaseViewModel.cs" />
+    <Compile Include="AL\ViewModels\TaskListViewModel.cs" />
+    <Compile Include="AL\ViewModels\ProjectListViewModel.cs" />
     <Compile Include="DAL\Contracts\BaseBusinessEntity.cs" />
     <Compile Include="BL\Contracts\IManager.cs" />
     <Compile Include="BL\Contracts\IProjectManager.cs" />

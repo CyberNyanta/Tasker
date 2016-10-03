@@ -113,5 +113,31 @@ namespace Tasker.Core.DL
                 }
             }
         }
+
+        public int DeleteGroup<T>(IList<T> group) where T : IBusinessEntity, new()
+        {
+            lock (locker)
+            {
+                var count = 0;
+                BeginTransaction();
+
+                try
+                {
+                    for (int i = 0; i < group.Count; i++, count++)
+                    {
+                        Delete(group[i]);
+                    }
+
+                    Commit();
+
+                    return count;
+                }
+                catch (Exception ex)
+                {
+                    Rollback();
+                    throw;
+                }
+            }
+        }
     }
 }

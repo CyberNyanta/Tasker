@@ -13,5 +13,8 @@ namespace Tasker.Core.BL.Contracts
 
         int Delete(int id);
 
+        int Delete(T item);
+
+        int DeleteGroup(IList<T> group);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Tasker.Core.BL.Contracts;
 using Tasker.Core.DAL.Contracts;
@@ -41,6 +42,20 @@ namespace Tasker.Core.BL.Managers
         {
             taskRepository.DeleteGroupBy(x => x.ProjectID == id);
             return projectRepository.Delete(id);
+        }
+
+        public int Delete(Project item)
+        {
+            return Delete(item.ID);
+        }
+
+        public int DeleteGroup(IList<Project> group)
+        {
+            foreach(var project in group)
+            {
+                taskRepository.DeleteGroupBy(x => x.ProjectID == project.ID);
+            }
+            return projectRepository.DeleteGroup(group);
         }
     }
 }

@@ -34,6 +34,11 @@ namespace Tasker.Core.DAL.Repositories
         {
             return db.DeleteGroupBy<T>(predicate);
         }
+        /// <exception cref="Exception">Thrown when delete transaction failed</exception>
+        public int DeleteGroup(IList<T> group)
+        {
+            return db.DeleteGroup<T>(group);
+        }
 
         public IEnumerable<T> Find(Func<T, bool> predicate)
         {

@@ -17,6 +17,8 @@ namespace Tasker.Core.DAL.Entities
         public DateTime DueDate { get; set; }
 
         public DateTime RemindDate { get; set; }
+        
+        public bool IsSolved { get; set; }
 
         public int Color { get; set; }
     }

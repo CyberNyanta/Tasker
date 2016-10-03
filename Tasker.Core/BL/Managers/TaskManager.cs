@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Tasker.Core.BL.Contracts;
 using Tasker.Core.DAL.Contracts;
 using Tasker.Core.DAL.Entities;
@@ -41,7 +42,14 @@ namespace Tasker.Core.BL.Managers
             return taskRepository.Delete(id);
         }
 
+        public int Delete(Task item)
+        {
+            return Delete(item.ID);
+        }
 
-
+        public int DeleteGroup(IList<Task> group)
+        {
+            return taskRepository.DeleteGroup(group);
+        }
     }
 }

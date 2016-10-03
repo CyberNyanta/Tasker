@@ -10,6 +10,10 @@ using Tasker.Droid.Utils;
 using Tasker.Core.AL.Utils;
 using Tasker.Core.DAL.Contracts;
 using Tasker.Core.DAL;
+using Tasker.Core.BL.Contracts;
+using Tasker.Core.BL.Managers;
+using Tasker.Core.AL.ViewModels;
+using Tasker.Core.AL.ViewModels.Contracts;
 
 namespace Tasker.Droid
 {
@@ -24,6 +28,10 @@ namespace Tasker.Droid
 
             container.Register<IDatabasePath, DatabasePath>();            
             container.Register<IUnitOfWork, UnitOfWork>();
+            container.Register<ITaskManager, TaskManager>();
+            container.Register<IProjectManager, ProjectManager>();
+            container.Register<IProjectListViewModel, ProjectListViewModel>();
+            container.Register<ITaskListViewModel, TaskListViewModel>();
         }
 
 
