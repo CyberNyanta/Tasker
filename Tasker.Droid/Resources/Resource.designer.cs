@@ -44,8 +44,14 @@ namespace Tasker.Droid
 		public partial class Color
 		{
 			
+			// aapt resource value: 0x7f040002
+			public const int colorAccent = 2130968578;
+			
 			// aapt resource value: 0x7f040000
-			public const int white = 2130968576;
+			public const int colorPrimary = 2130968576;
+			
+			// aapt resource value: 0x7f040001
+			public const int colorPrimaryDark = 2130968577;
 			
 			static Color()
 			{
@@ -59,6 +65,9 @@ namespace Tasker.Droid
 		
 		public partial class Dimension
 		{
+			
+			// aapt resource value: 0x7f050007
+			public const int list_item_padding = 2131034119;
 			
 			// aapt resource value: 0x7f050005
 			public const int size_avatar_toolbar = 2131034117;
@@ -110,8 +119,23 @@ namespace Tasker.Droid
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f080002
+			public const int checkBox = 2131230722;
+			
+			// aapt resource value: 0x7f080004
+			public const int dueDate = 2131230724;
+			
+			// aapt resource value: 0x7f080005
+			public const int projectName = 2131230725;
+			
+			// aapt resource value: 0x7f080001
+			public const int taskContainer = 2131230721;
+			
 			// aapt resource value: 0x7f080000
-			public const int myButton = 2131230720;
+			public const int taskList = 2131230720;
+			
+			// aapt resource value: 0x7f080003
+			public const int taskTitle = 2131230723;
 			
 			static Id()
 			{
@@ -128,6 +152,9 @@ namespace Tasker.Droid
 			
 			// aapt resource value: 0x7f030000
 			public const int Main = 2130903040;
+			
+			// aapt resource value: 0x7f030001
+			public const int TaskListItem = 2130903041;
 			
 			static Layout()
 			{
@@ -163,6 +190,9 @@ namespace Tasker.Droid
 			
 			// aapt resource value: 0x7f070000
 			public const int Tasker = 2131165184;
+			
+			// aapt resource value: 0x7f070001
+			public const int Tasker_ListItem = 2131165185;
 			
 			static Style()
 			{

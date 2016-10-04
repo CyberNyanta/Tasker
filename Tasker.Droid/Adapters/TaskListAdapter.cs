@@ -26,28 +26,44 @@ namespace Tasker.Droid.Adapters
 
         public override Task this[int position]
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return tasks[position]; }
         }
 
         public override int Count
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return tasks.Count; }
         }
 
         public override long GetItemId(int position)
         {
-            throw new NotImplementedException();
+            return tasks[position].ID;
         }
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
-            throw new NotImplementedException();
+            // Get our object for position
+            var item = tasks[position];
+            View view;
+
+            //Try to reuse convertView if it's not  null, otherwise inflate it from our item layout
+            // gives us some performance gains by not always inflating a new view
+            if (convertView == null)
+            {
+                view = context.LayoutInflater.Inflate(Resource.Layout.TaskListItem, null);
+            }
+            else
+            {
+                view = convertView;
+            }
+
+            var taskTitle = view.FindViewById<TextView>(Resource.Id.taskTitle);
+            taskTitle.Text = item.Title;
+            var taskDueDate = view.FindViewById<TextView>(Resource.Id.dueDate);
+            taskDueDate.Text = item.DueDate.ToString();
+            var project = view.FindViewById<TextView>(Resource.Id.projectName);
+            project.Text = "project";
+            //Finally return the view
+            return view;
         }
     }
 }

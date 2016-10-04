@@ -11,7 +11,6 @@ namespace Tasker.Core.AL.ViewModels
     public class ProjectDetailsViewModel : BaseViewModel, IProjectDetailsViewModel
     {
         private IProjectManager _projectManager;   
-        private Project current;
        
         public ProjectDetailsViewModel(IProjectManager projectManager) : base()
         {
