@@ -6,7 +6,7 @@ using Tasker.Core.DAL.Entities;
 
 namespace Tasker.Core.BL.Managers
 {
-    public class TaskManager:ITaskManager
+    public class TaskManager : ITaskManager
     {
         private IRepository<Task> taskRepository;
         private IRepository<Project> projectRepository;
@@ -34,11 +34,57 @@ namespace Tasker.Core.BL.Managers
 
         public int SaveItem(Task item)
         {
+            if (item.ID == 0)
+            {
+                var project = projectRepository.GetById(item.ProjectID);
+                project.CountOfOpenTasks++;
+                projectRepository.Save(project);
+            }
+
+
             return taskRepository.Save(item);
+        }
+
+        public void ChangeStatus(int id)
+        {
+            var task = Get(id);
+            ChangeStatus(task);
+        }
+
+        public void ChangeStatus(Task task)
+        {
+            var project = projectRepository.GetById(task.ProjectID);
+            if (!task.IsSolved)
+            {
+                project.CountOfSolveTasks++;
+                project.CountOfOpenTasks--;
+            }
+            else
+            {
+                project.CountOfSolveTasks--;
+                project.CountOfOpenTasks++;
+            }
+            projectRepository.Save(project);
+            task.IsSolved = !task.IsSolved;
+            taskRepository.Save(task);
         }
 
         public int Delete(int id)
         {
+            var task = Get(id);
+
+            var project = projectRepository.GetById(task.ProjectID);
+            if (task.IsSolved)
+            {
+                project.CountOfSolveTasks--;
+            }
+            else
+            {
+                project.CountOfOpenTasks--;
+            }
+            
+            projectRepository.Save(project);
+
             return taskRepository.Delete(id);
         }
 
@@ -49,7 +95,13 @@ namespace Tasker.Core.BL.Managers
 
         public int DeleteGroup(IList<Task> group)
         {
-            return taskRepository.DeleteGroup(group);
+            int count = 0;
+            foreach (var task in group)
+            {
+                Delete(task.ID);
+                count++;
+            }
+            return count;
         }
     }
 }

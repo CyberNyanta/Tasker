@@ -13,7 +13,5 @@ namespace Tasker.Core.AL.Utils
             return text.Length <= maxLength ? true : false;
         }
 
-
-
     }
 }

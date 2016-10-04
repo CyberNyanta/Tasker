@@ -6,5 +6,10 @@ namespace Tasker.Core.BL.Contracts
     public interface ITaskManager:IManager<Task>
     {
         List<Task> GetProjectTasks(int projectId);
+
+        void ChangeStatus(int id);
+
+        void ChangeStatus(Task task);
+
     }
 }

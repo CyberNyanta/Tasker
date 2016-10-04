@@ -9,5 +9,9 @@ namespace Tasker.Core.DAL.Entities
     {
         [MaxLength(TextConstant.PROJECT_TITLE_MAX_LENGTH)]
         public string Title { get; set; }
+
+        public int CountOfOpenTasks { get; set; }
+
+        public int CountOfSolveTasks { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Tasker.Core.AL.ViewModels
 
         public event Action OnCollectionChanged;
 
-        public void DeleteGroup(IList<Task> group)
+        public void DeleteGroup(IList<Task> group) //unused in droid
         {
             _taskManager.DeleteGroup(group);
             RaiseOnCollectionChanged();
@@ -32,13 +32,15 @@ namespace Tasker.Core.AL.ViewModels
             return _taskManager.GetAll();
         }
 
-        public void SolveGroup(IList<Task> tasks)
+        public void ChangeStatus(Task task)
         {
-            foreach(var task in tasks)
-            {
-                task.IsSolved = true;
-                _taskManager.SaveItem(task);
-            }
+            _taskManager.ChangeStatus(task);
+            RaiseOnCollectionChanged();
+        }
+
+        public void ChangeStatus(int id)
+        {
+            _taskManager.ChangeStatus(id);
             RaiseOnCollectionChanged();
         }
 

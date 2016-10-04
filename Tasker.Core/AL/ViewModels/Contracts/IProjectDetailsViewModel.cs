@@ -8,6 +8,5 @@ namespace Tasker.Core.AL.ViewModels.Contracts
 {
     public interface IProjectDetailsViewModel:IDetailsViewModel<Project>
     {
-        int GetTaskCount { get; }
     }
 }

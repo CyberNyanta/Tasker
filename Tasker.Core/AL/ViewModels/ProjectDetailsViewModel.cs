@@ -20,14 +20,6 @@ namespace Tasker.Core.AL.ViewModels
 
         public int Id { get; set; }
 
-        public int GetTaskCount
-        {
-            get
-            {
-                return _projectManager.GetProjectTasks(Id).Count;
-            }
-        }
-
         public Project GetItem()
         {
             if (Id != 0)

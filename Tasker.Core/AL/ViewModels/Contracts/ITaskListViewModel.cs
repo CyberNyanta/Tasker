@@ -8,8 +8,6 @@ namespace Tasker.Core.AL.ViewModels.Contracts
 {
     public interface ITaskListViewModel: IListViewModel<Task>
     {
-        void SolveGroup(IList<Task> task);
-
         bool IsSolvedTaskDisplayed { get; set; }
     }
 }

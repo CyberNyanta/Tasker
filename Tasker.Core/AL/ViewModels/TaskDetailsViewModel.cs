@@ -34,5 +34,15 @@ namespace Tasker.Core.AL.ViewModels
         {
             return _taskManager.SaveItem(task);
         }
+
+        public void ChangeStatus(Task task)
+        {
+            _taskManager.ChangeStatus(task);
+        }
+
+        public void ChangeStatus(int id)
+        {
+            _taskManager.ChangeStatus(id);
+        }
     }
 }
