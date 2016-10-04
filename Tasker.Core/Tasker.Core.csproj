@@ -34,8 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Constants\TextConstant.cs" />
-    <Compile Include="AL\Utils\IDatabasePath.cs" />
+    <Compile Include="GlobalConstants.cs" />
+    <Compile Include="DL\IDatabasePath.cs" />
     <Compile Include="AL\Utils\ValidationExtensions.cs" />
     <Compile Include="AL\ViewModels\Contracts\IListViewModel.cs" />
     <Compile Include="AL\ViewModels\Contracts\IDetailsViewModel.cs" />

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 using Tasker.Core.DAL.Entities;
 
 namespace Tasker.Core.BL.Contracts
@@ -10,6 +11,5 @@ namespace Tasker.Core.BL.Contracts
         void ChangeStatus(int id);
 
         void ChangeStatus(Task task);
-
     }
 }

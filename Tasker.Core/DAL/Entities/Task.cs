@@ -1,16 +1,18 @@
 ﻿using System;
+
 using SQLite;
+
 using Tasker.Core.DAL.Contracts;
-using Tasker.Core.Constants;
 
 namespace Tasker.Core.DAL.Entities
 {
     [Table("Task")]
     public class Task : BaseBusinessEntity
     {
-        [MaxLength(TextConstant.TASK_TITLE_MAX_LENGTH)]
+        [MaxLength(TaskConstants.TASK_TITLE_MAX_LENGTH)]
         public string Title { get; set; }
-        [MaxLength(TextConstant.TASK_TITLE_MAX_LENGTH)]
+
+        [MaxLength(TaskConstants.TASK_DESCRIPTION_MAX_LENGTH)]
         public string Description { get; set; }
        
         public int ProjectID { get; set; }

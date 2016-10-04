@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Tasker.Core.AL.ViewModels.Contracts;
 using Tasker.Core.BL.Contracts;
@@ -12,14 +10,15 @@ namespace Tasker.Core.AL.ViewModels
     public class TaskListViewModel : BaseViewModel, ITaskListViewModel
     {
         private ITaskManager _taskManager;
-        public TaskListViewModel(ITaskManager taskManager) : base()
-        {
-            _taskManager = taskManager;
-        }
 
         public bool IsSolvedTaskDisplayed { get; set; }
 
         public event Action OnCollectionChanged;
+
+        public TaskListViewModel(ITaskManager taskManager) : base()
+        {
+            _taskManager = taskManager;
+        }
 
         public void DeleteGroup(IList<Task> group) //unused in droid
         {

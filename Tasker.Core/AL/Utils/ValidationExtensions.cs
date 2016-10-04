@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tasker.Core.AL.Utils
+﻿namespace Tasker.Core.AL.Utils
 {
     public static class ValidationExtensions
     {
-        public static bool IsLengthLess(this string text, int maxLength)
+        public static bool IsLengthInRange(this string text, int maxLength = int.MaxValue, int minLength = 0)
         {
-            return text.Length <= maxLength ? true : false;
+            return text.Length <= maxLength && text.Length >= minLength ? true : false;
         }
-
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Tasker.Core.AL.ViewModels.Contracts;
 using Tasker.Core.BL.Contracts;
@@ -13,12 +11,12 @@ namespace Tasker.Core.AL.ViewModels
     {
         private IProjectManager _projectManager;
 
+        public event Action OnCollectionChanged;
+
         public ProjectListViewModel(IProjectManager projectManager) : base()
         {
             _projectManager = projectManager;
         }
-
-        public event Action OnCollectionChanged;
 
         public void DeleteGroup(IList<Project> group)
         {

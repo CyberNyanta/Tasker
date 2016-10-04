@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using SQLite;
+
 using Tasker.Core.DAL.Entities;
 using Tasker.Core.DAL.Contracts;
 

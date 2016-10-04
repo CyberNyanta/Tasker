@@ -1,5 +1,4 @@
-﻿
-using Tasker.Core.DL;
+﻿using Tasker.Core.DL;
 using Tasker.Core.DAL.Entities;
 
 namespace Tasker.Core.DAL.Repositories

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tasker.Core.Constants
+namespace Tasker.Core
 {
-    public static class TextConstant
+    public static class TaskConstants
     {
         public const int TASK_DESCRIPTION_MAX_LENGTH = 1000;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Tasker.Core.AL.Utils;
+using Tasker.Core.DL;
 
 namespace Tasker.Droid.Utils
 {

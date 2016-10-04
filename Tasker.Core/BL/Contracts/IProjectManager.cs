@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 using Tasker.Core.DAL.Entities;
 
 namespace Tasker.Core.BL.Contracts

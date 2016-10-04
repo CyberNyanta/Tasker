@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using Tasker.Core.BL.Contracts;
 using Tasker.Core.DAL.Contracts;
 using Tasker.Core.DAL.Entities;
@@ -8,41 +9,39 @@ namespace Tasker.Core.BL.Managers
 {
     public class TaskManager : ITaskManager
     {
-        private IRepository<Task> taskRepository;
-        private IRepository<Project> projectRepository;
+        private IRepository<Task> _taskRepository;
+        private IRepository<Project> _projectRepository;
 
         public TaskManager(IUnitOfWork unitOfWork)
         {
-            taskRepository = unitOfWork.Tasks;
-            projectRepository = unitOfWork.Projects;
+            _taskRepository = unitOfWork.Tasks;
+            _projectRepository = unitOfWork.Projects;
         }
 
         public Task Get(int id)
         {            
-            return taskRepository.GetById(id);
+            return _taskRepository.GetById(id);
         }
 
         public List<Task> GetAll()
         {
-            return new List<Task>(taskRepository.GetAll());
+            return new List<Task>(_taskRepository.GetAll());
         }
 
         public List<Task> GetProjectTasks(int projectID)
         {
-            return new List<Task>(taskRepository.Find(x=>x.ProjectID == projectID));
+            return new List<Task>(_taskRepository.Find(x=>x.ProjectID == projectID));
         }
 
         public int SaveItem(Task item)
         {
             if (item.ID == 0)
             {
-                var project = projectRepository.GetById(item.ProjectID);
+                var project = _projectRepository.GetById(item.ProjectID);
                 project.CountOfOpenTasks++;
-                projectRepository.Save(project);
+                _projectRepository.Save(project);
             }
-
-
-            return taskRepository.Save(item);
+            return _taskRepository.Save(item);
         }
 
         public void ChangeStatus(int id)
@@ -53,7 +52,7 @@ namespace Tasker.Core.BL.Managers
 
         public void ChangeStatus(Task task)
         {
-            var project = projectRepository.GetById(task.ProjectID);
+            var project = _projectRepository.GetById(task.ProjectID);
             if (!task.IsSolved)
             {
                 project.CountOfSolveTasks++;
@@ -64,16 +63,16 @@ namespace Tasker.Core.BL.Managers
                 project.CountOfSolveTasks--;
                 project.CountOfOpenTasks++;
             }
-            projectRepository.Save(project);
+            _projectRepository.Save(project);
             task.IsSolved = !task.IsSolved;
-            taskRepository.Save(task);
+            _taskRepository.Save(task);
         }
-
+            
         public int Delete(int id)
         {
             var task = Get(id);
+            var project = _projectRepository.GetById(task.ProjectID);
 
-            var project = projectRepository.GetById(task.ProjectID);
             if (task.IsSolved)
             {
                 project.CountOfSolveTasks--;
@@ -83,9 +82,8 @@ namespace Tasker.Core.BL.Managers
                 project.CountOfOpenTasks--;
             }
             
-            projectRepository.Save(project);
-
-            return taskRepository.Delete(id);
+            _projectRepository.Save(project);
+            return _taskRepository.Delete(id);
         }
 
         public int Delete(Task item)

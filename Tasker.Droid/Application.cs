@@ -2,18 +2,17 @@ using System;
 
 using Android.App;
 using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.Content;
+
 using TinyIoC;
+
 using Tasker.Droid.Utils;
-using Tasker.Core.AL.Utils;
 using Tasker.Core.DAL.Contracts;
 using Tasker.Core.DAL;
 using Tasker.Core.BL.Contracts;
 using Tasker.Core.BL.Managers;
 using Tasker.Core.AL.ViewModels;
 using Tasker.Core.AL.ViewModels.Contracts;
+using Tasker.Core.DL;
 
 namespace Tasker.Droid
 {

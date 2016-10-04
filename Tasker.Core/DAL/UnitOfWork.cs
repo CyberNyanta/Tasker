@@ -1,34 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Tasker.Core.BL.Contracts;
-using Tasker.Core.DL;
+﻿using Tasker.Core.DL;
 using Tasker.Core.DAL.Entities;
 using Tasker.Core.DAL.Repositories;
 using Tasker.Core.DAL.Contracts;
-using Tasker.Core.AL.Utils;
 
 namespace Tasker.Core.DAL
 {
     public class UnitOfWork : Disposable, IUnitOfWork
     {
-        TaskerDatabase db;
-        IRepository<Project> projectRepository;
-        IRepository<Task> tasksRepository;
+        private TaskerDatabase _db;
+        private IRepository<Project> _projectRepository;
+        private IRepository<Task> _tasksRepository;
 
         public UnitOfWork(IDatabasePath path)
         {
-            db = new TaskerDatabase(path.GetDatabasePath());
-            projectRepository = new ProjectsRepository(db);
-            tasksRepository = new TaskRepository(db);
+            _db = new TaskerDatabase(path.GetDatabasePath());
+            _projectRepository = new ProjectsRepository(_db);
+            _tasksRepository = new TaskRepository(_db);
         }
 
         public IRepository<Project> Projects
         {
             get
             {
-                return projectRepository;
+                return _projectRepository;
             }
         }
 
@@ -36,16 +30,16 @@ namespace Tasker.Core.DAL
         {
             get
             {
-                return tasksRepository;
+                return _tasksRepository;
             }
         }
 
         protected override void DisposeCore()
         {
             base.DisposeCore();
-            projectRepository = null;
-            tasksRepository = null;            
-            db.Dispose();
+            _projectRepository = null;
+            _tasksRepository = null;            
+            _db.Dispose();
     
         }
     }
