@@ -44,14 +44,23 @@ namespace Tasker.Droid
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f040002
-			public const int colorAccent = 2130968578;
+			// aapt resource value: 0x7f050004
+			public const int colorAccent = 2131034116;
 			
-			// aapt resource value: 0x7f040000
-			public const int colorPrimary = 2130968576;
+			// aapt resource value: 0x7f050002
+			public const int colorPrimary = 2131034114;
 			
-			// aapt resource value: 0x7f040001
-			public const int colorPrimaryDark = 2130968577;
+			// aapt resource value: 0x7f050003
+			public const int colorPrimaryDark = 2131034115;
+			
+			// aapt resource value: 0x7f050005
+			public const int demoItem = 2131034117;
+			
+			// aapt resource value: 0x7f050000
+			public const int gray_holo_dark = 2131034112;
+			
+			// aapt resource value: 0x7f050001
+			public const int gray_holo_light = 2131034113;
 			
 			static Color()
 			{
@@ -66,29 +75,29 @@ namespace Tasker.Droid
 		public partial class Dimension
 		{
 			
-			// aapt resource value: 0x7f050007
-			public const int list_item_padding = 2131034119;
+			// aapt resource value: 0x7f060007
+			public const int list_item_padding = 2131099655;
 			
-			// aapt resource value: 0x7f050005
-			public const int size_avatar_toolbar = 2131034117;
+			// aapt resource value: 0x7f060005
+			public const int size_avatar_toolbar = 2131099653;
 			
-			// aapt resource value: 0x7f050004
-			public const int size_fab = 2131034116;
+			// aapt resource value: 0x7f060004
+			public const int size_fab = 2131099652;
 			
-			// aapt resource value: 0x7f050006
-			public const int size_score_mark = 2131034118;
+			// aapt resource value: 0x7f060006
+			public const int size_score_mark = 2131099654;
 			
-			// aapt resource value: 0x7f050002
-			public const int spacing_double = 2131034114;
+			// aapt resource value: 0x7f060002
+			public const int spacing_double = 2131099650;
 			
-			// aapt resource value: 0x7f050003
-			public const int spacing_huge = 2131034115;
+			// aapt resource value: 0x7f060003
+			public const int spacing_huge = 2131099651;
 			
-			// aapt resource value: 0x7f050000
-			public const int spacing_micro = 2131034112;
+			// aapt resource value: 0x7f060000
+			public const int spacing_micro = 2131099648;
 			
-			// aapt resource value: 0x7f050001
-			public const int spacing_normal = 2131034113;
+			// aapt resource value: 0x7f060001
+			public const int spacing_normal = 2131099649;
 			
 			static Dimension()
 			{
@@ -104,7 +113,10 @@ namespace Tasker.Droid
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int Icon = 2130837504;
+			public const int icon = 2130837504;
+			
+			// aapt resource value: 0x7f020001
+			public const int selection_divider = 2130837505;
 			
 			static Drawable()
 			{
@@ -119,23 +131,53 @@ namespace Tasker.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f080002
-			public const int checkBox = 2131230722;
+			// aapt resource value: 0x7f080007
+			public const int buttonHorizontalDivider = 2131230727;
 			
-			// aapt resource value: 0x7f080004
-			public const int dueDate = 2131230724;
+			// aapt resource value: 0x7f080009
+			public const int buttonVerticalDivider = 2131230729;
 			
-			// aapt resource value: 0x7f080005
-			public const int projectName = 2131230725;
+			// aapt resource value: 0x7f080008
+			public const int cancelButton = 2131230728;
 			
-			// aapt resource value: 0x7f080001
-			public const int taskContainer = 2131230721;
+			// aapt resource value: 0x7f08000c
+			public const int checkBox = 2131230732;
 			
 			// aapt resource value: 0x7f080000
-			public const int taskList = 2131230720;
+			public const int customTab = 2131230720;
+			
+			// aapt resource value: 0x7f080002
+			public const int datePicker = 2131230722;
+			
+			// aapt resource value: 0x7f08000e
+			public const int dueDate = 2131230734;
+			
+			// aapt resource value: 0x7f08000a
+			public const int okButton = 2131230730;
+			
+			// aapt resource value: 0x7f08000f
+			public const int projectName = 2131230735;
+			
+			// aapt resource value: 0x7f080005
+			public const int slidingTabLayout = 2131230725;
+			
+			// aapt resource value: 0x7f080001
+			public const int tabText = 2131230721;
+			
+			// aapt resource value: 0x7f08000b
+			public const int taskContainer = 2131230731;
+			
+			// aapt resource value: 0x7f080004
+			public const int taskList = 2131230724;
+			
+			// aapt resource value: 0x7f08000d
+			public const int taskTitle = 2131230733;
 			
 			// aapt resource value: 0x7f080003
-			public const int taskTitle = 2131230723;
+			public const int timePicker = 2131230723;
+			
+			// aapt resource value: 0x7f080006
+			public const int viewPager = 2131230726;
 			
 			static Id()
 			{
@@ -151,10 +193,22 @@ namespace Tasker.Droid
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Main = 2130903040;
+			public const int custom_tab = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int TaskListItem = 2130903041;
+			public const int fragment_date = 2130903041;
+			
+			// aapt resource value: 0x7f030002
+			public const int fragment_time = 2130903042;
+			
+			// aapt resource value: 0x7f030003
+			public const int main = 2130903043;
+			
+			// aapt resource value: 0x7f030004
+			public const int slide_date_time_picker = 2130903044;
+			
+			// aapt resource value: 0x7f030005
+			public const int tasklistitem = 2130903045;
 			
 			static Layout()
 			{
@@ -169,11 +223,11 @@ namespace Tasker.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f060001
-			public const int app_name = 2131099649;
+			// aapt resource value: 0x7f070001
+			public const int app_name = 2131165185;
 			
-			// aapt resource value: 0x7f060000
-			public const int hello = 2131099648;
+			// aapt resource value: 0x7f070000
+			public const int hello = 2131165184;
 			
 			static String()
 			{
@@ -188,11 +242,17 @@ namespace Tasker.Droid
 		public partial class Style
 		{
 			
-			// aapt resource value: 0x7f070000
-			public const int Tasker = 2131165184;
+			// aapt resource value: 0x7f040000
+			public const int AppBaseTheme = 2130968576;
 			
-			// aapt resource value: 0x7f070001
-			public const int Tasker_ListItem = 2131165185;
+			// aapt resource value: 0x7f040001
+			public const int AppTheme = 2130968577;
+			
+			// aapt resource value: 0x7f040002
+			public const int Tasker = 2130968578;
+			
+			// aapt resource value: 0x7f040003
+			public const int Tasker_ListItem = 2130968579;
 			
 			static Style()
 			{

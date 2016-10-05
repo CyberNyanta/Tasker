@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Android.App;
 using Android.Content;
@@ -6,34 +7,63 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Android.Support.V4.App;
+
+using Java.Util;
+
 using TinyIoC;
+using Com.Github.Jjobes.Slidedatetimepicker;
+
 using Tasker.Core.BL.Managers;
 using Tasker.Core.DAL.Entities;
-using System.Collections.Generic;
+using Tasker.Core.AL.Utils;
+
+
+
+
+
+
 
 namespace Tasker.Droid
 {
-	[Activity (Label = "Tasker", MainLauncher = true, Icon = "@drawable/icon",Theme = "@style/Tasker")]
-	public class MainActivity : Activity
-	{
+
+
+    [Activity (Label = "Tasker", MainLauncher = true, Icon = "@drawable/icon",Theme = "@style/Tasker")]
+	public class MainActivity : FragmentActivity
+    {
         protected Adapters.TaskListAdapter taskList;
         protected IList<Task> tasks;
         protected ListView taskListView = null;
 
         protected override void OnCreate (Bundle bundle)
 		{
-			base.OnCreate (bundle);
+
+            base.OnCreate (bundle);
 
 			// Set our view from the "main" layout resource
-			SetContentView (Resource.Layout.Main);
-
+			SetContentView (Resource.Layout.main);
 
             taskListView = FindViewById<ListView>(Resource.Id.taskList);
-            //var taskManager = TinyIoCContainer.Current.Resolve<TaskManager>();
-            //taskManager.SaveItem(new Task { Title = "asd", Description = "fgjh" });
-            //var r = taskManager.GetAll();
-            ////var ut = new Core.DAL.UnitOfWork(new Utils.DatabasePath());
-            ////var taskManager = new TaskManager(ut);
+
+            var javaTime = new Java.Util.Date();
+            var cTime = DateTime.UtcNow;
+            var r = cTime.ToUnixTime();
+
+            var b = new SlideDateTimePicker.Builder(SupportFragmentManager);
+            b.SetInitialDate(javaTime);
+
+            b.SetListener(new CustomSlideDateTimeListener(this));
+            b.SetTheme(1);
+            var p = b.Build();
+            p.Show();
+
+            if (taskListView != null)
+            {
+                taskListView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) => {
+                    
+                };
+            }
+
         }
 
 
@@ -56,10 +86,32 @@ namespace Tasker.Droid
             // create our adapter
             taskList = new Adapters.TaskListAdapter(this, tasks);
 
+            
             //Hook up our adapter to our ListView
             taskListView.Adapter = taskList;
+
+        }
+
+        public class CustomSlideDateTimeListener : SlideDateTimeListener
+        {
+            MainActivity _activity;
+            public CustomSlideDateTimeListener(MainActivity activity)
+            {
+                _activity = activity;
+            }
+            public override void OnDateTimeSet(Date p0)
+            {
+                Toast.MakeText(_activity, p0.ToString(), ToastLength.Long).Show();
+            }
+
+            public void onDateTimeCancel()
+            {
+                Toast.MakeText(_activity,"Canceled", ToastLength.Long).Show();
+            }
         }
     }
+
+    
 }
 
 

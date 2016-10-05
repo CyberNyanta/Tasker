@@ -49,7 +49,7 @@ namespace Tasker.Droid.Adapters
             // gives us some performance gains by not always inflating a new view
             if (convertView == null)
             {
-                view = context.LayoutInflater.Inflate(Resource.Layout.TaskListItem, null);
+                view = context.LayoutInflater.Inflate(Resource.Layout.tasklistitem, null);
             }
             else
             {
