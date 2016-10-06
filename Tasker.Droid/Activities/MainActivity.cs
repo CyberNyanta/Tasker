@@ -44,14 +44,10 @@ namespace Tasker.Droid
             }
         }
 
-        protected override void OnResume()
+        public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            base.OnResume();
-        }
-
-        protected override void OnPause()
-        {
-            base.OnPause();          
+            MenuInflater.Inflate(Resource.Menu.main_activity_menu, menu);
+            return base.OnCreateOptionsMenu(menu);
         }
     }
 }

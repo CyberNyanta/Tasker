@@ -1793,8 +1793,8 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f05006d
 			public const int labels_text_size = 2131034221;
 			
-			// aapt resource value: 0x7f050075
-			public const int list_item_padding = 2131034229;
+			// aapt resource value: 0x7f050077
+			public const int list_item_padding = 2131034231;
 			
 			// aapt resource value: 0x7f05004b
 			public const int notification_large_icon_height = 2131034187;
@@ -1825,6 +1825,12 @@ namespace Tasker.Droid
 			
 			// aapt resource value: 0x7f05006f
 			public const int spacing_normal = 2131034223;
+			
+			// aapt resource value: 0x7f050076
+			public const int taskDetails_textSize = 2131034230;
+			
+			// aapt resource value: 0x7f050075
+			public const int taskTitle_textSize = 2131034229;
 			
 			static Dimension()
 			{
@@ -2092,16 +2098,22 @@ namespace Tasker.Droid
 			public const int ic_progress = 2130837587;
 			
 			// aapt resource value: 0x7f020054
-			public const int ic_star = 2130837588;
+			public const int ic_save = 2130837588;
 			
 			// aapt resource value: 0x7f020055
-			public const int icon = 2130837589;
-			
-			// aapt resource value: 0x7f020057
-			public const int notification_template_icon_bg = 2130837591;
+			public const int ic_search = 2130837589;
 			
 			// aapt resource value: 0x7f020056
-			public const int selection_divider = 2130837590;
+			public const int ic_star = 2130837590;
+			
+			// aapt resource value: 0x7f020057
+			public const int icon = 2130837591;
+			
+			// aapt resource value: 0x7f020059
+			public const int notification_template_icon_bg = 2130837593;
+			
+			// aapt resource value: 0x7f020058
+			public const int selection_divider = 2130837592;
 			
 			static Drawable()
 			{
@@ -2349,6 +2361,18 @@ namespace Tasker.Droid
 			
 			// aapt resource value: 0x7f06007d
 			public const int media_actions = 2131099773;
+			
+			// aapt resource value: 0x7f060096
+			public const int menu_about = 2131099798;
+			
+			// aapt resource value: 0x7f060097
+			public const int menu_edit = 2131099799;
+			
+			// aapt resource value: 0x7f060098
+			public const int menu_save = 2131099800;
+			
+			// aapt resource value: 0x7f060095
+			public const int menu_search = 2131099797;
 			
 			// aapt resource value: 0x7f06001e
 			public const int middle = 2131099678;
@@ -2791,6 +2815,28 @@ namespace Tasker.Droid
 			}
 		}
 		
+		public partial class Menu
+		{
+			
+			// aapt resource value: 0x7f0c0000
+			public const int main_activity_menu = 2131492864;
+			
+			// aapt resource value: 0x7f0c0001
+			public const int task_details_menu = 2131492865;
+			
+			// aapt resource value: 0x7f0c0002
+			public const int task_edit_menu = 2131492866;
+			
+			static Menu()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Menu()
+			{
+			}
+		}
+		
 		public partial class String
 		{
 			
@@ -2851,8 +2897,8 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f070012
 			public const int abc_toolbar_collapse_description = 2131165202;
 			
-			// aapt resource value: 0x7f070018
-			public const int app_name = 2131165208;
+			// aapt resource value: 0x7f070017
+			public const int app_name = 2131165207;
 			
 			// aapt resource value: 0x7f070014
 			public const int appbar_scrolling_view_behavior = 2131165204;
@@ -2863,8 +2909,17 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f070016
 			public const int character_counter_pattern = 2131165206;
 			
-			// aapt resource value: 0x7f070017
-			public const int hello = 2131165207;
+			// aapt resource value: 0x7f07001a
+			public const int edit = 2131165210;
+			
+			// aapt resource value: 0x7f070018
+			public const int projects = 2131165208;
+			
+			// aapt resource value: 0x7f07001b
+			public const int save = 2131165211;
+			
+			// aapt resource value: 0x7f070019
+			public const int search = 2131165209;
 			
 			// aapt resource value: 0x7f070013
 			public const int status_bar_notification_info_overflow = 2131165203;
