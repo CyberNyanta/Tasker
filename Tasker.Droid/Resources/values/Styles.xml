@@ -2,10 +2,14 @@
 <resources>
 
   <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="android:colorPrimary">@color/colorPrimary</item>
-    <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="android:colorAccent">@color/colorAccent</item>
+    <item name="windowNoTitle">true</item>
     <item name="actionBarStyle">@style/ActionBarStyle</item>
+    <item name="windowActionBar">false</item>
+  </style>
+
+  <style name="Tasker.EditTextStyle" parent="Base.Widget.AppCompat.EditText">
+    <item name="android:layout_margin">@dimen/editText_margin</item>
+    <item name="android:textSize">@dimen/editText_textSize</item>
   </style>
 
   <style name="ActionBarStyle" parent="Widget.AppCompat.ActionBar.Solid">
@@ -19,6 +23,7 @@
 
 
   <style name="Tasker.ListItem">
+    <item name="android:layout_marginTop">@dimen/list_item_marginTop</item>
     <item name="android:padding">@dimen/list_item_padding</item>
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>

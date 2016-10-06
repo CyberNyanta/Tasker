@@ -35,7 +35,7 @@ namespace Tasker.Core.BL.Managers
 
         public int SaveItem(Task item)
         {
-            if (item.ID == 0)
+            if (item.ID != 0)
             {
                 var project = _projectRepository.GetById(item.ProjectID);
                 project.CountOfOpenTasks++;

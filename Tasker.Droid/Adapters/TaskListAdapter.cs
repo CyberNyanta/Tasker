@@ -9,7 +9,10 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Android.Graphics;
+
 using Tasker.Core.DAL.Entities;
+using Tasker.Core;
 
 namespace Tasker.Droid.Adapters
 {
@@ -55,13 +58,23 @@ namespace Tasker.Droid.Adapters
             {
                 view = convertView;
             }
+            
 
             var taskTitle = view.FindViewById<TextView>(Resource.Id.taskTitle);
             taskTitle.Text = item.Title;
+
+            if (item.Color != TaskColors.None)
+            {
+                taskTitle.SetBackgroundColor(Color.ParseColor(TaskConstants.Colors[(int)item.Color]));
+            }
+            else
+                taskTitle.SetBackgroundColor(parent.DrawingCacheBackgroundColor);
+
             var taskDueDate = view.FindViewById<TextView>(Resource.Id.dueDate);
             taskDueDate.Text = item.DueDate.ToString();
             var project = view.FindViewById<TextView>(Resource.Id.projectName);
             project.Text = "project";
+
             //Finally return the view
             return view;
         }

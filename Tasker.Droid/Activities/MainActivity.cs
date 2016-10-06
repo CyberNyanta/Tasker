@@ -22,8 +22,7 @@ using Tasker.Core.DAL.Entities;
 using Tasker.Core.AL.Utils;
 using Tasker.Core.AL.ViewModels.Contracts;
 using Tasker.Droid.Fragments;
-
-
+using Android.Graphics;
 
 namespace Tasker.Droid
 {
@@ -37,11 +36,10 @@ namespace Tasker.Droid
 
             Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
-
             if (bundle == null)
             {
                 SupportFragmentManager.BeginTransaction().Add(Resource.Id.fragment, new TaskListFragment()).Commit();
-            }
+            }            
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

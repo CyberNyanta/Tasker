@@ -23,6 +23,6 @@ namespace Tasker.Core.DAL.Entities
         
         public bool IsSolved { get; set; }
 
-        public int Color { get; set; }
+        public TaskColors Color { get; set; }
     }
 }
