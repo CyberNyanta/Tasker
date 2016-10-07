@@ -8,7 +8,16 @@
   </style>
 
   <style name="Tasker.EditTextStyle" parent="Base.Widget.AppCompat.EditText">
-    <item name="android:layout_margin">@dimen/editText_margin</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_margin">@dimen/medium_margin</item>
+    <item name="android:textSize">@dimen/editText_textSize</item>
+  </style>
+
+  <style name="Tasker.TextViewStyle">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_margin">@dimen/medium_margin</item>
     <item name="android:textSize">@dimen/editText_textSize</item>
   </style>
 
@@ -17,7 +26,6 @@
   </style>
   
   <style name="Tasker" parent="BaseAppTheme">
-    
   </style>
 
 

@@ -7,4 +7,9 @@
     <string name="save">Save</string>
     <string name="title_error">Length must be less then %s</string>
     <string name="decription_error">Length must be less then %s</string>
+    <string name="task_due_date">Task due date</string>
+    <string name="task_remind_date">Task remind date</string>
+    <string name="task_title">Enter task title</string>
+    <string name="task_description">Enter task description</string>
+    <string name="task_color">Color</string>
 </resources>

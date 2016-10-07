@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 using Android.App;
@@ -19,7 +18,9 @@ using Tasker.Core.DAL.Entities;
 using Tasker.Core;
 
 using TinyIoC;
-
+using Com.Github.Jjobes.Slidedatetimepicker;
+using Java.Util;
+using Android.Graphics;
 
 namespace Tasker.Droid.Activities
 {
@@ -27,11 +28,12 @@ namespace Tasker.Droid.Activities
     public class TaskEditCreateActivity: AppCompatActivity
     {
         private ITaskDetailsViewModel _viewModel;
-        private TextView _taskTitle;
-        private TextView _taskDescription;
+        private EditText _taskTitle;
+        private EditText _taskDescription;
         private TextView _taskDueDate;
         private TextView _taskRemindDate;
-        private Spinner _taskColor;
+        private List<RadioButton> _taskColors = new List<RadioButton>();
+
 
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -46,13 +48,28 @@ namespace Tasker.Droid.Activities
 
             _viewModel = TinyIoCContainer.Current.Resolve<ITaskDetailsViewModel>();
 
-            _taskTitle = FindViewById<TextView>(Resource.Id.task_title);
-            _taskDescription = FindViewById<TextView>(Resource.Id.task_description);
+            _taskTitle = FindViewById<EditText>(Resource.Id.task_title);
+            _taskDescription = FindViewById<EditText>(Resource.Id.task_description);
             _taskDueDate = FindViewById<TextView>(Resource.Id.task_dueDate);
             _taskRemindDate = FindViewById<TextView>(Resource.Id.task_remindDate);
-            _taskColor = FindViewById<Spinner>(Resource.Id.color_spinner);
+            _taskColors.Add(FindViewById<RadioButton>(Resource.Id.color_none));
+            _taskColors.Add(FindViewById<RadioButton>(Resource.Id.color_1));
+            _taskColors.Add(FindViewById<RadioButton>(Resource.Id.color_2));
+            _taskColors.Add(FindViewById<RadioButton>(Resource.Id.color_3));
+
+            _taskDueDate.Click += delegate
+            {
+                var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
+                dateTimePicker.SetInitialDate(new Date());
+                dateTimePicker.SetMinDate(new Date());
+                dateTimePicker.SetListener(new CustomSlideDateTimeListener(this));
+                dateTimePicker.SetTheme(0);
+                var dialog = dateTimePicker.Build();
+                dialog.Show();
+            };
 
         }
+
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             switch (item.ItemId)
@@ -94,6 +111,25 @@ namespace Tasker.Droid.Activities
             _viewModel.SaveItem(task);
             SetResult(Result.Ok);
             Finish();
+        }
+
+        public class CustomSlideDateTimeListener : SlideDateTimeListener
+        {
+            TaskEditCreateActivity _activity;
+            public CustomSlideDateTimeListener(TaskEditCreateActivity activity) : base()
+            {
+                _activity = activity;
+            }
+            public override void OnDateTimeSet(Date p0)
+            {
+                _activity._taskDueDate.Text = p0.ToString();
+                Toast.MakeText(_activity, p0.ToString(), ToastLength.Long).Show();
+            }
+
+            public void onDateTimeCancel()
+            {
+                Toast.MakeText(_activity, "Canceled", ToastLength.Long).Show();
+            }
         }
     }
 }
