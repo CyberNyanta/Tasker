@@ -308,12 +308,6 @@
     <AndroidResource Include="Resources\layout\task_edit_create.xml" />
   </ItemGroup>
   <ItemGroup>
-    <XamarinComponentReference Include="AndroidSwipeLayout">
-      <Visible>False</Visible>
-      <Version>1.2.0.0</Version>
-    </XamarinComponentReference>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\layout\task_details.xml" />
   </ItemGroup>
   <ItemGroup>
