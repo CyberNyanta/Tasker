@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\MainActivity.cs" />
+    <Compile Include="Activities\TaskDetailsActivity.cs" />
     <Compile Include="Activities\TaskEditCreateActivity.cs" />
     <Compile Include="Adapters\TaskListAdapter.cs" />
     <Compile Include="Application.cs" />
@@ -108,7 +109,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\AndroidManifest.xml" />
-    <AndroidResource Include="Resources\layout\tasklistitem.xml">
+    <AndroidResource Include="Resources\layout\task_list_item.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -305,6 +306,27 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\task_edit_create.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="AndroidSwipeLayout">
+      <Visible>False</Visible>
+      <Version>1.2.0.0</Version>
+    </XamarinComponentReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\task_details.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_delete.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

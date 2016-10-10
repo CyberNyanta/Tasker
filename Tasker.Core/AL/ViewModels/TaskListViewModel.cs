@@ -10,14 +10,16 @@ namespace Tasker.Core.AL.ViewModels
     public class TaskListViewModel : BaseViewModel, ITaskListViewModel
     {
         private ITaskManager _taskManager;
+        private IProjectManager _projectManager;
 
         public bool IsSolvedTaskDisplayed { get; set; }
 
         public event Action OnCollectionChanged;
 
-        public TaskListViewModel(ITaskManager taskManager) : base()
+        public TaskListViewModel(ITaskManager taskManager, IProjectManager projectManager) : base()
         {
             _taskManager = taskManager;
+            _projectManager = projectManager;
         }
 
         public void DeleteGroup(IList<Task> group) //unused in droid
@@ -29,6 +31,11 @@ namespace Tasker.Core.AL.ViewModels
         public List<Task> GetAll()
         {
             return _taskManager.GetAll();
+        }
+
+        public List<Project> GetAllProjects()
+        {
+            return _projectManager.GetAll();
         }
 
         public void ChangeStatus(Task task)

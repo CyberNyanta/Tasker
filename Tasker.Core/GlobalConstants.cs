@@ -17,10 +17,10 @@ namespace Tasker.Core
 
         public static readonly string[] Colors =
         {
-            "None",
-            "#32FF0000",
-            "#3200FF00",
-            "#320000FF"
+            "#FF9e9e9e",
+            "#FFFF0000",
+            "#FF00FF00",
+            "#FF0000FF"
         };
     }
 

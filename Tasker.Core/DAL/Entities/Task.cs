@@ -17,7 +17,7 @@ namespace Tasker.Core.DAL.Entities
        
         public int ProjectID { get; set; }
 
-        public DateTime DueDate { get; set; }
+        public DateTime DueDate { get; set; } 
         
         public DateTime RemindDate { get; set; }
         

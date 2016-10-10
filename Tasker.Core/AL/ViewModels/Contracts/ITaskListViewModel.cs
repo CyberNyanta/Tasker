@@ -13,5 +13,7 @@ namespace Tasker.Core.AL.ViewModels.Contracts
         void ChangeStatus(Task task);
 
         void ChangeStatus(int id);
+
+        List<Project> GetAllProjects();
     }
 }
