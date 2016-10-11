@@ -19,13 +19,15 @@
             <EditText
                 android:id="@+id/task_title"
                 style="@style/Tasker.EditTextStyle"
-                android:hint="@string/task_title" />
+                android:hint="@string/task_title"
+                android:maxLength="100"/>
 
             <EditText
                 android:id="@+id/task_description"
                 style="@style/Tasker.EditTextStyle"
                 android:hint="@string/task_description"
-                android:inputType="textMultiLine" />
+                android:inputType="textMultiLine"
+                android:maxLength="1000"/>
 
             <TextView
                 android:id="@+id/task_dueDate"

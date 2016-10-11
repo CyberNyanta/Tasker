@@ -1,20 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="datetime_regex">g</string>
-    <string name="datetime_none">none</string>
-    <string name="project_inbox">Inbox</string>
+  <string name="datetime_regex">g</string>
+  <string name="datetime_none">none</string>
+  <string name="project_inbox">Inbox</string>
 
-    <string name="app_name">Tasker.Droid</string>
-    <string name="projects">Projects</string>
-    <string name="search">Search</string>
-    <string name="edit">Edit</string>
-    <string name="delete">Delete</string>
-    <string name="save">Save</string>
-    <string name="title_error">Length must be less then %s</string>
-    <string name="description_error">Length must be less then %s</string>
-    <string name="task_due_date">Due date</string>
-    <string name="task_remind_date">Remind date</string>
-    <string name="task_title">Title</string>
-    <string name="task_description">Description</string>
-    <string name="task_color">Color</string>
+  <string name="app_name">Tasker.Droid</string>
+  <string name="projects">Projects</string>
+  <string name="search">Search</string>
+  <string name="edit">Edit</string>
+  <string name="delete">Delete</string>
+  <string name="save">Save</string>
+
+  <string name="title_error">Length must be less then %s</string>
+  <string name="description_error">Length must be less then %s</string>
+
+  <string name="task_due_date">Due date</string>
+  <string name="task_remind_date">Remind date</string>
+  <string name="task_title">Title</string>
+  <string name="task_description">Description</string>
+  <string name="task_color">Color</string>
+
+
+  <string name="confirm_delete">Confirm delete</string>
+  <string name="confirm_delete_task">Delete this task</string>
+  <string name="dialog_yes">OK</string>
+  <string name="dialog_cancel">CANCEL</string>
 </resources>

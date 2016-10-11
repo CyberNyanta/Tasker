@@ -2972,6 +2972,12 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f070016
 			public const int character_counter_pattern = 2131165206;
 			
+			// aapt resource value: 0x7f070027
+			public const int confirm_delete = 2131165223;
+			
+			// aapt resource value: 0x7f070028
+			public const int confirm_delete_task = 2131165224;
+			
 			// aapt resource value: 0x7f070018
 			public const int datetime_none = 2131165208;
 			
@@ -2983,6 +2989,12 @@ namespace Tasker.Droid
 			
 			// aapt resource value: 0x7f070021
 			public const int description_error = 2131165217;
+			
+			// aapt resource value: 0x7f07002a
+			public const int dialog_cancel = 2131165226;
+			
+			// aapt resource value: 0x7f070029
+			public const int dialog_yes = 2131165225;
 			
 			// aapt resource value: 0x7f07001d
 			public const int edit = 2131165213;

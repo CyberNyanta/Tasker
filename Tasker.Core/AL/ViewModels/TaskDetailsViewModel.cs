@@ -1,4 +1,5 @@
-﻿using Tasker.Core.AL.ViewModels.Contracts;
+﻿using System;
+using Tasker.Core.AL.ViewModels.Contracts;
 using Tasker.Core.BL.Contracts;
 using Tasker.Core.DAL.Entities;
 
@@ -32,6 +33,11 @@ namespace Tasker.Core.AL.ViewModels
         public void ChangeStatus(int id)
         {
             _taskManager.ChangeStatus(id);
+        }
+
+        public int DeleteItem()
+        {
+            return _taskManager.Delete(Id);
         }
     }
 }

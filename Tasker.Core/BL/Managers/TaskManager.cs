@@ -52,18 +52,22 @@ namespace Tasker.Core.BL.Managers
 
         public void ChangeStatus(Task task)
         {
-            var project = _projectRepository.GetById(task.ProjectID);
-            if (!task.IsSolved)
+            if (task.ProjectID != 0)
             {
-                project.CountOfSolveTasks++;
-                project.CountOfOpenTasks--;
+                var project = _projectRepository.GetById(task.ProjectID);
+                if (!task.IsSolved)
+                {
+                    project.CountOfSolveTasks++;
+                    project.CountOfOpenTasks--;
+                }
+                else
+                {
+                    project.CountOfSolveTasks--;
+                    project.CountOfOpenTasks++;
+                }
+                _projectRepository.Save(project);
             }
-            else
-            {
-                project.CountOfSolveTasks--;
-                project.CountOfOpenTasks++;
-            }
-            _projectRepository.Save(project);
+                        
             task.IsSolved = !task.IsSolved;
             _taskRepository.Save(task);
         }
@@ -71,18 +75,22 @@ namespace Tasker.Core.BL.Managers
         public int Delete(int id)
         {
             var task = Get(id);
-            var project = _projectRepository.GetById(task.ProjectID);
+            if (task.ProjectID != 0)
+            {
+                var project = _projectRepository.GetById(task.ProjectID);
 
-            if (task.IsSolved)
-            {
-                project.CountOfSolveTasks--;
-            }
-            else
-            {
-                project.CountOfOpenTasks--;
+                if (task.IsSolved)
+                {
+                    project.CountOfSolveTasks--;
+                }
+                else
+                {
+                    project.CountOfOpenTasks--;
+                }
+
+                _projectRepository.Save(project);
             }
             
-            _projectRepository.Save(project);
             return _taskRepository.Delete(id);
         }
 

@@ -42,7 +42,7 @@ namespace Tasker.Droid.Adapters
 
         public override long GetItemId(int position)
         {
-            return _tasks[position-1].ID;
+            return _tasks[position].ID;
         }       
 
         public override View GetView(int position, View convertView, ViewGroup parent)

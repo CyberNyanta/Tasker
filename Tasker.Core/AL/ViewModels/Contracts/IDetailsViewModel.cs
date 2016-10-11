@@ -14,5 +14,7 @@ namespace Tasker.Core.AL.ViewModels.Contracts
         T GetItem();
 
         int SaveItem(T item);
+
+        int DeleteItem();
     }
 }

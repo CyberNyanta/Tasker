@@ -1,4 +1,5 @@
-﻿using Tasker.Core.AL.ViewModels.Contracts;
+﻿using System;
+using Tasker.Core.AL.ViewModels.Contracts;
 using Tasker.Core.BL.Contracts;
 using Tasker.Core.DAL.Entities;
 
@@ -23,6 +24,11 @@ namespace Tasker.Core.AL.ViewModels
         public int SaveItem(Project item)
         {
             return _projectManager.SaveItem(item);
+        }
+
+        public int DeleteItem()
+        {
+            return _projectManager.Delete(Id);
         }
     }
 }

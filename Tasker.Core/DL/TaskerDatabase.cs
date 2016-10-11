@@ -45,8 +45,8 @@ namespace Tasker.Core.DL
         public T GetItem<T>(int id) where T : IBusinessEntity, new()
         {
             lock (locker)
-            {
-                return Table<T>().FirstOrDefault(x => x.ID == id);
+            {                
+                return Table<T>().First<T>(x => x.ID == id);
             }
         }
 
@@ -69,8 +69,8 @@ namespace Tasker.Core.DL
         public int DeleteItem<T>(int id) where T : IBusinessEntity, new()
         {
             lock (locker)
-            {                
-                return Delete(new T() { ID = id });
+            {              
+                return Delete<T>( id );
             }
         }
 
