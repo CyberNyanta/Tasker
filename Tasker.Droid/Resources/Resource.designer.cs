@@ -2104,40 +2104,46 @@ namespace Tasker.Droid
 			public const int fab_label_background = 2130837582;
 			
 			// aapt resource value: 0x7f02004f
-			public const int ic_close = 2130837583;
+			public const int fab_solved = 2130837583;
 			
 			// aapt resource value: 0x7f020050
-			public const int ic_delete = 2130837584;
+			public const int fab_unsolved = 2130837584;
 			
 			// aapt resource value: 0x7f020051
-			public const int ic_edit = 2130837585;
+			public const int ic_close = 2130837585;
 			
 			// aapt resource value: 0x7f020052
-			public const int ic_menu = 2130837586;
+			public const int ic_delete = 2130837586;
 			
 			// aapt resource value: 0x7f020053
-			public const int ic_nav_item = 2130837587;
+			public const int ic_edit = 2130837587;
 			
 			// aapt resource value: 0x7f020054
-			public const int ic_progress = 2130837588;
+			public const int ic_menu = 2130837588;
 			
 			// aapt resource value: 0x7f020055
-			public const int ic_save = 2130837589;
+			public const int ic_nav_item = 2130837589;
 			
 			// aapt resource value: 0x7f020056
-			public const int ic_search = 2130837590;
+			public const int ic_progress = 2130837590;
 			
 			// aapt resource value: 0x7f020057
-			public const int ic_star = 2130837591;
+			public const int ic_save = 2130837591;
 			
 			// aapt resource value: 0x7f020058
-			public const int icon = 2130837592;
-			
-			// aapt resource value: 0x7f02005a
-			public const int notification_template_icon_bg = 2130837594;
+			public const int ic_search = 2130837592;
 			
 			// aapt resource value: 0x7f020059
-			public const int selection_divider = 2130837593;
+			public const int ic_star = 2130837593;
+			
+			// aapt resource value: 0x7f02005a
+			public const int icon = 2130837594;
+			
+			// aapt resource value: 0x7f02005c
+			public const int notification_template_icon_bg = 2130837596;
+			
+			// aapt resource value: 0x7f02005b
+			public const int selection_divider = 2130837595;
 			
 			static Drawable()
 			{
@@ -2212,6 +2218,18 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f06002b
 			public const int bottom = 2131099691;
 			
+			// aapt resource value: 0x7f060095
+			public const int box_task_description = 2131099797;
+			
+			// aapt resource value: 0x7f060096
+			public const int box_task_dueDate = 2131099798;
+			
+			// aapt resource value: 0x7f060097
+			public const int box_task_remindDate = 2131099799;
+			
+			// aapt resource value: 0x7f060094
+			public const int box_task_title = 2131099796;
+			
 			// aapt resource value: 0x7f060089
 			public const int buttonHorizontalDivider = 2131099785;
 			
@@ -2251,20 +2269,20 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f060020
 			public const int collapseActionView = 2131099680;
 			
-			// aapt resource value: 0x7f060095
-			public const int color_1 = 2131099797;
+			// aapt resource value: 0x7f06009a
+			public const int color_1 = 2131099802;
 			
-			// aapt resource value: 0x7f060096
-			public const int color_2 = 2131099798;
+			// aapt resource value: 0x7f06009b
+			public const int color_2 = 2131099803;
 			
-			// aapt resource value: 0x7f060097
-			public const int color_3 = 2131099799;
+			// aapt resource value: 0x7f06009c
+			public const int color_3 = 2131099804;
 			
-			// aapt resource value: 0x7f060094
-			public const int color_none = 2131099796;
+			// aapt resource value: 0x7f060099
+			public const int color_none = 2131099801;
 			
-			// aapt resource value: 0x7f060093
-			public const int colors_radiogroup = 2131099795;
+			// aapt resource value: 0x7f060098
+			public const int colors_radiogroup = 2131099800;
 			
 			// aapt resource value: 0x7f06004d
 			public const int contentPanel = 2131099725;
@@ -2308,8 +2326,8 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f06003c
 			public const int down = 2131099708;
 			
-			// aapt resource value: 0x7f06009c
-			public const int dueDate = 2131099804;
+			// aapt resource value: 0x7f0600a0
+			public const int dueDate = 2131099808;
 			
 			// aapt resource value: 0x7f06005f
 			public const int edit_query = 2131099743;
@@ -2335,8 +2353,8 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f060054
 			public const int expanded_menu = 2131099732;
 			
-			// aapt resource value: 0x7f060099
-			public const int fab = 2131099801;
+			// aapt resource value: 0x7f060093
+			public const int fab = 2131099795;
 			
 			// aapt resource value: 0x7f06000b
 			public const int fab_label = 2131099659;
@@ -2398,20 +2416,20 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f06007d
 			public const int media_actions = 2131099773;
 			
-			// aapt resource value: 0x7f0600a0
-			public const int menu_about = 2131099808;
+			// aapt resource value: 0x7f0600a4
+			public const int menu_about = 2131099812;
 			
-			// aapt resource value: 0x7f0600a1
-			public const int menu_delete = 2131099809;
+			// aapt resource value: 0x7f0600a5
+			public const int menu_delete = 2131099813;
 			
-			// aapt resource value: 0x7f0600a2
-			public const int menu_edit = 2131099810;
+			// aapt resource value: 0x7f0600a6
+			public const int menu_edit = 2131099814;
+			
+			// aapt resource value: 0x7f0600a7
+			public const int menu_save = 2131099815;
 			
 			// aapt resource value: 0x7f0600a3
-			public const int menu_save = 2131099811;
-			
-			// aapt resource value: 0x7f06009f
-			public const int menu_search = 2131099807;
+			public const int menu_search = 2131099811;
 			
 			// aapt resource value: 0x7f06001e
 			public const int middle = 2131099678;
@@ -2452,8 +2470,8 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f060007
 			public const int progress_horizontal = 2131099655;
 			
-			// aapt resource value: 0x7f06009d
-			public const int projectName = 2131099805;
+			// aapt resource value: 0x7f0600a1
+			public const int projectName = 2131099809;
 			
 			// aapt resource value: 0x7f060057
 			public const int radio = 2131099735;
@@ -2566,14 +2584,14 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f06006d
 			public const int tabText = 2131099757;
 			
-			// aapt resource value: 0x7f06009a
-			public const int taskContainer = 2131099802;
+			// aapt resource value: 0x7f06009e
+			public const int taskContainer = 2131099806;
 			
-			// aapt resource value: 0x7f060098
-			public const int taskList = 2131099800;
+			// aapt resource value: 0x7f06009d
+			public const int taskList = 2131099805;
 			
-			// aapt resource value: 0x7f06009b
-			public const int taskTitle = 2131099803;
+			// aapt resource value: 0x7f06009f
+			public const int taskTitle = 2131099807;
 			
 			// aapt resource value: 0x7f06008d
 			public const int task_color_border = 2131099789;
@@ -2614,8 +2632,8 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f06004b
 			public const int title_template = 2131099723;
 			
-			// aapt resource value: 0x7f06009e
-			public const int toolbar = 2131099806;
+			// aapt resource value: 0x7f0600a2
+			public const int toolbar = 2131099810;
 			
 			// aapt resource value: 0x7f060033
 			public const int top = 2131099699;

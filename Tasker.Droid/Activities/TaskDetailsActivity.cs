@@ -126,9 +126,8 @@ namespace Tasker.Droid.Activities
                 SetResult(Result.Ok);
                 Finish();
             });
-
+            alert.SetCancelable(true);
             alert.SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { });
-
             Dialog dialog = alert.Create();
             dialog.Show();
         }

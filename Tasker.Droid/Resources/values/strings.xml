@@ -11,8 +11,10 @@
   <string name="delete">Delete</string>
   <string name="save">Save</string>
 
+  <!--Errors-->
   <string name="title_error">Length must be less then %s</string>
   <string name="description_error">Length must be less then %s</string>
+  
 
   <string name="task_due_date">Due date</string>
   <string name="task_remind_date">Remind date</string>
@@ -22,7 +24,7 @@
 
 
   <string name="confirm_delete">Confirm delete</string>
-  <string name="confirm_delete_task">Delete this task</string>
+  <string name="confirm_delete_task">Delete this task?</string>
   <string name="dialog_yes">OK</string>
   <string name="dialog_cancel">CANCEL</string>
 </resources>

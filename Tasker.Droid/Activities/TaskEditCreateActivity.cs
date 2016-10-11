@@ -9,6 +9,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Support.V7.Widget;
 using Android.Widget;
+using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 
@@ -25,7 +26,7 @@ using Android.Graphics;
 namespace Tasker.Droid.Activities
 {
     [Activity]
-    public class TaskEditCreateActivity: AppCompatActivity
+    public class TaskEditCreateActivity : AppCompatActivity
     {
         private ITaskDetailsViewModel _viewModel;
         private EditText _taskTitle;
@@ -36,8 +37,8 @@ namespace Tasker.Droid.Activities
         private List<RadioButton> _taskColors = new List<RadioButton>();
         private DateTime _dueDate;
         private DateTime _remindDate;
-
-
+        TextInputEditText tie;
+        
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -60,12 +61,14 @@ namespace Tasker.Droid.Activities
             _taskColors.Add(FindViewById<RadioButton>(Resource.Id.color_1));
             _taskColors.Add(FindViewById<RadioButton>(Resource.Id.color_2));
             _taskColors.Add(FindViewById<RadioButton>(Resource.Id.color_3));
-            
-            for (int i=0; i<4; i++)
-            {
-                _taskColors[i].ButtonTintList = Android.Content.Res.ColorStateList.ValueOf(Color.ParseColor(TaskConstants.Colors[i]));
-            }
-            _taskDueDate.Click += delegate
+
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
+                for (int i = 0; i < 4; i++)
+                {
+                    _taskColors[i].ButtonTintList = Android.Content.Res.ColorStateList.ValueOf(Color.ParseColor(TaskConstants.Colors[i]));
+                }
+
+            _taskDueDate.OnFocusChangeListener = new OnFocusChangeListener(delegate
             {
                 var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
                 dateTimePicker.SetInitialDate(new Date());
@@ -74,24 +77,49 @@ namespace Tasker.Droid.Activities
                 dateTimePicker.SetTheme(0);
                 var dialog = dateTimePicker.Build();
                 dialog.Show();
-            };
+            });
 
-            _taskRemindDate.Click += delegate
-            {
-                var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
-                dateTimePicker.SetInitialDate(new Date());
-                if (_dueDate != DateTime.MinValue)
-                {
-                    dateTimePicker.SetMaxDate(new Date(_dueDate.ToUnixTime()));
-                }
-                dateTimePicker.SetMinDate(new Date());
-                dateTimePicker.SetListener(new RemindDateListener(this));
-                dateTimePicker.SetTheme(0);
-                var dialog = dateTimePicker.Build();
-                dialog.Show();
-            };
+            _taskRemindDate.OnFocusChangeListener = new OnFocusChangeListener(delegate
+           {
+               var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
+               dateTimePicker.SetInitialDate(new Date());
+               if (_dueDate != DateTime.MinValue)
+               {
+                   dateTimePicker.SetMaxDate(new Date(_dueDate.ToUnixTime()));
+               }
+               dateTimePicker.SetMinDate(new Date());
+               dateTimePicker.SetListener(new RemindDateListener(this));
+               dateTimePicker.SetTheme(0);
+               var dialog = dateTimePicker.Build();
+               dialog.Show();
+           });
+
+            _viewModel.Id = Intent.GetIntExtra("TaskId", 0);
+
+            if (_viewModel.Id != 0)
+                Initialization();
 
         }
+
+        private void Initialization()
+        {
+            var task = _viewModel.GetItem();
+            if (task != null)
+            {
+                _taskTitle.Text = task.Title;
+                _taskDescription.Text = task.Description;
+                _dueDate = task.DueDate;
+                _remindDate = task.RemindDate;
+                _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
+                _taskRemindDate.Text = _remindDate.ToString(GetString(Resource.String.datetime_regex));
+
+                if (task.Color != TaskColors.None)
+                {
+                    _taskColors[(int)task.Color].Checked = true;
+                }
+            }
+        }
+
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
@@ -106,7 +134,7 @@ namespace Tasker.Droid.Activities
             }
             return base.OnOptionsItemSelected(item);
         }
-      
+
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.task_edit_menu, menu);
@@ -118,7 +146,7 @@ namespace Tasker.Droid.Activities
             var error = false;
             var title = _taskTitle.Text;
             var desciption = _taskDescription.Text;
-            if (!title.IsLengthInRange(TaskConstants.TASK_TITLE_MAX_LENGTH,1))
+            if (!title.IsLengthInRange(TaskConstants.TASK_TITLE_MAX_LENGTH, 1))
             {
                 _taskTitle.Error = GetString(Resource.String.title_error);
                 error = true;
@@ -128,6 +156,22 @@ namespace Tasker.Droid.Activities
                 _taskDescription.Error = GetString(Resource.String.description_error);
                 error = true;
             }
+            //if (_dueDate.CompareTo(DateTime.Now) <= 0)
+            //{
+            //    _taskDueDate.Error = "Error";             //TODO chenge error
+            //    error = true;
+            //}
+            //if (_remindDate.CompareTo(DateTime.Now) <= 0)
+            //{
+            //    _taskRemindDate.Error = "Error";             //TODO chenge error
+            //    error = true;
+            //}
+            //if (_dueDate.CompareTo(_remindDate) <= 1)
+            //{
+            //    _taskDueDate.Error = "Error";             //TODO chenge error
+            //    error = true;
+            //}
+
             if (error) return;
 
             TaskColors color = TaskColors.None;
@@ -142,9 +186,9 @@ namespace Tasker.Droid.Activities
                 case Resource.Id.color_3:
                     color = TaskColors.Blue;
                     break;
-            }            
+            }
 
-            var task = new Task() { Title = title, Description = desciption, Color = color};
+            var task = new Task() { Title = title, Description = desciption, Color = color };
 
             _viewModel.SaveItem(task);
             SetResult(Result.Ok);
@@ -162,7 +206,7 @@ namespace Tasker.Droid.Activities
             {
                 _activity._dueDate = p0.Time.UnixTimeToDateTime();
                 _activity._taskDueDate.Text = _activity._dueDate.ToString(_activity.GetString(Resource.String.datetime_regex));
-            }            
+            }
         }
 
         public class RemindDateListener : SlideDateTimeListener
@@ -176,6 +220,23 @@ namespace Tasker.Droid.Activities
             {
                 _activity._remindDate = p0.Time.UnixTimeToDateTime();
                 _activity._taskRemindDate.Text = _activity._remindDate.ToString(_activity.GetString(Resource.String.datetime_regex));
+            }
+        }
+
+        public class OnFocusChangeListener : Java.Lang.Object, View.IOnFocusChangeListener
+        {
+            private event Action OnFocus;
+            public OnFocusChangeListener(Action callback)
+            {
+                OnFocus += callback;
+
+            }
+            public void OnFocusChange(View v, bool hasFocus)
+            {
+                if (hasFocus)
+                {
+                    OnFocus?.Invoke();
+                }
             }
         }
     }
