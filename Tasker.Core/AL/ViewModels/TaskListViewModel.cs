@@ -11,8 +11,17 @@ namespace Tasker.Core.AL.ViewModels
     {
         private ITaskManager _taskManager;
         private IProjectManager _projectManager;
+        private bool _isSolvedTaskDisplayed = false;
 
-        public bool IsSolvedTaskDisplayed { get; set; }
+        public bool IsSolvedTaskDisplayed
+        {
+            get { return _isSolvedTaskDisplayed; }
+            set
+            {
+                RaiseOnCollectionChanged();
+               _isSolvedTaskDisplayed = value;
+            }
+        }
 
         public event Action OnCollectionChanged;
 
@@ -30,7 +39,17 @@ namespace Tasker.Core.AL.ViewModels
 
         public List<Task> GetAll()
         {
-            return _taskManager.GetAll();
+            return IsSolvedTaskDisplayed ? _taskManager.GetAll() : _taskManager.GetAllOpen();
+        }
+
+        public List<Task> GetWhere(Predicate<Task> predicate) //unused in droid
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Task> GetProjectTasks(int projectId)
+        {
+            return IsSolvedTaskDisplayed ? _taskManager.GetProjectTasks(projectId) : _taskManager.GetProjectOpenTasks(projectId);
         }
 
         public List<Project> GetAllProjects()
@@ -54,5 +73,7 @@ namespace Tasker.Core.AL.ViewModels
         {
             OnCollectionChanged?.Invoke();
         }
+
+
     }
 }

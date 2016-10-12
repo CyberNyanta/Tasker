@@ -37,8 +37,8 @@ namespace Tasker.Droid.Activities
         private List<RadioButton> _taskColors = new List<RadioButton>();
         private DateTime _dueDate;
         private DateTime _remindDate;
-        TextInputEditText tie;
         
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -68,7 +68,7 @@ namespace Tasker.Droid.Activities
                     _taskColors[i].ButtonTintList = Android.Content.Res.ColorStateList.ValueOf(Color.ParseColor(TaskConstants.Colors[i]));
                 }
 
-            _taskDueDate.OnFocusChangeListener = new OnFocusChangeListener(delegate
+            Action setDueDate = delegate
             {
                 var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
                 dateTimePicker.SetInitialDate(new Date());
@@ -77,26 +77,30 @@ namespace Tasker.Droid.Activities
                 dateTimePicker.SetTheme(0);
                 var dialog = dateTimePicker.Build();
                 dialog.Show();
-            });
+            };
+            Action setRemindDate = delegate
+            {
+                var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
+                dateTimePicker.SetInitialDate(new Date());
+                if (_dueDate != DateTime.MinValue)
+                {
+                    dateTimePicker.SetMaxDate(new Date(_dueDate.ToUnixTime()));
+                }
+                dateTimePicker.SetMinDate(new Date());
+                dateTimePicker.SetListener(new RemindDateListener(this));
+                dateTimePicker.SetTheme(0);
+                var dialog = dateTimePicker.Build();
+                dialog.Show();
+            };
 
-            _taskRemindDate.OnFocusChangeListener = new OnFocusChangeListener(delegate
-           {
-               var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
-               dateTimePicker.SetInitialDate(new Date());
-               if (_dueDate != DateTime.MinValue)
-               {
-                   dateTimePicker.SetMaxDate(new Date(_dueDate.ToUnixTime()));
-               }
-               dateTimePicker.SetMinDate(new Date());
-               dateTimePicker.SetListener(new RemindDateListener(this));
-               dateTimePicker.SetTheme(0);
-               var dialog = dateTimePicker.Build();
-               dialog.Show();
-           });
+            _taskDueDate.OnFocusChangeListener = new OnFocusChangeListener(setDueDate);
+            _taskRemindDate.OnFocusChangeListener = new OnFocusChangeListener(setRemindDate);
+            _taskDueDate.Click += new EventHandler(delegate (Object o, EventArgs a) { setDueDate?.Invoke(); });
+            _taskRemindDate.Click += new EventHandler(delegate (Object o, EventArgs a) { setRemindDate?.Invoke(); });
 
-            _viewModel.Id = Intent.GetIntExtra("TaskId", 0);
+            _viewModel.Id = Intent.GetIntExtra("TaskId", -1);
 
-            if (_viewModel.Id != 0)
+            if (_viewModel.Id != -1)
                 Initialization();
 
         }
@@ -156,21 +160,7 @@ namespace Tasker.Droid.Activities
                 _taskDescription.Error = GetString(Resource.String.description_error);
                 error = true;
             }
-            //if (_dueDate.CompareTo(DateTime.Now) <= 0)
-            //{
-            //    _taskDueDate.Error = "Error";             //TODO chenge error
-            //    error = true;
-            //}
-            //if (_remindDate.CompareTo(DateTime.Now) <= 0)
-            //{
-            //    _taskRemindDate.Error = "Error";             //TODO chenge error
-            //    error = true;
-            //}
-            //if (_dueDate.CompareTo(_remindDate) <= 1)
-            //{
-            //    _taskDueDate.Error = "Error";             //TODO chenge error
-            //    error = true;
-            //}
+           
 
             if (error) return;
 

@@ -22,6 +22,7 @@ using TinyIoC;
 using Com.Github.Jjobes.Slidedatetimepicker;
 using Java.Util;
 using Android.Graphics;
+using FAB = Clans.Fab.FloatingActionButton;
 
 namespace Tasker.Droid.Activities
 {
@@ -34,6 +35,7 @@ namespace Tasker.Droid.Activities
         private TextView _taskDueDate;
         private TextView _taskRemindDate;
         private View _taskColor;
+        private FAB _fab;
 
 
         protected override void OnCreate(Bundle bundle)
@@ -55,8 +57,13 @@ namespace Tasker.Droid.Activities
             _taskDueDate = FindViewById<TextView>(Resource.Id.task_dueDate);
             _taskRemindDate = FindViewById<TextView>(Resource.Id.task_remindDate);
             _taskColor = FindViewById<View>(Resource.Id.task_color_border);
-           
+            _fab = FindViewById<FAB>(Resource.Id.fab);
+
             _viewModel.Id = Intent.GetIntExtra("TaskId", 0);
+            _fab.Click += delegate
+            {
+                OnSolveClick();
+            };
 
             Initialization();
         }
@@ -70,7 +77,7 @@ namespace Tasker.Droid.Activities
                 _taskDescription.Text = task.Description;
                 _taskDueDate.Text = task.DueDate.ToString();
                 _taskRemindDate.Text = task.RemindDate.ToString();
-
+                _fab.SetImageResource(task.IsSolved ? Resource.Drawable.fab_unsolved : Resource.Drawable.fab_solved);
                 if (task.Color != TaskColors.None)
                 {
                     _taskColor.SetBackgroundColor(Color.ParseColor(TaskConstants.Colors[(int)task.Color]));
@@ -91,6 +98,13 @@ namespace Tasker.Droid.Activities
                 Initialization();
             }
         }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.task_details_menu, menu);
+            return base.OnCreateOptionsMenu(menu);
+        }
+
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
@@ -115,6 +129,22 @@ namespace Tasker.Droid.Activities
             StartActivityForResult(intent, (int)Result.Ok);
         }
 
+        private void OnSolveClick()
+        {
+            var task = _viewModel.GetItem();
+            if (task.IsSolved)
+            {
+                _viewModel.ChangeStatus(task);
+                _fab.SetImageResource(Resource.Drawable.fab_unsolved);          
+                SetResult(Result.Ok);
+            }
+            else
+            {
+                _viewModel.ChangeStatus(task);
+                _fab.SetImageResource(Resource.Drawable.fab_solved);
+                SetResult(Result.Ok);
+            }
+        }
         private void OnDeleteClick()
         {
             //set alert for executing the task
@@ -132,11 +162,6 @@ namespace Tasker.Droid.Activities
             dialog.Show();
         }
 
-        public override bool OnCreateOptionsMenu(IMenu menu)
-        {
-            MenuInflater.Inflate(Resource.Menu.task_details_menu, menu);
-            return base.OnCreateOptionsMenu(menu);
-        }
-     
+   
     }
 }

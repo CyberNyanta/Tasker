@@ -21,16 +21,15 @@ using Tasker.Droid.Activities;
 
 namespace Tasker.Droid.Fragments
 {
-    public class TaskListFragment : BaseListFragment
+    public class ProjectListFragment : BaseListFragment
     {
-        public enum TaskListType { All, Project, Search}
-
         private Adapters.TaskListAdapter _taskList;
         private IList<Task> _tasks;
         private IList<Project> _projects;
-        private ITaskListViewModel _viewModel;             
-        private TaskListType _taskListType;
-        private int _projectId;
+        private IProjectListViewModel _viewModel;
+        private FAB _fab;
+        private readonly bool hideFab;
+        private int previousVisibleItem;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -40,15 +39,22 @@ namespace Tasker.Droid.Fragments
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
-            _viewModel = TinyIoCContainer.Current.Resolve<ITaskListViewModel>();
+            _viewModel = TinyIoCContainer.Current.Resolve<IProjectListViewModel>();
             _listView = view.FindViewById<ListView>(Resource.Id.taskList);
+            _fab = view.FindViewById<FAB>(Resource.Id.fab);
+        }
+
+        public override void OnActivityCreated(Bundle savedInstanceState)
+        {
+            base.OnActivityCreated(savedInstanceState);
+
             _listView.ItemClick += ItemClick;
         }
 
         private void ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             int id = (int)e.Id;
-            Intent intent = new Intent(this.Activity, typeof(TaskDetailsActivity));
+            Intent intent = new Intent(this.Activity, typeof(MainActivity));
             intent.PutExtra("TaskId", id);
             StartActivityForResult(intent, (int)Result.Ok);
         }
@@ -56,10 +62,7 @@ namespace Tasker.Droid.Fragments
         protected override void FabClick(object sender, EventArgs e)
         {
             Intent intent = new Intent(this.Activity, typeof(TaskEditCreateActivity));
-            if (_taskListType == TaskListType.Project)
-            {
-                intent.PutExtra("ProjectId", 0);
-            }
+            intent.PutExtra("TaskId", 0);
             StartActivityForResult(intent, (int)Result.Ok);
         }
 
@@ -68,7 +71,7 @@ namespace Tasker.Droid.Fragments
             base.OnActivityResult(requestCode, resultCode, data);
             if (requestCode == resultCode)
             {
-                TaskInitialization();
+                _projects = _viewModel.GetAll();//TODO Update list after adding
             }
         }
 
@@ -76,29 +79,12 @@ namespace Tasker.Droid.Fragments
         {
             base.OnResume();
 
-            TaskInitialization();
-            _projects = _viewModel.GetAllProjects();
+            _projects = _viewModel.GetAll();
             _taskList = new Adapters.TaskListAdapter(this.Activity, _tasks, _projects);
-
             _listView.Adapter = _taskList;
         }
 
-        private void TaskInitialization()
-        {
-            _taskListType = (TaskListType)Activity.Intent.GetIntExtra("TaskListType", (int)TaskListType.All);
-            switch (_taskListType)
-            {
-                case TaskListType.All:
-                    _tasks = _viewModel.GetAll();
-                    break;
-                case TaskListType.Project:
-                    _projectId = Activity.Intent.GetIntExtra("ProjectId", 0);
-                    _tasks = _viewModel.GetProjectTasks(_projectId);
-                    break;
-                case TaskListType.Search:
-                    throw new NotImplementedException();
-                    break;
-            }
-        }
+
+
     }
 }

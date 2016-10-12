@@ -15,5 +15,9 @@ namespace Tasker.Core.AL.ViewModels.Contracts
         void ChangeStatus(int id);
 
         List<Project> GetAllProjects();
+
+        List<Task> GetWhere(Predicate<Task> predicate);
+
+        List<Task> GetProjectTasks(int projectId);
     }
 }

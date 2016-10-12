@@ -35,7 +35,9 @@
         <item name="elevation">0dp</item>
     </style>
 
-    <style name="Tasker" parent="BaseAppTheme"></style>
+    <style name="Tasker" parent="BaseAppTheme">
+        <item name="android:colorBackground">@color/colorBackground</item>
+    </style>
 
 
     <style name="Tasker.ListItem">

@@ -8,6 +8,10 @@ namespace Tasker.Core.BL.Contracts
     {
         List<Task> GetProjectTasks(int projectId);
 
+        List<Task> GetProjectOpenTasks(int projectId);
+
+        List<Task> GetAllOpen();
+
         void ChangeStatus(int id);
 
         void ChangeStatus(Task task);
