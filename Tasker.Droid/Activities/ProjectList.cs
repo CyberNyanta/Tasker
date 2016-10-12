@@ -26,41 +26,33 @@ using Android.Graphics;
 
 namespace Tasker.Droid
 {
-    [Activity (Label = "Tasker", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/Tasker")]
-    public class MainActivity : AppCompatActivity
+    [Activity (Label = "Tasker", Theme = "@style/Tasker")]
+    public class ProjectList : AppCompatActivity
     {
         protected override void OnCreate (Bundle bundle)
 		{
             base.OnCreate (bundle);
 			SetContentView (Resource.Layout.main);
+            
 
             Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
+            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+            SupportActionBar.SetDisplayShowHomeEnabled(true);
             if (bundle == null)
             {
-                SupportFragmentManager.BeginTransaction().Add(Resource.Id.fragment, new TaskListFragment()).Commit();
+                SupportFragmentManager.BeginTransaction().Add(Resource.Id.fragment, new ProjectListFragment()).Commit();
             }            
         }
-
-        public override bool OnCreateOptionsMenu(IMenu menu)
-        {
-            MenuInflater.Inflate(Resource.Menu.main_activity_menu, menu);
-            return base.OnCreateOptionsMenu(menu);
-        }
-
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             switch (item.ItemId)
             {
-                case Resource.Id.menu_projects:
-                    Intent intent = new Intent(this, typeof(ProjectList));
-                    StartActivity(intent);
+                case Android.Resource.Id.Home:
+                    OnBackPressed();
                     break;
             }
             return base.OnOptionsItemSelected(item);
         }
-
     }
 }
-
-

@@ -26,13 +26,16 @@ namespace Tasker.Droid.Adapters
         {
             _context = context;
             _projects = projects;
-            var inboxProjectTasks = tasks.FindAll(task => task.ProjectID == 0);
-            _projects.Insert(0, new Project
+            if (tasks != null)
             {
-                Title = context.GetString(Resource.String.project_inbox),
-                CountOfOpenTasks = inboxProjectTasks.FindAll(task => task.IsSolved).Count,
-                CountOfSolveTasks = inboxProjectTasks.FindAll(task => !task.IsSolved).Count
-            });
+                var inboxProjectTasks = tasks.FindAll(task => task.ProjectID == 0);
+                _projects.Insert(0, new Project
+                {
+                    Title = context.GetString(Resource.String.project_inbox),
+                    CountOfOpenTasks = inboxProjectTasks.FindAll(task => task.IsSolved).Count,
+                    CountOfSolveTasks = inboxProjectTasks.FindAll(task => !task.IsSolved).Count
+                });
+            }
         }
 
         public override Project this[int position]
@@ -59,7 +62,7 @@ namespace Tasker.Droid.Adapters
             // gives us some performance gains by not always inflating a new view
             if (convertView == null)
             {
-                view = _context.LayoutInflater.Inflate(Resource.Layout.task_list_item, null);
+                view = _context.LayoutInflater.Inflate(Resource.Layout.project_list_item, null);
             }
             else
             {

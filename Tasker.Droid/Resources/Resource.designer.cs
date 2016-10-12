@@ -2428,14 +2428,14 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f06007d
 			public const int media_actions = 2131099773;
 			
-			// aapt resource value: 0x7f0600aa
-			public const int menu_about = 2131099818;
-			
 			// aapt resource value: 0x7f0600ab
 			public const int menu_delete = 2131099819;
 			
 			// aapt resource value: 0x7f0600ac
 			public const int menu_edit = 2131099820;
+			
+			// aapt resource value: 0x7f0600aa
+			public const int menu_projects = 2131099818;
 			
 			// aapt resource value: 0x7f0600ad
 			public const int menu_save = 2131099821;

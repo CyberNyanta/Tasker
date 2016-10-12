@@ -23,14 +23,11 @@ namespace Tasker.Droid.Fragments
 {
     public class ProjectListFragment : BaseListFragment
     {
-        private Adapters.TaskListAdapter _taskList;
-        private IList<Task> _tasks;
-        private IList<Project> _projects;
+        private Adapters.ProjectListAdapter _listAdapter;
+        private List<Task> _tasks;
+        private List<Project> _projects;
         private IProjectListViewModel _viewModel;
-        private FAB _fab;
-        private readonly bool hideFab;
-        private int previousVisibleItem;
-
+        private ITaskListViewModel _taskViewModel;
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             return inflater.Inflate(Resource.Layout.task_list, container, false);
@@ -40,8 +37,8 @@ namespace Tasker.Droid.Fragments
         {
             base.OnViewCreated(view, savedInstanceState);
             _viewModel = TinyIoCContainer.Current.Resolve<IProjectListViewModel>();
+            _taskViewModel = TinyIoCContainer.Current.Resolve<ITaskListViewModel>();
             _listView = view.FindViewById<ListView>(Resource.Id.taskList);
-            _fab = view.FindViewById<FAB>(Resource.Id.fab);
         }
 
         public override void OnActivityCreated(Bundle savedInstanceState)
@@ -54,26 +51,25 @@ namespace Tasker.Droid.Fragments
         private void ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             int id = (int)e.Id;
-            Intent intent = new Intent(this.Activity, typeof(MainActivity));
-            intent.PutExtra("TaskId", id);
-            StartActivityForResult(intent, (int)Result.Ok);
+            Intent intent = new Intent(this.Activity, typeof(ProjectTasksList));
+            intent.PutExtra("TaskListType", (int)TaskListFragment.TaskListType.Project);
+            intent.PutExtra("ProjectId", id);
+            StartActivity(intent);
         }
 
         protected override void FabClick(object sender, EventArgs e)
         {
-            Intent intent = new Intent(this.Activity, typeof(TaskEditCreateActivity));
-            intent.PutExtra("TaskId", 0);
-            StartActivity(intent);
+            //TODO DIALOGS
         }
 
 
         public override void OnResume()
         {
             base.OnResume();
-
+            _tasks = _taskViewModel.GetAll();
             _projects = _viewModel.GetAll();
-            _taskList = new Adapters.TaskListAdapter(this.Activity, _tasks, _projects);
-            _listView.Adapter = _taskList;
+            _listAdapter = new Adapters.ProjectListAdapter(this.Activity, _tasks, _projects);
+            _listView.Adapter = _listAdapter;
         }
 
 
