@@ -49,5 +49,3 @@ namespace Tasker.Droid
         }
     }
 }
-
-

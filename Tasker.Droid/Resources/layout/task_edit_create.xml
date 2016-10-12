@@ -51,7 +51,7 @@
 
                 <TextView
                     android:id="@+id/task_dueDate"
-                    style="@style/Tasker.TextViewStyle"
+                    style="@style/Tasker.TextViewStyleEditText"
 
                     android:hint="@string/task_due_date" />
             </android.support.design.widget.TextInputLayout>
@@ -65,7 +65,7 @@
 
                 <TextView
                     android:id="@+id/task_remindDate"
-                    style="@style/Tasker.TextViewStyle"
+                    style="@style/Tasker.TextViewStyleEditText"
                     android:hint="@string/task_remind_date" />
             </android.support.design.widget.TextInputLayout>
 

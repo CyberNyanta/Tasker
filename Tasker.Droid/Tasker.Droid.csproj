@@ -98,6 +98,7 @@
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Activities\TaskDetailsActivity.cs" />
     <Compile Include="Activities\TaskEditCreateActivity.cs" />
+    <Compile Include="Adapters\ProjectListAdapter.cs" />
     <Compile Include="Adapters\TaskListAdapter.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Fragments\ProjectListFragment.cs" />

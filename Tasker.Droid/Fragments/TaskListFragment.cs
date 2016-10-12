@@ -60,17 +60,9 @@ namespace Tasker.Droid.Fragments
             {
                 intent.PutExtra("ProjectId", 0);
             }
-            StartActivityForResult(intent, (int)Result.Ok);
+            StartActivity(intent);
         }
 
-        public override void OnActivityResult(int requestCode, int resultCode, Intent data)
-        {
-            base.OnActivityResult(requestCode, resultCode, data);
-            if (requestCode == resultCode)
-            {
-                TaskInitialization();
-            }
-        }
 
         public override void OnResume()
         {

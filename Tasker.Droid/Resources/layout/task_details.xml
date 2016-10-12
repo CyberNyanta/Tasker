@@ -31,33 +31,29 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginRight="@dimen/small_margin">
 
                 <TextView
                     android:id="@+id/task_title"
-                    style="@style/Tasker.TextViewStyle"
-                    android:hint="@string/task_title" />
+                    style="@style/Tasker.TextViewStyle" />
 
                 <TextView
                     android:id="@+id/task_description"
                     style="@style/Tasker.TextViewStyle"
-                    android:hint="@string/task_description"
                     android:inputType="textMultiLine" />
 
                 <TextView
                     android:id="@+id/task_dueDate"
-                    style="@style/Tasker.TextViewStyle"
-                    android:hint="@string/task_due_date" />
+                    style="@style/Tasker.TextViewStyle" />
 
                 <TextView
                     android:id="@+id/task_remindDate"
-                    style="@style/Tasker.TextViewStyle"
-                    android:hint="@string/task_remind_date" />
+                    style="@style/Tasker.TextViewStyle" />
 
                 <TextView
                     android:id="@+id/task_project"
-                    style="@style/Tasker.TextViewStyle"
-                    android:text="project" />
+                    style="@style/Tasker.TextViewStyle" />
 
 
             </LinearLayout>

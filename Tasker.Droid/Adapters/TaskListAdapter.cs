@@ -78,15 +78,15 @@ namespace Tasker.Droid.Adapters
             {
                 taskDueDate.Text = item.DueDate.ToString(_context.GetString(Resource.String.datetime_regex));
             }
-            else
-            {
-                taskDueDate.Text = _context.GetString(Resource.String.datetime_none);
-            }
+            //else
+            //{
+            //    taskDueDate.Text = _context.GetString(Resource.String.datetime_none);
+            //}
             //Set Task project
             var taskProject = view.FindViewById<TextView>(Resource.Id.projectName);
             if (item.ProjectID != 0)
             {
-                taskProject.Text = _projects.FirstOrDefault((x)=> x.ID==item.ProjectID).Title;
+                taskProject.Text = _projects.First((x)=> x.ID==item.ProjectID).Title;
             }
             else
             {

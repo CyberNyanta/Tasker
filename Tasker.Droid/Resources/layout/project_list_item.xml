@@ -5,7 +5,8 @@
     android:layout_height="80dp"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/medium_margin"
-    android:paddingRight="5dp">
+    android:paddingRight="5dp"
+    android:background="@color/colorWhite">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -13,7 +14,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/projectTitle"
+            android:id="@+id/project_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
@@ -23,7 +24,7 @@
             android:textSize="@dimen/taskTitle_textSize" />
 
         <TextView
-            android:id="@+id/taskCount"
+            android:id="@+id/task_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

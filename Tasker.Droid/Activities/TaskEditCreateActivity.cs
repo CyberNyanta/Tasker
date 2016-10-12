@@ -95,12 +95,12 @@ namespace Tasker.Droid.Activities
 
             _taskDueDate.OnFocusChangeListener = new OnFocusChangeListener(setDueDate);
             _taskRemindDate.OnFocusChangeListener = new OnFocusChangeListener(setRemindDate);
-            _taskDueDate.Click += new EventHandler(delegate (Object o, EventArgs a) { setDueDate?.Invoke(); });
-            _taskRemindDate.Click += new EventHandler(delegate (Object o, EventArgs a) { setRemindDate?.Invoke(); });
+            _taskDueDate.Click += delegate (Object o, EventArgs a) { setDueDate?.Invoke(); };
+            _taskRemindDate.Click += delegate (Object o, EventArgs a) { setRemindDate?.Invoke(); };
 
-            _viewModel.Id = Intent.GetIntExtra("TaskId", -1);
+            _viewModel.Id = Intent.GetIntExtra("TaskId", 0);
 
-            if (_viewModel.Id != -1)
+            if (_viewModel.Id != 0)
                 Initialization();
 
         }
@@ -112,10 +112,17 @@ namespace Tasker.Droid.Activities
             {
                 _taskTitle.Text = task.Title;
                 _taskDescription.Text = task.Description;
-                _dueDate = task.DueDate;
-                _remindDate = task.RemindDate;
-                _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
-                _taskRemindDate.Text = _remindDate.ToString(GetString(Resource.String.datetime_regex));
+                if (task.DueDate != DateTime.MinValue)
+                {
+                    _dueDate = task.DueDate;
+                    _remindDate = task.RemindDate;
+                    _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
+                }
+                if (task.RemindDate != DateTime.MinValue)
+                {
+                    _remindDate = task.RemindDate;
+                    _taskRemindDate.Text = _remindDate.ToString(GetString(Resource.String.datetime_regex));
+                }
 
                 if (task.Color != TaskColors.None)
                 {
@@ -161,7 +168,6 @@ namespace Tasker.Droid.Activities
                 error = true;
             }
            
-
             if (error) return;
 
             TaskColors color = TaskColors.None;
@@ -177,11 +183,10 @@ namespace Tasker.Droid.Activities
                     color = TaskColors.Blue;
                     break;
             }
-
-            var task = new Task() { Title = title, Description = desciption, Color = color };
+             
+            var task = new Task() { ID = _viewModel.Id , Title = title, Description = desciption, Color = color, DueDate = _dueDate, RemindDate=_remindDate};
 
             _viewModel.SaveItem(task);
-            SetResult(Result.Ok);
             Finish();
         }
 

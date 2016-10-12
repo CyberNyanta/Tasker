@@ -86,19 +86,18 @@ namespace Tasker.Droid.Activities
                 {
                     _taskColor.Background = _taskDescription.Background;
                 }
+
+                _taskDescription.Visibility = string.IsNullOrWhiteSpace(task.Description) ? ViewStates.Gone : ViewStates.Visible;
+                _taskDueDate.Visibility = task.DueDate==DateTime.MinValue? ViewStates.Gone : ViewStates.Visible;
+                _taskRemindDate.Visibility = task.RemindDate == DateTime.MinValue ? ViewStates.Gone : ViewStates.Visible;
             }
         }
 
-        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        protected override void OnResume()
         {
-            base.OnActivityResult(requestCode, resultCode, data);
-
-            if (requestCode == (int)resultCode)
-            {
-                Initialization();
-            }
+            base.OnResume();
+            Initialization();
         }
-
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.task_details_menu, menu);
@@ -126,7 +125,7 @@ namespace Tasker.Droid.Activities
         {
             Intent intent = new Intent(this, typeof(TaskEditCreateActivity));
             intent.PutExtra("TaskId", _viewModel.Id);
-            StartActivityForResult(intent, (int)Result.Ok);
+            StartActivity(intent);            
         }
 
         private void OnSolveClick()

@@ -63,17 +63,9 @@ namespace Tasker.Droid.Fragments
         {
             Intent intent = new Intent(this.Activity, typeof(TaskEditCreateActivity));
             intent.PutExtra("TaskId", 0);
-            StartActivityForResult(intent, (int)Result.Ok);
+            StartActivity(intent);
         }
 
-        public override void OnActivityResult(int requestCode, int resultCode, Intent data)
-        {
-            base.OnActivityResult(requestCode, resultCode, data);
-            if (requestCode == resultCode)
-            {
-                _projects = _viewModel.GetAll();//TODO Update list after adding
-            }
-        }
 
         public override void OnResume()
         {
