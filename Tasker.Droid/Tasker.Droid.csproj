@@ -117,6 +117,7 @@
     <AndroidResource Include="Resources\layout\task_list_item.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\row_bg.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\main.xml">
@@ -148,6 +149,10 @@
     <ProjectReference Include="..\Binding_DateTimePicker\Binding_DateTimePicker.csproj">
       <Project>{9d9b0979-842f-4333-94d9-3571de2e111d}</Project>
       <Name>Binding_DateTimePicker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Binding_SwipeActionAdapter\Binding_SwipeActionAdapter.csproj">
+      <Project>{acc82ece-7f88-4119-b3f7-7aaa2d896f96}</Project>
+      <Name>Binding_SwipeActionAdapter</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tasker.Core\Tasker.Core.csproj">
       <Project>{cfa09876-fa23-4189-89f8-df88bd9739dc}</Project>
@@ -341,6 +346,23 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_due_date.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values-v21\styles.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\row_bg_right_far.axml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\row_bg_left.axml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\row_bg_left_far.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\row_bg_right.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

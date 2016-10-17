@@ -33,9 +33,10 @@ namespace Tasker.Droid
 		{
             base.OnCreate (bundle);
 			SetContentView (Resource.Layout.main);
+            var ab = ActionBar;
+            var ab2 = SupportActionBar;
+            SupportActionBar.Title = "asdasd";
 
-            Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
-            SetSupportActionBar(toolbar);
             if (bundle == null)
             {
                 SupportFragmentManager.BeginTransaction().Add(Resource.Id.fragment, new TaskListFragment()).Commit();

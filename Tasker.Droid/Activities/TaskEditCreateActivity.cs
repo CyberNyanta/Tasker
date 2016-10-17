@@ -43,8 +43,6 @@ namespace Tasker.Droid.Activities
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.task_edit_create);
-            Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
-            SetSupportActionBar(toolbar);
 
             SupportActionBar.Title = GetString(Resource.String.task_edit_title);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
