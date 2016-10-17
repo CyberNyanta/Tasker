@@ -46,7 +46,7 @@ namespace Tasker.Droid.Activities
             Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
 
-            SupportActionBar.Title = "Task Edit";
+            SupportActionBar.Title = GetString(Resource.String.task_edit_title);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
 

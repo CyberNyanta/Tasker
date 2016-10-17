@@ -44,32 +44,39 @@
             </android.support.design.widget.TextInputLayout>
 
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/box_task_dueDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_due_date"
+            android:layout_marginTop="18dp" />
 
                 <TextView
                     android:id="@+id/task_dueDate"
                     style="@style/Tasker.TextViewStyleEditText"
 
                     android:hint="@string/task_due_date" />
-            </android.support.design.widget.TextInputLayout>
 
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/box_task_remindDate"
-                android:hint="asdasasd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_remind"
+                android:layout_marginTop="18dp" />
 
                 <TextView
                     android:id="@+id/task_remindDate"
                     style="@style/Tasker.TextViewStyleEditText"
                     android:hint="@string/task_remind_date" />
-            </android.support.design.widget.TextInputLayout>
 
-
+        </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

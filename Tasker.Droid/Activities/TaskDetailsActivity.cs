@@ -34,6 +34,8 @@ namespace Tasker.Droid.Activities
         private TextView _taskDescription;
         private TextView _taskDueDate;
         private TextView _taskRemindDate;
+        private LinearLayout _taskDueDateConteiner;
+        private LinearLayout _taskRemindDateConteiner;
         private View _taskColor;
         private FAB _fab;
 
@@ -47,8 +49,7 @@ namespace Tasker.Droid.Activities
             
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
-
-            
+            SupportActionBar.Title = GetString(Resource.String.task_details_title);
 
             _viewModel = TinyIoCContainer.Current.Resolve<ITaskDetailsViewModel>();
 
@@ -57,6 +58,8 @@ namespace Tasker.Droid.Activities
             _taskDueDate = FindViewById<TextView>(Resource.Id.task_dueDate);
             _taskRemindDate = FindViewById<TextView>(Resource.Id.task_remindDate);
             _taskColor = FindViewById<View>(Resource.Id.task_color_border);
+            _taskDueDateConteiner = FindViewById<LinearLayout>(Resource.Id.box_task_due_date);
+            _taskRemindDateConteiner = FindViewById<LinearLayout>(Resource.Id.box_task_remind_date);
             _fab = FindViewById<FAB>(Resource.Id.fab);
 
             _viewModel.Id = Intent.GetIntExtra("TaskId", 0);
@@ -77,6 +80,7 @@ namespace Tasker.Droid.Activities
                 _taskDescription.Text = task.Description;
                 _taskDueDate.Text = task.DueDate.ToString();
                 _taskRemindDate.Text = task.RemindDate.ToString();
+
                 _fab.SetImageResource(task.IsSolved ? Resource.Drawable.fab_unsolved : Resource.Drawable.fab_solved);
                 if (task.Color != TaskColors.None)
                 {
@@ -88,8 +92,18 @@ namespace Tasker.Droid.Activities
                 }
 
                 _taskDescription.Visibility = string.IsNullOrWhiteSpace(task.Description) ? ViewStates.Gone : ViewStates.Visible;
-                _taskDueDate.Visibility = task.DueDate==DateTime.MinValue? ViewStates.Gone : ViewStates.Visible;
-                _taskRemindDate.Visibility = task.RemindDate == DateTime.MinValue ? ViewStates.Gone : ViewStates.Visible;
+                _taskDueDateConteiner.Visibility = task.DueDate==DateTime.MinValue? ViewStates.Gone : ViewStates.Visible;
+                _taskRemindDateConteiner.Visibility = task.RemindDate == DateTime.MinValue ? ViewStates.Gone : ViewStates.Visible;
+                if (task.IsSolved)
+                {
+                    _viewModel.ChangeStatus(task);
+                    _fab.SetImageResource(Resource.Drawable.fab_unsolved);
+                }
+                else
+                {
+                    _viewModel.ChangeStatus(task);
+                    _fab.SetImageResource(Resource.Drawable.fab_solved);
+                }
             }
         }
 
@@ -135,13 +149,11 @@ namespace Tasker.Droid.Activities
             {
                 _viewModel.ChangeStatus(task);
                 _fab.SetImageResource(Resource.Drawable.fab_unsolved);          
-                SetResult(Result.Ok);
             }
             else
             {
                 _viewModel.ChangeStatus(task);
                 _fab.SetImageResource(Resource.Drawable.fab_solved);
-                SetResult(Result.Ok);
             }
         }
         private void OnDeleteClick()

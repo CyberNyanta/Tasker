@@ -14,6 +14,7 @@ using Android.Graphics;
 using Tasker.Core.DAL.Entities;
 using Tasker.Core;
 using Tasker.Core.BL.Contracts;
+using Android.Support.V7.App;
 
 namespace Tasker.Droid.Adapters
 {
@@ -60,7 +61,14 @@ namespace Tasker.Droid.Adapters
             {
                 view = convertView;
             }
-            
+            if (item.IsSolved)
+            {
+                view.SetBackgroundColor(Color.ParseColor("#82ffffff"));
+            }
+            else
+            {
+                view.SetBackgroundColor(Color.ParseColor("#ffffff"));
+            }
             var taskTitle = view.FindViewById<TextView>(Resource.Id.taskTitle);
             var border = view.FindViewById<View>(Resource.Id.task_color_border);
 
@@ -71,13 +79,18 @@ namespace Tasker.Droid.Adapters
                 border.SetBackgroundColor(Color.ParseColor(TaskConstants.Colors[(int)item.Color]));
             }
             else
-                border.SetBackgroundColor(parent.DrawingCacheBackgroundColor);
+                border.SetBackgroundColor(view.DrawingCacheBackgroundColor);
             //Set Task due date
             var taskDueDate = view.FindViewById<TextView>(Resource.Id.dueDate);
             if (item.DueDate != DateTime.MinValue)
             {
                 taskDueDate.Text = item.DueDate.ToString(_context.GetString(Resource.String.datetime_regex));
             }
+            else
+            {
+                taskDueDate.Text = "";
+            }
+
             //else
             //{
             //    taskDueDate.Text = _context.GetString(Resource.String.datetime_none);
@@ -96,6 +109,11 @@ namespace Tasker.Droid.Adapters
 
             //Finally return the view
             return view;
+        }
+
+        public Color GetColorFromInteger(int color)
+        {
+            return Color.Rgb(Color.GetRedComponent(color), Color.GetGreenComponent(color), Color.GetBlueComponent(color));
         }
     }
 }

@@ -26,8 +26,8 @@ namespace Tasker.Droid.Fragments
         public enum TaskListType { All, Project, Search}
 
         private Adapters.TaskListAdapter _taskList;
-        private IList<Task> _tasks;
-        private IList<Project> _projects;
+        private List<Task> _tasks;
+        private List<Project> _projects;
         private ITaskListViewModel _viewModel;             
         private TaskListType _taskListType;
         private int _projectId;
@@ -43,8 +43,10 @@ namespace Tasker.Droid.Fragments
             _viewModel = TinyIoCContainer.Current.Resolve<ITaskListViewModel>();
             _listView = view.FindViewById<ListView>(Resource.Id.taskList);
             _listView.ItemClick += ItemClick;
-        }
+            HasOptionsMenu = true;
 
+        }
+      
         private void ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             int id = (int)e.Id;
@@ -68,11 +70,7 @@ namespace Tasker.Droid.Fragments
         {
             base.OnResume();
 
-            TaskInitialization();
-            _projects = _viewModel.GetAllProjects();
-            _taskList = new Adapters.TaskListAdapter(this.Activity, _tasks, _projects);
-
-            _listView.Adapter = _taskList;
+            TaskInitialization();            
         }
 
         private void TaskInitialization()
@@ -91,6 +89,41 @@ namespace Tasker.Droid.Fragments
                     throw new NotImplementedException();
                     break;
             }
+            var taskWithMinDate = _tasks.FindAll(t => t.DueDate == DateTime.MinValue);
+            _tasks = _tasks.FindAll(t => t.DueDate != DateTime.MinValue);
+            _tasks.Sort((t1, t2) => DateTime.Compare(t1.DueDate, t2.DueDate));
+
+
+            _tasks.InsertRange(_tasks.Count, taskWithMinDate);
+            _projects = _viewModel.GetAllProjects();
+            _taskList = new Adapters.TaskListAdapter(Activity, _tasks, _projects);
+
+            _listView.Adapter = _taskList;
         }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            
+            switch (item.ItemId)
+            {
+                case Resource.Id.menu_show_hide_solve_tasks:
+                    if (_viewModel.IsSolvedTaskDisplayed)
+                    {
+                        item.SetTitle(Resource.String.show_solved);
+                        _viewModel.IsSolvedTaskDisplayed = false;
+                        TaskInitialization();
+                    }
+                    else
+                    {
+                        item.SetTitle(Resource.String.hide_solved);
+                        _viewModel.IsSolvedTaskDisplayed = true;
+                        TaskInitialization();
+                    }
+                    
+                    break;
+            }
+            return base.OnOptionsItemSelected(item);
+        }
+
     }
 }

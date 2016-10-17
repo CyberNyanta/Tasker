@@ -19,6 +19,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/small_margin</item>
         <item name="android:textSize">@dimen/editText_textSize</item>
+        <item name="android:inputType">textFilter|textNoSuggestions</item>
     </style>
 
     <style name="Tasker.TextViewStyle">
@@ -26,6 +27,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/small_margin</item>
         <item name="android:textSize">@dimen/editText_textSize</item>
+        <item name="android:inputType">textFilter|textNoSuggestions</item>
     </style>
 
     <style name="Tasker.RadioButtonStyle">
