@@ -4,7 +4,7 @@
   <string name="datetime_none">none</string>
   <string name="project_inbox">Inbox</string>
 
-  <string name="app_name">Tasker.Droid</string>
+    <string name="app_name">Tasker</string>
 
   <!--Toolbar-->
   <string name="task_edit_title">Edit</string>

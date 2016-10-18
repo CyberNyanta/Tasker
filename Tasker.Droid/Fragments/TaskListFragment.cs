@@ -9,26 +9,29 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Android.Views.Animations;
 
 using TinyIoC;
 using Fragment = Android.Support.V4.App.Fragment;
 using FAB = Clans.Fab.FloatingActionButton;
 
 using Tasker.Core.AL.ViewModels.Contracts;
-using Android.Views.Animations;
+
 using Tasker.Core.DAL.Entities;
 using Tasker.Droid.Activities;
+using Com.Wdullaer.Swipeactionadapter;
 
 namespace Tasker.Droid.Fragments
 {
-    public class TaskListFragment : BaseListFragment
+    public class TaskListFragment : BaseListFragment, SwipeActionAdapter.ISwipeActionListener
     {
-        public enum TaskListType { All, Project, Search}
+        public enum TaskListType { All, Project, Search }
 
-        private Adapters.TaskListAdapter _taskList;
+        private Adapters.TaskListAdapter _taskListAdapter;
+        private SwipeActionAdapter _swipeActionAdapter;
         private List<Task> _tasks;
         private List<Project> _projects;
-        private ITaskListViewModel _viewModel;             
+        private ITaskListViewModel _viewModel;
         private TaskListType _taskListType;
         private int _projectId;
 
@@ -46,7 +49,7 @@ namespace Tasker.Droid.Fragments
             HasOptionsMenu = true;
 
         }
-      
+
         private void ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             int id = (int)e.Id;
@@ -70,7 +73,9 @@ namespace Tasker.Droid.Fragments
         {
             base.OnResume();
 
-            TaskInitialization();            
+            TaskInitialization();
+
+
         }
 
         private void TaskInitialization()
@@ -96,14 +101,20 @@ namespace Tasker.Droid.Fragments
 
             _tasks.InsertRange(_tasks.Count, taskWithMinDate);
             _projects = _viewModel.GetAllProjects();
-            _taskList = new Adapters.TaskListAdapter(Activity, _tasks, _projects);
 
-            _listView.Adapter = _taskList;
+            _taskListAdapter = new Adapters.TaskListAdapter(Activity, _tasks, _projects);
+            _swipeActionAdapter = new SwipeActionAdapter(_taskListAdapter);
+            _swipeActionAdapter.SetListView(_listView);
+            _swipeActionAdapter.SetSwipeActionListener(this);
+            // Set the SwipeActionAdapter as the Adapter for ListView
+            _listView.Adapter = _swipeActionAdapter;
+            // Set backgrounds for the swipe directions
+            _swipeActionAdapter.AddBackground(SwipeDirection.DirectionNormalLeft, Resource.Layout.row_bg_left)
+                               .AddBackground(SwipeDirection.DirectionNormalRight, Resource.Layout.row_bg_right);
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            
             switch (item.ItemId)
             {
                 case Resource.Id.menu_show_hide_solve_tasks:
@@ -119,11 +130,37 @@ namespace Tasker.Droid.Fragments
                         _viewModel.IsSolvedTaskDisplayed = true;
                         TaskInitialization();
                     }
-                    
                     break;
             }
             return base.OnOptionsItemSelected(item);
         }
 
+        #region  SwipeActionAdapter.ISwipeActionListener
+        public bool HasActions(int position, SwipeDirection direction)
+        {
+            if (direction.IsLeft) return true; // Change this to false to disable left swipes
+            if (direction.IsRight) return true;
+            return false;
+        }
+
+        public void OnSwipe(int[] positionList, SwipeDirection[] directionList)
+        {
+            for (int i = 0; i < positionList.Length; i++)
+            {
+                SwipeDirection direction = directionList[i];
+                int position = positionList[i];
+                if (direction.IsRight)
+                {
+                    _taskListAdapter.Remove(position);
+                    _swipeActionAdapter.NotifyDataSetChanged();
+                }               
+            }
+        }
+
+        public bool ShouldDismiss(int position, SwipeDirection direction)
+        {
+            return direction.IsRight ? true : false;
+        }
+        #endregion
     }
 }

@@ -44,7 +44,7 @@ namespace Tasker.Droid.Activities
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.task_details);
-            
+            SetSupportActionBar(FindViewById<Toolbar>(Resource.Id.toolbar));
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
             SupportActionBar.Title = GetString(Resource.String.task_details_title);

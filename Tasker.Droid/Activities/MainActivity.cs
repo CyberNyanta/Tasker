@@ -33,9 +33,9 @@ namespace Tasker.Droid
 		{
             base.OnCreate (bundle);
 			SetContentView (Resource.Layout.main);
-            var ab = ActionBar;
-            var ab2 = SupportActionBar;
-            SupportActionBar.Title = "asdasd";
+            var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+            SetSupportActionBar(toolbar);
+            SupportActionBar.Title = GetString(Resource.String.app_name);
 
             if (bundle == null)
             {

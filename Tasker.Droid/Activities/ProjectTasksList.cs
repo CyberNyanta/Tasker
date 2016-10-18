@@ -33,7 +33,7 @@ namespace Tasker.Droid
 		{
             base.OnCreate (bundle);
 			SetContentView (Resource.Layout.main);
-
+            SetSupportActionBar(FindViewById<Toolbar>(Resource.Id.toolbar));
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
 

@@ -21,16 +21,23 @@ namespace Tasker.Droid.Adapters
     public class TaskListAdapter : BaseAdapter<Task>
     {
         private Activity _context;
-        private IList<Task> _tasks;
-        private IList<Project> _projects;
+        private List<Task> _tasks;
+        private List<Project> _projects;
 
-        public TaskListAdapter(Activity context, IList<Task> tasks, IList<Project> projects) : base()
+        public TaskListAdapter(Activity context, List<Task> tasks, List<Project> projects) : base()
         {
             _context = context;
             _tasks = tasks;
             _projects = projects;
+            NotifyDataSetChanged();
         }
 
+        public void Remove(int position)
+        {
+            _tasks.RemoveAt(position);
+            NotifyDataSetChanged();
+        }
+       
         public override Task this[int position]
         {
             get { return _tasks[position]; }

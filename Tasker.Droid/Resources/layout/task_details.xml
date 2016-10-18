@@ -5,13 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
+
+    <include layout="@layout/toolbar" />
 
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-
-
 
 
         <ScrollView
@@ -24,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/small_margin"
                 android:orientation="vertical">
+
                 <View
                     android:id="@+id/task_color_border"
                     android:layout_width="match_parent"
@@ -31,6 +33,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_margin="@dimen/small_margin"
                     android:background="#FF50" />
+
                 <TextView
                     android:id="@+id/task_title"
                     style="@style/Tasker.TextViewStyle"

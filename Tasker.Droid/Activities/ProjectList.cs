@@ -32,8 +32,8 @@ namespace Tasker.Droid
         protected override void OnCreate (Bundle bundle)
 		{
             base.OnCreate (bundle);
-			SetContentView (Resource.Layout.main);         
-
+			SetContentView (Resource.Layout.main);
+            SetSupportActionBar(FindViewById<Toolbar>(Resource.Id.toolbar));
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
             if (bundle == null)

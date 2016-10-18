@@ -71,64 +71,11 @@ namespace Tasker.Droid.Fragments
             _projects = _viewModel.GetAll();
             _listAdapter = new Adapters.ProjectListAdapter(this.Activity, _tasks, _projects);
 
-
-            String[] content = new String[20];
-            for (int i = 0; i < 20; i++) content[i] = "Row " + (i + 1);
-            ArrayAdapter<String> stringAdapter = new ArrayAdapter<String>(
-                    this.Activity,
-                    Resource.Layout.row_bg,
-                    Resource.Id.text,
-                    content
-            );
             var mAdapter = new SwipeActionAdapter(_listAdapter);
 
             // Pass a reference of your ListView to the SwipeActionAdapter
-            mAdapter.SetListView(_listView);
-            mAdapter.SetSwipeActionListener( new ActionListener(mAdapter));
-            // Set the SwipeActionAdapter as the Adapter for your ListView
-
-            // Set backgrounds for the swipe directions
-
-
-
             _listView.Adapter = mAdapter;
-
-            mAdapter.AddBackground(SwipeDirection.DirectionFarLeft, Resource.Layout.row_bg_left_far)
-            .AddBackground(SwipeDirection.DirectionNormalLeft, Resource.Layout.row_bg_left)
-            .AddBackground(SwipeDirection.DirectionFarRight, Resource.Layout.row_bg_right_far)
-            .AddBackground(SwipeDirection.DirectionNormalRight, Resource.Layout.row_bg_right);
+            
         }
-
-        public class ActionListener : Java.Lang.Object, SwipeActionAdapter.ISwipeActionListener
-        {
-            SwipeActionAdapter _adapter;
-            public ActionListener(SwipeActionAdapter adapter)
-            {
-                _adapter = adapter;
-            }
-            public bool HasActions(int position, SwipeDirection direction)
-            {
-                if (direction.IsLeft) return true; // Change this to false to disable left swipes
-                if (direction.IsRight) return true;
-                return false;
-            }
-
-            public void OnSwipe(int[] positionList, SwipeDirection[] directionList)
-            {
-                for (int i = 0; i < positionList.Length; i++)
-                {
-                    SwipeDirection direction = directionList[i];
-                    int position = positionList[i];
-                   
-                    _adapter.NotifyDataSetChanged();
-                }
-            }
-
-            public bool ShouldDismiss(int position, SwipeDirection direction)
-            {
-                return direction == SwipeDirection.DirectionNormalLeft;
-            }
-        }
-
     }
 }
