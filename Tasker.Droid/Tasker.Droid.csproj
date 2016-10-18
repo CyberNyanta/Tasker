@@ -94,9 +94,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activities\ProjectTasksList.cs" />
-    <Compile Include="Activities\ProjectList.cs" />
-    <Compile Include="Activities\MainActivity.cs" />
+    <Compile Include="Activities\ProjectTasksListActivity.cs" />
+    <Compile Include="Activities\ProjectListActivity.cs" />
+    <Compile Include="Activities\TaskListActivity.cs" />
     <Compile Include="Activities\TaskDetailsActivity.cs" />
     <Compile Include="Activities\TaskEditCreateActivity.cs" />
     <Compile Include="Adapters\ProjectListAdapter.cs" />

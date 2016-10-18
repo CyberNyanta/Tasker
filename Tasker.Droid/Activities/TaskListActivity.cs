@@ -26,8 +26,8 @@ using Android.Graphics;
 
 namespace Tasker.Droid
 {
-    [Activity (Label = "Tasker", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/Tasker")]
-    public class MainActivity : AppCompatActivity
+    [Activity (Label = "Tasker", MainLauncher = true, Theme = "@style/Tasker")]
+    public class TaskListActivity : AppCompatActivity
     {
         protected override void OnCreate (Bundle bundle)
 		{
@@ -54,7 +54,7 @@ namespace Tasker.Droid
             switch (item.ItemId)
             {
                 case Resource.Id.menu_projects:
-                    Intent intent = new Intent(this, typeof(ProjectList));
+                    Intent intent = new Intent(this, typeof(ProjectListActivity));
                     StartActivity(intent);
                     break;
             }

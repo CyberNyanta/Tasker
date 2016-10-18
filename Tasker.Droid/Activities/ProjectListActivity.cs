@@ -26,8 +26,8 @@ using Android.Graphics;
 
 namespace Tasker.Droid
 {
-    [Activity (Label = "Tasker",  Theme = "@style/Tasker")]
-    public class ProjectTasksList : AppCompatActivity
+    [Activity (Label = "Tasker", Theme = "@style/Tasker")]
+    public class ProjectListActivity : AppCompatActivity
     {
         protected override void OnCreate (Bundle bundle)
 		{
@@ -36,13 +36,11 @@ namespace Tasker.Droid
             SetSupportActionBar(FindViewById<Toolbar>(Resource.Id.toolbar));
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
-
             if (bundle == null)
             {
-                SupportFragmentManager.BeginTransaction().Add(Resource.Id.fragment, new TaskListFragment()).Commit();
+                SupportFragmentManager.BeginTransaction().Add(Resource.Id.fragment, new ProjectListFragment()).Commit();
             }            
         }
-
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             switch (item.ItemId)
@@ -55,5 +53,3 @@ namespace Tasker.Droid
         }
     }
 }
-
-

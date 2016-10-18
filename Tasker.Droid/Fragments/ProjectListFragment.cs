@@ -52,7 +52,7 @@ namespace Tasker.Droid.Fragments
         private void ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             int id = (int)e.Id;
-            Intent intent = new Intent(this.Activity, typeof(ProjectTasksList));
+            Intent intent = new Intent(this.Activity, typeof(ProjectTasksListActivity));
             intent.PutExtra("TaskListType", (int)TaskListFragment.TaskListType.Project);
             intent.PutExtra("ProjectId", id);
             StartActivity(intent);
