@@ -89,7 +89,7 @@ namespace Tasker.Droid.Adapters
                 border.SetBackgroundColor(view.DrawingCacheBackgroundColor);
             //Set Task due date
             var taskDueDate = view.FindViewById<TextView>(Resource.Id.dueDate);
-            if (item.DueDate != DateTime.MinValue)
+            if (item.DueDate != DateTime.MaxValue)
             {
                 taskDueDate.Text = item.DueDate.ToString(_context.GetString(Resource.String.datetime_regex));
             }

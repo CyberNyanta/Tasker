@@ -25,7 +25,7 @@ namespace Tasker.Droid.Fragments
 {
     public class TaskListFragment : BaseListFragment, SwipeActionAdapter.ISwipeActionListener
     {
-        public enum TaskListType { All, Project, Search }
+        public enum TaskListType { AllOpen, AllSolve, ProjectOpen, ProjectSolve, Search }    
 
         private Adapters.TaskListAdapter _taskListAdapter;
         private SwipeActionAdapter _swipeActionAdapter;
@@ -61,9 +61,9 @@ namespace Tasker.Droid.Fragments
         protected override void FabClick(object sender, EventArgs e)
         {
             Intent intent = new Intent(this.Activity, typeof(TaskEditCreateActivity));
-            if (_taskListType == TaskListType.Project)
+            if (_taskListType == TaskListType.ProjectOpen)
             {
-                intent.PutExtra("ProjectId", 0);
+                intent.PutExtra("ProjectId", _projectId);
             }
             StartActivity(intent);
         }
@@ -80,26 +80,24 @@ namespace Tasker.Droid.Fragments
 
         private void TaskInitialization()
         {
-            _taskListType = (TaskListType)Activity.Intent.GetIntExtra("TaskListType", (int)TaskListType.All);
+            _taskListType = (TaskListType)Activity.Intent.GetIntExtra("TaskListType", (int)TaskListType.AllOpen);
             switch (_taskListType)
             {
-                case TaskListType.All:
+                case TaskListType.AllOpen:
                     _tasks = _viewModel.GetAll();
                     break;
-                case TaskListType.Project:
+                case TaskListType.ProjectSolve:
+                case TaskListType.ProjectOpen:
                     _projectId = Activity.Intent.GetIntExtra("ProjectId", 0);
-                    _tasks = _viewModel.GetProjectTasks(_projectId);
+                    _tasks = _viewModel.GetProjectOpenTasks(_projectId);
                     break;
                 case TaskListType.Search:
                     throw new NotImplementedException();
                     break;
             }
-            var taskWithMinDate = _tasks.FindAll(t => t.DueDate == DateTime.MinValue);
-            _tasks = _tasks.FindAll(t => t.DueDate != DateTime.MinValue);
+
             _tasks.Sort((t1, t2) => DateTime.Compare(t1.DueDate, t2.DueDate));
 
-
-            _tasks.InsertRange(_tasks.Count, taskWithMinDate);
             _projects = _viewModel.GetAllProjects();
 
             _taskListAdapter = new Adapters.TaskListAdapter(Activity, _tasks, _projects);
@@ -151,5 +149,26 @@ namespace Tasker.Droid.Fragments
             return direction.IsRight ? true : false;
         }
         #endregion
+    }
+    public static class Extensions
+    {
+        public static bool IsAllType(this TaskListFragment.TaskListType type)
+        {
+            return type == TaskListFragment.TaskListType.AllOpen || type == TaskListFragment.TaskListType.AllSolve;
+        }
+
+        public static bool IsProjectType(this TaskListFragment.TaskListType type)
+        {
+            return type == TaskListFragment.TaskListType.ProjectOpen || type == TaskListFragment.TaskListType.ProjectSolve;
+        }
+
+        public static bool IsOpenType(this TaskListFragment.TaskListType type)
+        {
+            return type == TaskListFragment.TaskListType.AllOpen || type == TaskListFragment.TaskListType.ProjectOpen;
+        }
+        public static bool IsSolveType(this TaskListFragment.TaskListType type)
+        {
+            return type == TaskListFragment.TaskListType.AllSolve || type == TaskListFragment.TaskListType.AllSolve;
+        }
     }
 }

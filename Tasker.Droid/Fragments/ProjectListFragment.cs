@@ -53,9 +53,9 @@ namespace Tasker.Droid.Fragments
         {
             int id = (int)e.Id;
             Intent intent = new Intent(this.Activity, typeof(ProjectTasksListActivity));
-            intent.PutExtra("TaskListType", (int)TaskListFragment.TaskListType.Project);
+            intent.PutExtra("TaskListType", (int)TaskListFragment.TaskListType.ProjectOpen);
             intent.PutExtra("ProjectId", id);
-            StartActivity(intent);
+            StartActivity(intent);           
         }
 
         protected override void FabClick(object sender, EventArgs e)
