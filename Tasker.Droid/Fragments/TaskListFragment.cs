@@ -118,18 +118,7 @@ namespace Tasker.Droid.Fragments
             switch (item.ItemId)
             {
                 case Resource.Id.menu_show_hide_solve_tasks:
-                    if (_viewModel.IsSolvedTaskDisplayed)
-                    {
-                        item.SetTitle(Resource.String.show_solved);
-                        _viewModel.IsSolvedTaskDisplayed = false;
-                        TaskInitialization();
-                    }
-                    else
-                    {
-                        item.SetTitle(Resource.String.hide_solved);
-                        _viewModel.IsSolvedTaskDisplayed = true;
-                        TaskInitialization();
-                    }
+                   
                     break;
             }
             return base.OnOptionsItemSelected(item);

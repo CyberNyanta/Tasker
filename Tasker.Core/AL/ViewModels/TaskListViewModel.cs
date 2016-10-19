@@ -74,6 +74,24 @@ namespace Tasker.Core.AL.ViewModels
             OnCollectionChanged?.Invoke();
         }
 
+        public List<Task> GetProjectOpenTasks(int projectId)
+        {
+            return _taskManager.GetProjectOpenTasks(projectId);
+        }
 
+        public List<Task> GetProjectSolveTasks(int projectId)
+        {
+            return _taskManager.GetProjectSolveTasks(projectId);
+        }
+
+        public List<Task> GetAllOpen()
+        {
+            return _taskManager.GetAllOpen();
+        }
+
+        public List<Task> GetAllSolve()
+        {
+            return _taskManager.GetAllSolve();
+        }
     }
 }

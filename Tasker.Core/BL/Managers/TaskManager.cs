@@ -33,6 +33,11 @@ namespace Tasker.Core.BL.Managers
             return GetAll().FindAll(t => !t.IsSolved);
         }
 
+        public List<Task> GetAllSolve()
+        {
+            return GetAll().FindAll(t => t.IsSolved);
+        }
+
         public List<Task> GetProjectTasks(int projectId)
         {
             return new List<Task>(_taskRepository.Find(x=>x.ProjectID == projectId));
@@ -41,6 +46,16 @@ namespace Tasker.Core.BL.Managers
         public List<Task> GetProjectOpenTasks(int projectId)
         {
             return GetProjectTasks(projectId).FindAll(t => !t.IsSolved);
+        }
+
+        public List<Task> GetProjectSolveTasks(int projectId)
+        {
+            return GetProjectTasks(projectId).FindAll(t => t.IsSolved);
+        }
+
+        public List<Task> GetWhere(Predicate<Task> predicate)
+        {
+            return GetAll().FindAll(predicate);
         }
 
         public int SaveItem(Task item)
@@ -118,8 +133,6 @@ namespace Tasker.Core.BL.Managers
                 count++;
             }
             return count;
-        }
-
-
+        }   
     }
 }
