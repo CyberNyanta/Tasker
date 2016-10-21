@@ -35,9 +35,9 @@ namespace Tasker.Droid.Activities
         private TextView _taskRemindDate;
         private RadioGroup _colorRadioGroup;
         private List<RadioButton> _taskColors = new List<RadioButton>();
-        private DateTime _dueDate;
-        private DateTime _remindDate;
-        
+        private DateTime _dueDate = DateTime.MaxValue;
+        private DateTime _remindDate = DateTime.MaxValue;
+
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -110,13 +110,13 @@ namespace Tasker.Droid.Activities
             {
                 _taskTitle.Text = task.Title;
                 _taskDescription.Text = task.Description;
-                if (task.DueDate != DateTime.MinValue)
+                if (task.DueDate != DateTime.MaxValue)
                 {
                     _dueDate = task.DueDate;
                     _remindDate = task.RemindDate;
                     _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
                 }
-                if (task.RemindDate != DateTime.MinValue)
+                if (task.RemindDate != DateTime.MaxValue)
                 {
                     _remindDate = task.RemindDate;
                     _taskRemindDate.Text = _remindDate.ToString(GetString(Resource.String.datetime_regex));

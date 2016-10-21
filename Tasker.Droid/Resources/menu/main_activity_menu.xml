@@ -11,7 +11,7 @@
         android:title="@string/projects"
         app:showAsAction="never" />
     <item
-        android:id="@+id/menu_show_hide_solve_tasks"
+        android:id="@+id/menu_show_solve_tasks"
         android:title="@string/show_solved"
         app:showAsAction="never" />
 

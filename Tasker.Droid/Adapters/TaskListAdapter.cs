@@ -68,17 +68,23 @@ namespace Tasker.Droid.Adapters
             {
                 view = convertView;
             }
+
+            var taskTitle = view.FindViewById<TextView>(Resource.Id.taskTitle);
+            var border = view.FindViewById<View>(Resource.Id.task_color_border);
+            var taskDueDate = view.FindViewById<TextView>(Resource.Id.dueDate);
+            var taskProject = view.FindViewById<TextView>(Resource.Id.projectName);
+                        
             if (item.IsSolved)
             {
-                view.SetBackgroundColor(Color.ParseColor("#82ffffff"));
+                taskTitle.PaintFlags = PaintFlags.StrikeThruText | PaintFlags.AntiAlias | PaintFlags.EmbeddedBitmapText;
+                view.Alpha = 0.4f;
             }
             else
             {
-                view.SetBackgroundColor(Color.ParseColor("#ffffff"));
+                taskTitle.PaintFlags = PaintFlags.AntiAlias | PaintFlags.EmbeddedBitmapText;
+                view.Alpha = 1;
             }
-            var taskTitle = view.FindViewById<TextView>(Resource.Id.taskTitle);
-            var border = view.FindViewById<View>(Resource.Id.task_color_border);
-
+                 
             taskTitle.Text = item.Title;
             //Set Task Color
             if (item.Color != TaskColors.None)
@@ -88,7 +94,7 @@ namespace Tasker.Droid.Adapters
             else
                 border.SetBackgroundColor(view.DrawingCacheBackgroundColor);
             //Set Task due date
-            var taskDueDate = view.FindViewById<TextView>(Resource.Id.dueDate);
+            
             if (item.DueDate != DateTime.MaxValue)
             {
                 taskDueDate.Text = item.DueDate.ToString(_context.GetString(Resource.String.datetime_regex));
@@ -97,13 +103,7 @@ namespace Tasker.Droid.Adapters
             {
                 taskDueDate.Text = "";
             }
-
-            //else
-            //{
-            //    taskDueDate.Text = _context.GetString(Resource.String.datetime_none);
-            //}
-            //Set Task project
-            var taskProject = view.FindViewById<TextView>(Resource.Id.projectName);
+            
             if (item.ProjectID != 0)
             {
                 taskProject.Text = _projects.First((x)=> x.ID==item.ProjectID).Title;
@@ -112,9 +112,7 @@ namespace Tasker.Droid.Adapters
             {
                 taskProject.Text = _context.GetString(Resource.String.project_inbox);
             }
-            
-
-            //Finally return the view
+                        
             return view;
         }
 

@@ -25,13 +25,14 @@ namespace Tasker.Droid.Fragments
 {
     public class TaskListFragment : BaseListFragment, SwipeActionAdapter.ISwipeActionListener
     {
-        public enum TaskListType { AllOpen, AllSolve, ProjectOpen, ProjectSolve, Search }    
+        public enum TaskListType { AllOpen, AllSolve, ProjectOpen, ProjectSolve, Search }
 
         private Adapters.TaskListAdapter _taskListAdapter;
         private SwipeActionAdapter _swipeActionAdapter;
         private List<Task> _tasks;
         private List<Project> _projects;
         private ITaskListViewModel _viewModel;
+        private ITaskDetailsViewModel _detailsViewModel;
         private TaskListType _taskListType;
         private int _projectId;
 
@@ -44,6 +45,7 @@ namespace Tasker.Droid.Fragments
         {
             base.OnViewCreated(view, savedInstanceState);
             _viewModel = TinyIoCContainer.Current.Resolve<ITaskListViewModel>();
+            _detailsViewModel = TinyIoCContainer.Current.Resolve<ITaskDetailsViewModel>();
             _listView = view.FindViewById<ListView>(Resource.Id.taskList);
             _listView.ItemClick += ItemClick;
             HasOptionsMenu = true;
@@ -68,14 +70,10 @@ namespace Tasker.Droid.Fragments
             StartActivity(intent);
         }
 
-
         public override void OnResume()
         {
             base.OnResume();
-
             TaskInitialization();
-
-
         }
 
         private void TaskInitialization()
@@ -85,6 +83,9 @@ namespace Tasker.Droid.Fragments
             {
                 case TaskListType.AllOpen:
                     _tasks = _viewModel.GetAll();
+                    break;
+                case TaskListType.AllSolve:
+                    _tasks = _viewModel.GetAllSolve();
                     break;
                 case TaskListType.ProjectSolve:
                 case TaskListType.ProjectOpen:
@@ -107,20 +108,61 @@ namespace Tasker.Droid.Fragments
             // Set the SwipeActionAdapter as the Adapter for ListView
             _listView.Adapter = _swipeActionAdapter;
             // Set backgrounds for the swipe directions
-            _swipeActionAdapter.AddBackground(SwipeDirection.DirectionNormalLeft, Resource.Layout.row_bg_left)
-                               .AddBackground(SwipeDirection.DirectionNormalRight, Resource.Layout.row_bg_right);
+            if (_taskListType.IsOpenType())
+            {
+                _swipeActionAdapter.AddBackground(SwipeDirection.DirectionNormalLeft, Resource.Layout.task_item_background_unsolve_left)
+                               .AddBackground(SwipeDirection.DirectionNormalRight, Resource.Layout.task_item_background_unsolve_right);
+            }
+            else
+            {
+                _swipeActionAdapter.AddBackground(SwipeDirection.DirectionNormalLeft, Resource.Layout.task_item_background_solve_left)
+                               .AddBackground(SwipeDirection.DirectionNormalRight, Resource.Layout.task_item_background_solve_right);
+            }
+
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             switch (item.ItemId)
             {
-                case Resource.Id.menu_show_hide_solve_tasks:
-                   
+                case Resource.Id.menu_show_solve_tasks:
+
+                    Intent intent = new Intent(this.Activity, typeof(CompleteTaskListActivity));
+                    intent.PutExtra("TaskListType", (int)(_taskListType == TaskListType.ProjectOpen ? TaskListType.ProjectSolve : TaskListType.AllSolve));
+                    intent.PutExtra("ProjectId", _projectId);
+                    StartActivity(intent);
                     break;
             }
             return base.OnOptionsItemSelected(item);
         }
+
+        private void SolveTask()
+        {
+            var task = _detailsViewModel.GetItem();
+            if (task.IsSolved)
+            {
+                _viewModel.ChangeStatus(task);
+            }
+            else
+            {
+                _viewModel.ChangeStatus(task);
+            }
+        }
+        private void DeleteTask(Action callback)
+        {
+            //set alert for executing the task
+            AlertDialog.Builder alert = new AlertDialog.Builder(this.Activity);
+            alert.SetTitle(GetString(Resource.String.confirm_delete_task));
+            alert.SetPositiveButton(GetString(Resource.String.dialog_yes), (senderAlert, args) =>
+            {
+                callback?.Invoke();
+
+            });
+            alert.SetCancelable(true);
+            alert.SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { });
+            Dialog dialog = alert.Create();
+            dialog.Show();
+        }  
 
         #region  SwipeActionAdapter.ISwipeActionListener
         public bool HasActions(int position, SwipeDirection direction)
@@ -136,16 +178,37 @@ namespace Tasker.Droid.Fragments
             {
                 SwipeDirection direction = directionList[i];
                 int position = positionList[i];
+                
                 if (direction.IsRight)
-                {
+                {                    
+                    SolveTask();
                     _taskListAdapter.Remove(position);
+
                     _swipeActionAdapter.NotifyDataSetChanged();
-                }               
+                }                
+                else if (_taskListType.IsSolveType())
+                {
+                    DeleteTask(() =>
+                    {
+                        _detailsViewModel.DeleteItem();
+                        _taskListAdapter.Remove(position);
+                        _swipeActionAdapter.NotifyDataSetChanged();
+                    });
+                }
             }
         }
 
         public bool ShouldDismiss(int position, SwipeDirection direction)
         {
+            _detailsViewModel.Id = (int)_taskListAdapter.GetItemId(position);
+            if (_taskListType.IsOpenType()&&direction.IsLeft)
+            {
+                Intent intent = new Intent(this.Activity, typeof(TaskEditCreateActivity));
+                intent.PutExtra("TaskId", _detailsViewModel.Id);
+                StartActivity(intent);
+                return true;
+            }
+            
             return direction.IsRight ? true : false;
         }
         #endregion

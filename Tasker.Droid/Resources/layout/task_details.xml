@@ -31,7 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_alignParentStart="true"
-                    android:layout_margin="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/small_margin"
                     android:background="#FF50" />
 
                 <TextView
@@ -93,17 +93,5 @@
             </LinearLayout>
         </ScrollView>
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab"
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="12dp"
-            android:layout_marginRight="16dp"
-            android:src="@drawable/fab_solved"
-            app:fab_colorNormal="@color/colorPrimary"
-            app:fab_colorPressed="@color/colorPrimaryDark"
-            app:fab_colorRipple="#99FFFFFF" />
     </FrameLayout>
 </LinearLayout>

@@ -9,6 +9,11 @@ namespace Tasker.Core.DAL.Entities
     [Table("Task")]
     public class Task : BaseBusinessEntity
     {
+        public Task()
+        {
+            DueDate = DateTime.MaxValue;
+            RemindDate = DateTime.MaxValue;
+        }
         [MaxLength(TaskConstants.TASK_TITLE_MAX_LENGTH)]
         public string Title { get; set; }
 
@@ -17,9 +22,9 @@ namespace Tasker.Core.DAL.Entities
        
         public int ProjectID { get; set; }
 
-        public DateTime DueDate { get; set; } = DateTime.MaxValue;
+        public DateTime DueDate { get; set; }
         
-        public DateTime RemindDate { get; set; } = DateTime.MaxValue;
+        public DateTime RemindDate { get; set; }
 
         public bool IsSolved { get; set; }
 

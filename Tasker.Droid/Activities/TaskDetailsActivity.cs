@@ -37,7 +37,6 @@ namespace Tasker.Droid.Activities
         private LinearLayout _taskDueDateConteiner;
         private LinearLayout _taskRemindDateConteiner;
         private View _taskColor;
-        private FAB _fab;
 
 
         protected override void OnCreate(Bundle bundle)
@@ -58,13 +57,8 @@ namespace Tasker.Droid.Activities
             _taskColor = FindViewById<View>(Resource.Id.task_color_border);
             _taskDueDateConteiner = FindViewById<LinearLayout>(Resource.Id.box_task_due_date);
             _taskRemindDateConteiner = FindViewById<LinearLayout>(Resource.Id.box_task_remind_date);
-            _fab = FindViewById<FAB>(Resource.Id.fab);
 
             _viewModel.Id = Intent.GetIntExtra("TaskId", 0);
-            _fab.Click += delegate
-            {
-                OnSolveClick();
-            };
 
             Initialization();
         }
@@ -79,7 +73,6 @@ namespace Tasker.Droid.Activities
                 _taskDueDate.Text = task.DueDate.ToString();
                 _taskRemindDate.Text = task.RemindDate.ToString();
 
-                _fab.SetImageResource(task.IsSolved ? Resource.Drawable.fab_unsolved : Resource.Drawable.fab_solved);
                 if (task.Color != TaskColors.None)
                 {
                     _taskColor.SetBackgroundColor(Color.ParseColor(TaskConstants.Colors[(int)task.Color]));
@@ -92,16 +85,7 @@ namespace Tasker.Droid.Activities
                 _taskDescription.Visibility = string.IsNullOrWhiteSpace(task.Description) ? ViewStates.Gone : ViewStates.Visible;
                 _taskDueDateConteiner.Visibility = task.DueDate==DateTime.MinValue? ViewStates.Gone : ViewStates.Visible;
                 _taskRemindDateConteiner.Visibility = task.RemindDate == DateTime.MinValue ? ViewStates.Gone : ViewStates.Visible;
-                if (task.IsSolved)
-                {
-                    _viewModel.ChangeStatus(task);
-                    _fab.SetImageResource(Resource.Drawable.fab_unsolved);
-                }
-                else
-                {
-                    _viewModel.ChangeStatus(task);
-                    _fab.SetImageResource(Resource.Drawable.fab_solved);
-                }
+
             }
         }
 
@@ -145,13 +129,11 @@ namespace Tasker.Droid.Activities
             var task = _viewModel.GetItem();
             if (task.IsSolved)
             {
-                _viewModel.ChangeStatus(task);
-                _fab.SetImageResource(Resource.Drawable.fab_unsolved);          
+                _viewModel.ChangeStatus(task);      
             }
             else
             {
                 _viewModel.ChangeStatus(task);
-                _fab.SetImageResource(Resource.Drawable.fab_solved);
             }
         }
         private void OnDeleteClick()

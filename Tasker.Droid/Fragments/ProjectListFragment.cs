@@ -71,10 +71,7 @@ namespace Tasker.Droid.Fragments
             _projects = _viewModel.GetAll();
             _listAdapter = new Adapters.ProjectListAdapter(this.Activity, _tasks, _projects);
 
-            var mAdapter = new SwipeActionAdapter(_listAdapter);
-
-            // Pass a reference of your ListView to the SwipeActionAdapter
-            _listView.Adapter = mAdapter;
+            _listView.Adapter = _listAdapter;
             
         }
     }
