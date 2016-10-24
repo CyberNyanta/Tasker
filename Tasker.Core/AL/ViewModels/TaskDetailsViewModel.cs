@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Tasker.Core.AL.ViewModels.Contracts;
 using Tasker.Core.BL.Contracts;
 using Tasker.Core.DAL.Entities;
@@ -15,9 +16,9 @@ namespace Tasker.Core.AL.ViewModels
             _taskManager = taskManager;
         }
 
-        public Task GetItem()
+        public Task GetItem(int id)
         {
-            return Id != 0 ? _taskManager.Get(Id) : null;
+            return id != 0 ? _taskManager.Get(id) : null;
         }
 
         public int SaveItem(Task task)
@@ -35,9 +36,14 @@ namespace Tasker.Core.AL.ViewModels
             _taskManager.ChangeStatus(id);
         }
 
-        public int DeleteItem()
+        public int DeleteItem(int id)
         {
-            return _taskManager.Delete(Id);
+            return _taskManager.Delete(id);
+        }
+
+        public List<Project> GetProjects()
+        {
+            return _taskManager.GetProjects();
         }
     }
 }

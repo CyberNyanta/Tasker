@@ -23,6 +23,8 @@ namespace Tasker.Core.AL.ViewModels
             }
         }
 
+        public int Id{ get; set; }
+
         public event Action OnCollectionChanged;
 
         public TaskListViewModel(ITaskManager taskManager, IProjectManager projectManager) : base()
@@ -92,6 +94,16 @@ namespace Tasker.Core.AL.ViewModels
         public List<Task> GetAllSolve()
         {
             return _taskManager.GetAllSolve();
+        }
+
+        public int DeleteItem(int id)
+        {
+            return _taskManager.Delete(id);
+        }
+
+        public Task GetItem(int id)
+        {
+            return _taskManager.Get(id);
         }
     }
 }

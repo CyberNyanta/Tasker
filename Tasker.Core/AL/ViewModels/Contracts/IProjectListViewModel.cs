@@ -8,5 +8,7 @@ namespace Tasker.Core.AL.ViewModels.Contracts
 {
     public interface IProjectListViewModel: IListViewModel<Project>
     {
+        int SaveItem(Project item);
+
     }
 }

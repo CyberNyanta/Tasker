@@ -60,8 +60,20 @@ namespace Tasker.Core.BL.Managers
 
         public int SaveItem(Task item)
         {
+            if (item.ID != 0)
+            {
+                var previousVersion = _taskRepository.GetById(item.ID);
+                if (item.ProjectID != previousVersion.ProjectID)
+                {
+                    var previousProject = _projectRepository.GetById(previousVersion.ProjectID);
+                    if (previousVersion.IsSolved) previousProject.CountOfSolveTasks--;
+                    else previousProject.CountOfOpenTasks--;
+                    _projectRepository.Save(previousProject);
+                }
+            }
             if (item.ProjectID != 0)
             {
+                
                 var project = _projectRepository.GetById(item.ProjectID);
                 project.CountOfOpenTasks++;
                 _projectRepository.Save(project);
@@ -133,6 +145,11 @@ namespace Tasker.Core.BL.Managers
                 count++;
             }
             return count;
-        }   
+        }
+
+        public List<Project> GetProjects()
+        {
+            return new List<Project>(_projectRepository.GetAll());
+        }
     }
 }

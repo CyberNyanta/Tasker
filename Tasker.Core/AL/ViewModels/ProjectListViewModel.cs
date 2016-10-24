@@ -11,6 +11,8 @@ namespace Tasker.Core.AL.ViewModels
     {
         private IProjectManager _projectManager;
 
+        public int Id { get; set; }
+
         public event Action OnCollectionChanged;
 
         public ProjectListViewModel(IProjectManager projectManager) : base()
@@ -31,6 +33,21 @@ namespace Tasker.Core.AL.ViewModels
         protected virtual void RaiseOnCollectionChanged()
         {
             OnCollectionChanged?.Invoke();
+        }
+
+        public Project GetItem(int id)
+        {
+            return id != 0 ? _projectManager.Get(id) : null;
+        }
+
+        public int SaveItem(Project item)
+        {
+            return _projectManager.SaveItem(item);
+        }
+
+        public int DeleteItem(int id)
+        {
+            return _projectManager.Delete(id);
         }
     }
 }

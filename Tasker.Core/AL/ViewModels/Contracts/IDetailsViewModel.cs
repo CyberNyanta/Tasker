@@ -11,10 +11,10 @@ namespace Tasker.Core.AL.ViewModels.Contracts
     {
         int Id { get; set; }
 
-        T GetItem();
+        T GetItem(int id);
 
         int SaveItem(T item);
 
-        int DeleteItem();
+        int DeleteItem(int id);
     }
 }

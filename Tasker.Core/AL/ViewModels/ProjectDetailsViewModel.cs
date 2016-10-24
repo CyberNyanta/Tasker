@@ -30,5 +30,15 @@ namespace Tasker.Core.AL.ViewModels
         {
             return _projectManager.Delete(Id);
         }
+
+        public Project GetItem(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int DeleteItem(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

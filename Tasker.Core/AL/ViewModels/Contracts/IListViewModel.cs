@@ -11,9 +11,15 @@ namespace Tasker.Core.AL.ViewModels.Contracts
     {
         event Action OnCollectionChanged;
 
+        int Id { get; set; }
+
         List<T> GetAll();
 
         void DeleteGroup(IList<T> group);
+
+        int DeleteItem(int id);
+
+        T GetItem(int id);
 
     }
 }

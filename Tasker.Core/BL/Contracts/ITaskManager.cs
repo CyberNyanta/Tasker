@@ -19,6 +19,8 @@ namespace Tasker.Core.BL.Contracts
 
         List<Task> GetWhere(Predicate<Task> predicate);
 
+        List<Project> GetProjects();
+
         void ChangeStatus(int id);
 
         void ChangeStatus(Task task);
