@@ -63,7 +63,7 @@ namespace Tasker.Core.BL.Managers
             if (item.ID != 0)
             {
                 var previousVersion = _taskRepository.GetById(item.ID);
-                if (item.ProjectID != previousVersion.ProjectID)
+                if (item.ProjectID != previousVersion.ProjectID && previousVersion.ProjectID != 0)
                 {
                     var previousProject = _projectRepository.GetById(previousVersion.ProjectID);
                     if (previousVersion.IsSolved) previousProject.CountOfSolveTasks--;

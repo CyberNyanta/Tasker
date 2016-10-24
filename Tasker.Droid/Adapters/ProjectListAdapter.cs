@@ -90,8 +90,8 @@ namespace Tasker.Droid.Adapters
 
             var projectTitle = view.FindViewById<TextView>(Resource.Id.project_title);
             var projectTaskCount = view.FindViewById<TextView>(Resource.Id.task_count);
-
-            projectTaskCount.Text = $"{item.CountOfSolveTasks}/{item.CountOfOpenTasks + item.CountOfSolveTasks}";
+            
+            projectTaskCount.Text = _context.GetString(Resource.String.task_count, item.CountOfSolveTasks, item.CountOfOpenTasks + item.CountOfSolveTasks);
             projectTitle.Text = item.Title;
 
             //Finally return the view

@@ -39,6 +39,8 @@
   <string name="confirm_delete">Confirm delete</string>
   <string name="confirm_delete_task">Delete this task?</string>
   <string name="confirm_delete_project">Delete this project?</string>
+
+    <string name="task_count">Complete %1$s of %2$s</string>
   <string name="dialog_yes">OK</string>
   <string name="dialog_cancel">CANCEL</string>
 </resources>
