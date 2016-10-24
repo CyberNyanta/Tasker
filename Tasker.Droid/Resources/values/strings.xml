@@ -10,6 +10,7 @@
   <string name="task_edit_title">Edit</string>
   <string name="task_details_title">Details</string>
   <string name="complete_tasks_title">Complete tasks</string>
+  <string name="project">Project</string>
   <!--Actions-->
   <string name="projects">Projects</string>
   <string name="search">Search</string>
@@ -31,8 +32,13 @@
   <string name="task_color">Color</string>
 
 
+  <string name="project_dialog_field_hint">Title</string>
+  <string name="project_create_dialog">Create project</string>
+  <string name="project_edit_dialog">Edit project</string>
+
   <string name="confirm_delete">Confirm delete</string>
   <string name="confirm_delete_task">Delete this task?</string>
+  <string name="confirm_delete_project">Delete this project?</string>
   <string name="dialog_yes">OK</string>
   <string name="dialog_cancel">CANCEL</string>
 </resources>

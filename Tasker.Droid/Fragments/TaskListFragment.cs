@@ -138,7 +138,7 @@ namespace Tasker.Droid.Fragments
 
         private void SolveTask()
         {
-            var task = _detailsViewModel.GetItem();
+            var task = _viewModel.GetItem(_viewModel.Id);
             if (task.IsSolved)
             {
                 _viewModel.ChangeStatus(task);
@@ -190,7 +190,7 @@ namespace Tasker.Droid.Fragments
                 {
                     DeleteTask(() =>
                     {
-                        _detailsViewModel.DeleteItem();
+                        _viewModel.DeleteItem(_viewModel.Id);
                         _taskListAdapter.Remove(position);
                         _swipeActionAdapter.NotifyDataSetChanged();
                     });
@@ -200,7 +200,7 @@ namespace Tasker.Droid.Fragments
 
         public bool ShouldDismiss(int position, SwipeDirection direction)
         {
-            _detailsViewModel.Id = (int)_taskListAdapter.GetItemId(position);
+            _viewModel.Id = (int)_taskListAdapter.GetItemId(position);
             if (_taskListType.IsOpenType()&&direction.IsLeft)
             {
                 Intent intent = new Intent(this.Activity, typeof(TaskEditCreateActivity));

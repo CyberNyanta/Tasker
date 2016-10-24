@@ -18,13 +18,16 @@ using Com.Wdullaer.Swipeactionadapter;
 using Tasker.Core.AL.ViewModels.Contracts;
 using Android.Views.Animations;
 using Tasker.Core.DAL.Entities;
+using Tasker.Core.AL.Utils;
+using Tasker.Core;
 using Tasker.Droid.Activities;
 
 namespace Tasker.Droid.Fragments
 {
-    public class ProjectListFragment : BaseListFragment
+    public class ProjectListFragment : BaseListFragment, SwipeActionAdapter.ISwipeActionListener
     {
         private Adapters.ProjectListAdapter _listAdapter;
+        private SwipeActionAdapter _swipeActionAdapter;
         private List<Task> _tasks;
         private List<Project> _projects;
         private IProjectListViewModel _viewModel;
@@ -55,12 +58,31 @@ namespace Tasker.Droid.Fragments
             Intent intent = new Intent(this.Activity, typeof(ProjectTasksListActivity));
             intent.PutExtra("TaskListType", (int)TaskListFragment.TaskListType.ProjectOpen);
             intent.PutExtra("ProjectId", id);
-            StartActivity(intent);           
+            StartActivity(intent);
         }
 
         protected override void FabClick(object sender, EventArgs e)
         {
-            //TODO DIALOGS
+            Dialog dialog = new Dialog(Activity);
+            AlertDialog.Builder alert = new AlertDialog.Builder(this.Activity);
+            alert.SetTitle(GetString(Resource.String.project_create_dialog));
+            alert.SetPositiveButton(GetString(Resource.String.dialog_yes), (senderAlert, args) =>
+            {
+                var projectTitle = dialog.FindViewById<EditText>(Resource.Id.project_dialog_title);
+                if (projectTitle.Text.IsLengthInRange(TaskConstants.PROJECT_TITLE_MAX_LENGTH, 1))
+                {
+                    var project = new Project { Title = projectTitle.Text };
+                    _viewModel.SaveItem(project);
+                    _listAdapter.Add(project);
+
+                }
+
+            });
+            alert.SetView(Resource.Layout.project_edit_create_dialog);
+            alert.SetCancelable(true);
+            alert.SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { });
+            dialog = alert.Create();
+            dialog.Show();
         }
 
 
@@ -71,8 +93,104 @@ namespace Tasker.Droid.Fragments
             _projects = _viewModel.GetAll();
             _listAdapter = new Adapters.ProjectListAdapter(this.Activity, _tasks, _projects);
 
-            _listView.Adapter = _listAdapter;
-            
+
+            _swipeActionAdapter = new SwipeActionAdapter(_listAdapter);
+            _swipeActionAdapter.SetListView(_listView);
+            _swipeActionAdapter.SetSwipeActionListener(this);
+            _listView.Adapter = _swipeActionAdapter;
+
+            _swipeActionAdapter.AddBackground(SwipeDirection.DirectionNormalLeft, Resource.Layout.project_item_background_left)
+                               .AddBackground(SwipeDirection.DirectionNormalRight, Resource.Layout.project_item_background_right);
         }
+
+
+        private void DeleteProject(Action callback)
+        {
+
+            AlertDialog.Builder alert = new AlertDialog.Builder(this.Activity);
+            alert.SetTitle(GetString(Resource.String.confirm_delete_project));
+            alert.SetPositiveButton(GetString(Resource.String.dialog_yes), (senderAlert, args) =>
+            {
+                callback?.Invoke();
+            });
+            alert.SetCancelable(true);
+            alert.SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { });
+            Dialog dialog = alert.Create();
+            dialog.Show();
+        }
+
+        private void EditProject(int position)
+        {
+
+            Dialog dialog = new Dialog(Activity);
+            EditText projectTitle = null;
+            var project = _viewModel.GetItem(_viewModel.Id);
+
+            AlertDialog.Builder alert = new AlertDialog.Builder(this.Activity);
+            alert.SetTitle(GetString(Resource.String.project_edit_dialog));
+            alert.SetView(Resource.Layout.project_edit_create_dialog);
+            
+            alert.SetPositiveButton(GetString(Resource.String.dialog_yes), (senderAlert, args) =>
+            {
+
+                if (projectTitle.Text.IsLengthInRange(TaskConstants.PROJECT_TITLE_MAX_LENGTH, 1))
+                {
+                    project.Title = projectTitle.Text;
+                    _viewModel.SaveItem(project);
+
+                    _listAdapter.Save(project, position);                    
+                    _swipeActionAdapter.NotifyDataSetChanged();
+                }
+
+            });
+            
+            alert.SetCancelable(true);
+            alert.SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { });
+            dialog = alert.Create();
+            
+            dialog.Show();
+
+            projectTitle = dialog.FindViewById<EditText>(Resource.Id.project_dialog_title);      
+            projectTitle.Text = project.Title;
+        }
+
+        #region  SwipeActionAdapter.ISwipeActionListener
+        public bool HasActions(int position, SwipeDirection direction)
+        {
+            if (position == 0) return false;
+            if (direction.IsLeft) return true; // Change this to false to disable left swipes
+            if (direction.IsRight) return true;
+            return false;
+        }
+
+        public void OnSwipe(int[] positionList, SwipeDirection[] directionList)
+        {
+            for (int i = 0; i < positionList.Length; i++)
+            {
+                SwipeDirection direction = directionList[i];
+                int position = positionList[i];
+
+                if (direction.IsRight)
+                {
+                    DeleteProject(() =>
+                    {
+                        _viewModel.DeleteItem(_viewModel.Id);
+                        _listAdapter.Remove(position);
+                        _swipeActionAdapter.NotifyDataSetChanged();
+                    });                  
+                }
+                else
+                {
+                    EditProject(position);
+                }               
+            }
+        }
+
+        public bool ShouldDismiss(int position, SwipeDirection direction)
+        {
+            _viewModel.Id = (int)_listAdapter.GetItemId(position);
+            return false;
+        }
+        #endregion
     }
 }

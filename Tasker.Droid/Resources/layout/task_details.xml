@@ -14,7 +14,6 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -24,7 +23,89 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/small_margin"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/small_margin">
+
+                <TextView
+                    style="@style/Tasker.TextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:gravity="start"
+                    android:text="@string/task_title"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="15sp"
+                    android:layout_marginBottom="-10dp" />
+                <TextView
+                    android:id="@+id/task_title"
+                    style="@style/Tasker.TextViewStyle"
+                    android:text="task_title"
+                    android:textSize="40sp" />
+
+            <LinearLayout
+                android:id="@+id/box_task_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <TextView
+                    style="@style/Tasker.TextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:gravity="start"
+                    android:text="@string/task_description"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/task_description"
+                    style="@style/Tasker.TextViewStyle"
+                    android:inputType="textMultiLine"
+                    android:textSize="25sp" />
+            </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/box_task_due_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/textView"
+                        style="@style/Tasker.TextViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:text="@string/task_due_date"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/task_dueDate"
+                        style="@style/Tasker.TextViewStyle"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/box_task_remind_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        style="@style/Tasker.TextViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:text="@string/task_remind_date"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/task_remindDate"
+                        style="@style/Tasker.TextViewStyle" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/task_project"
+                    style="@style/Tasker.TextViewStyle" />
 
                 <View
                     android:id="@+id/task_color_border"
@@ -32,63 +113,8 @@
                     android:layout_height="2dp"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="@dimen/small_margin"
-                    android:background="#FF50" />
-
-                <TextView
-                    android:id="@+id/task_title"
-                    style="@style/Tasker.TextViewStyle"
-                    android:text="task_title"
-                    android:textSize="40sp" />
-
-                <TextView
-                    android:id="@+id/task_description"
-                    style="@style/Tasker.TextViewStyle"
-                    android:inputType="textMultiLine"
-                    android:text="task_description"
-                    android:textSize="25sp" />
-
-                <LinearLayout
-                    android:id="@+id/box_task_due_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/small_margin"
-
-                        android:src="@drawable/ic_due_date" />
-
-                    <TextView
-                        android:id="@+id/task_dueDate"
-                        style="@style/Tasker.TextViewStyle"
-                        android:text="task_dueDate" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/box_task_remind_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/small_margin"
-
-                        android:src="@drawable/ic_remind" />
-
-                    <TextView
-                        android:id="@+id/task_remindDate"
-                        style="@style/Tasker.TextViewStyle"
-                        android:text="task_dueDate" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/task_project"
-                    style="@style/Tasker.TextViewStyle" />
-
+                    android:background="#FF50"
+                    android:visibility="gone" />
 
             </LinearLayout>
         </ScrollView>

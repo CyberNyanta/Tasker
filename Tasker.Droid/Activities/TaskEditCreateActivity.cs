@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 using Android.App;
 using Android.Content;
@@ -12,6 +13,7 @@ using Android.Widget;
 using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
+using AlertDialog = Android.App.AlertDialog;
 
 using Tasker.Core.AL.ViewModels.Contracts;
 using Tasker.Core.AL.Utils;
@@ -29,10 +31,12 @@ namespace Tasker.Droid.Activities
     public class TaskEditCreateActivity : AppCompatActivity
     {
         private ITaskDetailsViewModel _viewModel;
+        private List<Project> _projects;
         private EditText _taskTitle;
         private EditText _taskDescription;
         private TextView _taskDueDate;
         private TextView _taskRemindDate;
+        private TextView _taskProject;
         private RadioGroup _colorRadioGroup;
         private List<RadioButton> _taskColors = new List<RadioButton>();
         private DateTime _dueDate = DateTime.MaxValue;
@@ -55,10 +59,17 @@ namespace Tasker.Droid.Activities
             _taskDueDate = FindViewById<TextView>(Resource.Id.task_dueDate);
             _taskRemindDate = FindViewById<TextView>(Resource.Id.task_remindDate);
             _colorRadioGroup = FindViewById<RadioGroup>(Resource.Id.colors_radiogroup);
+            _taskProject = FindViewById<TextView>(Resource.Id.task_project);
             _taskColors.Add(FindViewById<RadioButton>(Resource.Id.color_none));
             _taskColors.Add(FindViewById<RadioButton>(Resource.Id.color_1));
             _taskColors.Add(FindViewById<RadioButton>(Resource.Id.color_2));
             _taskColors.Add(FindViewById<RadioButton>(Resource.Id.color_3));
+
+            _projects = _viewModel.GetProjects();
+            _projects.Insert(0, new Project
+            {
+                Title = ApplicationContext.GetString(Resource.String.project_inbox)
+            });
 
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
                 for (int i = 0; i < 4; i++)
@@ -66,36 +77,12 @@ namespace Tasker.Droid.Activities
                     _taskColors[i].ButtonTintList = Android.Content.Res.ColorStateList.ValueOf(Color.ParseColor(TaskConstants.Colors[i]));
                 }
 
-            Action setDueDate = delegate
-            {
-                var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
-                dateTimePicker.SetInitialDate(new Date());
-                dateTimePicker.SetMinDate(new Date());
-                dateTimePicker.SetListener(new DueDateListener(this));
-                dateTimePicker.SetTheme(0);
-                var dialog = dateTimePicker.Build();
-                dialog.Show();
-            };
-            Action setRemindDate = delegate
-            {
-                var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
-                dateTimePicker.SetInitialDate(new Date());
-                if (_dueDate != DateTime.MinValue)
-                {
-                    dateTimePicker.SetMaxDate(new Date(_dueDate.ToUnixTime()));
-                }
-                dateTimePicker.SetMinDate(new Date());
-                dateTimePicker.SetListener(new RemindDateListener(this));
-                dateTimePicker.SetTheme(0);
-                var dialog = dateTimePicker.Build();
-                dialog.Show();
-            };
-
-            _taskDueDate.OnFocusChangeListener = new OnFocusChangeListener(setDueDate);
-            _taskRemindDate.OnFocusChangeListener = new OnFocusChangeListener(setRemindDate);
-            _taskDueDate.Click += delegate (Object o, EventArgs a) { setDueDate?.Invoke(); };
-            _taskRemindDate.Click += delegate (Object o, EventArgs a) { setRemindDate?.Invoke(); };
-
+            _taskDueDate.OnFocusChangeListener = new OnFocusChangeListener(SetDueDate);
+            _taskRemindDate.OnFocusChangeListener = new OnFocusChangeListener(SetRemindDate);
+            _taskProject.OnFocusChangeListener = new OnFocusChangeListener(SetProject);
+            _taskDueDate.Click += delegate (Object o, EventArgs a) { SetDueDate(); };
+            _taskRemindDate.Click += delegate (Object o, EventArgs a) { SetRemindDate(); };
+            _taskProject.Click += delegate (Object o, EventArgs a) { SetProject(); };
             _viewModel.Id = Intent.GetIntExtra("TaskId", 0);
 
             if (_viewModel.Id != 0)
@@ -105,7 +92,8 @@ namespace Tasker.Droid.Activities
 
         private void Initialization()
         {
-            var task = _viewModel.GetItem();
+            var task = _viewModel.GetItem(_viewModel.Id);
+
             if (task != null)
             {
                 _taskTitle.Text = task.Title;
@@ -121,6 +109,10 @@ namespace Tasker.Droid.Activities
                     _remindDate = task.RemindDate;
                     _taskRemindDate.Text = _remindDate.ToString(GetString(Resource.String.datetime_regex));
                 }
+
+                var project = _projects.Find(x => x.ID == task.ProjectID);
+                _taskProject.Text = project.Title;
+                _taskProject.Tag = project.ID;
 
                 if (task.Color != TaskColors.None)
                 {
@@ -165,7 +157,7 @@ namespace Tasker.Droid.Activities
                 _taskDescription.Error = GetString(Resource.String.description_error);
                 error = true;
             }
-           
+
             if (error) return;
 
             TaskColors color = TaskColors.None;
@@ -181,11 +173,64 @@ namespace Tasker.Droid.Activities
                     color = TaskColors.Blue;
                     break;
             }
-             
-            var task = new Task() { ID = _viewModel.Id , Title = title, Description = desciption, Color = color, DueDate = _dueDate, RemindDate=_remindDate};
+
+            var task = new Task()
+            {
+                ID = _viewModel.Id,
+                Title = title,
+                Description = desciption,
+                Color = color,
+                DueDate = _dueDate,
+                RemindDate = _remindDate,
+                ProjectID = (int)_taskProject.Tag
+            };
 
             _viewModel.SaveItem(task);
             Finish();
+        }
+
+        private void SetDueDate()
+        {
+            var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
+            dateTimePicker.SetInitialDate(new Date());
+            dateTimePicker.SetMinDate(new Date());
+            dateTimePicker.SetListener(new DueDateListener(this));
+            dateTimePicker.SetTheme(0);
+            var dialog = dateTimePicker.Build();
+            dialog.Show();
+        }
+        private void SetRemindDate()
+        {
+            var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
+            dateTimePicker.SetInitialDate(new Date());
+            if (_dueDate != DateTime.MinValue)
+            {
+                dateTimePicker.SetMaxDate(new Date(_dueDate.ToUnixTime()));
+            }
+            dateTimePicker.SetMinDate(new Date());
+            dateTimePicker.SetListener(new RemindDateListener(this));
+            dateTimePicker.SetTheme(0);
+            var dialog = dateTimePicker.Build();
+            dialog.Show();
+        }
+
+        private void SetProject()
+        {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.SetTitle(GetString(Resource.String.project_create_dialog));
+            alert.SetItems(
+               _projects.Select(x => x.Title).ToArray(),
+                delegate (object obj, DialogClickEventArgs args)
+                {
+                    var project = _projects[args.Which];
+                    _taskProject.Text = project.Title;
+                    _taskProject.Tag = project.ID;
+                }
+                        );
+            alert.SetCancelable(true);
+            alert.SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { });
+            Dialog dialog = alert.Create();            
+            dialog.Show();
         }
 
         public class DueDateListener : SlideDateTimeListener

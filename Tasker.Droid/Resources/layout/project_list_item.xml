@@ -4,56 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:background="@color/colorWhite"
-    android:orientation="horizontal"
-    android:paddingLeft="@dimen/medium_margin"
-    android:paddingRight="5dp">
+    android:orientation="vertical"
+    android:padding="@dimen/small_margin">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/project_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="taskasdasdasTitle"
+        android:textSize="@dimen/taskTitle_textSize" />
 
-        <TextView
-            android:id="@+id/project_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/small_margin"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="taskasdasdasTitle"
-            android:textSize="@dimen/taskTitle_textSize" />
-
-        <TextView
-            android:id="@+id/task_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="taskCount"
-            android:textSize="@dimen/taskDetails_textSize" />
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageButton
-            android:id="@+id/edit"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_delete" />
-
-        <ImageButton
-            android:id="@+id/delete"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/edit"
-            android:src="@drawable/ic_edit" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/task_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="taskCount"
+        android:textSize="@dimen/taskDetails_textSize" />
 
 </LinearLayout>

@@ -32,8 +32,8 @@ namespace Tasker.Droid.Adapters
                 _projects.Insert(0, new Project
                 {
                     Title = context.GetString(Resource.String.project_inbox),
-                    CountOfOpenTasks = inboxProjectTasks.FindAll(task => task.IsSolved).Count,
-                    CountOfSolveTasks = inboxProjectTasks.FindAll(task => !task.IsSolved).Count
+                    CountOfSolveTasks = inboxProjectTasks.FindAll(task => task.IsSolved).Count,
+                    CountOfOpenTasks = inboxProjectTasks.FindAll(task => !task.IsSolved).Count
                 });
             }
         }
@@ -51,6 +51,25 @@ namespace Tasker.Droid.Adapters
         public override long GetItemId(int position)
         {
             return _projects[position].ID;
+        }
+
+        public void Remove(int position)
+        {
+            _projects.RemoveAt(position);
+            NotifyDataSetChanged();
+        }
+
+        public void Add(Project project)
+        {
+            _projects.Add(project);
+            NotifyDataSetChanged();
+        }
+
+        public void Save(Project project, int position)
+        {
+            _projects.RemoveAt(position);
+            _projects.Add(project);
+            NotifyDataSetChanged();
         }
 
         public override View GetView(int position, View convertView, ViewGroup parent)
@@ -71,43 +90,13 @@ namespace Tasker.Droid.Adapters
 
             var projectTitle = view.FindViewById<TextView>(Resource.Id.project_title);
             var projectTaskCount = view.FindViewById<TextView>(Resource.Id.task_count);
-            var editButton = view.FindViewById<ImageButton>(Resource.Id.edit);
-            var deleteButton = view.FindViewById<ImageButton>(Resource.Id.delete);
 
-            projectTaskCount.Text = $"{item.CountOfOpenTasks}/{item.CountOfOpenTasks + item.CountOfSolveTasks}";
+            projectTaskCount.Text = $"{item.CountOfSolveTasks}/{item.CountOfOpenTasks + item.CountOfSolveTasks}";
             projectTitle.Text = item.Title;
-            if (item.ID != 0)
-            {
-                editButton.Visibility = ViewStates.Visible;
-                deleteButton.Visibility = ViewStates.Visible;
-                editButton.Click -= EditButtonClick;
-                deleteButton.Click -= DeleteButtonClick;
-                editButton.Click += EditButtonClick;
-                deleteButton.Click += DeleteButtonClick;
-                editButton.Tag = item.ID;
-                deleteButton.Tag = item.ID;
-            }
-            else
-            {
-                editButton.Visibility = ViewStates.Gone;
-                deleteButton.Visibility = ViewStates.Gone;
-            }
 
             //Finally return the view
             return view;
         }
 
-        private void DeleteButtonClick(object sender, EventArgs e)
-        {
-            var button = sender as ImageButton;
-            int id = (int)button.Tag;
-            
-        }
-
-        private void EditButtonClick(object sender, EventArgs e)
-        {
-            var button = sender as ImageButton;
-            int id = (int)button.Tag;
-        }
     }
 }

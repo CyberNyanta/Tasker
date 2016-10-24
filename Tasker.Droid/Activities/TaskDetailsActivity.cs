@@ -36,6 +36,7 @@ namespace Tasker.Droid.Activities
         private TextView _taskRemindDate;
         private LinearLayout _taskDueDateConteiner;
         private LinearLayout _taskRemindDateConteiner;
+        private LinearLayout _taskDescriptionConteiner;
         private View _taskColor;
 
 
@@ -57,6 +58,7 @@ namespace Tasker.Droid.Activities
             _taskColor = FindViewById<View>(Resource.Id.task_color_border);
             _taskDueDateConteiner = FindViewById<LinearLayout>(Resource.Id.box_task_due_date);
             _taskRemindDateConteiner = FindViewById<LinearLayout>(Resource.Id.box_task_remind_date);
+            _taskDescriptionConteiner = FindViewById<LinearLayout>(Resource.Id.box_task_description);
 
             _viewModel.Id = Intent.GetIntExtra("TaskId", 0);
 
@@ -65,7 +67,7 @@ namespace Tasker.Droid.Activities
 
         private void Initialization()
         {
-            var task = _viewModel.GetItem();
+            var task = _viewModel.GetItem(_viewModel.Id);
             if (task != null)
             {
                 _taskTitle.Text = task.Title;
@@ -82,7 +84,7 @@ namespace Tasker.Droid.Activities
                     _taskColor.Background = _taskDescription.Background;
                 }
 
-                _taskDescription.Visibility = string.IsNullOrWhiteSpace(task.Description) ? ViewStates.Gone : ViewStates.Visible;
+                _taskDescriptionConteiner.Visibility = string.IsNullOrWhiteSpace(task.Description) ? ViewStates.Gone : ViewStates.Visible;
                 _taskDueDateConteiner.Visibility = task.DueDate==DateTime.MinValue? ViewStates.Gone : ViewStates.Visible;
                 _taskRemindDateConteiner.Visibility = task.RemindDate == DateTime.MinValue ? ViewStates.Gone : ViewStates.Visible;
 
@@ -126,7 +128,7 @@ namespace Tasker.Droid.Activities
 
         private void OnSolveClick()
         {
-            var task = _viewModel.GetItem();
+            var task = _viewModel.GetItem(_viewModel.Id);
             if (task.IsSolved)
             {
                 _viewModel.ChangeStatus(task);      
@@ -143,7 +145,7 @@ namespace Tasker.Droid.Activities
             alert.SetTitle(GetString(Resource.String.confirm_delete_task));
             alert.SetPositiveButton(GetString(Resource.String.dialog_yes), (senderAlert, args) =>
             {
-                _viewModel.DeleteItem();
+                _viewModel.DeleteItem(_viewModel.Id);
                 SetResult(Result.Ok);
                 Finish();
             });
