@@ -77,7 +77,7 @@ namespace Tasker.Droid.Activities
 
                 if (task.Color != TaskColors.None)
                 {
-                    _taskColor.SetBackgroundColor(Color.ParseColor(TaskConstants.Colors[(int)task.Color]));
+                    _taskColor.SetBackgroundColor(Color.ParseColor(TaskConstants.Colors[task.Color]));
                 }
                 else
                 {

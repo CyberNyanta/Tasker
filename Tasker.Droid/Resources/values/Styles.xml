@@ -42,6 +42,14 @@
         <item name="android:inputType">textFilter|textNoSuggestions</item>
     </style>
 
+    <style name="Tasker.HintTextViewStyle" parent="Tasker.TextViewStyle">
+        <item name="android:textSize">@dimen/hint_textSize</item>
+        <item name="android:inputType">textFilter|textNoSuggestions</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:layout_marginBottom">@dimen/small_margin_negative</item>
+        <item name="android:layout_marginTop">@dimen/small_margin</item>
+    </style>
+
     <style name="Tasker.RadioButtonStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

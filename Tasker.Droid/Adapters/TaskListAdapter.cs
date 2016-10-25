@@ -89,7 +89,7 @@ namespace Tasker.Droid.Adapters
             //Set Task Color
             if (item.Color != TaskColors.None)
             {
-                border.SetBackgroundColor(Color.ParseColor(TaskConstants.Colors[(int)item.Color]));
+                border.SetBackgroundColor(Color.ParseColor(TaskConstants.Colors[item.Color]));
             }
             else
                 border.SetBackgroundColor(view.DrawingCacheBackgroundColor);

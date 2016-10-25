@@ -19,14 +19,9 @@
             android:paddingLeft="@dimen/small_margin">
 
             <TextView
-                style="@style/Tasker.TextViewStyle"
-                android:layout_width="wrap_content"
+                style="@style/Tasker.HintTextViewStyle"
                 android:layout_marginTop="@dimen/medium_margin"
-                android:gravity="start"
-                android:text="@string/task_title"
-                android:textColor="@color/colorAccent"
-                android:textSize="15sp"
-                android:layout_marginBottom="-10dp" />
+                android:text="@string/task_title" />
 
             <EditText
                 android:id="@+id/task_title"
@@ -34,13 +29,8 @@
                 android:maxLength="100" />
 
             <TextView
-                style="@style/Tasker.TextViewStyle"
-                android:layout_width="wrap_content"
-                android:gravity="start"
-                android:text="@string/task_description"
-                android:textColor="@color/colorAccent"
-                android:textSize="15sp"
-                android:layout_marginBottom="-10dp" />
+                style="@style/Tasker.HintTextViewStyle"
+                android:text="@string/task_description" />
 
             <EditText
                 android:id="@+id/task_description"
@@ -49,30 +39,21 @@
                 android:maxLength="1000" />
 
             <TextView
-                style="@style/Tasker.TextViewStyle"
-                android:layout_width="wrap_content"
-                android:gravity="start"
+                style="@style/Tasker.HintTextViewStyle"
                 android:text="@string/project"
-                android:textColor="@color/colorAccent"
-                android:textSize="15sp"
-                android:layout_marginBottom="-10dp" />
+                android:layout_marginBottom="0dp"
+              />
 
             <TextView
                 android:id="@+id/task_project"
-                style="@style/Tasker.TextViewStyleEditText"
-                android:gravity="top"
-                android:text="Inbox" />
+                style="@style/Tasker.TextViewStyle"
+                android:text="Inbox"
+                android:layout_marginLeft="@dimen/small_margin"
+                android:drawableRight="@drawable/ic_drop_dawn"/>
 
             <TextView
-                android:id="@+id/textView"
-                style="@style/Tasker.TextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:text="@string/task_due_date"
-                android:textColor="@color/colorAccent"
-                android:textSize="15sp"
-                android:layout_marginBottom="-10dp" />
+                style="@style/Tasker.HintTextViewStyle"
+                android:text="@string/task_due_date" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -81,21 +62,13 @@
 
                 <TextView
                     android:id="@+id/task_dueDate"
-                    style="@style/Tasker.TextViewStyleEditText"
-                    />
+                    style="@style/Tasker.TextViewStyleEditText" />
 
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView3"
-                style="@style/Tasker.TextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:gravity="start"
-                android:text="@string/task_remind_date"
-                android:textColor="@color/colorAccent"
-                android:textSize="15sp"
-                android:layout_marginBottom="-10dp" />
+                style="@style/Tasker.HintTextViewStyle"
+                android:text="@string/task_remind_date"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -108,46 +81,11 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/Tasker.TextViewStyle"
-                    android:layout_width="wrap_content"
-                    android:gravity="start"
-                    android:text="@string/task_color" />
-
-                <RadioGroup
-                    android:id="@+id/colors_radiogroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/medium_margin"
-                    android:gravity="right"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/color_none"
-                        style="@style/Tasker.RadioButtonStyle"
-                        android:checked="true" />
-
-                    <RadioButton
-                        android:id="@+id/color_1"
-                        style="@style/Tasker.RadioButtonStyle" />
-
-                    <RadioButton
-                        android:id="@+id/color_2"
-                        style="@style/Tasker.RadioButtonStyle" />
-
-                    <RadioButton
-                        android:id="@+id/color_3"
-                        style="@style/Tasker.RadioButtonStyle"
-                        android:layout_marginRight="0dp" />
-                </RadioGroup>
-            </LinearLayout>
-
+            <TextView
+                style="@style/Tasker.HintTextViewStyle"
+                android:text="@string/task_color"
+                android:layout_marginBottom="0dp"/>
+            <include layout="@layout/color_item" />
 
         </LinearLayout>
     </ScrollView>

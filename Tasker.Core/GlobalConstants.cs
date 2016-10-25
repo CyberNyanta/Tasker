@@ -15,21 +15,38 @@ namespace Tasker.Core
 
         public const Int32 PROJECT_TITLE_MAX_LENGTH = 50;
 
-        public static readonly string[] Colors =
+        public static readonly Dictionary<TaskColors, string> Colors = new Dictionary<TaskColors, string>()
         {
-            "#FF9e9e9e",
-            "#FFFF0000",
-            "#FF00FF00",
-            "#FF0000FF"
+            {TaskColors.None,"#FF9E9E9E" },
+            {TaskColors.Lime,"#FF00FF00" },
+            {TaskColors.Peach,"#FFFFDAB9" },
+
+            {TaskColors.Aqua,"#FF00FFFF" },
+            {TaskColors.Blue,"#FF87CEFA" },
+            {TaskColors.Salmon,"#FFFA8072" },
+
+            {TaskColors.Teal,"#FF008080" },
+            {TaskColors.Tan,"#FFD2B48C" },
+
+            {TaskColors.Tomato,"#FFFF6347" },
+            {TaskColors.Yellow,"#FFFFFF00" },
+            {TaskColors.Violet,"#FFEE82EE" }
         };
+
     }
 
     public enum TaskColors
     {
         None,
-        Red,
-        Green,
+        Lime,
+        Peach,
+        Aqua,
         Blue,
-        
+        Salmon,
+        Teal,
+        Tan,
+        Tomato,
+        Yellow,
+        Violet
     }
 }

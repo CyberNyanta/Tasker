@@ -122,7 +122,7 @@ namespace Tasker.Droid.Fragments
         private void EditProject(int position)
         {
 
-            Dialog dialog = new Dialog(Activity);
+            Dialog dialog = new Dialog(Activity);            
             EditText projectTitle = null;
             var project = _viewModel.GetItem(_viewModel.Id);
 
@@ -158,7 +158,7 @@ namespace Tasker.Droid.Fragments
         public bool HasActions(int position, SwipeDirection direction)
         {
             if (position == 0) return false;
-            if (direction.IsLeft) return true; // Change this to false to disable left swipes
+            if (direction.IsLeft) return true;
             if (direction.IsRight) return true;
             return false;
         }

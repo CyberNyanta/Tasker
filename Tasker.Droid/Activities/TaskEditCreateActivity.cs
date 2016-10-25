@@ -24,11 +24,13 @@ using TinyIoC;
 using Com.Github.Jjobes.Slidedatetimepicker;
 using Java.Util;
 using Android.Graphics;
+using Android.Graphics.Drawables;
+using Tasker.Droid.Adapters;
 
 namespace Tasker.Droid.Activities
 {
     [Activity]
-    public class TaskEditCreateActivity : AppCompatActivity
+    public class TaskEditCreateActivity : AppCompatActivity, IDialogInterfaceOnClickListener
     {
         private ITaskDetailsViewModel _viewModel;
         private List<Project> _projects;
@@ -37,11 +39,12 @@ namespace Tasker.Droid.Activities
         private TextView _taskDueDate;
         private TextView _taskRemindDate;
         private TextView _taskProject;
-        private RadioGroup _colorRadioGroup;
-        private List<RadioButton> _taskColors = new List<RadioButton>();
         private DateTime _dueDate = DateTime.MaxValue;
-        private DateTime _remindDate = DateTime.MaxValue;
-
+        private DateTime _remindDate = DateTime.MaxValue;   
+        private LinearLayout _colorContainer;
+        private ImageView _colorShape;
+        private TextView _colorName;
+        private Task _task;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -57,13 +60,11 @@ namespace Tasker.Droid.Activities
             _taskTitle = FindViewById<EditText>(Resource.Id.task_title);
             _taskDescription = FindViewById<EditText>(Resource.Id.task_description);
             _taskDueDate = FindViewById<TextView>(Resource.Id.task_dueDate);
-            _taskRemindDate = FindViewById<TextView>(Resource.Id.task_remindDate);
-            _colorRadioGroup = FindViewById<RadioGroup>(Resource.Id.colors_radiogroup);
+            _taskRemindDate = FindViewById<TextView>(Resource.Id.task_remindDate);        
             _taskProject = FindViewById<TextView>(Resource.Id.task_project);
-            _taskColors.Add(FindViewById<RadioButton>(Resource.Id.color_none));
-            _taskColors.Add(FindViewById<RadioButton>(Resource.Id.color_1));
-            _taskColors.Add(FindViewById<RadioButton>(Resource.Id.color_2));
-            _taskColors.Add(FindViewById<RadioButton>(Resource.Id.color_3));
+            _colorContainer = FindViewById<LinearLayout>(Resource.Id.color_container);
+            _colorShape = FindViewById<ImageView>(Resource.Id.color_shape);
+            _colorName = FindViewById<TextView>(Resource.Id.color_name);
 
             _projects = _viewModel.GetProjects();
             _projects.Insert(0, new Project
@@ -74,7 +75,7 @@ namespace Tasker.Droid.Activities
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
                 for (int i = 0; i < 4; i++)
                 {
-                    _taskColors[i].ButtonTintList = Android.Content.Res.ColorStateList.ValueOf(Color.ParseColor(TaskConstants.Colors[i]));
+                    //_taskColors[i].ButtonTintList = Android.Content.Res.ColorStateList.ValueOf(Color.ParseColor(TaskConstants.Colors[i]));
                 }
 
             _taskDueDate.OnFocusChangeListener = new OnFocusChangeListener(SetDueDate);
@@ -83,6 +84,9 @@ namespace Tasker.Droid.Activities
             _taskDueDate.Click += delegate (Object o, EventArgs a) { SetDueDate(); };
             _taskRemindDate.Click += delegate (Object o, EventArgs a) { SetRemindDate(); };
             _taskProject.Click += delegate (Object o, EventArgs a) { SetProject(); };
+            _colorContainer.Click += delegate (Object o, EventArgs a) { SetColor(); };
+            _colorShape.Click += delegate (Object o, EventArgs a) { SetColor(); };
+            _colorName.Click += delegate (Object o, EventArgs a) { SetColor(); };
             _viewModel.Id = Intent.GetIntExtra("TaskId", 0);
 
             if (_viewModel.Id != 0)
@@ -92,31 +96,31 @@ namespace Tasker.Droid.Activities
 
         private void Initialization()
         {
-            var task = _viewModel.GetItem(_viewModel.Id);
+            _task = _viewModel.GetItem(_viewModel.Id);
 
-            if (task != null)
+            if (_task != null)
             {
-                _taskTitle.Text = task.Title;
-                _taskDescription.Text = task.Description;
-                if (task.DueDate != DateTime.MaxValue)
+                _taskTitle.Text = _task.Title;
+                _taskDescription.Text = _task.Description;
+                if (_task.DueDate != DateTime.MaxValue)
                 {
-                    _dueDate = task.DueDate;
-                    _remindDate = task.RemindDate;
+                    _dueDate = _task.DueDate;
+                    _remindDate = _task.RemindDate;
                     _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
                 }
-                if (task.RemindDate != DateTime.MaxValue)
+                if (_task.RemindDate != DateTime.MaxValue)
                 {
-                    _remindDate = task.RemindDate;
+                    _remindDate = _task.RemindDate;
                     _taskRemindDate.Text = _remindDate.ToString(GetString(Resource.String.datetime_regex));
                 }
 
-                var project = _projects.Find(x => x.ID == task.ProjectID);
+                var project = _projects.Find(x => x.ID == _task.ProjectID);
                 _taskProject.Text = project.Title;
                 _taskProject.Tag = project.ID;
 
-                if (task.Color != TaskColors.None)
+                if (_task.Color != TaskColors.None)
                 {
-                    _taskColors[(int)task.Color].Checked = true;
+                    //_taskColors[(int)task.Color].Checked = true;
                 }
             }
         }
@@ -161,18 +165,18 @@ namespace Tasker.Droid.Activities
             if (error) return;
 
             TaskColors color = TaskColors.None;
-            switch (_colorRadioGroup.CheckedRadioButtonId)
-            {
-                case Resource.Id.color_1:
-                    color = TaskColors.Red;
-                    break;
-                case Resource.Id.color_2:
-                    color = TaskColors.Green;
-                    break;
-                case Resource.Id.color_3:
-                    color = TaskColors.Blue;
-                    break;
-            }
+            //switch (_colorRadioGroup.CheckedRadioButtonId)
+            //{
+            //    case Resource.Id.color_1:
+            //        color = TaskColors.Red;
+            //        break;
+            //    case Resource.Id.color_2:
+            //        color = TaskColors.Green;
+            //        break;
+            //    case Resource.Id.color_3:
+            //        color = TaskColors.Blue;
+            //        break;
+            //}
 
             var task = new Task()
             {
@@ -217,7 +221,7 @@ namespace Tasker.Droid.Activities
         private void SetProject()
         {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.SetTitle(GetString(Resource.String.project_create_dialog));
+            //alert.SetTitle(GetString(Resource.String.project_create_dialog));
             alert.SetItems(
                _projects.Select(x => x.Title).ToArray(),
                 delegate (object obj, DialogClickEventArgs args)
@@ -228,9 +232,38 @@ namespace Tasker.Droid.Activities
                 }
                         );
             alert.SetCancelable(true);
-            alert.SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { });
-            Dialog dialog = alert.Create();            
+         
+            alert.Show();            
+        }
+        private Dialog dialog;
+        private void SetColor()
+        {
+            _task = new Task();
+            
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            //View view = LayoutInflater.Inflate(Resource.Layout.color_list, null);
+            //alert.SetView(view);
+            alert.SetCancelable(true);
+
+            //ListView lv = view.FindViewById<ListView>(Resource.Id.color_listView);
+            var adapter = new ColorListAdapter(this, _task.Color);
+            //lv.Adapter = adapter;
+            alert.SetAdapter(adapter, this);
+            //lv.ItemClick += ColorItemClick;
+
+            dialog = alert.Create();
             dialog.Show();
+
+        }
+
+        private void ColorItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            dialog.Dismiss();
+        }
+
+        public void OnClick(IDialogInterface dialog, int which)
+        {
+            dialog.Dismiss();
         }
 
         public class DueDateListener : SlideDateTimeListener
