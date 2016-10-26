@@ -55,7 +55,7 @@ namespace Tasker.Droid.Fragments
             int id = (int)e.Id;
             Intent intent = new Intent(this.Activity, typeof(TaskDetailsActivity));
             intent.PutExtra("TaskId", id);
-            StartActivityForResult(intent, (int)Result.Ok);
+            StartActivity(intent);
         }
 
         protected override void FabClick(object sender, EventArgs e)
@@ -83,14 +83,20 @@ namespace Tasker.Droid.Fragments
                     _tasks = _viewModel.GetAll();
                     break;
                 case TaskListType.AllSolve:
+                    HideFAB();
                     _tasks = _viewModel.GetAllSolve();
                     break;
                 case TaskListType.ProjectSolve:
+                    HideFAB();
+                    _projectId = Activity.Intent.GetIntExtra("ProjectId", 0);
+                    _tasks = _viewModel.GetProjectSolveTasks(_projectId);
+                    break;
                 case TaskListType.ProjectOpen:
                     _projectId = Activity.Intent.GetIntExtra("ProjectId", 0);
                     _tasks = _viewModel.GetProjectOpenTasks(_projectId);
                     break;
                 case TaskListType.Search:
+                    HideFAB();
                     throw new NotImplementedException();
                     break;
             }

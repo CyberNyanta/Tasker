@@ -43,6 +43,11 @@ namespace Tasker.Droid.Fragments
             _fab.Click += FabClick;      
         }
 
+        public void HideFAB()
+        {
+            _fab.Hide(false);
+        }
+
 
         protected virtual void FabClick(object sender, EventArgs e)
         {

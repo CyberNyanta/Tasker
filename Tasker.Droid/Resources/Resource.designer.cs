@@ -2206,22 +2206,25 @@ namespace Tasker.Droid
 			public const int ic_save = 2130837602;
 			
 			// aapt resource value: 0x7f020063
-			public const int ic_search = 2130837603;
+			public const int ic_save_light = 2130837603;
 			
 			// aapt resource value: 0x7f020064
-			public const int ic_search_light = 2130837604;
+			public const int ic_search = 2130837604;
 			
 			// aapt resource value: 0x7f020065
-			public const int ic_star = 2130837605;
+			public const int ic_search_light = 2130837605;
 			
 			// aapt resource value: 0x7f020066
-			public const int icon = 2130837606;
-			
-			// aapt resource value: 0x7f020068
-			public const int notification_template_icon_bg = 2130837608;
+			public const int ic_star = 2130837606;
 			
 			// aapt resource value: 0x7f020067
-			public const int selection_divider = 2130837607;
+			public const int icon = 2130837607;
+			
+			// aapt resource value: 0x7f020069
+			public const int notification_template_icon_bg = 2130837609;
+			
+			// aapt resource value: 0x7f020068
+			public const int selection_divider = 2130837608;
 			
 			static Drawable()
 			{
@@ -3038,10 +3041,13 @@ namespace Tasker.Droid
 			public const int main_activity_menu = 2131492864;
 			
 			// aapt resource value: 0x7f0c0001
-			public const int task_details_menu = 2131492865;
+			public const int project_list_menu = 2131492865;
 			
 			// aapt resource value: 0x7f0c0002
-			public const int task_edit_menu = 2131492866;
+			public const int task_details_menu = 2131492866;
+			
+			// aapt resource value: 0x7f0c0003
+			public const int task_edit_menu = 2131492867;
 			
 			static Menu()
 			{

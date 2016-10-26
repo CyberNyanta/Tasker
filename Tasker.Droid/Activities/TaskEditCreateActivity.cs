@@ -45,6 +45,7 @@ namespace Tasker.Droid.Activities
         private DateTime _dueDate = DateTime.MaxValue;
         private DateTime _remindDate = DateTime.MaxValue;
         private TaskColors _taskColor;
+        private int _projectId;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -87,8 +88,7 @@ namespace Tasker.Droid.Activities
             _colorContainer.Click += delegate (Object o, EventArgs a) { SetColor(); };
             _colorShape.Click += delegate (Object o, EventArgs a) { SetColor(); };
             _colorName.Click += delegate (Object o, EventArgs a) { SetColor(); };
-            _viewModel.Id = Intent.GetIntExtra("TaskId", 0);
-
+         
             Initialization();
 
 
@@ -96,6 +96,9 @@ namespace Tasker.Droid.Activities
 
         private void Initialization()
         {
+            _viewModel.Id = Intent.GetIntExtra("TaskId", 0);
+            _projectId = Intent.GetIntExtra("ProjectId", 0);
+
             Task task = null;
             if (_viewModel.Id != 0)
                 task = _viewModel.GetItem(_viewModel.Id);
@@ -124,6 +127,13 @@ namespace Tasker.Droid.Activities
             else
             {
                 _taskColor = default(TaskColors);
+                var project = _projects.Find(x => x.ID == _projectId);
+                if (project != null)
+                {
+                    _taskProject.Text = project.Title;
+                    _taskProject.Tag = project.ID;
+
+                }
             }
 
 
