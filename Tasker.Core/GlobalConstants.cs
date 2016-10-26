@@ -20,15 +20,11 @@ namespace Tasker.Core
             {TaskColors.None,"#FF9E9E9E" },
             {TaskColors.Lime,"#FF00FF00" },
             {TaskColors.Peach,"#FFFFDAB9" },
-
             {TaskColors.Aqua,"#FF00FFFF" },
             {TaskColors.Blue,"#FF87CEFA" },
-            {TaskColors.Salmon,"#FFFA8072" },
-
+            {TaskColors.Salmon,"#FFFA8072" },      
             {TaskColors.Teal,"#FF008080" },
             {TaskColors.Tan,"#FFD2B48C" },
-
-            {TaskColors.Tomato,"#FFFF6347" },
             {TaskColors.Yellow,"#FFFFFF00" },
             {TaskColors.Violet,"#FFEE82EE" }
         };
@@ -45,7 +41,6 @@ namespace Tasker.Core
         Salmon,
         Teal,
         Tan,
-        Tomato,
         Yellow,
         Violet
     }

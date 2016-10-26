@@ -140,6 +140,7 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Dialogs\" />
     <Folder Include="Services\" />
     <Folder Include="Widgets\" />
   </ItemGroup>
@@ -491,9 +492,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_drop_dawn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\color_list.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\color_list_item.xml" />

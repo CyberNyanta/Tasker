@@ -9,7 +9,7 @@
 
   <color name="black">#000</color>
   <color name="demoItem">#848A2BE2</color>
-  <color name="item_selected">#fde2aa</color>
+  <color name="item_selected">#f9e9c7</color>
 
   <color name="action_swipe_complete">#ff3b9b0c</color>
   <color name="action_swipe_delete">#ffdb4c3f</color>

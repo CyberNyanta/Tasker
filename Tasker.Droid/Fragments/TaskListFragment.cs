@@ -32,7 +32,6 @@ namespace Tasker.Droid.Fragments
         private List<Task> _tasks;
         private List<Project> _projects;
         private ITaskListViewModel _viewModel;
-        private ITaskDetailsViewModel _detailsViewModel;
         private TaskListType _taskListType;
         private int _projectId;
 
@@ -45,7 +44,6 @@ namespace Tasker.Droid.Fragments
         {
             base.OnViewCreated(view, savedInstanceState);
             _viewModel = TinyIoCContainer.Current.Resolve<ITaskListViewModel>();
-            _detailsViewModel = TinyIoCContainer.Current.Resolve<ITaskDetailsViewModel>();
             _listView = view.FindViewById<ListView>(Resource.Id.taskList);
             _listView.ItemClick += ItemClick;
             HasOptionsMenu = true;
@@ -204,7 +202,7 @@ namespace Tasker.Droid.Fragments
             if (_taskListType.IsOpenType()&&direction.IsLeft)
             {
                 Intent intent = new Intent(this.Activity, typeof(TaskEditCreateActivity));
-                intent.PutExtra("TaskId", _detailsViewModel.Id);
+                intent.PutExtra("TaskId", _viewModel.Id);
                 StartActivity(intent);
                 return true;
             }

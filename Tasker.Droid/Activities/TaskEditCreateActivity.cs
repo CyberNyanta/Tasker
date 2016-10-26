@@ -30,7 +30,7 @@ using Tasker.Droid.Adapters;
 namespace Tasker.Droid.Activities
 {
     [Activity]
-    public class TaskEditCreateActivity : AppCompatActivity, IDialogInterfaceOnClickListener
+    public class TaskEditCreateActivity : AppCompatActivity
     {
         private ITaskDetailsViewModel _viewModel;
         private List<Project> _projects;
@@ -39,12 +39,12 @@ namespace Tasker.Droid.Activities
         private TextView _taskDueDate;
         private TextView _taskRemindDate;
         private TextView _taskProject;
-        private DateTime _dueDate = DateTime.MaxValue;
-        private DateTime _remindDate = DateTime.MaxValue;   
         private LinearLayout _colorContainer;
         private ImageView _colorShape;
         private TextView _colorName;
-        private Task _task;
+        private DateTime _dueDate = DateTime.MaxValue;
+        private DateTime _remindDate = DateTime.MaxValue;
+        private TaskColors _taskColor;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -60,7 +60,7 @@ namespace Tasker.Droid.Activities
             _taskTitle = FindViewById<EditText>(Resource.Id.task_title);
             _taskDescription = FindViewById<EditText>(Resource.Id.task_description);
             _taskDueDate = FindViewById<TextView>(Resource.Id.task_dueDate);
-            _taskRemindDate = FindViewById<TextView>(Resource.Id.task_remindDate);        
+            _taskRemindDate = FindViewById<TextView>(Resource.Id.task_remindDate);
             _taskProject = FindViewById<TextView>(Resource.Id.task_project);
             _colorContainer = FindViewById<LinearLayout>(Resource.Id.color_container);
             _colorShape = FindViewById<ImageView>(Resource.Id.color_shape);
@@ -89,40 +89,47 @@ namespace Tasker.Droid.Activities
             _colorName.Click += delegate (Object o, EventArgs a) { SetColor(); };
             _viewModel.Id = Intent.GetIntExtra("TaskId", 0);
 
-            if (_viewModel.Id != 0)
-                Initialization();
+            Initialization();
+
 
         }
 
         private void Initialization()
         {
-            _task = _viewModel.GetItem(_viewModel.Id);
+            Task task = null;
+            if (_viewModel.Id != 0)
+                task = _viewModel.GetItem(_viewModel.Id);
 
-            if (_task != null)
+            if (task != null)
             {
-                _taskTitle.Text = _task.Title;
-                _taskDescription.Text = _task.Description;
-                if (_task.DueDate != DateTime.MaxValue)
+                _taskTitle.Text = task.Title;
+                _taskDescription.Text = task.Description;
+                if (task.DueDate != DateTime.MaxValue)
                 {
-                    _dueDate = _task.DueDate;
-                    _remindDate = _task.RemindDate;
+                    _dueDate = task.DueDate;
+                    _remindDate = task.RemindDate;
                     _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
                 }
-                if (_task.RemindDate != DateTime.MaxValue)
+                if (task.RemindDate != DateTime.MaxValue)
                 {
-                    _remindDate = _task.RemindDate;
+                    _remindDate = task.RemindDate;
                     _taskRemindDate.Text = _remindDate.ToString(GetString(Resource.String.datetime_regex));
                 }
-
-                var project = _projects.Find(x => x.ID == _task.ProjectID);
+                var project = _projects.Find(x => x.ID == task.ProjectID);
                 _taskProject.Text = project.Title;
                 _taskProject.Tag = project.ID;
 
-                if (_task.Color != TaskColors.None)
-                {
-                    //_taskColors[(int)task.Color].Checked = true;
-                }
+                _taskColor = task.Color;
             }
+            else
+            {
+                _taskColor = default(TaskColors);
+            }
+
+
+            _colorName.Text = _taskColor.ToString();
+            GradientDrawable drawable = (GradientDrawable)_colorShape.Drawable;
+            drawable.Mutate().SetColorFilter(Color.ParseColor(TaskConstants.Colors[_taskColor]), PorterDuff.Mode.Src);
         }
 
 
@@ -164,26 +171,12 @@ namespace Tasker.Droid.Activities
 
             if (error) return;
 
-            TaskColors color = TaskColors.None;
-            //switch (_colorRadioGroup.CheckedRadioButtonId)
-            //{
-            //    case Resource.Id.color_1:
-            //        color = TaskColors.Red;
-            //        break;
-            //    case Resource.Id.color_2:
-            //        color = TaskColors.Green;
-            //        break;
-            //    case Resource.Id.color_3:
-            //        color = TaskColors.Blue;
-            //        break;
-            //}
-
             var task = new Task()
             {
                 ID = _viewModel.Id,
                 Title = title,
                 Description = desciption,
-                Color = color,
+                Color = _taskColor,
                 DueDate = _dueDate,
                 RemindDate = _remindDate,
                 ProjectID = (int)_taskProject.Tag
@@ -232,38 +225,27 @@ namespace Tasker.Droid.Activities
                 }
                         );
             alert.SetCancelable(true);
-         
-            alert.Show();            
+
+            alert.Show();
         }
-        private Dialog dialog;
+
         private void SetColor()
         {
-            _task = new Task();
-            
+            AlertDialog dialog = null;
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            //View view = LayoutInflater.Inflate(Resource.Layout.color_list, null);
-            //alert.SetView(view);
-            alert.SetCancelable(true);
-
-            //ListView lv = view.FindViewById<ListView>(Resource.Id.color_listView);
-            var adapter = new ColorListAdapter(this, _task.Color);
-            //lv.Adapter = adapter;
-            alert.SetAdapter(adapter, this);
-            //lv.ItemClick += ColorItemClick;
-
-            dialog = alert.Create();
-            dialog.Show();
-
+            dialog = alert.SetCancelable(true)
+                          .SetAdapter(new ColorListAdapter(this, _taskColor, () => OnSetColor(dialog.Dismiss)), default(IDialogInterfaceOnClickListener))
+                          .Show();
         }
 
-        private void ColorItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        private void OnSetColor(Action callback)
         {
-            dialog.Dismiss();
-        }
+            callback?.Invoke();
+            _taskColor = (TaskColors)Intent.GetIntExtra("TaskColor", 0);
+            _colorName.Text = _taskColor.ToString();
+            GradientDrawable drawable = (GradientDrawable)_colorShape.Drawable;
+            drawable.Mutate().SetColorFilter(Color.ParseColor(TaskConstants.Colors[_taskColor]), PorterDuff.Mode.Src);
 
-        public void OnClick(IDialogInterface dialog, int which)
-        {
-            dialog.Dismiss();
         }
 
         public class DueDateListener : SlideDateTimeListener

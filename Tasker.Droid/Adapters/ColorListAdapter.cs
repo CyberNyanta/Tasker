@@ -23,11 +23,13 @@ namespace Tasker.Droid.Adapters
         private Activity _context;
         private List<TaskColors> _colors;
         private TaskColors _current;
+        private event Action OnClick;
 
-        public ColorListAdapter(Activity context, TaskColors current) : base()
+        public ColorListAdapter(Activity context, TaskColors current, Action callback) : base()
         {
             _context = context;
             _current = current;
+            OnClick += callback;
             _colors = Enum.GetValues(typeof(TaskColors)).Cast<TaskColors>().ToList();
         }
 
@@ -48,34 +50,45 @@ namespace Tasker.Droid.Adapters
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
-            // Get our object for position
+
             var item = _colors[position];
             View view;
-            //Try to reuse convertView if it's not  null, otherwise inflate it from our item layout
-            // gives us some performance gains by not always inflating a new view
-            if (convertView == null)
-            {
-                view = _context.LayoutInflater.Inflate(Resource.Layout.color_list_item, null);
-            }
-            else
-            {
-                view = convertView;
-            }
-            if (item ==_current)
+            view = _context.LayoutInflater.Inflate(Resource.Layout.color_list_item, null);
+            if (Enum.Equals(item,_current))
             {
                 view.SetBackgroundResource(Resource.Color.item_selected);
             }
-           
+
             var colorDrawable = view.FindViewById<ImageView>(Resource.Id.color_shape);
             var colorName = view.FindViewById<TextView>(Resource.Id.color_name);
-
+            
             GradientDrawable drawable = (GradientDrawable)colorDrawable.Drawable;
             drawable.Mutate().SetColorFilter(Color.ParseColor(TaskConstants.Colors[item]),PorterDuff.Mode.Src);
 
             colorName.Text = item.ToString();
-            //Finally return the view
+
+            colorDrawable.Click -= View_Click;
+            colorName.Click -= View_Click;
+            view.Click -= View_Click;
+            view.Click += View_Click;
+            colorDrawable.Click += View_Click;
+            colorName.Click += View_Click;
+            view.Tag = (int)item;
+            colorDrawable.Tag = (int)item;
+            colorName.Tag = (int)item;
+
             return view;
         }
 
+        private void View_Click(object sender, EventArgs e)
+        {
+            _context.Intent.PutExtra("TaskColor", (int)((View)sender).Tag);      
+
+            _context.RunOnUiThread(() =>
+            {
+                OnClick?.Invoke();
+            });
+            
+        }
     }
 }

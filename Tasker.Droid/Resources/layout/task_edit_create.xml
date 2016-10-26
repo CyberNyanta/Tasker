@@ -40,16 +40,15 @@
 
             <TextView
                 style="@style/Tasker.HintTextViewStyle"
-                android:text="@string/project"
                 android:layout_marginBottom="0dp"
-              />
+                android:text="@string/project" />
 
             <TextView
                 android:id="@+id/task_project"
                 style="@style/Tasker.TextViewStyle"
-                android:text="Inbox"
                 android:layout_marginLeft="@dimen/small_margin"
-                android:drawableRight="@drawable/ic_drop_dawn"/>
+                android:drawableRight="@drawable/ic_drop_dawn"
+                android:text="Inbox" />
 
             <TextView
                 style="@style/Tasker.HintTextViewStyle"
@@ -68,7 +67,7 @@
 
             <TextView
                 style="@style/Tasker.HintTextViewStyle"
-                android:text="@string/task_remind_date"/>
+                android:text="@string/task_remind_date" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -83,8 +82,9 @@
 
             <TextView
                 style="@style/Tasker.HintTextViewStyle"
-                android:text="@string/task_color"
-                android:layout_marginBottom="0dp"/>
+                android:layout_marginBottom="0dp"
+                android:text="@string/task_color" />
+
             <include layout="@layout/color_item" />
 
         </LinearLayout>
