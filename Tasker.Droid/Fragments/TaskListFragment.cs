@@ -34,6 +34,7 @@ namespace Tasker.Droid.Fragments
         private ITaskListViewModel _viewModel;
         private TaskListType _taskListType;
         private int _projectId;
+        private bool isAllSoved;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -77,10 +78,12 @@ namespace Tasker.Droid.Fragments
         private void TaskInitialization()
         {
             _taskListType = (TaskListType)Activity.Intent.GetIntExtra("TaskListType", (int)TaskListType.AllOpen);
+           
             switch (_taskListType)
             {
                 case TaskListType.AllOpen:
                     _tasks = _viewModel.GetAll();
+                    isAllSoved = _viewModel.GetAllSolve().Count > 0 ? true : false;
                     break;
                 case TaskListType.AllSolve:
                     HideFAB();
@@ -94,6 +97,7 @@ namespace Tasker.Droid.Fragments
                 case TaskListType.ProjectOpen:
                     _projectId = Activity.Intent.GetIntExtra("ProjectId", 0);
                     _tasks = _viewModel.GetProjectOpenTasks(_projectId);
+                    isAllSoved = _viewModel.GetProjectSolveTasks(_projectId).Count > 0 ? true : false;
                     break;
                 case TaskListType.Search:
                     HideFAB();
@@ -101,6 +105,14 @@ namespace Tasker.Droid.Fragments
                     break;
             }
 
+            if (_tasks.Count == 0)
+            {
+                OnTasksListIsEmpty();
+            }
+            else
+            {
+                _listView.Visibility = ViewStates.Visible;
+            }
             _tasks.Sort((t1, t2) => DateTime.Compare(t1.DueDate, t2.DueDate));
 
             _projects = _viewModel.GetAllProjects();
@@ -123,6 +135,24 @@ namespace Tasker.Droid.Fragments
                                .AddBackground(SwipeDirection.DirectionNormalRight, Resource.Layout.task_item_background_solve_right);
             }
 
+        }
+
+        private void OnTasksListIsEmpty()
+        {
+            var image = Activity.FindViewById<ImageView>(Resource.Id.empty_items_image);
+            var coment = Activity.FindViewById<TextView>(Resource.Id.empty_items_comment);
+            if (isAllSoved)
+            {
+                image.SetImageDrawable(Activity.GetDrawable(Resource.Drawable.empty_items_solve));
+                coment.Text = Activity.GetString(Resource.String.empty_items_comment_all_solve);
+            }
+            else
+            {
+                image.SetImageDrawable(Activity.GetDrawable(Resource.Drawable.empty_items));
+                coment.Text = Activity.GetString(Resource.String.empty_items_comment_not_added);
+            }
+
+            _listView.Visibility = ViewStates.Gone;
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -198,6 +228,11 @@ namespace Tasker.Droid.Fragments
                         _taskListAdapter.Remove(position);
                         _swipeActionAdapter.NotifyDataSetChanged();
                     });
+                }
+
+                if (_tasks.Count==0)
+                {
+                    OnTasksListIsEmpty();
                 }
             }
         }

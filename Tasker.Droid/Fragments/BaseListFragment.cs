@@ -45,7 +45,7 @@ namespace Tasker.Droid.Fragments
 
         public void HideFAB()
         {
-            _fab.Hide(false);
+            _fab.Visibility = ViewStates.Gone;
         }
 
 

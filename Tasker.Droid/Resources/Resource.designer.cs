@@ -3134,14 +3134,14 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f07001d
 			public const int complete_tasks_title = 2131165213;
 			
-			// aapt resource value: 0x7f070030
-			public const int confirm_delete = 2131165232;
-			
 			// aapt resource value: 0x7f070032
-			public const int confirm_delete_project = 2131165234;
+			public const int confirm_delete = 2131165234;
 			
-			// aapt resource value: 0x7f070031
-			public const int confirm_delete_task = 2131165233;
+			// aapt resource value: 0x7f070034
+			public const int confirm_delete_project = 2131165236;
+			
+			// aapt resource value: 0x7f070033
+			public const int confirm_delete_task = 2131165235;
 			
 			// aapt resource value: 0x7f070018
 			public const int datetime_none = 2131165208;
@@ -3155,14 +3155,20 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f070027
 			public const int description_error = 2131165223;
 			
-			// aapt resource value: 0x7f070035
-			public const int dialog_cancel = 2131165237;
+			// aapt resource value: 0x7f070037
+			public const int dialog_cancel = 2131165239;
 			
-			// aapt resource value: 0x7f070034
-			public const int dialog_yes = 2131165236;
+			// aapt resource value: 0x7f070036
+			public const int dialog_yes = 2131165238;
 			
 			// aapt resource value: 0x7f070021
 			public const int edit = 2131165217;
+			
+			// aapt resource value: 0x7f070029
+			public const int empty_items_comment_all_solve = 2131165225;
+			
+			// aapt resource value: 0x7f070028
+			public const int empty_items_comment_not_added = 2131165224;
 			
 			// aapt resource value: 0x7f070025
 			public const int hide_solved = 2131165221;
@@ -3170,14 +3176,14 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f07001e
 			public const int project = 2131165214;
 			
-			// aapt resource value: 0x7f07002e
-			public const int project_create_dialog = 2131165230;
-			
-			// aapt resource value: 0x7f07002d
-			public const int project_dialog_field_hint = 2131165229;
+			// aapt resource value: 0x7f070030
+			public const int project_create_dialog = 2131165232;
 			
 			// aapt resource value: 0x7f07002f
-			public const int project_edit_dialog = 2131165231;
+			public const int project_dialog_field_hint = 2131165231;
+			
+			// aapt resource value: 0x7f070031
+			public const int project_edit_dialog = 2131165233;
 			
 			// aapt resource value: 0x7f070019
 			public const int project_inbox = 2131165209;
@@ -3197,29 +3203,29 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f070013
 			public const int status_bar_notification_info_overflow = 2131165203;
 			
-			// aapt resource value: 0x7f07002c
-			public const int task_color = 2131165228;
+			// aapt resource value: 0x7f07002e
+			public const int task_color = 2131165230;
 			
-			// aapt resource value: 0x7f070033
-			public const int task_count = 2131165235;
+			// aapt resource value: 0x7f070035
+			public const int task_count = 2131165237;
 			
-			// aapt resource value: 0x7f07002b
-			public const int task_description = 2131165227;
+			// aapt resource value: 0x7f07002d
+			public const int task_description = 2131165229;
 			
 			// aapt resource value: 0x7f07001c
 			public const int task_details_title = 2131165212;
 			
-			// aapt resource value: 0x7f070028
-			public const int task_due_date = 2131165224;
+			// aapt resource value: 0x7f07002a
+			public const int task_due_date = 2131165226;
 			
 			// aapt resource value: 0x7f07001b
 			public const int task_edit_title = 2131165211;
 			
-			// aapt resource value: 0x7f070029
-			public const int task_remind_date = 2131165225;
+			// aapt resource value: 0x7f07002b
+			public const int task_remind_date = 2131165227;
 			
-			// aapt resource value: 0x7f07002a
-			public const int task_title = 2131165226;
+			// aapt resource value: 0x7f07002c
+			public const int task_title = 2131165228;
 			
 			// aapt resource value: 0x7f070026
 			public const int title_error = 2131165222;

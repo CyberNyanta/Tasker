@@ -23,6 +23,9 @@
   <!--Errors-->
   <string name="title_error">Length must be less then %s</string>
   <string name="description_error">Length must be less then %s</string>
+
+  <string name="empty_items_comment_not_added">You\'ve not added anything</string>
+  <string name="empty_items_comment_all_solve">You\'re all done!</string>
   
 
   <string name="task_due_date">Due date</string>
