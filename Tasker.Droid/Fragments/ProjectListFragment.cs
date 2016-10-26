@@ -63,26 +63,25 @@ namespace Tasker.Droid.Fragments
 
         protected override void FabClick(object sender, EventArgs e)
         {
-            Dialog dialog = new Dialog(Activity);
+            View view = Activity.LayoutInflater.Inflate(Resource.Layout.project_edit_create_dialog, null);
             AlertDialog.Builder alert = new AlertDialog.Builder(this.Activity);
-            alert.SetTitle(GetString(Resource.String.project_create_dialog));
-            alert.SetPositiveButton(GetString(Resource.String.dialog_yes), (senderAlert, args) =>
-            {
-                var projectTitle = dialog.FindViewById<EditText>(Resource.Id.project_dialog_title);
-                if (projectTitle.Text.IsLengthInRange(TaskConstants.PROJECT_TITLE_MAX_LENGTH, 1))
-                {
-                    var project = new Project { Title = projectTitle.Text };
-                    _viewModel.SaveItem(project);
-                    _listAdapter.Add(project);
+            alert.SetTitle(GetString(Resource.String.project_create_dialog))
+                 .SetPositiveButton(GetString(Resource.String.dialog_yes), (senderAlert, args) =>
+                        {
+                            var projectTitle = view.FindViewById<EditText>(Resource.Id.project_dialog_title);
+                            if (projectTitle.Text.IsLengthInRange(TaskConstants.PROJECT_TITLE_MAX_LENGTH, 1))
+                            {
+                                var project = new Project { Title = projectTitle.Text };
+                                _viewModel.SaveItem(project);
+                                _listAdapter.Add(project);
 
-                }
+                            }
 
-            });
-            alert.SetView(Resource.Layout.project_edit_create_dialog);
-            alert.SetCancelable(true);
-            alert.SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { });
-            dialog = alert.Create();
-            dialog.Show();
+                        })            
+                 .SetView(view)
+                 .SetCancelable(true)
+                 .SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { })
+                 .Show();
         }
 
 
@@ -121,36 +120,31 @@ namespace Tasker.Droid.Fragments
 
         private void EditProject(int position)
         {
-
-            Dialog dialog = new Dialog(Activity);            
+         
             EditText projectTitle = null;
             var project = _viewModel.GetItem(_viewModel.Id);
-
+            View view = Activity.LayoutInflater.Inflate(Resource.Layout.project_edit_create_dialog, null);
             AlertDialog.Builder alert = new AlertDialog.Builder(this.Activity);
-            alert.SetTitle(GetString(Resource.String.project_edit_dialog));
-            alert.SetView(Resource.Layout.project_edit_create_dialog);
-            
-            alert.SetPositiveButton(GetString(Resource.String.dialog_yes), (senderAlert, args) =>
-            {
+            alert.SetTitle(GetString(Resource.String.project_edit_dialog))
+                 .SetView(view)
+                 .SetPositiveButton(GetString(Resource.String.dialog_yes), (senderAlert, args) =>
+                        {
 
-                if (projectTitle.Text.IsLengthInRange(TaskConstants.PROJECT_TITLE_MAX_LENGTH, 1))
-                {
-                    project.Title = projectTitle.Text;
-                    _viewModel.SaveItem(project);
+                            if (projectTitle.Text.IsLengthInRange(TaskConstants.PROJECT_TITLE_MAX_LENGTH, 1))
+                            {
+                                project.Title = projectTitle.Text;
+                                _viewModel.SaveItem(project);
 
-                    _listAdapter.Save(project, position);                    
-                    _swipeActionAdapter.NotifyDataSetChanged();
-                }
+                                _listAdapter.Save(project, position);                    
+                                _swipeActionAdapter.NotifyDataSetChanged();
+                            }
 
-            });
-            
-            alert.SetCancelable(true);
-            alert.SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { });
-            dialog = alert.Create();
-            
-            dialog.Show();
+                        })            
+                .SetCancelable(true)
+                .SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { })
+                .Show();
 
-            projectTitle = dialog.FindViewById<EditText>(Resource.Id.project_dialog_title);      
+            projectTitle = view.FindViewById<EditText>(Resource.Id.project_dialog_title);      
             projectTitle.Text = project.Title;
         }
 
