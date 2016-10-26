@@ -29,6 +29,7 @@ namespace Tasker.Droid
     [Activity (Label = "Tasker",  Theme = "@style/Tasker")]
     public class ProjectTasksListActivity : AppCompatActivity
     {
+        private IProjectDetailsViewModel _viewModel;
         protected override void OnCreate (Bundle bundle)
 		{
             base.OnCreate (bundle);
@@ -36,6 +37,18 @@ namespace Tasker.Droid
             SetSupportActionBar(FindViewById<Toolbar>(Resource.Id.toolbar));
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
+
+            _viewModel = TinyIoCContainer.Current.Resolve<IProjectDetailsViewModel>();
+            var id = Intent.GetIntExtra("ProjectId", 0);
+            if (id != 0)
+            {
+                var project = _viewModel.GetItem(id);
+                SupportActionBar.Title = project.Title;
+            }
+            else
+            {
+                SupportActionBar.SetTitle(Resource.String.project_inbox);
+            }
 
             if (bundle == null)
             {
