@@ -37,7 +37,13 @@ namespace Tasker.Droid.Adapters
             _tasks.RemoveAt(position);
             NotifyDataSetChanged();
         }
-       
+
+        public void ChangeDataSet(List<Task> tasks)
+        {
+            _tasks = tasks;
+            NotifyDataSetChanged();
+        }
+
         public override Task this[int position]
         {
             get { return _tasks[position]; }
@@ -77,12 +83,12 @@ namespace Tasker.Droid.Adapters
             if (item.IsSolved)
             {
                 taskTitle.PaintFlags = PaintFlags.StrikeThruText | PaintFlags.AntiAlias | PaintFlags.EmbeddedBitmapText;
-                view.Alpha = 0.4f;
+                view.Alpha = TaskConstants.COMPLETED_TASK_BACKGROUND_ALPHA;
             }
             else
             {
                 taskTitle.PaintFlags = PaintFlags.AntiAlias | PaintFlags.EmbeddedBitmapText;
-                view.Alpha = 1;
+                view.Alpha = TaskConstants.TASK_BACKGROUND_ALPHA;
             }
                  
             taskTitle.Text = item.Title;

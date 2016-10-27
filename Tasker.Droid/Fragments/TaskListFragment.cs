@@ -20,6 +20,7 @@ using Tasker.Core.AL.ViewModels.Contracts;
 using Tasker.Core.DAL.Entities;
 using Tasker.Droid.Activities;
 using Com.Wdullaer.Swipeactionadapter;
+using Tasker.Core;
 
 namespace Tasker.Droid.Fragments
 {
@@ -141,13 +142,22 @@ namespace Tasker.Droid.Fragments
         {
             var image = Activity.FindViewById<ImageView>(Resource.Id.empty_items_image);
             var coment = Activity.FindViewById<TextView>(Resource.Id.empty_items_comment);
-            if (isAllSoved)
+            var container = Activity.FindViewById<FrameLayout>(Resource.Id.empty_items_container);
+            if (_taskListType.IsSolveType())
             {
+                container.Alpha = TaskConstants.COMPLETED_TASK_BACKGROUND_ALPHA;
+                image.SetImageDrawable(Activity.GetDrawable(Resource.Drawable.empty_items));
+                coment.Text = Activity.GetString(Resource.String.empty_items_comment_no_complete);
+            }
+            else if(isAllSoved)
+            {
+                container.Alpha = TaskConstants.TASK_BACKGROUND_ALPHA;
                 image.SetImageDrawable(Activity.GetDrawable(Resource.Drawable.empty_items_solve));
                 coment.Text = Activity.GetString(Resource.String.empty_items_comment_all_solve);
             }
             else
             {
+                container.Alpha = TaskConstants.TASK_BACKGROUND_ALPHA;
                 image.SetImageDrawable(Activity.GetDrawable(Resource.Drawable.empty_items));
                 coment.Text = Activity.GetString(Resource.String.empty_items_comment_not_added);
             }
@@ -162,9 +172,15 @@ namespace Tasker.Droid.Fragments
                 case Resource.Id.menu_show_solve_tasks:
 
                     Intent intent = new Intent(this.Activity, typeof(CompleteTaskListActivity));
-                    intent.PutExtra("TaskListType", (int)(_taskListType == TaskListType.ProjectOpen ? TaskListType.ProjectSolve : TaskListType.AllSolve));
+                    intent.PutExtra("IsProjectTaskSearch", (_taskListType == TaskListType.ProjectOpen ? true : false));
                     intent.PutExtra("ProjectId", _projectId);
                     StartActivity(intent);
+                    break;
+
+                case Resource.Id.menu_search:
+
+                    var intent2 = new Intent(Activity, typeof(SearchTaskListActivity));
+                    StartActivity(intent2);
                     break;
             }
             return base.OnOptionsItemSelected(item);
@@ -217,8 +233,10 @@ namespace Tasker.Droid.Fragments
                 {                    
                     SolveTask();
                     _taskListAdapter.Remove(position);
-
+                    isAllSoved = true;
                     _swipeActionAdapter.NotifyDataSetChanged();
+                    if (_tasks.Count == 0)
+                        OnTasksListIsEmpty();
                 }                
                 else if (_taskListType.IsSolveType())
                 {
@@ -226,14 +244,14 @@ namespace Tasker.Droid.Fragments
                     {
                         _viewModel.DeleteItem(_viewModel.Id);
                         _taskListAdapter.Remove(position);
+                        isAllSoved = false;
                         _swipeActionAdapter.NotifyDataSetChanged();
+                        if (_tasks.Count == 0)
+                            OnTasksListIsEmpty();
                     });
                 }
 
-                if (_tasks.Count==0)
-                {
-                    OnTasksListIsEmpty();
-                }
+             
             }
         }
 

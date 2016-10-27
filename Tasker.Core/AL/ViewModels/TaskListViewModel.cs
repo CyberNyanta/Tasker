@@ -41,7 +41,7 @@ namespace Tasker.Core.AL.ViewModels
 
         public List<Task> GetAll()
         {
-            return IsSolvedTaskDisplayed ? _taskManager.GetAll() : _taskManager.GetAllOpen();
+            return _taskManager.GetAll();
         }
 
         public List<Task> GetWhere(Predicate<Task> predicate) //unused in droid
@@ -51,7 +51,7 @@ namespace Tasker.Core.AL.ViewModels
 
         public List<Task> GetProjectTasks(int projectId)
         {
-            return IsSolvedTaskDisplayed ? _taskManager.GetProjectTasks(projectId) : _taskManager.GetProjectOpenTasks(projectId);
+            return _taskManager.GetProjectTasks(projectId);
         }
 
         public List<Project> GetAllProjects()

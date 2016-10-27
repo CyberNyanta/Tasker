@@ -24,10 +24,10 @@ using Tasker.Core.AL.ViewModels.Contracts;
 using Tasker.Droid.Fragments;
 using Android.Graphics;
 
-namespace Tasker.Droid
+namespace Tasker.Droid.Activities
 {
     [Activity (Label = "Tasker", MainLauncher = true, Theme = "@style/Tasker")]
-    public class TaskListActivity : AppCompatActivity
+    public class MainTaskListActivity : AppCompatActivity
     {
         protected override void OnCreate (Bundle bundle)
 		{
@@ -54,9 +54,9 @@ namespace Tasker.Droid
             switch (item.ItemId)
             {
                 case Resource.Id.menu_projects:
-                    Intent intent = new Intent(this, typeof(ProjectListActivity));
+                    var intent = new Intent(this, typeof(ProjectListActivity));
                     StartActivity(intent);
-                    break;
+                    break;             
             }
             return base.OnOptionsItemSelected(item);
         }

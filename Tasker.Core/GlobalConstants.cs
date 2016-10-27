@@ -15,6 +15,9 @@ namespace Tasker.Core
 
         public const Int32 PROJECT_TITLE_MAX_LENGTH = 50;
 
+        public const float COMPLETED_TASK_BACKGROUND_ALPHA = 0.4f;
+        public const float TASK_BACKGROUND_ALPHA = 1f;
+
         public static readonly Dictionary<TaskColors, string> Colors = new Dictionary<TaskColors, string>()
         {
             {TaskColors.None,"#FF9E9E9E" },

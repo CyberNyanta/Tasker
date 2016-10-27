@@ -24,7 +24,6 @@ namespace Tasker.Droid.Fragments
     public class BaseListFragment : Fragment
     {
         private FAB _fab;
-        private readonly bool hideFab;
         private int previousVisibleItem;
         protected ListView _listView = null;
 

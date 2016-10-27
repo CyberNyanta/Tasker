@@ -17,16 +17,15 @@
   <string name="edit">Edit</string>
   <string name="delete">Delete</string>
   <string name="save">Save</string>
-  <string name="show_solved">Show solved tasks</string>
-  <string name="hide_solved">Hide solved tasks</string>
+  <string name="show_solved">Show completed tasks</string>
 
   <!--Errors-->
-  <string name="title_error">Length must be less then %s</string>
+  <string name="title_error">Title is required</string>
   <string name="description_error">Length must be less then %s</string>
 
-  <string name="empty_items_comment_not_added">You\'ve not added anything</string>
+  <string name="empty_items_comment_not_added">Nothing added yet</string>
   <string name="empty_items_comment_all_solve">You\'re all done!</string>
-  
+  <string name="empty_items_comment_no_complete">No completed task</string>
 
   <string name="task_due_date">Due date</string>
   <string name="task_remind_date">Remind date</string>
