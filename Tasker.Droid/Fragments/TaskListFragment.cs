@@ -55,9 +55,9 @@ namespace Tasker.Droid.Fragments
         private void ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             int id = (int)e.Id;
-            Intent intent = new Intent(this.Activity, typeof(TaskDetailsActivity));
+            Intent intent = new Intent(this.Activity, typeof(TaskEditCreateActivity));
             intent.PutExtra("TaskId", id);
-            StartActivity(intent);
+            StartActivity(intent);           
         }
 
         protected override void FabClick(object sender, EventArgs e)
