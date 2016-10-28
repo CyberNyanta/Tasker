@@ -59,7 +59,7 @@ namespace Tasker.Droid
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            MenuInflater.Inflate(Resource.Menu.project_list_menu, menu);
+            MenuInflater.Inflate(Resource.Menu.project_task_list_menu, menu);
             return base.OnCreateOptionsMenu(menu);
         }
 

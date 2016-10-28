@@ -2305,15 +2305,6 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f07002b
 			public const int bottom = 2131165227;
 			
-			// aapt resource value: 0x7f07009c
-			public const int box_task_description = 2131165340;
-			
-			// aapt resource value: 0x7f07009e
-			public const int box_task_due_date = 2131165342;
-			
-			// aapt resource value: 0x7f0700a1
-			public const int box_task_remind_date = 2131165345;
-			
 			// aapt resource value: 0x7f070097
 			public const int buttonHorizontalDivider = 2131165335;
 			
@@ -2404,8 +2395,8 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f07003c
 			public const int down = 2131165244;
 			
-			// aapt resource value: 0x7f0700a8
-			public const int dueDate = 2131165352;
+			// aapt resource value: 0x7f0700a3
+			public const int dueDate = 2131165347;
 			
 			// aapt resource value: 0x7f07005f
 			public const int edit_query = 2131165279;
@@ -2503,26 +2494,23 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f070083
 			public const int media_actions = 2131165315;
 			
-			// aapt resource value: 0x7f0700af
-			public const int menu_delete = 2131165359;
-			
-			// aapt resource value: 0x7f0700b0
-			public const int menu_edit = 2131165360;
-			
-			// aapt resource value: 0x7f0700ac
-			public const int menu_projects = 2131165356;
-			
-			// aapt resource value: 0x7f0700b1
-			public const int menu_save = 2131165361;
-			
 			// aapt resource value: 0x7f0700ab
-			public const int menu_search = 2131165355;
+			public const int menu_delete = 2131165355;
 			
-			// aapt resource value: 0x7f0700ae
-			public const int menu_search_widget = 2131165358;
+			// aapt resource value: 0x7f0700a7
+			public const int menu_projects = 2131165351;
 			
-			// aapt resource value: 0x7f0700ad
-			public const int menu_show_solve_tasks = 2131165357;
+			// aapt resource value: 0x7f0700aa
+			public const int menu_save = 2131165354;
+			
+			// aapt resource value: 0x7f0700a6
+			public const int menu_search = 2131165350;
+			
+			// aapt resource value: 0x7f0700a9
+			public const int menu_search_widget = 2131165353;
+			
+			// aapt resource value: 0x7f0700a8
+			public const int menu_show_solve_tasks = 2131165352;
 			
 			// aapt resource value: 0x7f07001e
 			public const int middle = 2131165214;
@@ -2566,8 +2554,8 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f07008f
 			public const int projectContainer = 2131165327;
 			
-			// aapt resource value: 0x7f0700a9
-			public const int projectName = 2131165353;
+			// aapt resource value: 0x7f0700a4
+			public const int projectName = 2131165348;
 			
 			// aapt resource value: 0x7f07008d
 			public const int project_dialog_title = 2131165325;
@@ -2692,32 +2680,32 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f07008e
 			public const int taskContainer = 2131165326;
 			
-			// aapt resource value: 0x7f0700a6
-			public const int taskList = 2131165350;
+			// aapt resource value: 0x7f0700a0
+			public const int taskList = 2131165344;
 			
-			// aapt resource value: 0x7f0700a7
-			public const int taskTitle = 2131165351;
+			// aapt resource value: 0x7f0700a2
+			public const int taskTitle = 2131165346;
 			
-			// aapt resource value: 0x7f0700a5
-			public const int task_color_border = 2131165349;
+			// aapt resource value: 0x7f0700a1
+			public const int task_color_border = 2131165345;
 			
 			// aapt resource value: 0x7f070091
 			public const int task_count = 2131165329;
 			
-			// aapt resource value: 0x7f07009d
-			public const int task_description = 2131165341;
+			// aapt resource value: 0x7f07009c
+			public const int task_description = 2131165340;
 			
-			// aapt resource value: 0x7f0700a0
-			public const int task_dueDate = 2131165344;
+			// aapt resource value: 0x7f07009e
+			public const int task_dueDate = 2131165342;
 			
 			// aapt resource value: 0x7f070094
 			public const int task_list = 2131165332;
 			
-			// aapt resource value: 0x7f0700a4
-			public const int task_project = 2131165348;
+			// aapt resource value: 0x7f07009d
+			public const int task_project = 2131165341;
 			
-			// aapt resource value: 0x7f0700a3
-			public const int task_remindDate = 2131165347;
+			// aapt resource value: 0x7f07009f
+			public const int task_remindDate = 2131165343;
 			
 			// aapt resource value: 0x7f07009b
 			public const int task_title = 2131165339;
@@ -2731,12 +2719,6 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f070050
 			public const int textSpacerNoButtons = 2131165264;
 			
-			// aapt resource value: 0x7f07009f
-			public const int textView = 2131165343;
-			
-			// aapt resource value: 0x7f0700a2
-			public const int textView3 = 2131165346;
-			
 			// aapt resource value: 0x7f070086
 			public const int time = 2131165318;
 			
@@ -2749,8 +2731,8 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f07004b
 			public const int title_template = 2131165259;
 			
-			// aapt resource value: 0x7f0700aa
-			public const int toolbar = 2131165354;
+			// aapt resource value: 0x7f0700a5
+			public const int toolbar = 2131165349;
 			
 			// aapt resource value: 0x7f070033
 			public const int top = 2131165235;
@@ -3016,31 +2998,28 @@ namespace Tasker.Droid
 			public const int support_simple_spinner_dropdown_item = 2130903102;
 			
 			// aapt resource value: 0x7f03003f
-			public const int task_details = 2130903103;
+			public const int task_edit_create = 2130903103;
 			
 			// aapt resource value: 0x7f030040
-			public const int task_edit_create = 2130903104;
+			public const int task_item_background_solve_left = 2130903104;
 			
 			// aapt resource value: 0x7f030041
-			public const int task_item_background_solve_left = 2130903105;
+			public const int task_item_background_solve_right = 2130903105;
 			
 			// aapt resource value: 0x7f030042
-			public const int task_item_background_solve_right = 2130903106;
+			public const int task_item_background_unsolve_left = 2130903106;
 			
 			// aapt resource value: 0x7f030043
-			public const int task_item_background_unsolve_left = 2130903107;
+			public const int task_item_background_unsolve_right = 2130903107;
 			
 			// aapt resource value: 0x7f030044
-			public const int task_item_background_unsolve_right = 2130903108;
+			public const int task_list = 2130903108;
 			
 			// aapt resource value: 0x7f030045
-			public const int task_list = 2130903109;
+			public const int task_list_item = 2130903109;
 			
 			// aapt resource value: 0x7f030046
-			public const int task_list_item = 2130903110;
-			
-			// aapt resource value: 0x7f030047
-			public const int toolbar = 2130903111;
+			public const int toolbar = 2130903110;
 			
 			static Layout()
 			{
@@ -3059,13 +3038,13 @@ namespace Tasker.Droid
 			public const int main_activity_menu = 2131558400;
 			
 			// aapt resource value: 0x7f0d0001
-			public const int project_list_menu = 2131558401;
+			public const int project_task_list_menu = 2131558401;
 			
 			// aapt resource value: 0x7f0d0002
 			public const int search_task_list_menu = 2131558402;
 			
 			// aapt resource value: 0x7f0d0003
-			public const int task_details_menu = 2131558403;
+			public const int task_create_menu = 2131558403;
 			
 			// aapt resource value: 0x7f0d0004
 			public const int task_edit_menu = 2131558404;

@@ -99,7 +99,6 @@
     <Compile Include="Activities\ProjectListActivity.cs" />
     <Compile Include="Activities\MainTaskListActivity.cs" />
     <Compile Include="Activities\SearchTaskListActivity.cs" />
-    <Compile Include="Activities\TaskDetailsActivity.cs" />
     <Compile Include="Activities\TaskEditCreateActivity.cs" />
     <Compile Include="Adapters\ColorListAdapter.cs" />
     <Compile Include="Adapters\ProjectListAdapter.cs" />
@@ -270,13 +269,7 @@
     <AndroidResource Include="Resources\menu\task_edit_menu.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\menu\task_details_menu.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\layout\task_edit_create.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\task_details.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_delete.png" />
@@ -510,7 +503,7 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_save_light.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\menu\project_list_menu.xml" />
+    <AndroidResource Include="Resources\menu\project_task_list_menu.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\search_task_list_menu.xml" />
@@ -520,6 +513,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\search_list.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\task_create_menu.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

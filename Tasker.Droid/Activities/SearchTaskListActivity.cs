@@ -11,7 +11,10 @@ using Android.Support.V4.App;
 using Android.Support.V7.App;
 using Android.Views.Animations;
 using ListView = Android.Widget.ListView;
-using Java.Util;
+using SearchView = Android.Support.V7.Widget.SearchView;
+using Toolbar = Android.Support.V7.Widget.Toolbar;
+using Android.Graphics;
+using Android.Widget;
 
 using TinyIoC;
 using Com.Github.Jjobes.Slidedatetimepicker;
@@ -22,7 +25,6 @@ using Tasker.Core.DAL.Entities;
 using Tasker.Core.AL.Utils;
 using Tasker.Core.AL.ViewModels.Contracts;
 using Tasker.Droid.Fragments;
-using Android.Graphics;
 
 
 namespace Tasker.Droid.Activities
@@ -40,6 +42,7 @@ namespace Tasker.Droid.Activities
         private ListView _listView;
         private bool _isProjectTaskSearch;
         private int _projectId;
+        private string _lastQuery;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -51,30 +54,9 @@ namespace Tasker.Droid.Activities
             SupportActionBar.SetDisplayShowHomeEnabled(true);
             _viewModel = TinyIoCContainer.Current.Resolve<ITaskListViewModel>();
             _listView = FindViewById<ListView>(Resource.Id.task_list);
-
-
-        }   
-
-        protected override void OnResume()
-        {
-            base.OnResume();
-
-            _isProjectTaskSearch = Intent.GetBooleanExtra("IsProjectTaskSearch", false);
-            if (!_isProjectTaskSearch)
-            {
-                _tasks = _viewModel.GetAll();
-            }
-            else
-            {
-                _projectId = Intent.GetIntExtra("ProjectId", 0);
-                _tasks = _viewModel.GetProjectTasks(_projectId);
-            }
-            _projects = _viewModel.GetAllProjects();
-            _taskListAdapter = new Adapters.TaskListAdapter(this, _foundTasks, _projects);
-            _listView.Adapter = _taskListAdapter;
-
-
+            _listView.ItemClick += ItemClick;
         }
+
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.search_task_list_menu, menu);
@@ -100,12 +82,49 @@ namespace Tasker.Droid.Activities
             return base.OnOptionsItemSelected(item);
         }
 
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            _isProjectTaskSearch = Intent.GetBooleanExtra("IsProjectTaskSearch", false);
+            if (!_isProjectTaskSearch)
+            {
+                _tasks = _viewModel.GetAll();
+            }
+            else
+            {
+                _projectId = Intent.GetIntExtra("ProjectId", 0);
+                _tasks = _viewModel.GetProjectTasks(_projectId);
+            }
+            _projects = _viewModel.GetAllProjects();
+            _taskListAdapter = new Adapters.TaskListAdapter(this, _foundTasks, _projects);
+            _listView.Adapter = _taskListAdapter;
+
+            OnQueryTextChange(_lastQuery);
+        }
+
+
+        private void ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            int id = (int)e.Id;
+            Intent intent = new Intent(this, typeof(TaskEditCreateActivity));
+            intent.PutExtra("TaskId", id);
+            StartActivity(intent);
+        }
+
         #region SearchView.IOnQueryTextListener
         public bool OnQueryTextChange(string newText)
         {
-            var query = newText.ToLower();
-            _foundTasks = _tasks.FindAll(task => task.Title.ToLower().Contains(query));
-            _taskListAdapter.ChangeDataSet(_foundTasks);
+            _lastQuery = newText?.ToLower();
+            if (!string.IsNullOrWhiteSpace(_lastQuery))
+            {
+                _foundTasks = _tasks.FindAll(task => task.Title.ToLower().Contains(_lastQuery));
+                _taskListAdapter.ChangeDataSet(_foundTasks);
+            }
+            else
+            {
+                _taskListAdapter.ChangeDataSet(new List<Task>());
+            }
             return true;
         }
 

@@ -29,6 +29,7 @@ namespace Tasker.Droid.Adapters
             _context = context;
             _tasks = tasks;
             _projects = projects;
+            _tasks.Sort((t1, t2) => DateTime.Compare(t1.DueDate, t2.DueDate));
             NotifyDataSetChanged();
         }
 
@@ -41,6 +42,7 @@ namespace Tasker.Droid.Adapters
         public void ChangeDataSet(List<Task> tasks)
         {
             _tasks = tasks;
+            _tasks.Sort((t1, t2) => DateTime.Compare(t1.DueDate, t2.DueDate));
             NotifyDataSetChanged();
         }
 

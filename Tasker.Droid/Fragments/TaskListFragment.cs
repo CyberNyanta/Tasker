@@ -83,7 +83,7 @@ namespace Tasker.Droid.Fragments
             switch (_taskListType)
             {
                 case TaskListType.AllOpen:
-                    _tasks = _viewModel.GetAll();
+                    _tasks = _viewModel.GetAllOpen();
                     isAllSoved = _viewModel.GetAllSolve().Count > 0 ? true : false;
                     break;
                 case TaskListType.AllSolve:
@@ -113,8 +113,7 @@ namespace Tasker.Droid.Fragments
             else
             {
                 _listView.Visibility = ViewStates.Visible;
-            }
-            _tasks.Sort((t1, t2) => DateTime.Compare(t1.DueDate, t2.DueDate));
+            }            
 
             _projects = _viewModel.GetAllProjects();
 
@@ -170,9 +169,8 @@ namespace Tasker.Droid.Fragments
             switch (item.ItemId)
             {
                 case Resource.Id.menu_show_solve_tasks:
-
                     Intent intent = new Intent(this.Activity, typeof(CompleteTaskListActivity));
-                    intent.PutExtra("IsProjectTaskSearch", (_taskListType == TaskListType.ProjectOpen ? true : false));
+                    intent.PutExtra("TaskListType", (int)(_taskListType == TaskListType.ProjectOpen ? TaskListType.ProjectSolve : TaskListType.AllSolve));
                     intent.PutExtra("ProjectId", _projectId);
                     StartActivity(intent);
                     break;
@@ -180,6 +178,8 @@ namespace Tasker.Droid.Fragments
                 case Resource.Id.menu_search:
 
                     var intent2 = new Intent(Activity, typeof(SearchTaskListActivity));
+                    intent2.PutExtra("IsProjectTaskSearch", (_taskListType == TaskListType.ProjectOpen ? true : false));
+                    intent2.PutExtra("ProjectId", _projectId);
                     StartActivity(intent2);
                     break;
             }
@@ -198,6 +198,7 @@ namespace Tasker.Droid.Fragments
                 _viewModel.ChangeStatus(task);
             }
         }
+
         private void DeleteTask(Action callback)
         {
             //set alert for executing the task

@@ -153,14 +153,42 @@ namespace Tasker.Droid.Activities
                 case Resource.Id.menu_save:
                     OnSaveClick();
                     break;
+                case Resource.Id.menu_delete:
+                    OnDeleteClick();
+                    break;
             }
             return base.OnOptionsItemSelected(item);
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            MenuInflater.Inflate(Resource.Menu.task_edit_menu, menu);
+            if (_viewModel.Id != 0)
+            {
+                MenuInflater.Inflate(Resource.Menu.task_edit_menu, menu);
+            }
+            else
+            {
+                MenuInflater.Inflate(Resource.Menu.task_create_menu, menu);
+            }
+            
             return base.OnCreateOptionsMenu(menu);
+        }
+
+        private void OnDeleteClick()
+        {
+            //set alert for executing the task
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.SetTitle(GetString(Resource.String.confirm_delete_task));
+            alert.SetPositiveButton(GetString(Resource.String.dialog_yes), (senderAlert, args) =>
+            {
+                _viewModel.DeleteItem(_viewModel.Id);
+                SetResult(Result.Ok);
+                Finish();
+            });
+            alert.SetCancelable(true);
+            alert.SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { });
+            Dialog dialog = alert.Create();
+            dialog.Show();
         }
 
         private void OnSaveClick()
