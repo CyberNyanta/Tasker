@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/color_container"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/medium_margin"
+    android:paddingRight="@dimen/medium_margin">
+
+
+    <TextView
+        android:id="@+id/project_title"
+        style="@style/Tasker.TextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="Project" />
+</LinearLayout>

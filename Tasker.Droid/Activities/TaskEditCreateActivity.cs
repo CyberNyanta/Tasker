@@ -73,12 +73,6 @@ namespace Tasker.Droid.Activities
                 Title = ApplicationContext.GetString(Resource.String.project_inbox)
             });
 
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
-                for (int i = 0; i < 4; i++)
-                {
-                    //_taskColors[i].ButtonTintList = Android.Content.Res.ColorStateList.ValueOf(Color.ParseColor(TaskConstants.Colors[i]));
-                }
-
             _taskDueDate.OnFocusChangeListener = new OnFocusChangeListener(SetDueDate);
             _taskRemindDate.OnFocusChangeListener = new OnFocusChangeListener(SetRemindDate);
             _taskProject.OnFocusChangeListener = new OnFocusChangeListener(SetProject);
@@ -88,10 +82,46 @@ namespace Tasker.Droid.Activities
             _colorContainer.Click += delegate (Object o, EventArgs a) { SetColor(); };
             _colorShape.Click += delegate (Object o, EventArgs a) { SetColor(); };
             _colorName.Click += delegate (Object o, EventArgs a) { SetColor(); };
-         
+
             Initialization();
 
 
+        }
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Android.Resource.Id.Home:
+                    OnBackPressed();
+                    break;
+                case Resource.Id.menu_save:
+                    OnSaveClick();
+                    break;
+                case Resource.Id.menu_delete:
+                    OnDeleteClick();
+                    break;
+                case Resource.Id.menu_complete:
+                    item.SetTitle(_viewModel.GetItem(_viewModel.Id).IsSolved ? Resource.String.complete_task : Resource.String.uncomplete_task);
+                    _viewModel.ChangeStatus(_viewModel.Id);
+                    break;
+            }
+            return base.OnOptionsItemSelected(item);
+        }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            if (_viewModel.Id != 0)
+            {
+                MenuInflater.Inflate(Resource.Menu.task_edit_menu, menu);
+            }
+            else
+            {
+                MenuInflater.Inflate(Resource.Menu.task_create_menu, menu);
+                var item = menu.FindItem(Resource.Id.menu_complete);
+                item.SetTitle(_viewModel.GetItem(_viewModel.Id).IsSolved ? Resource.String.complete_task : Resource.String.uncomplete_task);
+            }
+
+            return base.OnCreateOptionsMenu(menu);
         }
 
         private void Initialization()
@@ -143,36 +173,7 @@ namespace Tasker.Droid.Activities
         }
 
 
-        public override bool OnOptionsItemSelected(IMenuItem item)
-        {
-            switch (item.ItemId)
-            {
-                case Android.Resource.Id.Home:
-                    OnBackPressed();
-                    break;
-                case Resource.Id.menu_save:
-                    OnSaveClick();
-                    break;
-                case Resource.Id.menu_delete:
-                    OnDeleteClick();
-                    break;
-            }
-            return base.OnOptionsItemSelected(item);
-        }
 
-        public override bool OnCreateOptionsMenu(IMenu menu)
-        {
-            if (_viewModel.Id != 0)
-            {
-                MenuInflater.Inflate(Resource.Menu.task_edit_menu, menu);
-            }
-            else
-            {
-                MenuInflater.Inflate(Resource.Menu.task_create_menu, menu);
-            }
-            
-            return base.OnCreateOptionsMenu(menu);
-        }
 
         private void OnDeleteClick()
         {
@@ -217,13 +218,13 @@ namespace Tasker.Droid.Activities
                 Color = _taskColor,
                 DueDate = _dueDate,
                 RemindDate = _remindDate,
-                ProjectID = (int)_taskProject.Tag
+                ProjectID = _projectId
             };
 
             _viewModel.SaveItem(task);
             Finish();
         }
-
+        #region Dialogs
         private void SetDueDate()
         {
             var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
@@ -251,20 +252,11 @@ namespace Tasker.Droid.Activities
 
         private void SetProject()
         {
+            AlertDialog dialog = null;
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            //alert.SetTitle(GetString(Resource.String.project_create_dialog));
-            alert.SetItems(
-               _projects.Select(x => x.Title).ToArray(),
-                delegate (object obj, DialogClickEventArgs args)
-                {
-                    var project = _projects[args.Which];
-                    _taskProject.Text = project.Title;
-                    _taskProject.Tag = project.ID;
-                }
-                        );
-            alert.SetCancelable(true);
-
-            alert.Show();
+            dialog = alert.SetAdapter(new ProjectListDialogAdapter(this, _projects, _projectId, () => OnSetProject(dialog.Dismiss)), default(IDialogInterfaceOnClickListener))
+                          .SetCancelable(true)
+                          .Show();
         }
 
         private void SetColor()
@@ -274,6 +266,13 @@ namespace Tasker.Droid.Activities
             dialog = alert.SetCancelable(true)
                           .SetAdapter(new ColorListAdapter(this, _taskColor, () => OnSetColor(dialog.Dismiss)), default(IDialogInterfaceOnClickListener))
                           .Show();
+        }
+
+        private void OnSetProject(Action callback)
+        {
+            callback?.Invoke();
+            _projectId = Intent.GetIntExtra("ProjectId", 0);
+            _taskProject.Text = _projects.Find(x => x.ID == _projectId).Title;
         }
 
         private void OnSetColor(Action callback)
@@ -330,5 +329,6 @@ namespace Tasker.Droid.Activities
                 }
             }
         }
+        #endregion
     }
 }

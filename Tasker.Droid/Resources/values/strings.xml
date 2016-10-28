@@ -32,6 +32,8 @@
   <string name="task_title">Title</string>
   <string name="task_description">Description</string>
   <string name="task_color">Color</string>
+  <string name="complete_task">Complete task</string>
+  <string name="uncomplete_task">Uncomplete task</string>
 
 
   <string name="project_dialog_field_hint">Title</string>
