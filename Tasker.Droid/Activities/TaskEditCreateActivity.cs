@@ -114,12 +114,12 @@ namespace Tasker.Droid.Activities
             if (_viewModel.Id != 0)
             {
                 MenuInflater.Inflate(Resource.Menu.task_edit_menu, menu);
+                var item = menu.FindItem(Resource.Id.menu_complete);
+                item.SetTitle(_viewModel.GetItem(_viewModel.Id).IsSolved ? Resource.String.uncomplete_task : Resource.String.complete_task);
             }
             else
             {
                 MenuInflater.Inflate(Resource.Menu.task_create_menu, menu);
-                var item = menu.FindItem(Resource.Id.menu_complete);
-                item.SetTitle(_viewModel.GetItem(_viewModel.Id).IsSolved ? Resource.String.complete_task : Resource.String.uncomplete_task);
             }
 
             return base.OnCreateOptionsMenu(menu);
@@ -310,8 +310,6 @@ namespace Tasker.Droid.Activities
 
                             }), default(IDialogInterfaceOnClickListener))
                             .Show();
-
-
         }
 
         public class DueDateListener : SlideDateTimeListener

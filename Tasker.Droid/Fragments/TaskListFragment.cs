@@ -290,7 +290,7 @@ namespace Tasker.Droid.Fragments
             {
                 SwipeDirection direction = directionList[i];
                 int position = positionList[i];
-                
+                _viewModel.Id = (int)_taskListAdapter.GetItemId(position);
                 if (direction.IsRight)
                 {                    
                     SolveTask();
@@ -314,7 +314,7 @@ namespace Tasker.Droid.Fragments
                 }
                 else
                 {
-                    _viewModel.Id = (int)_taskListAdapter.GetItemId(position);
+                    
                     SetDueDate(_viewModel.GetItem(_viewModel.Id), position);
                 }
 
@@ -346,7 +346,7 @@ namespace Tasker.Droid.Fragments
         }
         public static bool IsSolveType(this TaskListFragment.TaskListType type)
         {
-            return type == TaskListFragment.TaskListType.AllSolve || type == TaskListFragment.TaskListType.AllSolve;
+            return type == TaskListFragment.TaskListType.AllSolve || type == TaskListFragment.TaskListType.ProjectSolve;
         }
     }
 }
