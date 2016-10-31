@@ -39,6 +39,13 @@ namespace Tasker.Droid.Adapters
             NotifyDataSetChanged();
         }
 
+        public void SaveChanges(Task task, int position)
+        {
+            _tasks[position] = task;
+            _tasks.Sort((t1, t2) => DateTime.Compare(t1.DueDate, t2.DueDate));
+            NotifyDataSetChanged();
+        }
+
         public void ChangeDataSet(List<Task> tasks)
         {
             _tasks = tasks;
@@ -105,7 +112,18 @@ namespace Tasker.Droid.Adapters
             
             if (item.DueDate != DateTime.MaxValue)
             {
-                taskDueDate.Text = item.DueDate.ToString(_context.GetString(Resource.String.datetime_regex));
+                if (item.DueDate.Date == DateTime.Today)
+                {
+                    taskDueDate.Text = _context.GetString(Resource.String.due_dates_today_at, item.DueDate.ToString(_context.GetString(Resource.String.time_regex)));
+                }
+                else if (item.DueDate.Date == DateTime.Today.AddDays(1))
+                {
+                    taskDueDate.Text = _context.GetString(Resource.String.due_dates_tomorrow_at, item.DueDate.ToString(_context.GetString(Resource.String.time_regex)));
+                }
+                else
+                {
+                    taskDueDate.Text = item.DueDate.ToString(_context.GetString(Resource.String.datetime_regex));
+                }
             }
             else
             {

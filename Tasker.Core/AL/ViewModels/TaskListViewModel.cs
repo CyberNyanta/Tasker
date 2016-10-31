@@ -105,5 +105,10 @@ namespace Tasker.Core.AL.ViewModels
         {
             return _taskManager.Get(id);
         }
+
+        public int SaveItem(Task item)
+        {
+            return _taskManager.SaveItem(item);
+        }
     }
 }

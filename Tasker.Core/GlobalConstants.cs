@@ -47,4 +47,22 @@ namespace Tasker.Core
         Yellow,
         Violet
     }
+
+    public enum TaskDueDates
+    {
+        PickDataTime,
+        Today,
+        Tomorrow,
+        NextWeek,
+        Remove,
+    }
+
+    public enum TaskRemindDates
+    {
+        PickDataTime,
+        In15Minutes,
+        In30Minutes,
+        In1Hour,
+        Remove,
+    }
 }

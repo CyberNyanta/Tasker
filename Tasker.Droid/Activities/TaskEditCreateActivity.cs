@@ -42,7 +42,7 @@ namespace Tasker.Droid.Activities
         private LinearLayout _colorContainer;
         private ImageView _colorShape;
         private TextView _colorName;
-        private DateTime _dueDate = DateTime.MaxValue;
+        private DateTime _dueDate =  DateTime.MaxValue;
         private DateTime _remindDate = DateTime.MaxValue;
         private TaskColors _taskColor;
         private int _projectId;
@@ -87,6 +87,7 @@ namespace Tasker.Droid.Activities
 
 
         }
+
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             switch (item.ItemId)
@@ -139,9 +140,19 @@ namespace Tasker.Droid.Activities
                 _taskDescription.Text = task.Description;
                 if (task.DueDate != DateTime.MaxValue)
                 {
-                    _dueDate = task.DueDate;
-                    _remindDate = task.RemindDate;
-                    _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
+                    _dueDate = task.DueDate;                                  
+                    if (_dueDate.Date == DateTime.Today)
+                    {
+                        _taskDueDate.Text = GetString(Resource.String.due_dates_today_at, _dueDate.ToString(GetString(Resource.String.time_regex)));
+                    }
+                    else if (_dueDate.Date == DateTime.Today.AddDays(1))
+                    {
+                        _taskDueDate.Text = GetString(Resource.String.due_dates_tomorrow_at, _dueDate.ToString(GetString(Resource.String.time_regex)));
+                    }
+                    else
+                    {
+                        _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
+                    }                  
                 }
                 if (task.RemindDate != DateTime.MaxValue)
                 {
@@ -171,9 +182,6 @@ namespace Tasker.Droid.Activities
             GradientDrawable drawable = (GradientDrawable)_colorShape.Drawable;
             drawable.Mutate().SetColorFilter(Color.ParseColor(TaskConstants.Colors[_taskColor]), PorterDuff.Mode.Src);
         }
-
-
-
 
         private void OnDeleteClick()
         {
@@ -224,31 +232,8 @@ namespace Tasker.Droid.Activities
             _viewModel.SaveItem(task);
             Finish();
         }
-        #region Dialogs
-        private void SetDueDate()
-        {
-            var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
-            dateTimePicker.SetInitialDate(new Date());
-            dateTimePicker.SetMinDate(new Date());
-            dateTimePicker.SetListener(new DueDateListener(this));
-            dateTimePicker.SetTheme(0);
-            var dialog = dateTimePicker.Build();
-            dialog.Show();
-        }
-        private void SetRemindDate()
-        {
-            var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
-            dateTimePicker.SetInitialDate(new Date());
-            if (_dueDate != DateTime.MinValue)
-            {
-                dateTimePicker.SetMaxDate(new Date(_dueDate.ToUnixTime()));
-            }
-            dateTimePicker.SetMinDate(new Date());
-            dateTimePicker.SetListener(new RemindDateListener(this));
-            dateTimePicker.SetTheme(0);
-            var dialog = dateTimePicker.Build();
-            dialog.Show();
-        }
+
+        #region Dialogs   
 
         private void SetProject()
         {
@@ -284,6 +269,50 @@ namespace Tasker.Droid.Activities
             drawable.Mutate().SetColorFilter(Color.ParseColor(TaskConstants.Colors[_taskColor]), PorterDuff.Mode.Src);
 
         }
+            
+        private void SetDueDate()
+        {
+            AlertDialog dialog = null;
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            dialog = builder.SetCancelable(true)
+                            .SetAdapter(new DueDateListAdapter(this, _dueDate, (sender, args) =>
+                            {
+                                dialog.Dismiss();
+                                var selected = (TaskDueDates)(int)((View)sender).Tag;
+                                switch (selected)
+                                {
+                                    case TaskDueDates.Today:
+                                        _dueDate = DateTime.Today;
+                                        _taskDueDate.Text = GetString(Resource.String.due_dates_today_at, _dueDate.ToString(GetString(Resource.String.time_regex)));
+                                        break;
+                                    case TaskDueDates.Tomorrow:
+                                        _dueDate = DateTime.Today.AddDays(1);
+                                        _taskDueDate.Text = GetString(Resource.String.due_dates_tomorrow_at, _dueDate.ToString(GetString(Resource.String.time_regex)));
+                                        break;
+                                    case TaskDueDates.NextWeek:
+                                        _dueDate = DateTime.Today.AddDays(7);
+                                        _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
+                                        break;
+                                    case TaskDueDates.Remove:
+                                        _dueDate = DateTime.MaxValue;
+                                        _taskDueDate.Text = "";
+                                        break;
+                                    case TaskDueDates.PickDataTime:
+                                        var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
+                                        var pickerDialog = dateTimePicker.SetInitialDate(new Date())
+                                                                   .SetMinDate(new Date())
+                                                                   .SetListener(new DueDateListener(this))
+                                                                   .SetTheme(0)
+                                                                   .Build();
+                                        pickerDialog.Show();
+                                        break;
+                                }
+
+                            }), default(IDialogInterfaceOnClickListener))
+                            .Show();
+
+
+        }
 
         public class DueDateListener : SlideDateTimeListener
         {
@@ -295,8 +324,34 @@ namespace Tasker.Droid.Activities
             public override void OnDateTimeSet(Date p0)
             {
                 _activity._dueDate = p0.Time.UnixTimeToDateTime();
-                _activity._taskDueDate.Text = _activity._dueDate.ToString(_activity.GetString(Resource.String.datetime_regex));
+                if (_activity._dueDate.Date == DateTime.Today)
+                {
+                    _activity._taskDueDate.Text = _activity.GetString(Resource.String.due_dates_today_at, _activity._dueDate.ToString(_activity.GetString(Resource.String.time_regex)));
+                }
+                else if(_activity._dueDate.Date == DateTime.Today.AddDays(1))
+                {
+                    _activity._taskDueDate.Text = _activity.GetString(Resource.String.due_dates_tomorrow_at, _activity._dueDate.ToString(_activity.GetString(Resource.String.time_regex)));
+                }
+                else
+                {
+                    _activity._taskDueDate.Text = _activity._dueDate.ToString(_activity.GetString(Resource.String.datetime_regex));
+                }
             }
+        }
+
+        private void SetRemindDate()
+        {
+            var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
+            dateTimePicker.SetInitialDate(new Date());
+            if (_dueDate != DateTime.MaxValue)
+            {
+                dateTimePicker.SetMaxDate(new Date(_dueDate.ToUnixTime()));
+            }
+            dateTimePicker.SetMinDate(new Date());
+            dateTimePicker.SetListener(new RemindDateListener(this));
+            dateTimePicker.SetTheme(0);
+            var dialog = dateTimePicker.Build();
+            dialog.Show();
         }
 
         public class RemindDateListener : SlideDateTimeListener

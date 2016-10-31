@@ -10,15 +10,18 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Views.Animations;
+using Java.Util;
 
 using TinyIoC;
+using Com.Wdullaer.Swipeactionadapter;
+using Com.Github.Jjobes.Slidedatetimepicker;
 
 using Tasker.Core.AL.ViewModels.Contracts;
-
+using Tasker.Core.AL.Utils;
 using Tasker.Core.DAL.Entities;
 using Tasker.Droid.Activities;
-using Com.Wdullaer.Swipeactionadapter;
 using Tasker.Core;
+using Tasker.Droid.Adapters;
 
 namespace Tasker.Droid.Fragments
 {
@@ -100,10 +103,6 @@ namespace Tasker.Droid.Fragments
                     _projectId = Activity.Intent.GetIntExtra("ProjectId", 0);
                     _tasks = _viewModel.GetProjectOpenTasks(_projectId);
                     isAllSoved = _viewModel.GetProjectSolveTasks(_projectId).Count > 0 ? true : false;
-                    break;
-                case TaskListType.Search:
-                    HideFAB();
-                    throw new NotImplementedException();
                     break;
             }
 
@@ -214,7 +213,68 @@ namespace Tasker.Droid.Fragments
             alert.SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { });
             Dialog dialog = alert.Create();
             dialog.Show();
-        }  
+        }
+
+        private void SetDueDate(Task task,int position)
+        {
+            AlertDialog dialog = null;
+            AlertDialog.Builder builder = new AlertDialog.Builder(Activity);
+            dialog = builder.SetCancelable(true)
+                            .SetAdapter(new DueDateListAdapter(Activity, task.DueDate, (sender, args) =>
+                            {
+                                dialog.Dismiss();
+                                var selected = (TaskDueDates)(int)((View)sender).Tag;
+                                switch (selected)
+                                {
+                                    case TaskDueDates.Today:
+                                        task.DueDate = DateTime.Today;                                       
+                                        break;
+                                    case TaskDueDates.Tomorrow:
+                                        task.DueDate = DateTime.Today.AddDays(1);
+                                        break;
+                                    case TaskDueDates.NextWeek:
+                                        task.DueDate = DateTime.Today.AddDays(7);
+                                        break;
+                                    case TaskDueDates.Remove:
+                                        task.DueDate = DateTime.MaxValue;
+                                        break;
+                                    case TaskDueDates.PickDataTime:
+                                        var dateTimePicker = new SlideDateTimePicker.Builder(Activity.SupportFragmentManager);
+                                        var pickerDialog = dateTimePicker.SetInitialDate(new Date())
+                                                                   .SetMinDate(new Date())
+                                                                   .SetListener(new DueDateListener(task, () => 
+                                                                   {
+                                                                       _viewModel.SaveItem(task);
+                                                                       _taskListAdapter.SaveChanges(task, position);
+                                                                   }))
+                                                                   .SetTheme(0)
+                                                                   .Build();
+                                        pickerDialog.Show();
+                                        break;
+                                }
+                                _viewModel.SaveItem(task);
+                                _taskListAdapter.SaveChanges(task, position);
+                            }), default(IDialogInterfaceOnClickListener))
+                            .Show();
+
+
+        }
+
+        public class DueDateListener : SlideDateTimeListener
+        {
+            Task _task;
+            event Action _callback;
+            public DueDateListener(Task task, Action callback) : base()
+            {
+                _task = task;
+                _callback += callback;
+            }
+            public override void OnDateTimeSet(Date p0)
+            {
+                _task.DueDate = p0.Time.UnixTimeToDateTime();
+                _callback?.Invoke();
+            }
+        }
 
         #region  SwipeActionAdapter.ISwipeActionListener
         public bool HasActions(int position, SwipeDirection direction)
@@ -252,22 +312,18 @@ namespace Tasker.Droid.Fragments
                             OnTasksListIsEmpty();
                     });
                 }
+                else
+                {
+                    _viewModel.Id = (int)_taskListAdapter.GetItemId(position);
+                    SetDueDate(_viewModel.GetItem(_viewModel.Id), position);
+                }
 
              
             }
         }
 
         public bool ShouldDismiss(int position, SwipeDirection direction)
-        {
-            _viewModel.Id = (int)_taskListAdapter.GetItemId(position);
-            if (_taskListType.IsOpenType()&&direction.IsLeft)
-            {
-                Intent intent = new Intent(this.Activity, typeof(TaskEditCreateActivity));
-                intent.PutExtra("TaskId", _viewModel.Id);
-                StartActivity(intent);
-                return true;
-            }
-            
+        {           
             return direction.IsRight ? true : false;
         }
         #endregion

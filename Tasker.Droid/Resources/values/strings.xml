@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="datetime_regex">g</string>
+  <string name="time_regex">t</string>
   <string name="datetime_none">none</string>
   <string name="project_inbox">Inbox</string>
 
@@ -35,6 +36,19 @@
   <string name="complete_task">Complete task</string>
   <string name="uncomplete_task">Uncomplete task</string>
 
+  <string name="due_dates_pick">Pick date and time</string>
+  <string name="due_dates_today">Today</string>
+  <string name="due_dates_tomorrow">Tomorrow</string>
+  <string name="due_dates_today_at">Today at %s</string>
+  <string name="due_dates_tomorrow_at">Tomorrow at %s</string>
+  <string name="due_dates_nextWeek">Next week</string>
+  <string name="due_dates_remove">Remove</string>
+
+  <string name="remind_dates_pick">Pick date and time</string>
+  <string name="remind_dates_in15Minutes">Remind in 15 minutes</string>
+  <string name="remind_dates_in30Minutes">Remind in 30 minutes</string>
+  <string name="remind_dates_in1Hour">Remind in 1 hour</string>
+  <string name="remind_dates_remove">Remove</string>
 
   <string name="project_dialog_field_hint">Title</string>
   <string name="project_create_dialog">Create project</string>
