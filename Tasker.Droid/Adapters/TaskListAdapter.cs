@@ -112,9 +112,17 @@ namespace Tasker.Droid.Adapters
             
             if (item.DueDate != DateTime.MaxValue)
             {
+                if (item.DueDate == DateTime.Today)
+                {
+                    taskDueDate.Text = _context.GetString(Resource.String.due_dates_today);
+                }
                 if (item.DueDate.Date == DateTime.Today)
                 {
                     taskDueDate.Text = _context.GetString(Resource.String.due_dates_today_at, item.DueDate.ToString(_context.GetString(Resource.String.time_regex)));
+                }
+                else if (item.DueDate == DateTime.Today.AddDays(1))
+                {
+                    taskDueDate.Text = _context.GetString(Resource.String.due_dates_tomorrow);
                 }
                 else if (item.DueDate.Date == DateTime.Today.AddDays(1))
                 {

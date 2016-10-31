@@ -140,15 +140,23 @@ namespace Tasker.Droid.Activities
                 _taskDescription.Text = task.Description;
                 if (task.DueDate != DateTime.MaxValue)
                 {
-                    _dueDate = task.DueDate;                                  
-                    if (_dueDate.Date == DateTime.Today)
+                    _dueDate = task.DueDate;      
+                    if (_dueDate == DateTime.Today)
+                    {
+                        _taskDueDate.Text = GetString(Resource.String.due_dates_today);
+                    }
+                    else if(_dueDate.Date == DateTime.Today)
                     {
                         _taskDueDate.Text = GetString(Resource.String.due_dates_today_at, _dueDate.ToString(GetString(Resource.String.time_regex)));
+                    }
+                    else if (_dueDate == DateTime.Today.AddDays(1))
+                    {
+                        _taskDueDate.Text = GetString(Resource.String.due_dates_tomorrow);
                     }
                     else if (_dueDate.Date == DateTime.Today.AddDays(1))
                     {
                         _taskDueDate.Text = GetString(Resource.String.due_dates_tomorrow_at, _dueDate.ToString(GetString(Resource.String.time_regex)));
-                    }
+                    }                    
                     else
                     {
                         _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
@@ -213,6 +221,7 @@ namespace Tasker.Droid.Activities
             else
                 _taskRemindDate.Text = "";
         }
+
         private void OnDeleteClick()
         {
             //set alert for executing the task
@@ -318,11 +327,11 @@ namespace Tasker.Droid.Activities
                                 {
                                     case TaskDueDates.Today:
                                         _dueDate = DateTime.Today;
-                                        _taskDueDate.Text = GetString(Resource.String.due_dates_today_at, _dueDate.ToString(GetString(Resource.String.time_regex)));
+                                        _taskDueDate.Text = GetString(Resource.String.due_dates_today);
                                         break;
                                     case TaskDueDates.Tomorrow:
                                         _dueDate = DateTime.Today.AddDays(1);
-                                        _taskDueDate.Text = GetString(Resource.String.due_dates_tomorrow_at, _dueDate.ToString(GetString(Resource.String.time_regex)));
+                                        _taskDueDate.Text = GetString(Resource.String.due_dates_tomorrow);
                                         break;
                                     case TaskDueDates.NextWeek:
                                         _dueDate = DateTime.Today.AddDays(7);
@@ -357,9 +366,17 @@ namespace Tasker.Droid.Activities
             public override void OnDateTimeSet(Date p0)
             {
                 _activity._dueDate = p0.Time.UnixTimeToDateTime();
-                if (_activity._dueDate.Date == DateTime.Today)
+                if (_activity._dueDate == DateTime.Today)
+                {
+                    _activity._taskDueDate.Text = _activity.GetString(Resource.String.due_dates_today);
+                }
+                else if(_activity._dueDate.Date == DateTime.Today)
                 {
                     _activity._taskDueDate.Text = _activity.GetString(Resource.String.due_dates_today_at, _activity._dueDate.ToString(_activity.GetString(Resource.String.time_regex)));
+                }
+                else if (_activity._dueDate == DateTime.Today.AddDays(1))
+                {
+                    _activity._taskDueDate.Text = _activity.GetString(Resource.String.due_dates_tomorrow);
                 }
                 else if(_activity._dueDate.Date == DateTime.Today.AddDays(1))
                 {
