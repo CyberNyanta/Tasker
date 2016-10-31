@@ -342,7 +342,7 @@ namespace Tasker.Droid.Activities
                                         pickerDialog.Show();
                                         break;
                                 }
-
+                                InitRemindDate();
                             }), default(IDialogInterfaceOnClickListener))
                             .Show();
         }
@@ -369,6 +369,7 @@ namespace Tasker.Droid.Activities
                 {
                     _activity._taskDueDate.Text = _activity._dueDate.ToString(_activity.GetString(Resource.String.datetime_regex));
                 }
+                _activity.InitRemindDate();
             }
         }
         #endregion
