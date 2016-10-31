@@ -100,6 +100,7 @@
     <Compile Include="Activities\MainTaskListActivity.cs" />
     <Compile Include="Activities\SearchTaskListActivity.cs" />
     <Compile Include="Activities\TaskEditCreateActivity.cs" />
+    <Compile Include="Adapters\RemindDateListAdapter.cs" />
     <Compile Include="Adapters\DueDateListAdapter .cs" />
     <Compile Include="Adapters\ProjectListDialogAdapter.cs" />
     <Compile Include="Adapters\ColorListAdapter.cs" />

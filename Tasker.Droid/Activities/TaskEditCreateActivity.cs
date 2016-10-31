@@ -154,11 +154,7 @@ namespace Tasker.Droid.Activities
                         _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
                     }                  
                 }
-                if (task.RemindDate != DateTime.MaxValue)
-                {
-                    _remindDate = task.RemindDate;
-                    _taskRemindDate.Text = _remindDate.ToString(GetString(Resource.String.datetime_regex));
-                }
+                InitRemindDate();
                 var project = _projects.Find(x => x.ID == task.ProjectID);
                 _taskProject.Text = project.Title;
                 _taskProject.Tag = project.ID;
@@ -183,6 +179,40 @@ namespace Tasker.Droid.Activities
             drawable.Mutate().SetColorFilter(Color.ParseColor(TaskConstants.Colors[_taskColor]), PorterDuff.Mode.Src);
         }
 
+        private void InitRemindDate()
+        {
+            var task = _viewModel.GetItem(_viewModel.Id);
+
+            if (task.RemindDate != DateTime.MaxValue)
+            {
+                if (_dueDate == DateTime.MaxValue)
+                {
+                    _remindDate = task.RemindDate;
+                    _taskRemindDate.Text = _remindDate.ToString(GetString(Resource.String.datetime_regex));
+                }
+                else
+                {
+                    var odd = (int)(_dueDate - _remindDate).TotalMinutes;
+                    switch (odd)
+                    {
+                        case 15:
+                            _taskRemindDate.Text = GetString(Resource.String.remind_dates_in15Minutes);
+                            break;
+                        case 30:
+                            _taskRemindDate.Text = GetString(Resource.String.remind_dates_in30Minutes);
+                            break;
+                        case 60:
+                            _taskRemindDate.Text = GetString(Resource.String.remind_dates_in1Hour);
+                            break;
+                        default:
+                            _taskRemindDate.Text = _remindDate.ToString(GetString(Resource.String.datetime_regex));
+                            break;
+                    }
+                }
+            }
+            else
+                _taskRemindDate.Text = "";
+        }
         private void OnDeleteClick()
         {
             //set alert for executing the task
@@ -235,6 +265,7 @@ namespace Tasker.Droid.Activities
 
         #region Dialogs   
 
+        #region ProjectDialog
         private void SetProject()
         {
             AlertDialog dialog = null;
@@ -244,6 +275,15 @@ namespace Tasker.Droid.Activities
                           .Show();
         }
 
+        private void OnSetProject(Action callback)
+        {
+            callback?.Invoke();
+            _projectId = Intent.GetIntExtra("ProjectId", 0);
+            _taskProject.Text = _projects.Find(x => x.ID == _projectId).Title;
+        }
+        #endregion
+
+        #region ColorDialog
         private void SetColor()
         {
             AlertDialog dialog = null;
@@ -252,14 +292,7 @@ namespace Tasker.Droid.Activities
                           .SetAdapter(new ColorListAdapter(this, _taskColor, () => OnSetColor(dialog.Dismiss)), default(IDialogInterfaceOnClickListener))
                           .Show();
         }
-
-        private void OnSetProject(Action callback)
-        {
-            callback?.Invoke();
-            _projectId = Intent.GetIntExtra("ProjectId", 0);
-            _taskProject.Text = _projects.Find(x => x.ID == _projectId).Title;
-        }
-
+   
         private void OnSetColor(Action callback)
         {
             callback?.Invoke();
@@ -269,7 +302,9 @@ namespace Tasker.Droid.Activities
             drawable.Mutate().SetColorFilter(Color.ParseColor(TaskConstants.Colors[_taskColor]), PorterDuff.Mode.Src);
 
         }
-            
+        #endregion
+
+        #region DueDateDialog
         private void SetDueDate()
         {
             AlertDialog dialog = null;
@@ -336,22 +371,64 @@ namespace Tasker.Droid.Activities
                 }
             }
         }
+        #endregion
 
+        #region RemindDateDialog
         private void SetRemindDate()
         {
-            var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
-            dateTimePicker.SetInitialDate(new Date());
             if (_dueDate != DateTime.MaxValue)
             {
-                dateTimePicker.SetMaxDate(new Date(_dueDate.ToUnixTime()));
+                AlertDialog dialog = null;
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                dialog = builder.SetCancelable(true)
+                                .SetAdapter(new RemindDateListAdapter(this, _remindDate, _dueDate, (sender, args) =>
+                                {
+                                    dialog.Dismiss();
+                                    var selected = (TaskRemindDates)(int)((View)sender).Tag;
+                                    switch (selected)
+                                    {
+                                        case TaskRemindDates.In15Minutes:
+                                            _remindDate = _dueDate.AddMinutes(-15);
+                                            _taskRemindDate.Text = GetString(Resource.String.remind_dates_in15Minutes);
+                                            break;
+                                        case TaskRemindDates.In30Minutes:
+                                            _remindDate = _dueDate.AddMinutes(-30);
+                                            _taskRemindDate.Text = GetString(Resource.String.remind_dates_in30Minutes);
+                                            break;
+                                        case TaskRemindDates.In1Hour:
+                                            _remindDate = _dueDate.AddHours(-1);
+                                            _taskRemindDate.Text = GetString(Resource.String.remind_dates_in1Hour);
+                                            break;
+                                        case TaskRemindDates.Remove:
+                                            _remindDate = DateTime.MaxValue;
+                                            _taskRemindDate.Text = "";
+                                            break;
+                                        case TaskRemindDates.PickDataTime:
+                                            ShowRemindDateTimePicker();
+                                            break;
+                                    }
+
+                                }), default(IDialogInterfaceOnClickListener))
+                                .Show();
             }
-            dateTimePicker.SetMinDate(new Date());
-            dateTimePicker.SetListener(new RemindDateListener(this));
-            dateTimePicker.SetTheme(0);
-            var dialog = dateTimePicker.Build();
-            dialog.Show();
+            else
+            {
+                ShowRemindDateTimePicker();
+            }
+            
         }
 
+        private void ShowRemindDateTimePicker()
+        {
+            var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
+            var pickerDialog = dateTimePicker.SetInitialDate(new Date())
+                                       .SetMinDate(new Date())
+                                       .SetListener(new RemindDateListener(this))
+                                       .SetTheme(0)
+                                       .Build();
+            pickerDialog.Show();
+        }
+        
         public class RemindDateListener : SlideDateTimeListener
         {
             TaskEditCreateActivity _activity;
@@ -365,6 +442,9 @@ namespace Tasker.Droid.Activities
                 _activity._taskRemindDate.Text = _activity._remindDate.ToString(_activity.GetString(Resource.String.datetime_regex));
             }
         }
+        #endregion
+
+        #endregion
 
         public class OnFocusChangeListener : Java.Lang.Object, View.IOnFocusChangeListener
         {
@@ -382,6 +462,5 @@ namespace Tasker.Droid.Activities
                 }
             }
         }
-        #endregion
     }
 }
