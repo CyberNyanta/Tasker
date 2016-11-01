@@ -1,34 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content;
-using Android.Runtime;
 using Android.Views;
-using Android.Support.V7.Widget;
 using Android.OS;
-using Android.Support.V4.App;
+using Android.Widget;
 using Android.Support.V7.App;
-using Android.Views.Animations;
+using Android.Support.V4.Widget;
+using Android.Support.V7.Widget;
+using Toolbar = Android.Support.V7.Widget.Toolbar;
 
-using Java.Util;
-
-using TinyIoC;
-using Com.Github.Jjobes.Slidedatetimepicker;
-using FAB = Clans.Fab.FloatingActionButton;
-
-using Tasker.Core.BL.Managers;
-using Tasker.Core.DAL.Entities;
-using Tasker.Core.AL.Utils;
-using Tasker.Core.AL.ViewModels.Contracts;
 using Tasker.Droid.Fragments;
-using Android.Graphics;
 
 namespace Tasker.Droid.Activities
 {
     [Activity (Label = "Tasker", MainLauncher = true, Theme = "@style/Tasker")]
     public class MainTaskListActivity : AppCompatActivity
     {
+        private DrawerLayout mDrawerLayout;
+        private ListView mDrawerList;
+
         protected override void OnCreate (Bundle bundle)
 		{
             base.OnCreate (bundle);

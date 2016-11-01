@@ -1,20 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Android.Graphics;
-
-using Tasker.Core.DAL.Entities;
 using Tasker.Core;
-using Tasker.Core.BL.Contracts;
-using Android.Graphics.Drawables;
 
 namespace Tasker.Droid.Adapters
 {
@@ -31,12 +22,12 @@ namespace Tasker.Droid.Adapters
             _context = context;
             _current = current;
             OnClick += callback;
-            _dates = Enum.GetValues(typeof(TaskDueDates)).Cast<TaskDueDates>().ToList();  
+            _dates = Enum.GetValues(typeof(TaskDueDates)).Cast<TaskDueDates>().ToList();
             if (_current.Date == DateTime.Today)
             {
                 _currentType = TaskDueDates.Today;
             }
-            else if(_current.Date == DateTime.Today.AddDays(1))
+            else if (_current.Date == DateTime.Today.AddDays(1))
             {
                 _currentType = TaskDueDates.Tomorrow;
             }
@@ -67,11 +58,11 @@ namespace Tasker.Droid.Adapters
             var item = _dates[position];
             View view;
 
-            view = _context.LayoutInflater.Inflate(Resource.Layout.date_list_item, null);           
-           
+            view = _context.LayoutInflater.Inflate(Resource.Layout.date_list_item, null);
+
             var dateName = view.FindViewById<TextView>(Resource.Id.date_name);
 
-            
+
 
             if (item == _currentType)
             {
@@ -83,11 +74,17 @@ namespace Tasker.Droid.Adapters
                         break;
                     case TaskDueDates.Today:
                         view.SetBackgroundResource(Resource.Color.item_selected);
-                        dateName.Text = _context.GetString(Resource.String.due_dates_today_at, _current.ToString(_context.GetString(Resource.String.time_regex)));
+                        if (_current != DateTime.Today)
+                            dateName.Text = _context.GetString(Resource.String.due_dates_today_at, _current.ToString(_context.GetString(Resource.String.time_regex)));
+                        else
+                            dateName.Text = _context.GetString(Resource.String.due_dates_today);
                         break;
                     case TaskDueDates.Tomorrow:
                         view.SetBackgroundResource(Resource.Color.item_selected);
-                        dateName.Text = _context.GetString(Resource.String.due_dates_tomorrow_at, _current.ToString(_context.GetString(Resource.String.time_regex)));
+                        if (_current != DateTime.Today.AddDays(1))
+                            dateName.Text = _context.GetString(Resource.String.due_dates_tomorrow_at, _current.ToString(_context.GetString(Resource.String.time_regex)));
+                        else
+                            dateName.Text = _context.GetString(Resource.String.due_dates_tomorrow);
                         break;
                     case TaskDueDates.Remove:
                         dateName.Text = _context.GetString(Resource.String.due_dates_remove);

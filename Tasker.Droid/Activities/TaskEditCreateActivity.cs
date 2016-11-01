@@ -1,31 +1,27 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
-using Android.Support.V7.Widget;
 using Android.Widget;
-using Android.Support.Design.Widget;
 using Android.Support.V7.App;
+using Android.Graphics;
+using Android.Graphics.Drawables;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 using AlertDialog = Android.App.AlertDialog;
+using Java.Util;
 
 using Tasker.Core.AL.ViewModels.Contracts;
 using Tasker.Core.AL.Utils;
 using Tasker.Core.DAL.Entities;
 using Tasker.Core;
+using Tasker.Droid.Adapters;
 
 using TinyIoC;
 using Com.Github.Jjobes.Slidedatetimepicker;
-using Java.Util;
-using Android.Graphics;
-using Android.Graphics.Drawables;
-using Tasker.Droid.Adapters;
+
 
 namespace Tasker.Droid.Activities
 {
@@ -140,28 +136,10 @@ namespace Tasker.Droid.Activities
                 _taskDescription.Text = task.Description;
                 if (task.DueDate != DateTime.MaxValue)
                 {
-                    _dueDate = task.DueDate;      
-                    if (_dueDate == DateTime.Today)
-                    {
-                        _taskDueDate.Text = GetString(Resource.String.due_dates_today);
-                    }
-                    else if(_dueDate.Date == DateTime.Today)
-                    {
-                        _taskDueDate.Text = GetString(Resource.String.due_dates_today_at, _dueDate.ToString(GetString(Resource.String.time_regex)));
-                    }
-                    else if (_dueDate == DateTime.Today.AddDays(1))
-                    {
-                        _taskDueDate.Text = GetString(Resource.String.due_dates_tomorrow);
-                    }
-                    else if (_dueDate.Date == DateTime.Today.AddDays(1))
-                    {
-                        _taskDueDate.Text = GetString(Resource.String.due_dates_tomorrow_at, _dueDate.ToString(GetString(Resource.String.time_regex)));
-                    }                    
-                    else
-                    {
-                        _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
-                    }                  
+                    _dueDate = task.DueDate;
+                    InitDueDate();
                 }
+                _remindDate = task.RemindDate;
                 InitRemindDate();
                 var project = _projects.Find(x => x.ID == task.ProjectID);
                 _taskProject.Text = project.Title;
@@ -181,21 +159,17 @@ namespace Tasker.Droid.Activities
                 }
             }
 
-
             _colorName.Text = _taskColor.ToString();
             GradientDrawable drawable = (GradientDrawable)_colorShape.Drawable;
             drawable.Mutate().SetColorFilter(Color.ParseColor(TaskConstants.Colors[_taskColor]), PorterDuff.Mode.Src);
         }
 
         private void InitRemindDate()
-        {
-            var task = _viewModel.GetItem(_viewModel.Id);
-
-            if (task.RemindDate != DateTime.MaxValue)
+        {   
+            if (_remindDate != DateTime.MaxValue)
             {
                 if (_dueDate == DateTime.MaxValue)
-                {
-                    _remindDate = task.RemindDate;
+                {                    
                     _taskRemindDate.Text = _remindDate.ToString(GetString(Resource.String.datetime_regex));
                 }
                 else
@@ -220,6 +194,30 @@ namespace Tasker.Droid.Activities
             }
             else
                 _taskRemindDate.Text = "";
+        }
+
+        private void InitDueDate()
+        {
+            if (_dueDate == DateTime.Today)
+            {
+                _taskDueDate.Text = GetString(Resource.String.due_dates_today);
+            }
+            else if (_dueDate.Date == DateTime.Today)
+            {
+                _taskDueDate.Text = GetString(Resource.String.due_dates_today_at, _dueDate.ToString(GetString(Resource.String.time_regex)));
+            }
+            else if (_dueDate == DateTime.Today.AddDays(1))
+            {
+                _taskDueDate.Text = GetString(Resource.String.due_dates_tomorrow);
+            }
+            else if (_dueDate.Date == DateTime.Today.AddDays(1))
+            {
+                _taskDueDate.Text = GetString(Resource.String.due_dates_tomorrow_at, _dueDate.ToString(GetString(Resource.String.time_regex)));
+            }
+            else
+            {
+                _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
+            }            
         }
 
         private void OnDeleteClick()
