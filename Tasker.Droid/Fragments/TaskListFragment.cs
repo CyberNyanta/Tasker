@@ -27,7 +27,7 @@ namespace Tasker.Droid.Fragments
 {
     public class TaskListFragment : BaseListFragment, SwipeActionAdapter.ISwipeActionListener
     {
-        public enum TaskListType { AllOpen, AllSolve, ProjectOpen, ProjectSolve, Search }
+        public enum TaskListType { AllOpen, AllSolve, ProjectOpen, ProjectSolve, Today, Tomorrow, NextWeek, }
 
         private Adapters.TaskListAdapter _taskListAdapter;
         private SwipeActionAdapter _swipeActionAdapter;
@@ -103,6 +103,18 @@ namespace Tasker.Droid.Fragments
                     _projectId = Activity.Intent.GetIntExtra("ProjectId", 0);
                     _tasks = _viewModel.GetProjectOpenTasks(_projectId);
                     isAllSoved = _viewModel.GetProjectSolveTasks(_projectId).Count > 0 ? true : false;
+                    break;
+                case TaskListType.Today:
+                    
+                    _tasks = _viewModel.GetForToday();
+                    break;
+                case TaskListType.Tomorrow:
+
+                    _tasks = _viewModel.GetForTomorrow();
+                    break;
+                case TaskListType.NextWeek:
+
+                    _tasks = _viewModel.GetForNextWeek();
                     break;
             }
 

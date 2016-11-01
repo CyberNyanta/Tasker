@@ -110,5 +110,20 @@ namespace Tasker.Core.AL.ViewModels
         {
             return _taskManager.SaveItem(item);
         }
+
+        public List<Task> GetForToday()
+        {
+            return _taskManager.GetForToday();
+        }
+
+        public List<Task> GetForTomorrow()
+        {
+            return _taskManager.GetForTomorrow();
+        }
+
+        public List<Task> GetForNextWeek()
+        {
+            return _taskManager.GetForNextWeek();
+        }
     }
 }

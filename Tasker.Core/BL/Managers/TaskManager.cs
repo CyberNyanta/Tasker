@@ -19,7 +19,7 @@ namespace Tasker.Core.BL.Managers
         }
 
         public Task Get(int id)
-        {            
+        {
             return _taskRepository.GetById(id);
         }
 
@@ -40,7 +40,7 @@ namespace Tasker.Core.BL.Managers
 
         public List<Task> GetProjectTasks(int projectId)
         {
-            return new List<Task>(_taskRepository.Find(x=>x.ProjectID == projectId));
+            return new List<Task>(_taskRepository.Find(x => x.ProjectID == projectId));
         }
 
         public List<Task> GetProjectOpenTasks(int projectId)
@@ -73,7 +73,7 @@ namespace Tasker.Core.BL.Managers
             }
             if (item.ProjectID != 0)
             {
-                
+
                 var project = _projectRepository.GetById(item.ProjectID);
                 project.CountOfOpenTasks++;
                 _projectRepository.Save(project);
@@ -104,11 +104,11 @@ namespace Tasker.Core.BL.Managers
                 }
                 _projectRepository.Save(project);
             }
-                        
+
             task.IsSolved = !task.IsSolved;
             _taskRepository.Save(task);
         }
-            
+
         public int Delete(int id)
         {
             var task = Get(id);
@@ -127,7 +127,7 @@ namespace Tasker.Core.BL.Managers
 
                 _projectRepository.Save(project);
             }
-            
+
             return _taskRepository.Delete(id);
         }
 
@@ -150,6 +150,21 @@ namespace Tasker.Core.BL.Managers
         public List<Project> GetProjects()
         {
             return new List<Project>(_projectRepository.GetAll());
+        }
+
+        public List<Task> GetForToday()
+        {
+            return GetAll().FindAll(t => t.DueDate < DateTime.Today.AddDays(1));
+        }
+
+        public List<Task> GetForTomorrow()
+        {
+            return GetAll().FindAll(t => t.DueDate < DateTime.Today.AddDays(2));
+        }
+
+        public List<Task> GetForNextWeek()
+        {
+            return GetAll().FindAll(t => t.DueDate < DateTime.Today.AddDays(8));
         }
     }
 }

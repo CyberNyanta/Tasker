@@ -21,6 +21,12 @@ namespace Tasker.Core.BL.Contracts
 
         List<Project> GetProjects();
 
+        List<Task> GetForToday();
+
+        List<Task> GetForTomorrow();
+
+        List<Task> GetForNextWeek();
+
         void ChangeStatus(int id);
 
         void ChangeStatus(Task task);

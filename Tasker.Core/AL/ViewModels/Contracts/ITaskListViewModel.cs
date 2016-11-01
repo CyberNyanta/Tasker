@@ -30,6 +30,11 @@ namespace Tasker.Core.AL.ViewModels.Contracts
 
         List<Task> GetAllSolve();
 
+        List<Task> GetForToday();
+
+        List<Task> GetForTomorrow();
+
+        List<Task> GetForNextWeek();
 
     }
 }
