@@ -7,10 +7,6 @@
         android:title="@string/search"
         app:showAsAction="always" />
     <item
-        android:id="@+id/menu_projects"
-        android:title="@string/projects"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/menu_show_solve_tasks"
         android:title="@string/show_solved"
         app:showAsAction="never" />

@@ -48,18 +48,6 @@ namespace Tasker.Droid.Activities
             return base.OnCreateOptionsMenu(menu);
         }
 
-        public override bool OnOptionsItemSelected(IMenuItem item)
-        {
-            switch (item.ItemId)
-            {
-                case Resource.Id.menu_projects:
-                    var intent = new Intent(this, typeof(ProjectListActivity));
-                    StartActivity(intent);
-                    break;             
-            }
-            return base.OnOptionsItemSelected(item);
-        }
-
         public bool OnNavigationItemSelected(IMenuItem item)
         {
             switch (item.ItemId)
@@ -67,28 +55,36 @@ namespace Tasker.Droid.Activities
                 case Resource.Id.navigation_all:
                     Intent.PutExtra("ProjectId", 0);
                     Intent.PutExtra("TaskListType", (int)TaskListFragment.TaskListType.AllOpen);
+                    SupportActionBar.Title = GetString(Resource.String.navigation_all);
                     SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new TaskListFragment()).Commit();
                     break;
                 case Resource.Id.navigation_inbox:
                     Intent.PutExtra("ProjectId", 0);
                     Intent.PutExtra("TaskListType", (int)TaskListFragment.TaskListType.ProjectOpen);
+                    SupportActionBar.Title = GetString(Resource.String.navigation_inbox);
                     SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new TaskListFragment()).Commit();
                     break;
                 case Resource.Id.navigation_today:
                     Intent.PutExtra("ProjectId", 0);
                     Intent.PutExtra("TaskListType", (int)TaskListFragment.TaskListType.Today);
+                    SupportActionBar.Title = GetString(Resource.String.navigation_today);
                     SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new TaskListFragment()).Commit();
                     break;
                 case Resource.Id.navigation_tomorrow:
                     Intent.PutExtra("ProjectId", 0);
                     Intent.PutExtra("TaskListType", (int)TaskListFragment.TaskListType.Tomorrow);
+                    SupportActionBar.Title = GetString(Resource.String.navigation_tomorrow);
                     SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new TaskListFragment()).Commit();
                     break;
                 case Resource.Id.navigation_nextWeek:
                     Intent.PutExtra("ProjectId", 0);
                     Intent.PutExtra("TaskListType", (int)TaskListFragment.TaskListType.NextWeek);
+                    SupportActionBar.Title = GetString(Resource.String.navigation_nextWeek);
                     SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new TaskListFragment()).Commit();
                     break;
+            }            
+            _drawer.CloseDrawers();
+            return true;
             }
             _drawer.CloseDrawers();
             return true;

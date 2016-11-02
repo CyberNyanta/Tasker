@@ -159,12 +159,12 @@ namespace Tasker.Core.BL.Managers
 
         public List<Task> GetForTomorrow()
         {
-            return GetAll().FindAll(t => t.DueDate < DateTime.Today.AddDays(2));
+            return GetAll().FindAll(t => t.DueDate < DateTime.Today.AddDays(2) && t.DueDate>=DateTime.Today.AddDays(1));
         }
 
         public List<Task> GetForNextWeek()
         {
-            return GetAll().FindAll(t => t.DueDate < DateTime.Today.AddDays(8));
+            return GetAll().FindAll(t => t.DueDate < DateTime.Today.AddDays(8) && t.DueDate >= DateTime.Today.AddDays(2));
         }
     }
 }
