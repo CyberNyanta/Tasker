@@ -28,7 +28,9 @@
         <item name="android:textSize">@dimen/editText_textSize</item>
     </style>
 
-    <style name="Tasker.TextViewStyleEditText" parent="Widget.AppCompat.EditText">
+    <style name="Tasker.TextViewStyleEditText" >
+        <item name="android:textColor">?attr/editTextColor</item>
+        <item name="android:background">?attr/editTextBackground</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/editText_textSize</item>

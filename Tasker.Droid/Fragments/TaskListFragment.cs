@@ -67,6 +67,22 @@ namespace Tasker.Droid.Fragments
         protected override void FabClick(object sender, EventArgs e)
         {
             Intent intent = new Intent(this.Activity, typeof(TaskEditCreateActivity));
+
+            switch (_taskListType)
+            {                                         
+                case TaskListType.ProjectOpen:
+                    intent.PutExtra("ProjectId", _projectId);
+                    break;
+                case TaskListType.Today:
+                    intent.PutExtra("DueDate", (int)TaskDueDates.Today);
+                    break;
+                case TaskListType.Tomorrow:
+                    intent.PutExtra("DueDate", (int)TaskDueDates.Tomorrow);
+                    break;
+                case TaskListType.NextWeek:
+                    intent.PutExtra("DueDate", (int)TaskDueDates.NextWeek);
+                    break;
+            }
             if (_taskListType == TaskListType.ProjectOpen)
             {
                 intent.PutExtra("ProjectId", _projectId);

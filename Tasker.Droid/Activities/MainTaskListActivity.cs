@@ -39,7 +39,7 @@ namespace Tasker.Droid.Activities
             _toggle.SyncState();
 
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
-            navigationView.SetNavigationItemSelectedListener(this);
+            navigationView.SetNavigationItemSelectedListener(this);          
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

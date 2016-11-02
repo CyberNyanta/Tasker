@@ -68,10 +68,7 @@ namespace Tasker.Droid.Activities
             {
                 Title = ApplicationContext.GetString(Resource.String.project_inbox)
             });
-
-            _taskDueDate.OnFocusChangeListener = new OnFocusChangeListener(SetDueDate);
-            _taskRemindDate.OnFocusChangeListener = new OnFocusChangeListener(SetRemindDate);
-            _taskProject.OnFocusChangeListener = new OnFocusChangeListener(SetProject);
+      
             _taskDueDate.Click += delegate (Object o, EventArgs a) { SetDueDate(); };
             _taskRemindDate.Click += delegate (Object o, EventArgs a) { SetRemindDate(); };
             _taskProject.Click += delegate (Object o, EventArgs a) { SetProject(); };
@@ -79,9 +76,7 @@ namespace Tasker.Droid.Activities
             _colorShape.Click += delegate (Object o, EventArgs a) { SetColor(); };
             _colorName.Click += delegate (Object o, EventArgs a) { SetColor(); };
 
-            Initialization();
-
-
+            Initialization();      
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -125,7 +120,7 @@ namespace Tasker.Droid.Activities
         {
             _viewModel.Id = Intent.GetIntExtra("TaskId", 0);
             _projectId = Intent.GetIntExtra("ProjectId", 0);
-
+           
             Task task = null;
             if (_viewModel.Id != 0)
                 task = _viewModel.GetItem(_viewModel.Id);
@@ -156,6 +151,22 @@ namespace Tasker.Droid.Activities
                     _taskProject.Text = project.Title;
                     _taskProject.Tag = project.ID;
 
+                }
+                var dueDate = (TaskDueDates)Intent.GetIntExtra("DueDate", 0);
+                switch (dueDate)
+                {
+                    case TaskDueDates.Today:
+                        _dueDate = DateTime.Today;
+                        _taskDueDate.Text = GetString(Resource.String.due_dates_today);
+                        break;
+                    case TaskDueDates.Tomorrow:
+                        _dueDate = DateTime.Today.AddDays(1);
+                        _taskDueDate.Text = GetString(Resource.String.due_dates_tomorrow);
+                        break;
+                    case TaskDueDates.NextWeek:
+                        _dueDate = DateTime.Today.AddDays(7);
+                        _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
+                        break;
                 }
             }
 
@@ -461,22 +472,5 @@ namespace Tasker.Droid.Activities
         #endregion
 
         #endregion
-
-        public class OnFocusChangeListener : Java.Lang.Object, View.IOnFocusChangeListener
-        {
-            private event Action OnFocus;
-            public OnFocusChangeListener(Action callback)
-            {
-                OnFocus += callback;
-
-            }
-            public void OnFocusChange(View v, bool hasFocus)
-            {
-                if (hasFocus)
-                {
-                    OnFocus?.Invoke();
-                }
-            }
-        }
     }
 }
