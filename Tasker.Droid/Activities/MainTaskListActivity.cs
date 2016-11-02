@@ -82,10 +82,11 @@ namespace Tasker.Droid.Activities
                     SupportActionBar.Title = GetString(Resource.String.navigation_nextWeek);
                     SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new TaskListFragment()).Commit();
                     break;
+                case Resource.Id.navigation_projects:
+                    SupportActionBar.Title = GetString(Resource.String.navigation_projects);
+                    SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new ProjectListFragment()).Commit();
+                    break;
             }            
-            _drawer.CloseDrawers();
-            return true;
-            }
             _drawer.CloseDrawers();
             return true;
         }

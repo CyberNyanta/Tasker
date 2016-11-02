@@ -96,7 +96,6 @@
   <ItemGroup>
     <Compile Include="Activities\CompleteTaskListActivity.cs" />
     <Compile Include="Activities\ProjectTasksListActivity.cs" />
-    <Compile Include="Activities\ProjectListActivity.cs" />
     <Compile Include="Activities\MainTaskListActivity.cs" />
     <Compile Include="Activities\SearchTaskListActivity.cs" />
     <Compile Include="Activities\TaskEditCreateActivity.cs" />

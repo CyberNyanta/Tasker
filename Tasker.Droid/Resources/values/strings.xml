@@ -66,6 +66,7 @@
     <string name="navigation_today">Today</string>
     <string name="navigation_tomorrow">Tomorrow</string>
     <string name="navigation_nextWeek">Next 7 Days</string>
+    <string name="navigation_projects">Projects</string>
 
     <string name="task_count">Complete %1$s of %2$s</string>
     <string name="dialog_yes">OK</string>

@@ -22,6 +22,10 @@
             android:id="@+id/navigation_nextWeek"
 
             android:title="@string/navigation_nextWeek" />
+        <item
+            android:id="@+id/navigation_projects"
+
+            android:title="@string/navigation_projects" />
     </group>
 
 </menu>
