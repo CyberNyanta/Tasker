@@ -39,10 +39,10 @@ namespace Tasker.Droid
             SupportActionBar.SetDisplayShowHomeEnabled(true);
 
             _viewModel = TinyIoCContainer.Current.Resolve<IProjectDetailsViewModel>();
-            var id = Intent.GetIntExtra("ProjectId", 0);
-            if (id != 0)
+            _viewModel.Id = Intent.GetIntExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
+            if (_viewModel.Id != 0)
             {
-                var project = _viewModel.GetItem(id);
+                var project = _viewModel.GetItem();
                 SupportActionBar.Title = project.Title;
             }
             else

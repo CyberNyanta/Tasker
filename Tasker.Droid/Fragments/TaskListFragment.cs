@@ -57,7 +57,7 @@ namespace Tasker.Droid.Fragments
             {
                 int id = (int)e.Id;
                 Intent intent = new Intent(this.Activity, typeof(TaskEditCreateActivity));
-                intent.PutExtra("TaskId", id);
+                intent.PutExtra(IntentExtraConstants.TASK_ID_EXTRA, id);
                 StartActivity(intent);
             }   
         }
@@ -69,21 +69,21 @@ namespace Tasker.Droid.Fragments
             switch (_taskListType)
             {                                         
                 case TaskListType.ProjectOpen:
-                    intent.PutExtra("ProjectId", _projectId);
+                    intent.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, _projectId);
                     break;
                 case TaskListType.Today:
-                    intent.PutExtra("DueDate", (int)TaskDueDates.Today);
+                    intent.PutExtra(IntentExtraConstants.DUE_DATE_TYPE_EXTRA, (int)TaskDueDates.Today);
                     break;
                 case TaskListType.Tomorrow:
-                    intent.PutExtra("DueDate", (int)TaskDueDates.Tomorrow);
+                    intent.PutExtra(IntentExtraConstants.DUE_DATE_TYPE_EXTRA, (int)TaskDueDates.Tomorrow);
                     break;
                 case TaskListType.NextWeek:
-                    intent.PutExtra("DueDate", (int)TaskDueDates.NextWeek);
+                    intent.PutExtra(IntentExtraConstants.DUE_DATE_TYPE_EXTRA, (int)TaskDueDates.NextWeek);
                     break;
             }
             if (_taskListType == TaskListType.ProjectOpen)
             {
-                intent.PutExtra("ProjectId", _projectId);
+                intent.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, _projectId);
             }
             StartActivity(intent);
         }
@@ -96,7 +96,7 @@ namespace Tasker.Droid.Fragments
 
         private void TaskInitialization()
         {
-            _taskListType = (TaskListType)Activity.Intent.GetIntExtra("TaskListType", (int)TaskListType.AllOpen);
+            _taskListType = (TaskListType)Activity.Intent.GetIntExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)TaskListType.AllOpen);
            
             switch (_taskListType)
             {
@@ -110,11 +110,11 @@ namespace Tasker.Droid.Fragments
                     break;
                 case TaskListType.ProjectSolve:
                     HideFAB();
-                    _projectId = Activity.Intent.GetIntExtra("ProjectId", 0);
+                    _projectId = Activity.Intent.GetIntExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
                     _tasks = _viewModel.GetProjectSolveTasks(_projectId);
                     break;
                 case TaskListType.ProjectOpen:
-                    _projectId = Activity.Intent.GetIntExtra("ProjectId", 0);
+                    _projectId = Activity.Intent.GetIntExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
                     _tasks = _viewModel.GetProjectOpenTasks(_projectId);
                     isAllSoved = _viewModel.GetProjectSolveTasks(_projectId).Count > 0 ? true : false;
                     break;
@@ -196,16 +196,16 @@ namespace Tasker.Droid.Fragments
             {
                 case Resource.Id.menu_show_solve_tasks:
                     Intent intent = new Intent(this.Activity, typeof(CompleteTaskListActivity));
-                    intent.PutExtra("TaskListType", (int)(_taskListType == TaskListType.ProjectOpen ? TaskListType.ProjectSolve : TaskListType.AllSolve));
-                    intent.PutExtra("ProjectId", _projectId);
+                    intent.PutExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)(_taskListType == TaskListType.ProjectOpen ? TaskListType.ProjectSolve : TaskListType.AllSolve));
+                    intent.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, _projectId);
                     StartActivity(intent);
                     break;
 
                 case Resource.Id.menu_search:
 
                     var intent2 = new Intent(Activity, typeof(SearchTaskListActivity));
-                    intent2.PutExtra("IsProjectTaskSearch", (_taskListType == TaskListType.ProjectOpen ? true : false));
-                    intent2.PutExtra("ProjectId", _projectId);
+                    intent2.PutExtra(IntentExtraConstants.IS_SEARCH_IN_PROJECT_EXTRA, (_taskListType == TaskListType.ProjectOpen ? true : false));
+                    intent2.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, _projectId);
                     StartActivity(intent2);
                     break;
             }

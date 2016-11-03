@@ -23,7 +23,6 @@
         android:layout_toRightOf="@id/task_color_border"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="taskTitle"
         android:textSize="@dimen/taskTitle_textSize"
         android:textColor="@color/black"/>
 
@@ -33,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/taskTitle"
         android:layout_toRightOf="@id/task_color_border"
-        android:text="dueDate"
         android:textSize="@dimen/taskDetails_textSize" />
 
     <TextView
@@ -42,6 +40,5 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@id/taskTitle"
-        android:text="projectName"
         android:textSize="@dimen/taskDetails_textSize" />
 </RelativeLayout>

@@ -21,15 +21,17 @@ using Tasker.Droid.Adapters;
 
 using TinyIoC;
 using Com.Github.Jjobes.Slidedatetimepicker;
-
+using Tasker.Droid.AL.Utils;
 
 namespace Tasker.Droid.Activities
 {
     [Activity]
     public class TaskEditCreateActivity : AppCompatActivity
     {
+        #region Props
         private ITaskDetailsViewModel _viewModel;
         private List<Project> _projects;
+        #region Views
         private EditText _taskTitle;
         private EditText _taskDescription;
         private TextView _taskDueDate;
@@ -38,11 +40,12 @@ namespace Tasker.Droid.Activities
         private LinearLayout _colorContainer;
         private ImageView _colorShape;
         private TextView _colorName;
-        private DateTime _dueDate =  DateTime.MaxValue;
+        #endregion
+        private DateTime _dueDate = DateTime.MaxValue;
         private DateTime _remindDate = DateTime.MaxValue;
         private TaskColors _taskColor;
         private int _projectId;
-
+        #endregion
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -68,7 +71,7 @@ namespace Tasker.Droid.Activities
             {
                 Title = ApplicationContext.GetString(Resource.String.project_inbox)
             });
-      
+
             _taskDueDate.Click += delegate (Object o, EventArgs a) { SetDueDate(); };
             _taskRemindDate.Click += delegate (Object o, EventArgs a) { SetRemindDate(); };
             _taskProject.Click += delegate (Object o, EventArgs a) { SetProject(); };
@@ -76,7 +79,7 @@ namespace Tasker.Droid.Activities
             _colorShape.Click += delegate (Object o, EventArgs a) { SetColor(); };
             _colorName.Click += delegate (Object o, EventArgs a) { SetColor(); };
 
-            Initialization();      
+            Initialization();
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -93,7 +96,7 @@ namespace Tasker.Droid.Activities
                     OnDeleteClick();
                     break;
                 case Resource.Id.menu_complete:
-                    item.SetTitle(_viewModel.GetItem(_viewModel.Id).IsSolved ? Resource.String.complete_task : Resource.String.uncomplete_task);
+                    item.SetTitle(_viewModel.GetItem().IsSolved ? Resource.String.complete_task : Resource.String.uncomplete_task);
                     _viewModel.ChangeStatus(_viewModel.Id);
                     break;
             }
@@ -106,7 +109,7 @@ namespace Tasker.Droid.Activities
             {
                 MenuInflater.Inflate(Resource.Menu.task_edit_menu, menu);
                 var item = menu.FindItem(Resource.Id.menu_complete);
-                item.SetTitle(_viewModel.GetItem(_viewModel.Id).IsSolved ? Resource.String.uncomplete_task : Resource.String.complete_task);
+                item.SetTitle(_viewModel.GetItem().IsSolved ? Resource.String.uncomplete_task : Resource.String.complete_task);
             }
             else
             {
@@ -118,12 +121,12 @@ namespace Tasker.Droid.Activities
 
         private void Initialization()
         {
-            _viewModel.Id = Intent.GetIntExtra("TaskId", 0);
-            _projectId = Intent.GetIntExtra("ProjectId", 0);
-           
+            _viewModel.Id = Intent.GetIntExtra(IntentExtraConstants.TASK_ID_EXTRA, 0);
+            _projectId = Intent.GetIntExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
+
             Task task = null;
             if (_viewModel.Id != 0)
-                task = _viewModel.GetItem(_viewModel.Id);
+                task = _viewModel.GetItem();
 
             if (task != null)
             {
@@ -152,7 +155,7 @@ namespace Tasker.Droid.Activities
                     _taskProject.Tag = project.ID;
 
                 }
-                SetDueDate((TaskDueDates)Intent.GetIntExtra("DueDate", 0));
+                SetDueDate((TaskDueDates)Intent.GetIntExtra(IntentExtraConstants.DUE_DATE_TYPE_EXTRA, 0));
             }
 
             _colorName.Text = _taskColor.ToString();
@@ -161,11 +164,11 @@ namespace Tasker.Droid.Activities
         }
 
         private void InitRemindDate()
-        {   
+        {
             if (_remindDate != DateTime.MaxValue)
             {
                 if (_dueDate == DateTime.MaxValue)
-                {                    
+                {
                     _taskRemindDate.Text = _remindDate.ToString(GetString(Resource.String.datetime_regex));
                 }
                 else
@@ -214,7 +217,7 @@ namespace Tasker.Droid.Activities
             {
                 _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
             }
-        }       
+        }
 
         private void OnDeleteClick()
         {
@@ -246,7 +249,7 @@ namespace Tasker.Droid.Activities
             {
                 _taskDescription.Error = GetString(Resource.String.description_error);
                 error = true;
-            }        
+            }
             if (error) return;
             var task = new Task()
             {
@@ -259,7 +262,9 @@ namespace Tasker.Droid.Activities
                 ProjectID = _projectId
             };
 
-            _viewModel.SaveItem(task);
+            task.ID = _viewModel.SaveItem(task);
+            var notification = new NotificationUtils();
+            notification.SetTaskReminder(task);
             Finish();
         }
 
@@ -278,7 +283,7 @@ namespace Tasker.Droid.Activities
         private void OnSetProject(Action callback)
         {
             callback?.Invoke();
-            _projectId = Intent.GetIntExtra("ProjectId", 0);
+            _projectId = Intent.GetIntExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
             _taskProject.Text = _projects.Find(x => x.ID == _projectId).Title;
         }
         #endregion
@@ -292,11 +297,11 @@ namespace Tasker.Droid.Activities
                           .SetAdapter(new ColorListAdapter(this, _taskColor, () => OnSetColor(dialog.Dismiss)), default(IDialogInterfaceOnClickListener))
                           .Show();
         }
-   
+
         private void OnSetColor(Action callback)
         {
             callback?.Invoke();
-            _taskColor = (TaskColors)Intent.GetIntExtra("TaskColor", 0);
+            _taskColor = (TaskColors)Intent.GetIntExtra(IntentExtraConstants.TASK_COLOR_EXTRA, 0);
             _colorName.Text = _taskColor.ToString();
             GradientDrawable drawable = (GradientDrawable)_colorShape.Drawable;
             drawable.Mutate().SetColorFilter(Color.ParseColor(TaskConstants.Colors[_taskColor]), PorterDuff.Mode.Src);
@@ -340,13 +345,16 @@ namespace Tasker.Droid.Activities
                     _taskDueDate.Text = "";
                     break;
                 case TaskDueDates.PickDataTime:
-                    var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
-                    dateTimePicker.SetInitialDate(new Date())
-                                  .SetMinDate(new Date())
-                                  .SetListener(new DueDateListener(this))
-                                  .SetTheme(0)
-                                  .Build()
-                                  .Show();
+                    if (_viewModel.Id != 0)
+                    {
+                        var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
+                        dateTimePicker.SetInitialDate(new Date())
+                                      .SetMinDate(new Date())
+                                      .SetListener(new DueDateListener(this))
+                                      .SetTheme(0)
+                                      .Build()
+                                      .Show();
+                    }
                     break;
             }
         }
@@ -370,7 +378,7 @@ namespace Tasker.Droid.Activities
         #region RemindDateDialog
         private void SetRemindDate()
         {
-            if (_dueDate != DateTime.MaxValue)
+            if (_dueDate != DateTime.MaxValue && _dueDate.TimeOfDay != TimeSpan.FromTicks(0))
             {
                 AlertDialog dialog = null;
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -409,7 +417,7 @@ namespace Tasker.Droid.Activities
             {
                 ShowRemindDateTimePicker();
             }
-            
+
         }
 
         private void ShowRemindDateTimePicker()
@@ -422,7 +430,7 @@ namespace Tasker.Droid.Activities
                           .Build()
                           .Show();
         }
-        
+   
         public class RemindDateListener : SlideDateTimeListener
         {
             TaskEditCreateActivity _activity;
@@ -437,7 +445,7 @@ namespace Tasker.Droid.Activities
             }
         }
         #endregion
-        
+
         #endregion
     }
 }

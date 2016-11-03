@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:installLocation="auto" android:versionName="1.0" package="Tasker.Droid">
 	<uses-sdk android:minSdkVersion="19" />
+	<uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 	<application android:label="Tasker" android:icon="@drawable/icon"></application>
 </manifest>

@@ -52,32 +52,32 @@ namespace Tasker.Droid.Activities
             switch (item.ItemId)
             {
                 case Resource.Id.navigation_all:
-                    Intent.PutExtra("ProjectId", 0);
-                    Intent.PutExtra("TaskListType", (int)TaskListType.AllOpen);
+                    Intent.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
+                    Intent.PutExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)TaskListType.AllOpen);
                     SupportActionBar.Title = GetString(Resource.String.navigation_all);
                     SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new TaskListFragment()).Commit();
                     break;
                 case Resource.Id.navigation_inbox:
-                    Intent.PutExtra("ProjectId", 0);
-                    Intent.PutExtra("TaskListType", (int)TaskListType.ProjectOpen);
+                    Intent.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
+                    Intent.PutExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)TaskListType.ProjectOpen);
                     SupportActionBar.Title = GetString(Resource.String.navigation_inbox);
                     SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new TaskListFragment()).Commit();
                     break;
                 case Resource.Id.navigation_today:
-                    Intent.PutExtra("ProjectId", 0);
-                    Intent.PutExtra("TaskListType", (int)TaskListType.Today);
+                    Intent.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
+                    Intent.PutExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)TaskListType.Today);
                     SupportActionBar.Title = GetString(Resource.String.navigation_today);
                     SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new TaskListFragment()).Commit();
                     break;
                 case Resource.Id.navigation_tomorrow:
-                    Intent.PutExtra("ProjectId", 0);
-                    Intent.PutExtra("TaskListType", (int)TaskListType.Tomorrow);
+                    Intent.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
+                    Intent.PutExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)TaskListType.Tomorrow);
                     SupportActionBar.Title = GetString(Resource.String.navigation_tomorrow);
                     SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new TaskListFragment()).Commit();
                     break;
                 case Resource.Id.navigation_nextWeek:
-                    Intent.PutExtra("ProjectId", 0);
-                    Intent.PutExtra("TaskListType", (int)TaskListType.NextWeek);
+                    Intent.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
+                    Intent.PutExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)TaskListType.NextWeek);
                     SupportActionBar.Title = GetString(Resource.String.navigation_nextWeek);
                     SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new TaskListFragment()).Commit();
                     break;

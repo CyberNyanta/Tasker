@@ -56,8 +56,8 @@ namespace Tasker.Droid.Fragments
         {
             int id = (int)e.Id;
             Intent intent = new Intent(this.Activity, typeof(ProjectTasksListActivity));
-            intent.PutExtra("TaskListType", (int)TaskListType.ProjectOpen)
-                  .PutExtra("ProjectId", id);
+            intent.PutExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)TaskListType.ProjectOpen)
+                  .PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, id);
             StartActivity(intent);
         }
 

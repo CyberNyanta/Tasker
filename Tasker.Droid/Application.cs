@@ -5,7 +5,7 @@ using Android.Runtime;
 
 using TinyIoC;
 
-using Tasker.Droid.Utils;
+using Tasker.Droid.AL.Utils;
 using Tasker.Core.DAL.Contracts;
 using Tasker.Core.DAL;
 using Tasker.Core.BL.Contracts;

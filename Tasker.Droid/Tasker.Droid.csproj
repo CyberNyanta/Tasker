@@ -106,13 +106,16 @@
     <Compile Include="Adapters\ProjectListAdapter.cs" />
     <Compile Include="Adapters\TaskListAdapter.cs" />
     <Compile Include="Application.cs" />
+    <Compile Include="Constans.cs" />
     <Compile Include="Fragments\ProjectListFragment.cs" />
     <Compile Include="Fragments\BaseListFragment.cs" />
     <Compile Include="Fragments\TaskListFragment.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TinyIoC.cs" />
-    <Compile Include="Utils\DatabasePath.cs" />
+    <Compile Include="AL\Utils\DatabasePath.cs" />
+    <Compile Include="AL\Utils\NotificationUtils.cs" />
+    <Compile Include="AL\Utils\RemindAlarmReceiver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -140,8 +143,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dialogs\" />
-    <Folder Include="Services\" />
-    <Folder Include="Widgets\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\colors.xml" />

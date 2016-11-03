@@ -16,9 +16,9 @@ namespace Tasker.Core.AL.ViewModels
             _taskManager = taskManager;
         }
 
-        public Task GetItem(int id)
+        public Task GetItem()
         {
-            return id != 0 ? _taskManager.Get(id) : null;
+            return Id != 0 ? _taskManager.Get(Id) : null;
         }
 
         public int SaveItem(Task task)

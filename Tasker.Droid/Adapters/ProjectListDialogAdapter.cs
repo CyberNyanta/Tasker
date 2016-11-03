@@ -59,7 +59,7 @@ namespace Tasker.Droid.Adapters
 
         private void View_Click(object sender, EventArgs e)
         {
-            _context.Intent.PutExtra("ProjectId", (int)((View)sender).Tag);      
+            _context.Intent.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, (int)((View)sender).Tag);      
 
             _context.RunOnUiThread(() =>
             {

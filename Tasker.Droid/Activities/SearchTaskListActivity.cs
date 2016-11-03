@@ -40,7 +40,7 @@ namespace Tasker.Droid.Activities
         private List<Task> _foundTasks = new List<Task>();
         private ITaskListViewModel _viewModel;
         private ListView _listView;
-        private bool _isProjectTaskSearch;
+        private bool _isSearchInProject;
         private int _projectId;
         private string _lastQuery;
 
@@ -86,14 +86,14 @@ namespace Tasker.Droid.Activities
         {
             base.OnResume();
 
-            _isProjectTaskSearch = Intent.GetBooleanExtra("IsProjectTaskSearch", false);
-            if (!_isProjectTaskSearch)
+            _isSearchInProject = Intent.GetBooleanExtra(IntentExtraConstants.IS_SEARCH_IN_PROJECT_EXTRA, false);
+            if (!_isSearchInProject)
             {
                 _tasks = _viewModel.GetAll();
             }
             else
             {
-                _projectId = Intent.GetIntExtra("ProjectId", 0);
+                _projectId = Intent.GetIntExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
                 _tasks = _viewModel.GetProjectTasks(_projectId);
             }
             _projects = _viewModel.GetAllProjects();
@@ -108,7 +108,7 @@ namespace Tasker.Droid.Activities
         {
             int id = (int)e.Id;
             Intent intent = new Intent(this, typeof(TaskEditCreateActivity));
-            intent.PutExtra("TaskId", id);
+            intent.PutExtra(IntentExtraConstants.TASK_ID_EXTRA, id);
             StartActivity(intent);
         }
 
