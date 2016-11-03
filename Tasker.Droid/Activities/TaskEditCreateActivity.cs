@@ -152,22 +152,7 @@ namespace Tasker.Droid.Activities
                     _taskProject.Tag = project.ID;
 
                 }
-                var dueDate = (TaskDueDates)Intent.GetIntExtra("DueDate", 0);
-                switch (dueDate)
-                {
-                    case TaskDueDates.Today:
-                        _dueDate = DateTime.Today;
-                        _taskDueDate.Text = GetString(Resource.String.due_dates_today);
-                        break;
-                    case TaskDueDates.Tomorrow:
-                        _dueDate = DateTime.Today.AddDays(1);
-                        _taskDueDate.Text = GetString(Resource.String.due_dates_tomorrow);
-                        break;
-                    case TaskDueDates.NextWeek:
-                        _dueDate = DateTime.Today.AddDays(7);
-                        _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
-                        break;
-                }
+                SetDueDate((TaskDueDates)Intent.GetIntExtra("DueDate", 0));
             }
 
             _colorName.Text = _taskColor.ToString();
@@ -228,24 +213,23 @@ namespace Tasker.Droid.Activities
             else
             {
                 _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
-            }            
-        }
+            }
+        }       
 
         private void OnDeleteClick()
         {
             //set alert for executing the task
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.SetTitle(GetString(Resource.String.confirm_delete_task));
-            alert.SetPositiveButton(GetString(Resource.String.dialog_yes), (senderAlert, args) =>
-            {
-                _viewModel.DeleteItem(_viewModel.Id);
-                SetResult(Result.Ok);
-                Finish();
-            });
-            alert.SetCancelable(true);
-            alert.SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { });
-            Dialog dialog = alert.Create();
-            dialog.Show();
+            alert.SetTitle(GetString(Resource.String.confirm_delete_task))
+                 .SetPositiveButton(GetString(Resource.String.dialog_yes), (senderAlert, args) =>
+                    {
+                        _viewModel.DeleteItem(_viewModel.Id);
+                        SetResult(Result.Ok);
+                        Finish();
+                    })
+                 .SetCancelable(true)
+                 .SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { })
+                 .Show();
         }
 
         private void OnSaveClick()
@@ -262,10 +246,8 @@ namespace Tasker.Droid.Activities
             {
                 _taskDescription.Error = GetString(Resource.String.description_error);
                 error = true;
-            }
-
+            }        
             if (error) return;
-
             var task = new Task()
             {
                 ID = _viewModel.Id,
@@ -331,38 +313,42 @@ namespace Tasker.Droid.Activities
                             .SetAdapter(new DueDateListAdapter(this, _dueDate, (sender, args) =>
                             {
                                 dialog.Dismiss();
-                                var selected = (TaskDueDates)(int)((View)sender).Tag;
-                                switch (selected)
-                                {
-                                    case TaskDueDates.Today:
-                                        _dueDate = DateTime.Today;
-                                        _taskDueDate.Text = GetString(Resource.String.due_dates_today);
-                                        break;
-                                    case TaskDueDates.Tomorrow:
-                                        _dueDate = DateTime.Today.AddDays(1);
-                                        _taskDueDate.Text = GetString(Resource.String.due_dates_tomorrow);
-                                        break;
-                                    case TaskDueDates.NextWeek:
-                                        _dueDate = DateTime.Today.AddDays(7);
-                                        _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
-                                        break;
-                                    case TaskDueDates.Remove:
-                                        _dueDate = DateTime.MaxValue;
-                                        _taskDueDate.Text = "";
-                                        break;
-                                    case TaskDueDates.PickDataTime:
-                                        var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
-                                        var pickerDialog = dateTimePicker.SetInitialDate(new Date())
-                                                                   .SetMinDate(new Date())
-                                                                   .SetListener(new DueDateListener(this))
-                                                                   .SetTheme(0)
-                                                                   .Build();
-                                        pickerDialog.Show();
-                                        break;
-                                }
+                                SetDueDate((TaskDueDates)(int)((View)sender).Tag);
                                 InitRemindDate();
                             }), default(IDialogInterfaceOnClickListener))
                             .Show();
+        }
+
+        private void SetDueDate(TaskDueDates type)
+        {
+            switch (type)
+            {
+                case TaskDueDates.Today:
+                    _dueDate = DateTime.Today;
+                    _taskDueDate.Text = GetString(Resource.String.due_dates_today);
+                    break;
+                case TaskDueDates.Tomorrow:
+                    _dueDate = DateTime.Today.AddDays(1);
+                    _taskDueDate.Text = GetString(Resource.String.due_dates_tomorrow);
+                    break;
+                case TaskDueDates.NextWeek:
+                    _dueDate = DateTime.Today.AddDays(7);
+                    _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
+                    break;
+                case TaskDueDates.Remove:
+                    _dueDate = DateTime.MaxValue;
+                    _taskDueDate.Text = "";
+                    break;
+                case TaskDueDates.PickDataTime:
+                    var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
+                    dateTimePicker.SetInitialDate(new Date())
+                                  .SetMinDate(new Date())
+                                  .SetListener(new DueDateListener(this))
+                                  .SetTheme(0)
+                                  .Build()
+                                  .Show();
+                    break;
+            }
         }
 
         public class DueDateListener : SlideDateTimeListener
@@ -375,26 +361,7 @@ namespace Tasker.Droid.Activities
             public override void OnDateTimeSet(Date p0)
             {
                 _activity._dueDate = p0.Time.UnixTimeToDateTime();
-                if (_activity._dueDate == DateTime.Today)
-                {
-                    _activity._taskDueDate.Text = _activity.GetString(Resource.String.due_dates_today);
-                }
-                else if(_activity._dueDate.Date == DateTime.Today)
-                {
-                    _activity._taskDueDate.Text = _activity.GetString(Resource.String.due_dates_today_at, _activity._dueDate.ToString(_activity.GetString(Resource.String.time_regex)));
-                }
-                else if (_activity._dueDate == DateTime.Today.AddDays(1))
-                {
-                    _activity._taskDueDate.Text = _activity.GetString(Resource.String.due_dates_tomorrow);
-                }
-                else if(_activity._dueDate.Date == DateTime.Today.AddDays(1))
-                {
-                    _activity._taskDueDate.Text = _activity.GetString(Resource.String.due_dates_tomorrow_at, _activity._dueDate.ToString(_activity.GetString(Resource.String.time_regex)));
-                }
-                else
-                {
-                    _activity._taskDueDate.Text = _activity._dueDate.ToString(_activity.GetString(Resource.String.datetime_regex));
-                }
+                _activity.InitDueDate();
                 _activity.InitRemindDate();
             }
         }
@@ -448,12 +415,12 @@ namespace Tasker.Droid.Activities
         private void ShowRemindDateTimePicker()
         {
             var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
-            var pickerDialog = dateTimePicker.SetInitialDate(new Date())
-                                       .SetMinDate(new Date())
-                                       .SetListener(new RemindDateListener(this))
-                                       .SetTheme(0)
-                                       .Build();
-            pickerDialog.Show();
+            dateTimePicker.SetInitialDate(new Date())
+                          .SetMinDate(new Date())
+                          .SetListener(new RemindDateListener(this))
+                          .SetTheme(0)
+                          .Build()
+                          .Show();
         }
         
         public class RemindDateListener : SlideDateTimeListener
@@ -466,11 +433,11 @@ namespace Tasker.Droid.Activities
             public override void OnDateTimeSet(Date p0)
             {
                 _activity._remindDate = p0.Time.UnixTimeToDateTime();
-                _activity._taskRemindDate.Text = _activity._remindDate.ToString(_activity.GetString(Resource.String.datetime_regex));
+                _activity.InitRemindDate();
             }
         }
         #endregion
-
+        
         #endregion
     }
 }

@@ -25,7 +25,7 @@ namespace Tasker.Core
             {TaskColors.Peach,"#FFFFDAB9" },
             {TaskColors.Aqua,"#FF00FFFF" },
             {TaskColors.Blue,"#FF87CEFA" },
-            {TaskColors.Salmon,"#FFFA8072" },      
+            {TaskColors.Salmon,"#FFFA8072" },
             {TaskColors.Teal,"#FF008080" },
             {TaskColors.Tan,"#FFD2B48C" },
             {TaskColors.Yellow,"#FFFFFF00" },
@@ -64,5 +64,38 @@ namespace Tasker.Core
         In30Minutes,
         In1Hour,
         Remove,
+    }
+
+    public enum TaskListType
+    {
+        AllOpen,
+        AllSolve,
+        ProjectOpen,
+        ProjectSolve,
+        Today,
+        Tomorrow,
+        NextWeek,
+    }
+
+    public static class Extensions
+    {
+        public static bool IsAllType(this TaskListType type)
+        {
+            return type == TaskListType.AllOpen || type == TaskListType.AllSolve;
+        }
+
+        public static bool IsProjectType(this TaskListType type)
+        {
+            return type == TaskListType.ProjectOpen || type == TaskListType.ProjectSolve;
+        }
+
+        public static bool IsOpenType(this TaskListType type)
+        {
+            return type == TaskListType.AllOpen || type == TaskListType.ProjectOpen;
+        }
+        public static bool IsSolveType(this TaskListType type)
+        {
+            return type == TaskListType.AllSolve || type == TaskListType.ProjectSolve;
+        }
     }
 }

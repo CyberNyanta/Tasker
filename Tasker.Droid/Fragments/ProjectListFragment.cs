@@ -56,8 +56,8 @@ namespace Tasker.Droid.Fragments
         {
             int id = (int)e.Id;
             Intent intent = new Intent(this.Activity, typeof(ProjectTasksListActivity));
-            intent.PutExtra("TaskListType", (int)TaskListFragment.TaskListType.ProjectOpen);
-            intent.PutExtra("ProjectId", id);
+            intent.PutExtra("TaskListType", (int)TaskListType.ProjectOpen)
+                  .PutExtra("ProjectId", id);
             StartActivity(intent);
         }
 
@@ -107,15 +107,11 @@ namespace Tasker.Droid.Fragments
         {
 
             AlertDialog.Builder alert = new AlertDialog.Builder(this.Activity);
-            alert.SetTitle(GetString(Resource.String.confirm_delete_project));
-            alert.SetPositiveButton(GetString(Resource.String.dialog_yes), (senderAlert, args) =>
-            {
-                callback?.Invoke();
-            });
-            alert.SetCancelable(true);
-            alert.SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { });
-            Dialog dialog = alert.Create();
-            dialog.Show();
+            alert.SetTitle(GetString(Resource.String.confirm_delete_project))
+                 .SetPositiveButton(GetString(Resource.String.dialog_yes), (senderAlert, args) => { callback?.Invoke(); })
+                 .SetCancelable(true)
+                 .SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { })
+                 .Show();
         }
 
         private void EditProject(int position)
@@ -129,7 +125,6 @@ namespace Tasker.Droid.Fragments
                  .SetView(view)
                  .SetPositiveButton(GetString(Resource.String.dialog_yes), (senderAlert, args) =>
                         {
-
                             if (projectTitle.Text.IsLengthInRange(TaskConstants.PROJECT_TITLE_MAX_LENGTH, 1))
                             {
                                 project.Title = projectTitle.Text;
@@ -138,7 +133,6 @@ namespace Tasker.Droid.Fragments
                                 _listAdapter.Save(project, position);                    
                                 _swipeActionAdapter.NotifyDataSetChanged();
                             }
-
                         })            
                 .SetCancelable(true)
                 .SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { })
