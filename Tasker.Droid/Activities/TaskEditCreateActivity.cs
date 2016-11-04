@@ -22,14 +22,16 @@ using Tasker.Droid.Adapters;
 using TinyIoC;
 using Com.Github.Jjobes.Slidedatetimepicker;
 using Tasker.Droid.AL.Utils;
+using Tasker.Core.AL.Utils.Contracts;
 
 namespace Tasker.Droid.Activities
 {
-    [Activity]
+    [Activity(LaunchMode = Android.Content.PM.LaunchMode.SingleTop)]
     public class TaskEditCreateActivity : AppCompatActivity
     {
         #region Props
         private ITaskDetailsViewModel _viewModel;
+        private INotificationUtils _notificationUtils;
         private List<Project> _projects;
         #region Views
         private EditText _taskTitle;
@@ -56,7 +58,7 @@ namespace Tasker.Droid.Activities
             SupportActionBar.SetDisplayShowHomeEnabled(true);
 
             _viewModel = TinyIoCContainer.Current.Resolve<ITaskDetailsViewModel>();
-
+            _notificationUtils = TinyIoCContainer.Current.Resolve<INotificationUtils>();
             _taskTitle = FindViewById<EditText>(Resource.Id.task_title);
             _taskDescription = FindViewById<EditText>(Resource.Id.task_description);
             _taskDueDate = FindViewById<TextView>(Resource.Id.task_dueDate);
@@ -165,7 +167,7 @@ namespace Tasker.Droid.Activities
 
         private void InitRemindDate()
         {
-            if (_remindDate != DateTime.MaxValue)
+            if (_remindDate != DateTime.MaxValue &&  _remindDate>DateTime.Now)
             {
                 if (_dueDate == DateTime.MaxValue)
                 {
@@ -192,7 +194,11 @@ namespace Tasker.Droid.Activities
                 }
             }
             else
+            {
+                _remindDate = DateTime.MaxValue;
                 _taskRemindDate.Text = "";
+
+            }
         }
 
         private void InitDueDate()
@@ -223,15 +229,19 @@ namespace Tasker.Droid.Activities
         {
             //set alert for executing the task
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.SetTitle(GetString(Resource.String.confirm_delete_task))
-                 .SetPositiveButton(GetString(Resource.String.dialog_yes), (senderAlert, args) =>
+            alert.SetTitle(Resource.String.confirm_delete_task)
+                 .SetIcon(Resource.Drawable.ic_delete)
+                 .SetPositiveButton(Resource.String.dialog_yes, (senderAlert, args) =>
                     {
+                        var task = _viewModel.GetItem();
+                        task.RemindDate = DateTime.MaxValue;
+                        _notificationUtils.RemoveTaskReminder(task);
                         _viewModel.DeleteItem(_viewModel.Id);
                         SetResult(Result.Ok);
                         Finish();
                     })
                  .SetCancelable(true)
-                 .SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { })
+                 .SetNegativeButton(Resource.String.dialog_cancel, (senderAlert, args) => { })
                  .Show();
         }
 
@@ -263,8 +273,7 @@ namespace Tasker.Droid.Activities
             };
 
             task.ID = _viewModel.SaveItem(task);
-            var notification = new NotificationUtils();
-            notification.SetTaskReminder(task);
+            _notificationUtils.SetTaskReminder(task);
             Finish();
         }
 
@@ -441,6 +450,15 @@ namespace Tasker.Droid.Activities
             public override void OnDateTimeSet(Date p0)
             {
                 _activity._remindDate = p0.Time.UnixTimeToDateTime();
+                if(_activity._remindDate < DateTime.Now)
+                {                 
+                    AlertDialog.Builder alert = new AlertDialog.Builder(_activity);
+                    alert.SetCancelable(true)
+                         .SetTitle(Resource.String.remind_error)
+                         .SetIcon(Resource.Drawable.ic_remind) 
+                         .SetNegativeButton(Resource.String.dialog_cancel, (senderAlert, args) => { })
+                         .Show();
+                }
                 _activity.InitRemindDate();
             }
         }

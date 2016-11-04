@@ -79,19 +79,19 @@ namespace Tasker.Core
 
     public static class Extensions
     {
-        public static bool IsAllType(this TaskListType type)
-        {
-            return type == TaskListType.AllOpen || type == TaskListType.AllSolve;
-        }
+        //public static bool IsAllType(this TaskListType type)
+        //{
+        //    return type != TaskListType.ProjectSolve && type != TaskListType.AllSolve;
+        //}
 
-        public static bool IsProjectType(this TaskListType type)
-        {
-            return type == TaskListType.ProjectOpen || type == TaskListType.ProjectSolve;
-        }
+        //public static bool IsProjectType(this TaskListType type)
+        //{
+        //    return type == TaskListType.ProjectOpen || type == TaskListType.ProjectSolve;
+        //}
 
         public static bool IsOpenType(this TaskListType type)
         {
-            return type == TaskListType.AllOpen || type == TaskListType.ProjectOpen;
+            return type != TaskListType.ProjectSolve && type != TaskListType.AllSolve;
         }
         public static bool IsSolveType(this TaskListType type)
         {

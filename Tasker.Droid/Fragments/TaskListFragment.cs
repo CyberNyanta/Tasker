@@ -96,7 +96,7 @@ namespace Tasker.Droid.Fragments
 
         private void TaskInitialization()
         {
-            _taskListType = (TaskListType)Activity.Intent.GetIntExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)TaskListType.AllOpen);
+             _taskListType = (TaskListType)Activity.Intent.GetIntExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)TaskListType.AllOpen);
            
             switch (_taskListType)
             {
@@ -171,24 +171,24 @@ namespace Tasker.Droid.Fragments
             if (_taskListType.IsSolveType())
             {
                 container.Alpha = TaskConstants.COMPLETED_TASK_BACKGROUND_ALPHA;
-                image.SetImageDrawable(Activity.GetDrawable(Resource.Drawable.empty_items));
+                image.SetImageResource(Resource.Drawable.empty_items);
                 coment.Text = Activity.GetString(Resource.String.empty_items_comment_no_complete);
             }
             else if(isAllSoved)
             {
                 container.Alpha = TaskConstants.TASK_BACKGROUND_ALPHA;
-                image.SetImageDrawable(Activity.GetDrawable(Resource.Drawable.empty_items_solve));
+                image.SetImageResource(Resource.Drawable.empty_items_solve);
                 coment.Text = Activity.GetString(Resource.String.empty_items_comment_all_solve);
             }
             else
             {
                 container.Alpha = TaskConstants.TASK_BACKGROUND_ALPHA;
-                image.SetImageDrawable(Activity.GetDrawable(Resource.Drawable.empty_items));
+                image.SetImageResource(Resource.Drawable.empty_items);
                 coment.Text = Activity.GetString(Resource.String.empty_items_comment_not_added);
             }
 
             _listView.Visibility = ViewStates.Gone;
-        }
+        }       //TODO Add screens for Today,Tomorrow, NextWeek
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {

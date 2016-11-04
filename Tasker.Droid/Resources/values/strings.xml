@@ -23,6 +23,7 @@
     <!--Errors-->
     <string name="title_error">Title is required</string>
     <string name="description_error">Length must be less then %s</string>
+    <string name="remind_error">Remind date can\'t be set to past time!</string>
 
     <string name="empty_items_comment_not_added">Nothing added yet</string>
     <string name="empty_items_comment_all_solve">You\'re all done!</string>

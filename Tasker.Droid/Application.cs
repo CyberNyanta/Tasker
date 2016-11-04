@@ -13,6 +13,7 @@ using Tasker.Core.BL.Managers;
 using Tasker.Core.AL.ViewModels;
 using Tasker.Core.AL.ViewModels.Contracts;
 using Tasker.Core.DL;
+using Tasker.Core.AL.Utils.Contracts;
 
 namespace Tasker.Droid
 {
@@ -33,6 +34,7 @@ namespace Tasker.Droid
             container.Register<ITaskListViewModel, TaskListViewModel>();
             container.Register<IProjectDetailsViewModel, ProjectDetailsViewModel>();
             container.Register<ITaskDetailsViewModel, TaskDetailsViewModel>();
+            container.Register<INotificationUtils, NotificationUtils>();
         }
 
 

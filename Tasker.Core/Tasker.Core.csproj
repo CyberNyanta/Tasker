@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AL\Utils\Contracts\INotificationUtils.cs" />
     <Compile Include="AL\Utils\DateConverterExtensions.cs" />
     <Compile Include="GlobalConstants.cs" />
     <Compile Include="DL\IDatabasePath.cs" />
