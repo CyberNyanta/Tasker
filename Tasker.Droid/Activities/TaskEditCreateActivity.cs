@@ -124,7 +124,7 @@ namespace Tasker.Droid.Activities
         private void Initialization()
         {
             _viewModel.Id = Intent.GetIntExtra(IntentExtraConstants.TASK_ID_EXTRA, 0);
-            _projectId = Intent.GetIntExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
+           
 
             Task task = null;
             if (_viewModel.Id != 0)
@@ -137,18 +137,19 @@ namespace Tasker.Droid.Activities
                 if (task.DueDate != DateTime.MaxValue)
                 {
                     _dueDate = task.DueDate;
-                    InitDueDate();
+                    _taskDueDate.Text = DateTimeConverter.DueDateToString(_dueDate);
                 }
                 _remindDate = task.RemindDate;
                 InitRemindDate();
                 var project = _projects.Find(x => x.ID == task.ProjectID);
                 _taskProject.Text = project.Title;
                 _taskProject.Tag = project.ID;
-
+                _projectId = project.ID;
                 _taskColor = task.Color;
             }
             else
             {
+                _projectId = Intent.GetIntExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
                 _taskColor = default(TaskColors);
                 var project = _projects.Find(x => x.ID == _projectId);
                 if (project != null)
@@ -198,30 +199,6 @@ namespace Tasker.Droid.Activities
                 _remindDate = DateTime.MaxValue;
                 _taskRemindDate.Text = "";
 
-            }
-        }
-
-        private void InitDueDate()
-        {
-            if (_dueDate == DateTime.Today)
-            {
-                _taskDueDate.Text = GetString(Resource.String.due_dates_today);
-            }
-            else if (_dueDate.Date == DateTime.Today)
-            {
-                _taskDueDate.Text = GetString(Resource.String.due_dates_today_at, _dueDate.ToString(GetString(Resource.String.time_regex)));
-            }
-            else if (_dueDate == DateTime.Today.AddDays(1))
-            {
-                _taskDueDate.Text = GetString(Resource.String.due_dates_tomorrow);
-            }
-            else if (_dueDate.Date == DateTime.Today.AddDays(1))
-            {
-                _taskDueDate.Text = GetString(Resource.String.due_dates_tomorrow_at, _dueDate.ToString(GetString(Resource.String.time_regex)));
-            }
-            else
-            {
-                _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
             }
         }
 
@@ -357,7 +334,9 @@ namespace Tasker.Droid.Activities
                     if (_viewModel.Id != 0)
                     {
                         var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
-                        dateTimePicker.SetInitialDate(new Date())
+                        var date = DateTime.UtcNow;
+                        date.AddSeconds(-date.Second);
+                        dateTimePicker.SetInitialDate(new Date(date.ToUnixTime()))
                                       .SetMinDate(new Date())
                                       .SetListener(new DueDateListener(this))
                                       .SetTheme(0)
@@ -378,7 +357,7 @@ namespace Tasker.Droid.Activities
             public override void OnDateTimeSet(Date p0)
             {
                 _activity._dueDate = p0.Time.UnixTimeToDateTime();
-                _activity.InitDueDate();
+                _activity._taskDueDate.Text = DateTimeConverter.DueDateToString(_activity._dueDate);
                 _activity.InitRemindDate();
             }
         }
@@ -432,12 +411,14 @@ namespace Tasker.Droid.Activities
         private void ShowRemindDateTimePicker()
         {
             var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
-            dateTimePicker.SetInitialDate(new Date())
+            var date = DateTime.UtcNow;
+            date = date.AddSeconds(-date.Second);
+            dateTimePicker.SetInitialDate(new Date(date.ToUnixTime()))
                           .SetMinDate(new Date())
                           .SetListener(new RemindDateListener(this))
                           .SetTheme(0)
                           .Build()
-                          .Show();
+                          .Show();            
         }
    
         public class RemindDateListener : SlideDateTimeListener

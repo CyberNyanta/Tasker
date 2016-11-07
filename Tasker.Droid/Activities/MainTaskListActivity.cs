@@ -25,8 +25,8 @@ namespace Tasker.Droid.Activities
 			SetContentView (Resource.Layout.activity_main);
             var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
-            SupportActionBar.Title = GetString(Resource.String.app_name);
 
+            SupportActionBar.Title = GetString(Resource.String.navigation_all);
             if (bundle == null)
             {
                 SupportFragmentManager.BeginTransaction().Add(Resource.Id.fragment, new TaskListFragment()).Commit();
@@ -38,7 +38,9 @@ namespace Tasker.Droid.Activities
             _toggle.SyncState();
 
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
-            navigationView.SetNavigationItemSelectedListener(this);          
+            navigationView.SetNavigationItemSelectedListener(this);
+            navigationView.Menu.GetItem(0).SetChecked(true);    
+       
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

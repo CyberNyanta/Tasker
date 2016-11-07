@@ -142,8 +142,19 @@ namespace Tasker.Droid.Fragments
             }            
 
             _projects = _viewModel.GetAllProjects();
+            if (_taskListType.HasFlag(TaskListType.NextWeek))
+            {
+                _taskListAdapter = new Adapters.TaskListFor7DaysAdapter(Activity, _tasks, _projects);
+            }
+            //else if (_taskListType.HasFlag(TaskListType.NextWeek))
+            //{
 
-            _taskListAdapter = new Adapters.TaskListAdapter(Activity, _tasks, _projects);
+            //}
+            else
+            {
+                _taskListAdapter = new Adapters.TaskListAdapter(Activity, _tasks, _projects);
+            }            
+
             _swipeActionAdapter = new SwipeActionAdapter(_taskListAdapter);
             _swipeActionAdapter.SetListView(_listView);
             _swipeActionAdapter.SetSwipeActionListener(this);

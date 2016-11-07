@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/projectContainer"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="@dimen/list_item_height"
     android:background="@color/colorWhite"
     android:orientation="vertical"
     android:padding="@dimen/small_margin">
@@ -13,14 +13,15 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="taskasdasdasTitle"
-        android:textSize="@dimen/taskTitle_textSize" />
+        android:text="taskCount"
+        android:textColor="@color/black"
+        android:textSize="@dimen/listTitle_textSize" />
 
     <TextView
         android:id="@+id/task_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="taskCount"
-        android:textSize="@dimen/taskDetails_textSize" />
+        android:textSize="@dimen/listDetails_textSize" />
 
 </LinearLayout>

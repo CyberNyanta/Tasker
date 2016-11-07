@@ -104,7 +104,9 @@
     <Compile Include="Adapters\ProjectListDialogAdapter.cs" />
     <Compile Include="Adapters\ColorListAdapter.cs" />
     <Compile Include="Adapters\ProjectListAdapter.cs" />
+    <Compile Include="Adapters\TaskListFor7DaysAdapter.cs" />
     <Compile Include="Adapters\TaskListAdapter.cs" />
+    <Compile Include="AL\Utils\DateTimeConverter.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Constans.cs" />
     <Compile Include="Fragments\ProjectListFragment.cs" />

@@ -1793,6 +1793,9 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f06006a
 			public const int design_tab_text_size_2line = 2131099754;
 			
+			// aapt resource value: 0x7f060080
+			public const int dialog_list_item_height = 2131099776;
+			
 			// aapt resource value: 0x7f060046
 			public const int disabled_alpha_material_dark = 2131099718;
 			
@@ -1838,26 +1841,32 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f06006d
 			public const int labels_text_size = 2131099757;
 			
-			// aapt resource value: 0x7f060089
-			public const int large_margin = 2131099785;
+			// aapt resource value: 0x7f06008a
+			public const int large_margin = 2131099786;
 			
-			// aapt resource value: 0x7f060086
-			public const int large_margin_negative = 2131099782;
+			// aapt resource value: 0x7f060087
+			public const int large_margin_negative = 2131099783;
+			
+			// aapt resource value: 0x7f06007b
+			public const int listDetails_textSize = 2131099771;
+			
+			// aapt resource value: 0x7f06007a
+			public const int listTitle_textSize = 2131099770;
+			
+			// aapt resource value: 0x7f060084
+			public const int list_item_height = 2131099780;
 			
 			// aapt resource value: 0x7f060083
-			public const int list_item_height = 2131099779;
+			public const int list_item_marginTop = 2131099779;
 			
 			// aapt resource value: 0x7f060082
-			public const int list_item_marginTop = 2131099778;
+			public const int list_item_padding = 2131099778;
 			
-			// aapt resource value: 0x7f060081
-			public const int list_item_padding = 2131099777;
+			// aapt resource value: 0x7f060089
+			public const int medium_margin = 2131099785;
 			
-			// aapt resource value: 0x7f060088
-			public const int medium_margin = 2131099784;
-			
-			// aapt resource value: 0x7f060085
-			public const int medium_margin_negative = 2131099781;
+			// aapt resource value: 0x7f060086
+			public const int medium_margin_negative = 2131099782;
 			
 			// aapt resource value: 0x7f06006f
 			public const int nav_header_height = 2131099759;
@@ -1886,11 +1895,11 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f060078
 			public const int size_score_mark = 2131099768;
 			
-			// aapt resource value: 0x7f060087
-			public const int small_margin = 2131099783;
+			// aapt resource value: 0x7f060088
+			public const int small_margin = 2131099784;
 			
-			// aapt resource value: 0x7f060084
-			public const int small_margin_negative = 2131099780;
+			// aapt resource value: 0x7f060085
+			public const int small_margin_negative = 2131099781;
 			
 			// aapt resource value: 0x7f060074
 			public const int spacing_double = 2131099764;
@@ -1904,14 +1913,8 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f060073
 			public const int spacing_normal = 2131099763;
 			
-			// aapt resource value: 0x7f06007b
-			public const int taskDetails_textSize = 2131099771;
-			
-			// aapt resource value: 0x7f06007a
-			public const int taskTitle_textSize = 2131099770;
-			
-			// aapt resource value: 0x7f060080
-			public const int task_colorBorder_width = 2131099776;
+			// aapt resource value: 0x7f060081
+			public const int task_colorBorder_width = 2131099777;
 			
 			static Dimension()
 			{
@@ -3221,11 +3224,11 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f080027
 			public const int description_error = 2131230759;
 			
-			// aapt resource value: 0x7f08004f
-			public const int dialog_cancel = 2131230799;
+			// aapt resource value: 0x7f080051
+			public const int dialog_cancel = 2131230801;
 			
-			// aapt resource value: 0x7f08004e
-			public const int dialog_yes = 2131230798;
+			// aapt resource value: 0x7f080050
+			public const int dialog_yes = 2131230800;
 			
 			// aapt resource value: 0x7f080038
 			public const int due_dates_nextWeek = 2131230776;
@@ -3335,8 +3338,8 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f080030
 			public const int task_color = 2131230768;
 			
-			// aapt resource value: 0x7f08004d
-			public const int task_count = 2131230797;
+			// aapt resource value: 0x7f08004f
+			public const int task_count = 2131230799;
 			
 			// aapt resource value: 0x7f08002f
 			public const int task_description = 2131230767;
@@ -3361,6 +3364,12 @@ namespace Tasker.Droid
 			
 			// aapt resource value: 0x7f080026
 			public const int title_error = 2131230758;
+			
+			// aapt resource value: 0x7f08004d
+			public const int today = 2131230797;
+			
+			// aapt resource value: 0x7f08004e
+			public const int tomorrow = 2131230798;
 			
 			// aapt resource value: 0x7f080032
 			public const int uncomplete_task = 2131230770;

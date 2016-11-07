@@ -10,68 +10,71 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Graphics;
+using Android.Support.V7.App;
 
 using Tasker.Core.DAL.Entities;
 using Tasker.Core;
 using Tasker.Core.BL.Contracts;
-using Android.Support.V7.App;
+using Tasker.Droid.AL.Utils;
 
 namespace Tasker.Droid.Adapters
 {
     public class TaskListAdapter : BaseAdapter<Task>
     {
         private Activity _context;
-        private List<Task> _tasks;
         private List<Project> _projects;
+
+        protected List<Task> TaskList { get; set; }
 
         public TaskListAdapter(Activity context, List<Task> tasks, List<Project> projects) : base()
         {
             _context = context;
-            _tasks = tasks;
+            TaskList = tasks;
             _projects = projects;
-            _tasks.Sort((t1, t2) => DateTime.Compare(t1.DueDate, t2.DueDate));
-            NotifyDataSetChanged();
+            //TaskList.Insert(0, null);
+            TaskList.Sort((t1, t2) => DateTime.Compare(t1.DueDate, t2.DueDate));
+           // NotifyDataSetChanged();
         }
 
         public void Remove(int position)
         {
-            _tasks.RemoveAt(position);
+            TaskList.RemoveAt(position);
             NotifyDataSetChanged();
         }
 
-        public void SaveChanges(Task task, int position)
+        public void SaveChanges(Task task, int position) //For date change
         {
-            _tasks[position] = task;
-            _tasks.Sort((t1, t2) => DateTime.Compare(t1.DueDate, t2.DueDate));
+            TaskList[position] = task;
+            TaskList.Sort((t1, t2) => DateTime.Compare(t1.DueDate, t2.DueDate));
             NotifyDataSetChanged();
         }
 
-        public void ChangeDataSet(List<Task> tasks)
+        public void ChangeDataSet(List<Task> tasks) //For task search
         {
-            _tasks = tasks;
-            _tasks.Sort((t1, t2) => DateTime.Compare(t1.DueDate, t2.DueDate));
+            TaskList = tasks;
+            TaskList.Sort((t1, t2) => DateTime.Compare(t1.DueDate, t2.DueDate));
             NotifyDataSetChanged();
         }
 
         public override Task this[int position]
         {
-            get { return _tasks[position]; }
+            get { return TaskList[position]; }
         }
 
         public override int Count
         {
-            get { return _tasks.Count; }
+            get { return TaskList.Count; }
         }
 
         public override long GetItemId(int position)
         {
-            return _tasks[position].ID;
+            return TaskList[position].ID;
         }       
-
+     
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             // Get our object for position
-            var item = _tasks[position];
+            var item = TaskList[position];
             View view;
             //Try to reuse convertView if it's not  null, otherwise inflate it from our item layout
             // gives us some performance gains by not always inflating a new view
@@ -109,35 +112,10 @@ namespace Tasker.Droid.Adapters
             else
                 border.SetBackgroundColor(view.DrawingCacheBackgroundColor);
             //Set Task due date
-            
-            if (item.DueDate != DateTime.MaxValue)
-            {
-                if (item.DueDate == DateTime.Today)
-                {
-                    taskDueDate.Text = _context.GetString(Resource.String.due_dates_today);
-                }
-                if (item.DueDate.Date == DateTime.Today)
-                {
-                    taskDueDate.Text = _context.GetString(Resource.String.due_dates_today_at, item.DueDate.ToString(_context.GetString(Resource.String.time_regex)));
-                }
-                else if (item.DueDate == DateTime.Today.AddDays(1))
-                {
-                    taskDueDate.Text = _context.GetString(Resource.String.due_dates_tomorrow);
-                }
-                else if (item.DueDate.Date == DateTime.Today.AddDays(1))
-                {
-                    taskDueDate.Text = _context.GetString(Resource.String.due_dates_tomorrow_at, item.DueDate.ToString(_context.GetString(Resource.String.time_regex)));
-                }
-                else
-                {
-                    taskDueDate.Text = item.DueDate.ToString(_context.GetString(Resource.String.datetime_regex));
-                }
-            }
-            else
-            {
-                taskDueDate.Text = "";
-            }
-            
+
+            taskDueDate.Text = DateTimeConverter.DueDateToString(item.DueDate);
+
+
             if (item.ProjectID != 0)
             {
                 taskProject.Text = _projects.First((x)=> x.ID==item.ProjectID).Title;

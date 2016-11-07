@@ -14,7 +14,7 @@ namespace Tasker.Droid
 {
     static class Constans
     {
-        public const string DATABASE_NAME = "TaskDB.db3";
+        public const string DATABASE_NAME = "TaskDB.db3";        
     }
 
     static class IntentExtraConstants

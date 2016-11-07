@@ -58,24 +58,74 @@ namespace Tasker.Core.BL.Managers
             return GetAll().FindAll(predicate);
         }
 
+        public List<Project> GetProjects()
+        {
+            return new List<Project>(_projectRepository.GetAll());
+        }
+
+        public List<Task> GetForToday()
+        {
+            return GetAllOpen().FindAll(t => t.DueDate < DateTime.Today.AddDays(1));
+        }
+
+        public List<Task> GetForTomorrow()
+        {
+            return GetAllOpen().FindAll(t => t.DueDate < DateTime.Today.AddDays(2) && t.DueDate >= DateTime.Today.AddDays(1));
+        }
+
+        public List<Task> GetForNextWeek()
+        {
+            return GetAllOpen().FindAll(t => t.DueDate < DateTime.Today.AddDays(8) && t.DueDate >= DateTime.Today.AddDays(2));
+        }
+
         public int SaveItem(Task item)
         {
             if (item.ID != 0)
             {
                 var previousVersion = _taskRepository.GetById(item.ID);
-                if (item.ProjectID != previousVersion.ProjectID && previousVersion.ProjectID != 0)
+                if (item.ProjectID != previousVersion.ProjectID)
                 {
-                    var previousProject = _projectRepository.GetById(previousVersion.ProjectID);
-                    if (previousVersion.IsSolved) previousProject.CountOfSolveTasks--;
-                    else previousProject.CountOfOpenTasks--;
-                    _projectRepository.Save(previousProject);
+                    if(previousVersion.ProjectID != 0)
+                    {
+                        var previousProject = _projectRepository.GetById(previousVersion.ProjectID);
+                        if (previousVersion.IsSolved)
+                        {
+                            previousProject.CountOfSolveTasks--;
+                        }
+                        else
+                        {
+                            previousProject.CountOfOpenTasks--;
+                        }
+                        _projectRepository.Save(previousProject);
+                    }
+                    if (item.ProjectID != 0)
+                    {
+                        var project = _projectRepository.GetById(item.ProjectID);
+                        if (!item.IsSolved)
+                        {
+                            project.CountOfOpenTasks++;
+                        }
+                        else
+                        {
+                            project.CountOfSolveTasks++;
+                        }
+
+                        _projectRepository.Save(project);
+                    }
                 }
             }
-            if (item.ProjectID != 0)
+            else if (item.ProjectID != 0 )
             {
-
                 var project = _projectRepository.GetById(item.ProjectID);
-                project.CountOfOpenTasks++;
+                if (!item.IsSolved)
+                {
+                    project.CountOfOpenTasks++;
+                }
+                else
+                {
+                    project.CountOfSolveTasks++;
+                }
+               
                 _projectRepository.Save(project);
             }
             return _taskRepository.Save(item);
@@ -147,24 +197,6 @@ namespace Tasker.Core.BL.Managers
             return count;
         }
 
-        public List<Project> GetProjects()
-        {
-            return new List<Project>(_projectRepository.GetAll());
-        }
 
-        public List<Task> GetForToday()
-        {
-            return GetAllOpen().FindAll(t => t.DueDate < DateTime.Today.AddDays(1));
-        }
-
-        public List<Task> GetForTomorrow()
-        {
-            return GetAllOpen().FindAll(t => t.DueDate < DateTime.Today.AddDays(2) && t.DueDate>=DateTime.Today.AddDays(1));
-        }
-
-        public List<Task> GetForNextWeek()
-        {
-            return GetAllOpen().FindAll(t => t.DueDate < DateTime.Today.AddDays(8) && t.DueDate >= DateTime.Today.AddDays(2));
-        }
     }
 }

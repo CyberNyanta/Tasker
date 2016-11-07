@@ -6,6 +6,7 @@ using Android.App;
 using Android.Views;
 using Android.Widget;
 using Tasker.Core;
+using Tasker.Droid.AL.Utils;
 
 namespace Tasker.Droid.Adapters
 {
@@ -54,7 +55,6 @@ namespace Tasker.Droid.Adapters
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
-
             var item = _dates[position];
             View view;
 
@@ -62,29 +62,15 @@ namespace Tasker.Droid.Adapters
 
             var dateName = view.FindViewById<TextView>(Resource.Id.date_name);
 
-
-
             if (item == _currentType)
             {
                 switch (item)
                 {
                     case TaskDueDates.PickDataTime:
-                        view.SetBackgroundResource(Resource.Color.item_selected);
-                        dateName.Text = _current.ToString(_context.GetString(Resource.String.datetime_regex));
-                        break;
                     case TaskDueDates.Today:
-                        view.SetBackgroundResource(Resource.Color.item_selected);
-                        if (_current != DateTime.Today)
-                            dateName.Text = _context.GetString(Resource.String.due_dates_today_at, _current.ToString(_context.GetString(Resource.String.time_regex)));
-                        else
-                            dateName.Text = _context.GetString(Resource.String.due_dates_today);
-                        break;
                     case TaskDueDates.Tomorrow:
                         view.SetBackgroundResource(Resource.Color.item_selected);
-                        if (_current != DateTime.Today.AddDays(1))
-                            dateName.Text = _context.GetString(Resource.String.due_dates_tomorrow_at, _current.ToString(_context.GetString(Resource.String.time_regex)));
-                        else
-                            dateName.Text = _context.GetString(Resource.String.due_dates_tomorrow);
+                        dateName.Text = DateTimeConverter.DueDateToString(_current);
                         break;
                     case TaskDueDates.Remove:
                         dateName.Text = _context.GetString(Resource.String.due_dates_remove);

@@ -51,6 +51,7 @@ namespace Tasker.Droid.Adapters
             }
             var textView = view.FindViewById<TextView>(Resource.Id.project_title);
             textView.Text = item.Title;
+            textView.Tag = item.ID;
             textView.Click += View_Click;
             view.Click += View_Click;
             view.Tag = item.ID;

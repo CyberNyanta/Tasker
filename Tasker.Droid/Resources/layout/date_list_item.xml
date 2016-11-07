@@ -12,6 +12,7 @@
         android:id="@+id/date_name"
         style="@style/Tasker.TextViewStyle"
         android:layout_width="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_height="@dimen/dialog_list_item_height"
+        android:gravity="center"
         android:text="Date" />
 </LinearLayout>
