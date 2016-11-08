@@ -53,9 +53,9 @@ namespace Tasker.Droid.Fragments
 
         private void ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            if (_taskListType.IsOpenType())
-            {
-                int id = (int)e.Id;
+            int id = (int)e.Id;
+            if (_taskListType.IsOpenType() && id!=0)
+            {                
                 Intent intent = new Intent(this.Activity, typeof(TaskEditCreateActivity));
                 intent.PutExtra(IntentExtraConstants.TASK_ID_EXTRA, id);
                 StartActivity(intent);
@@ -146,10 +146,10 @@ namespace Tasker.Droid.Fragments
             {
                 _taskListAdapter = new Adapters.TaskListFor7DaysAdapter(Activity, _tasks, _projects);
             }
-            //else if (_taskListType.HasFlag(TaskListType.NextWeek))
-            //{
-
-            //}
+            else if (_taskListType ==TaskListType.AllOpen)
+            {
+                _taskListAdapter = new Adapters.TaskListAll(Activity, _tasks, _projects);
+            }
             else
             {
                 _taskListAdapter = new Adapters.TaskListAdapter(Activity, _tasks, _projects);
@@ -311,6 +311,7 @@ namespace Tasker.Droid.Fragments
         #region  SwipeActionAdapter.ISwipeActionListener
         public bool HasActions(int position, SwipeDirection direction)
         {
+            if (_tasks[position].ID == 0) return false;
             if (direction.IsLeft) return true; // Change this to false to disable left swipes
             if (direction.IsRight) return true;
             return false;

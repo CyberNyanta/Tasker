@@ -75,7 +75,7 @@ namespace Tasker.Core.BL.Managers
 
         public List<Task> GetForNextWeek()
         {
-            return GetAllOpen().FindAll(t => t.DueDate < DateTime.Today.AddDays(8) && t.DueDate >= DateTime.Today.AddDays(2));
+            return GetAllOpen().FindAll(t => t.DueDate < DateTime.Today.AddDays(8));
         }
 
         public int SaveItem(Task item)

@@ -66,12 +66,13 @@
     <string name="navigation_all">All tasks</string>
     <string name="navigation_today">@string/today</string>
     <string name="navigation_tomorrow">@string/tomorrow</string>
-    <string name="navigation_nextWeek">Next 7 Days</string>
+    <string name="navigation_nextWeek">@string/next7days</string>
     <string name="navigation_projects">Projects</string>
 
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
-
+    <string name="next7days">Next 7 Days</string>
+    <string name="rest">Rest</string>
 
     <string name="task_count">Complete %1$s of %2$s</string>
     <string name="dialog_yes">OK</string>

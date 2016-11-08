@@ -11,34 +11,39 @@ using Tasker.Core.DAL.Entities;
 
 namespace Tasker.Droid.Adapters
 {
-    public class TaskListFor7DaysAdapter : TaskListAdapter
+    public class TaskListAll : TaskListAdapter
     {
 
-        public TaskListFor7DaysAdapter(Activity context, List<Task> tasks, List<Project> projects) : base(context, tasks, projects)
+        public TaskListAll(Activity context, List<Task> tasks, List<Project> projects) : base(context, tasks, projects)
         {
             TaskList.Insert(0, new Task
             {
                 Title = context.GetString(Resource.String.today),
                 DueDate = DateTime.MinValue,
                 Description = DateTime.Today.ToString("ddd d MMM")
-            });
+            });  //Today
             TaskList.Insert(1, new Task
             {
                 Title = context.GetString(Resource.String.tomorrow),
                 DueDate = DateTime.Today.AddDays(1).AddSeconds(-1),
                 Description = DateTime.Today.AddDays(1).ToString("ddd d MMM")
-            });
-            int dayOfWeek = (int)DateTime.Today.AddDays(2).DayOfWeek;
-            for (int i = 0; i < 6; i++)
+            }); // Tomorrow
+
+            TaskList.Insert(2, new Task
             {
-                var sdfgi = (i + dayOfWeek) % 7;
-                TaskList.Insert(2, new Task
-                {
-                    Title = DateTimeFormatInfo.CurrentInfo.DayNames[(i+ dayOfWeek)% 7],
-                    DueDate = DateTime.Today.AddDays(2 + i).AddSeconds(-1),
-                    Description = DateTime.Today.AddDays(2 + i).ToString("d MMM")
-                });
-            }
+                Title = context.GetString(Resource.String.next7days),
+                DueDate = DateTime.Today.AddDays(2).AddSeconds(-1),
+                Description = $"{ DateTime.Today.AddDays(2).ToString("d MMM")} - { DateTime.Today.AddDays(8).ToString("d MMM")}"
+            }); // Next 7 days
+
+            TaskList.Insert(2, new Task
+            {
+                Title = context.GetString(Resource.String.rest),
+                DueDate = DateTime.Today.AddDays(9).AddSeconds(-1),
+                Description = ""
+            }); // rest
+
+
             TaskList.Sort((t1, t2) => DateTime.Compare(t1.DueDate, t2.DueDate));
         }
 
@@ -71,7 +76,6 @@ namespace Tasker.Droid.Adapters
                 {
                     view = convertView;
                 }
-
                 var right = parent.FindViewById(Resource.Id.task_background_right);
                 var left = parent.FindViewById(Resource.Id.task_background_left);
                 if (position + 1 < TaskList.Count && TaskList[position + 1].ID != 0)

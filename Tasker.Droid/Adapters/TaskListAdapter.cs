@@ -21,14 +21,14 @@ namespace Tasker.Droid.Adapters
 {
     public class TaskListAdapter : BaseAdapter<Task>
     {
-        private Activity _context;
         private List<Project> _projects;
 
+        protected Activity Context { get; set; }
         protected List<Task> TaskList { get; set; }
 
         public TaskListAdapter(Activity context, List<Task> tasks, List<Project> projects) : base()
         {
-            _context = context;
+            Context = context;
             TaskList = tasks;
             _projects = projects;
             //TaskList.Insert(0, null);
@@ -80,7 +80,7 @@ namespace Tasker.Droid.Adapters
             // gives us some performance gains by not always inflating a new view
             if (convertView == null)
             {
-                view = _context.LayoutInflater.Inflate(Resource.Layout.task_list_item, null);
+                view = Context.LayoutInflater.Inflate(Resource.Layout.task_list_item, null);
             }
             else
             {
@@ -122,7 +122,7 @@ namespace Tasker.Droid.Adapters
             }
             else
             {
-                taskProject.Text = _context.GetString(Resource.String.project_inbox);
+                taskProject.Text = Context.GetString(Resource.String.project_inbox);
             }
                         
             return view;

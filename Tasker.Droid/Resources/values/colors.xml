@@ -15,4 +15,7 @@
   <color name="action_swipe_delete">#ffdb4c3f</color>
   <color name="action_swipe_schedule">#ffffb300</color>
   <color name="action_swipe_uncomplete">#ff838383</color>
+
+  <color name="task_list_header">#fd9801</color>
+
 </resources>

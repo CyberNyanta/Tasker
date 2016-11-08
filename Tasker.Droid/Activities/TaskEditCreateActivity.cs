@@ -124,7 +124,7 @@ namespace Tasker.Droid.Activities
         private void Initialization()
         {
             _viewModel.Id = Intent.GetIntExtra(IntentExtraConstants.TASK_ID_EXTRA, 0);
-           
+
 
             Task task = null;
             if (_viewModel.Id != 0)
@@ -158,7 +158,7 @@ namespace Tasker.Droid.Activities
                     _taskProject.Tag = project.ID;
 
                 }
-                SetDueDate((TaskDueDates)Intent.GetIntExtra(IntentExtraConstants.DUE_DATE_TYPE_EXTRA, 0));
+                SetDueDate((TaskDueDates)Intent.GetIntExtra(IntentExtraConstants.DUE_DATE_TYPE_EXTRA, 4));
             }
 
             _colorName.Text = _taskColor.ToString();
@@ -168,7 +168,7 @@ namespace Tasker.Droid.Activities
 
         private void InitRemindDate()
         {
-            if (_remindDate != DateTime.MaxValue &&  _remindDate>DateTime.Now)
+            if (_remindDate != DateTime.MaxValue && _remindDate > DateTime.Now)
             {
                 if (_dueDate == DateTime.MaxValue)
                 {
@@ -331,18 +331,15 @@ namespace Tasker.Droid.Activities
                     _taskDueDate.Text = "";
                     break;
                 case TaskDueDates.PickDataTime:
-                    if (_viewModel.Id != 0)
-                    {
-                        var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
-                        var date = DateTime.UtcNow;
-                        date.AddSeconds(-date.Second);
-                        dateTimePicker.SetInitialDate(new Date(date.ToUnixTime()))
-                                      .SetMinDate(new Date())
-                                      .SetListener(new DueDateListener(this))
-                                      .SetTheme(0)
-                                      .Build()
-                                      .Show();
-                    }
+                    var dateTimePicker = new SlideDateTimePicker.Builder(SupportFragmentManager);
+                    var date = DateTime.UtcNow;
+                    date.AddSeconds(-date.Second);
+                    dateTimePicker.SetInitialDate(new Date(date.ToUnixTime()))
+                                  .SetMinDate(new Date())
+                                  .SetListener(new DueDateListener(this))
+                                  .SetTheme(0)
+                                  .Build()
+                                  .Show();
                     break;
             }
         }
@@ -418,9 +415,9 @@ namespace Tasker.Droid.Activities
                           .SetListener(new RemindDateListener(this))
                           .SetTheme(0)
                           .Build()
-                          .Show();            
+                          .Show();
         }
-   
+
         public class RemindDateListener : SlideDateTimeListener
         {
             TaskEditCreateActivity _activity;
@@ -431,12 +428,12 @@ namespace Tasker.Droid.Activities
             public override void OnDateTimeSet(Date p0)
             {
                 _activity._remindDate = p0.Time.UnixTimeToDateTime();
-                if(_activity._remindDate < DateTime.Now)
-                {                 
+                if (_activity._remindDate < DateTime.Now)
+                {
                     AlertDialog.Builder alert = new AlertDialog.Builder(_activity);
                     alert.SetCancelable(true)
                          .SetTitle(Resource.String.remind_error)
-                         .SetIcon(Resource.Drawable.ic_remind) 
+                         .SetIcon(Resource.Drawable.ic_remind)
                          .SetNegativeButton(Resource.String.dialog_cancel, (senderAlert, args) => { })
                          .Show();
                 }
