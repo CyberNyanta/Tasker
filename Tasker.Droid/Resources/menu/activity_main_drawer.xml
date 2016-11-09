@@ -26,6 +26,10 @@
             android:id="@+id/navigation_projects"
 
             android:title="@string/navigation_projects" />
+        <item
+            android:id="@+id/navigation_settings"
+
+            android:title="@string/settings" />
     </group>
 
 </menu>

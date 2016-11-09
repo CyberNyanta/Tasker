@@ -47,6 +47,7 @@ namespace Tasker.Droid.Activities
         private DateTime _remindDate = DateTime.MaxValue;
         private TaskColors _taskColor;
         private int _projectId;
+        private bool _is24hoursFormat;
         #endregion
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -68,6 +69,8 @@ namespace Tasker.Droid.Activities
             _colorShape = FindViewById<ImageView>(Resource.Id.color_shape);
             _colorName = FindViewById<TextView>(Resource.Id.color_name);
 
+            _is24hoursFormat = GetSharedPreferences(Constans.SHARED_PREFERENCES_FILE, FileCreationMode.Private)
+                .GetBoolean(GetString(Resource.String.settings_24hours_format), false);
             _projects = _viewModel.GetProjects();
             _projects.Insert(0, new Project
             {
@@ -232,11 +235,6 @@ namespace Tasker.Droid.Activities
                 _taskTitle.Error = GetString(Resource.String.title_error);
                 error = true;
             }
-            if (!desciption.IsLengthInRange(TaskConstants.TASK_DESCRIPTION_MAX_LENGTH))
-            {
-                _taskDescription.Error = GetString(Resource.String.description_error);
-                error = true;
-            }
             if (error) return;
             var task = new Task()
             {
@@ -338,6 +336,7 @@ namespace Tasker.Droid.Activities
                                   .SetMinDate(new Date())
                                   .SetListener(new DueDateListener(this))
                                   .SetTheme(0)
+                                  .SetIs24HourTime(_is24hoursFormat)
                                   .Build()
                                   .Show();
                     break;
@@ -414,6 +413,7 @@ namespace Tasker.Droid.Activities
                           .SetMinDate(new Date())
                           .SetListener(new RemindDateListener(this))
                           .SetTheme(0)
+                          .SetIs24HourTime(_is24hoursFormat)
                           .Build()
                           .Show();
         }

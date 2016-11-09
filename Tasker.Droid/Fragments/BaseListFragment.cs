@@ -69,8 +69,8 @@ namespace Tasker.Droid.Fragments
         private void ShowFab()
         {
             _fab.Show(true);
-            _fab.SetShowAnimation(AnimationUtils.LoadAnimation(this.Activity, Resource.Animation.show_from_bottom));
-            _fab.SetHideAnimation(AnimationUtils.LoadAnimation(this.Activity, Resource.Animation.hide_to_bottom));
+            _fab.SetShowAnimation(AnimationUtils.LoadAnimation(Application.Context, Resource.Animation.show_from_bottom));
+            _fab.SetHideAnimation(AnimationUtils.LoadAnimation(Application.Context, Resource.Animation.hide_to_bottom));
         }
 
         private void ListView_Scroll(object sender, AbsListView.ScrollEventArgs e)

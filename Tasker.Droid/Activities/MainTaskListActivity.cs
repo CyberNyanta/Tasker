@@ -43,12 +43,6 @@ namespace Tasker.Droid.Activities
        
         }
 
-        public override bool OnCreateOptionsMenu(IMenu menu)
-        {
-            MenuInflater.Inflate(Resource.Menu.main_activity_menu, menu);
-            return base.OnCreateOptionsMenu(menu);
-        }
-
         public bool OnNavigationItemSelected(IMenuItem item)
         {
             switch (item.ItemId)
@@ -86,6 +80,10 @@ namespace Tasker.Droid.Activities
                 case Resource.Id.navigation_projects:
                     SupportActionBar.Title = GetString(Resource.String.navigation_projects);
                     SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new ProjectListFragment()).Commit();
+                    break;
+                case Resource.Id.navigation_settings:
+                    SupportActionBar.Title = GetString(Resource.String.settings);
+                    SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new SettingsFragment()).Commit();
                     break;
             }            
             _drawer.CloseDrawers();

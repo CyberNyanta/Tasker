@@ -110,6 +110,7 @@
     <Compile Include="AL\Utils\DateTimeConverter.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Constans.cs" />
+    <Compile Include="Fragments\SettingsFragment.cs" />
     <Compile Include="Fragments\ProjectListFragment.cs" />
     <Compile Include="Fragments\BaseListFragment.cs" />
     <Compile Include="Fragments\TaskListFragment.cs" />
@@ -540,6 +541,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\activity_main_drawer.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values-ru\strings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\settings.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

@@ -34,9 +34,15 @@ namespace Tasker.Droid.Fragments
         private ITaskListViewModel _taskViewModel;
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            return inflater.Inflate(Resource.Layout.task_list, container, false);
+            HasOptionsMenu = true;
+            return inflater.Inflate(Resource.Layout.task_list, container, false);  
         }
 
+        public override void OnPrepareOptionsMenu(IMenu menu)
+        {
+            menu.Clear();
+            base.OnPrepareOptionsMenu(menu);
+        }
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);

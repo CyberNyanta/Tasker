@@ -26,7 +26,7 @@ using Tasker.Droid.Adapters;
 namespace Tasker.Droid.Fragments
 {
     public class TaskListFragment : BaseListFragment, SwipeActionAdapter.ISwipeActionListener
-    {       
+    {
         private TaskListAdapter _taskListAdapter;
         private SwipeActionAdapter _swipeActionAdapter;
         private List<Task> _tasks;
@@ -34,7 +34,8 @@ namespace Tasker.Droid.Fragments
         private ITaskListViewModel _viewModel;
         private TaskListType _taskListType;
         private int _projectId;
-        private bool isAllSoved;
+        private bool _isAllSoved;
+        private bool _is24hoursFormat;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -54,12 +55,12 @@ namespace Tasker.Droid.Fragments
         private void ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             int id = (int)e.Id;
-            if (_taskListType.IsOpenType() && id!=0)
-            {                
+            if (_taskListType.IsOpenType() && id != 0)
+            {
                 Intent intent = new Intent(this.Activity, typeof(TaskEditCreateActivity));
                 intent.PutExtra(IntentExtraConstants.TASK_ID_EXTRA, id);
                 StartActivity(intent);
-            }   
+            }
         }
 
         protected override void FabClick(object sender, EventArgs e)
@@ -67,7 +68,7 @@ namespace Tasker.Droid.Fragments
             Intent intent = new Intent(this.Activity, typeof(TaskEditCreateActivity));
 
             switch (_taskListType)
-            {                                         
+            {
                 case TaskListType.ProjectOpen:
                     intent.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, _projectId);
                     break;
@@ -91,18 +92,20 @@ namespace Tasker.Droid.Fragments
         public override void OnResume()
         {
             base.OnResume();
+            _is24hoursFormat = Activity.GetSharedPreferences(Constans.SHARED_PREFERENCES_FILE, FileCreationMode.Private)
+                .GetBoolean(GetString(Resource.String.settings_24hours_format),false);
             TaskInitialization();
         }
 
         private void TaskInitialization()
         {
-             _taskListType = (TaskListType)Activity.Intent.GetIntExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)TaskListType.AllOpen);
-           
+            _taskListType = (TaskListType)Activity.Intent.GetIntExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)TaskListType.AllOpen);
+
             switch (_taskListType)
             {
                 case TaskListType.AllOpen:
                     _tasks = _viewModel.GetAllOpen();
-                    isAllSoved = _viewModel.GetAllSolve().Count > 0 ? true : false;
+                    _isAllSoved = _viewModel.GetAllSolve().Count > 0 ? true : false;
                     break;
                 case TaskListType.AllSolve:
                     HideFAB();
@@ -116,10 +119,10 @@ namespace Tasker.Droid.Fragments
                 case TaskListType.ProjectOpen:
                     _projectId = Activity.Intent.GetIntExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
                     _tasks = _viewModel.GetProjectOpenTasks(_projectId);
-                    isAllSoved = _viewModel.GetProjectSolveTasks(_projectId).Count > 0 ? true : false;
+                    _isAllSoved = _viewModel.GetProjectSolveTasks(_projectId).Count > 0 ? true : false;
                     break;
                 case TaskListType.Today:
-                    
+
                     _tasks = _viewModel.GetForToday();
                     break;
                 case TaskListType.Tomorrow:
@@ -139,21 +142,21 @@ namespace Tasker.Droid.Fragments
             else
             {
                 _listView.Visibility = ViewStates.Visible;
-            }            
+            }
 
             _projects = _viewModel.GetAllProjects();
             if (_taskListType.HasFlag(TaskListType.NextWeek))
             {
                 _taskListAdapter = new Adapters.TaskListFor7DaysAdapter(Activity, _tasks, _projects);
             }
-            else if (_taskListType ==TaskListType.AllOpen)
+            else if (_taskListType == TaskListType.AllOpen)
             {
                 _taskListAdapter = new Adapters.TaskListAll(Activity, _tasks, _projects);
             }
             else
             {
                 _taskListAdapter = new Adapters.TaskListAdapter(Activity, _tasks, _projects);
-            }            
+            }
 
             _swipeActionAdapter = new SwipeActionAdapter(_taskListAdapter);
             _swipeActionAdapter.SetListView(_listView);
@@ -185,7 +188,7 @@ namespace Tasker.Droid.Fragments
                 image.SetImageResource(Resource.Drawable.empty_items);
                 coment.Text = Activity.GetString(Resource.String.empty_items_comment_no_complete);
             }
-            else if(isAllSoved)
+            else if (_isAllSoved)
             {
                 container.Alpha = TaskConstants.TASK_BACKGROUND_ALPHA;
                 image.SetImageResource(Resource.Drawable.empty_items_solve);
@@ -223,6 +226,13 @@ namespace Tasker.Droid.Fragments
             return base.OnOptionsItemSelected(item);
         }
 
+        public override void OnPrepareOptionsMenu(IMenu menu)
+        {
+            menu.Clear();         
+            Activity.MenuInflater.Inflate(Resource.Menu.main_activity_menu, menu);
+            base.OnPrepareOptionsMenu(menu);
+        }
+
         private void SolveTask()
         {
             var task = _viewModel.GetItem(_viewModel.Id);
@@ -247,7 +257,7 @@ namespace Tasker.Droid.Fragments
                  .Show();
         }
 
-        private void SetDueDate(Task task,int position)
+        private void SetDueDate(Task task, int position)
         {
             AlertDialog dialog = null;
             AlertDialog.Builder builder = new AlertDialog.Builder(Activity);
@@ -259,7 +269,7 @@ namespace Tasker.Droid.Fragments
                                  switch (selected)
                                  {
                                      case TaskDueDates.Today:
-                                         task.DueDate = DateTime.Today;                                       
+                                         task.DueDate = DateTime.Today;
                                          break;
                                      case TaskDueDates.Tomorrow:
                                          task.DueDate = DateTime.Today.AddDays(1);
@@ -274,12 +284,13 @@ namespace Tasker.Droid.Fragments
                                          var dateTimePicker = new SlideDateTimePicker.Builder(Activity.SupportFragmentManager);
                                          dateTimePicker.SetInitialDate(new Date())
                                                        .SetMinDate(new Date())
-                                                       .SetListener(new DueDateListener(task, () => 
+                                                       .SetListener(new DueDateListener(task, () =>
                                                            {
                                                                _viewModel.SaveItem(task);
                                                                _taskListAdapter.SaveChanges(task, position);
                                                            }))
                                                        .SetTheme(0)
+                                                       .SetIs24HourTime(_is24hoursFormat)
                                                        .Build()
                                                        .Show();
                                          break;
@@ -325,21 +336,21 @@ namespace Tasker.Droid.Fragments
                 int position = positionList[i];
                 _viewModel.Id = (int)_taskListAdapter.GetItemId(position);
                 if (direction.IsRight)
-                {                    
+                {
                     SolveTask();
                     _taskListAdapter.Remove(position);
-                    isAllSoved = true;
+                    _isAllSoved = true;
                     _swipeActionAdapter.NotifyDataSetChanged();
                     if (_tasks.Count == 0)
                         OnTasksListIsEmpty();
-                }                
+                }
                 else if (_taskListType.IsSolveType())
                 {
                     DeleteTask(() =>
                     {
                         _viewModel.DeleteItem(_viewModel.Id);
                         _taskListAdapter.Remove(position);
-                        isAllSoved = false;
+                        _isAllSoved = false;
                         _swipeActionAdapter.NotifyDataSetChanged();
                         if (_tasks.Count == 0)
                             OnTasksListIsEmpty();
@@ -347,16 +358,16 @@ namespace Tasker.Droid.Fragments
                 }
                 else
                 {
-                    
+
                     SetDueDate(_viewModel.GetItem(_viewModel.Id), position);
                 }
 
-             
+
             }
         }
 
         public bool ShouldDismiss(int position, SwipeDirection direction)
-        {           
+        {
             return direction.IsRight ? true : false;
         }
         #endregion
