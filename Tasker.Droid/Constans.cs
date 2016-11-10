@@ -29,7 +29,7 @@ namespace Tasker.Droid
         public const string TASK_COLOR_EXTRA = "TASK_COLOR_EXTRA";
     }
 
-    enum StartScreens
+    public enum StartScreens
     {
         AllTask,
         Inbox,
@@ -37,5 +37,27 @@ namespace Tasker.Droid
         Tomorrow,
         NextWeek,
         SelectedProject
+    }
+
+    public static class Extensions
+    {
+        public static string ToLocalString(this StartScreens screen)
+        {
+
+            switch (screen)
+            {
+                case StartScreens.AllTask:
+                    return Application.Context.GetString(Resource.String.navigation_all);
+                case StartScreens.Inbox:
+                    return Application.Context.GetString(Resource.String.navigation_inbox);
+                case StartScreens.Today:
+                    return Application.Context.GetString(Resource.String.navigation_today);
+                case StartScreens.Tomorrow:
+                    return Application.Context.GetString(Resource.String.navigation_tomorrow);
+                case StartScreens.NextWeek:
+                    return Application.Context.GetString(Resource.String.navigation_nextWeek);
+            }
+            return "";
+        }
     }
 }

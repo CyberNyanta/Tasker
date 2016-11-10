@@ -34,6 +34,10 @@ namespace Tasker.Droid.Fragments
         private TextView _startPageCurrent;
         private ISharedPreferences _sharedPreferences;
         private IProjectListViewModel _viewModel;
+        private StartScreens _startScreen;
+        private string _startScreenName;
+        private int _projectId =0;
+
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             HasOptionsMenu = true;
@@ -60,18 +64,19 @@ namespace Tasker.Droid.Fragments
 
             _pushNotificatin.Checked = _sharedPreferences.GetBoolean(GetString(Resource.String.settings_push_notifications), _pushNotificatin.Checked);
             _24hoursFormat.Checked = _sharedPreferences.GetBoolean(GetString(Resource.String.settings_push_notifications), _24hoursFormat.Checked);
-
+            _startScreenName = _sharedPreferences.GetString(GetString(Resource.String.settings_start_page_name), GetString(Resource.String.navigation_all));
+            _startPageCurrent.Text = _startScreenName;
             _startPage.Click += (o, args)=>{ SetStartPage(); };
-            //_startPageTitle.Click += (o, args) => { SetStartPage(); };
-            //_startPageCurrent.Click += (o, args) => { SetStartPage(); };
-        }                     
+        }
 
-        public override void OnDestroy()
+        public override void OnStop()
         {
             _sharedPreferences.Edit()
                 .PutBoolean(GetString(Resource.String.settings_push_notifications), _pushNotificatin.Checked)
                 .PutBoolean(GetString(Resource.String.settings_24hours_format), _24hoursFormat.Checked)
-                .PutInt(GetString(Resource.String.settings_start_page), 2)
+                .PutInt(GetString(Resource.String.settings_start_page), (int)_startScreen)
+                .PutString(GetString(Resource.String.settings_start_page_name), _startScreenName)
+                .PutInt(GetString(Resource.String.project), _projectId)
                 .Commit();
             base.OnDestroy();
         }
@@ -87,10 +92,16 @@ namespace Tasker.Droid.Fragments
                 switch (args.GroupPosition)
                 {
                     case 0:
+                        _startScreen = (StartScreens)args.ChildPosition;
+                        _startScreenName = _startScreen.ToLocalString();
+                        _startPageCurrent.Text = _startScreenName;
                         break;
                     case 1:
+                        _projectId = (int)args.Id;
+                        _startScreen = StartScreens.SelectedProject;
+                        _startScreenName = _viewModel.GetItem(_projectId).Title;
+                        _startPageCurrent.Text = _startScreenName;                     
                         break;
-
                 }
             };
             

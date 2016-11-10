@@ -34,7 +34,7 @@ namespace Tasker.Droid.Adapters
             View header = convertView;
             if (header == null)
             {
-                header = Context.LayoutInflater.Inflate(Resource.Layout.start_page_dialog_list_item, null);
+                header = Context.LayoutInflater.Inflate(Resource.Layout.start_page_dialog_list_header, null);
             }
             var title = header.FindViewById<TextView>(Resource.Id.title);
 
@@ -70,7 +70,7 @@ namespace Tasker.Droid.Adapters
                             title.Text = Context.GetString(Resource.String.navigation_all);
                             break;
                         case StartScreens.Inbox:
-                            title.Text = Context.GetString(Resource.String.navigation_today);
+                            title.Text = Context.GetString(Resource.String.navigation_inbox);
                             break;
                         case StartScreens.Today:
                             title.Text = Context.GetString(Resource.String.navigation_today);
@@ -106,8 +106,6 @@ namespace Tasker.Droid.Adapters
                 return ProjectList == null ? 1 : 2;
             }
         }
-
-        #region implemented abstract members of BaseExpandableListAdapter
 
         public override Java.Lang.Object GetChild(int groupPosition, int childPosition)
         {
@@ -146,7 +144,5 @@ namespace Tasker.Droid.Adapters
                 return true;
             }
         }
-
-        #endregion
     }
 }
