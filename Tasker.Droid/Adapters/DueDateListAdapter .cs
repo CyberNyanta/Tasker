@@ -99,9 +99,7 @@ namespace Tasker.Droid.Adapters
                 }
             }
             view.Click += OnClick;
-            dateName.Click += OnClick;
             view.Tag = (int)item;
-            dateName.Tag = (int)item;
 
             return view;
         }

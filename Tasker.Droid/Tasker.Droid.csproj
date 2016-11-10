@@ -104,6 +104,7 @@
     <Compile Include="Adapters\ProjectListDialogAdapter.cs" />
     <Compile Include="Adapters\ColorListAdapter.cs" />
     <Compile Include="Adapters\ProjectListAdapter.cs" />
+    <Compile Include="Adapters\StartPageDialogAdapter.cs" />
     <Compile Include="Adapters\TaskListForAll.cs" />
     <Compile Include="Adapters\TaskListFor7DaysAdapter.cs" />
     <Compile Include="Adapters\TaskListAdapter.cs" />
@@ -547,6 +548,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\settings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\start_page_dialog_list_item.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\expandable_list.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

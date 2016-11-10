@@ -72,6 +72,8 @@
     <string name="settings_push_notifications">Push notifications</string>
     <string name="settings_24hours_format">Use 24-hours format</string>
     <string name="settings_start_page">Start page</string>
+    <string name="settings_default_views">Default views</string>
+
 
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>

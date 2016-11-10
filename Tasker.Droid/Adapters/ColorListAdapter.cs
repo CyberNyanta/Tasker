@@ -60,15 +60,9 @@ namespace Tasker.Droid.Adapters
 
             colorName.Text = item.ToString();
 
-            colorDrawable.Click -= View_Click;
-            colorName.Click -= View_Click;
             view.Click -= View_Click;
             view.Click += View_Click;
-            colorDrawable.Click += View_Click;
-            colorName.Click += View_Click;
             view.Tag = (int)item;
-            colorDrawable.Tag = (int)item;
-            colorName.Tag = (int)item;
 
             return view;
         }

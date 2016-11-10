@@ -28,4 +28,14 @@ namespace Tasker.Droid
         public const string REMINDER_NOTIFICATION_EXTRA = "REMINDER_NOTIFICATION_EXTRA";
         public const string TASK_COLOR_EXTRA = "TASK_COLOR_EXTRA";
     }
+
+    enum StartScreens
+    {
+        AllTask,
+        Inbox,
+        Today,
+        Tomorrow,
+        NextWeek,
+        SelectedProject
+    }
 }

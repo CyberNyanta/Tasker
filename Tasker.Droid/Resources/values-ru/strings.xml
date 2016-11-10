@@ -72,6 +72,7 @@
     <string name="settings_push_notifications">Нотификации</string>
     <string name="settings_24hours_format">Использовать 24-часовой формат</string>
     <string name="settings_start_page">Стартовая страница</string>
+    <string name="settings_default_views">Экраны по умолчанию</string>
 
     <string name="today">Сегодня</string>
     <string name="tomorrow">Завтра</string>
