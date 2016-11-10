@@ -19,6 +19,7 @@
             android:layout_height="fill_parent"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:divider="@null"
             tools:listitem="@layout/task_list_item"
             android:background="@color/colorBackground" />
     </FrameLayout>

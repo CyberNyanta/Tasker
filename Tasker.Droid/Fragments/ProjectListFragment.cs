@@ -32,6 +32,8 @@ namespace Tasker.Droid.Fragments
         private List<Project> _projects;
         private IProjectListViewModel _viewModel;
         private ITaskListViewModel _taskViewModel;
+        private ISharedPreferences _sharedPreferences;
+
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             HasOptionsMenu = true;
@@ -54,8 +56,8 @@ namespace Tasker.Droid.Fragments
         public override void OnActivityCreated(Bundle savedInstanceState)
         {
             base.OnActivityCreated(savedInstanceState);
-
             _listView.ItemClick += ItemClick;
+            _sharedPreferences = Activity.GetSharedPreferences(Constans.SHARED_PREFERENCES_FILE, FileCreationMode.Private);
         }
 
         private void ItemClick(object sender, AdapterView.ItemClickEventArgs e)
@@ -118,6 +120,8 @@ namespace Tasker.Droid.Fragments
                  .SetCancelable(true)
                  .SetNegativeButton(GetString(Resource.String.dialog_cancel), (senderAlert, args) => { })
                  .Show();
+
+
         }
 
         private void EditProject(int position)
@@ -171,6 +175,18 @@ namespace Tasker.Droid.Fragments
                         _viewModel.DeleteItem(_viewModel.Id);
                         _listAdapter.Remove(position);
                         _swipeActionAdapter.NotifyDataSetChanged();
+
+                        if(_sharedPreferences.GetInt(GetString(Resource.String.settings_start_page), 0)==(int)StartScreens.SelectedProject)
+                        {
+                            if (_sharedPreferences.GetInt(GetString(Resource.String.project), 0) == _viewModel.Id)
+                            {
+                                _sharedPreferences.Edit()
+                                    .PutInt(GetString(Resource.String.settings_start_page), 0)
+                                    .PutString(GetString(Resource.String.settings_start_page_name), StartScreens.AllTask.ToLocalString())
+                                    .PutInt(GetString(Resource.String.project), 0)
+                                    .Commit();
+                            }
+                        }
                     });                  
                 }
                 else

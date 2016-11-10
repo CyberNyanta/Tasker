@@ -48,7 +48,6 @@
             <TextView
                 android:id="@+id/task_project"
                 style="@style/Tasker.TextViewStyle"
-                android:layout_marginLeft="@dimen/small_margin"
                 android:drawableRight="@drawable/ic_drop_dawn"
                 android:text="Inbox" />
 
