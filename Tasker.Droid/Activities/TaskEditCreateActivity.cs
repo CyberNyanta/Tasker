@@ -68,9 +68,7 @@ namespace Tasker.Droid.Activities
             _colorContainer = FindViewById<LinearLayout>(Resource.Id.color_container);
             _colorShape = FindViewById<ImageView>(Resource.Id.color_shape);
             _colorName = FindViewById<TextView>(Resource.Id.color_name);
-
-            _is24hoursFormat = GetSharedPreferences(Constans.SHARED_PREFERENCES_FILE, FileCreationMode.Private)
-                .GetBoolean(GetString(Resource.String.settings_24hours_format), false);
+            
             _projects = _viewModel.GetProjects();
             _projects.Insert(0, new Project
             {
@@ -83,6 +81,9 @@ namespace Tasker.Droid.Activities
             _colorContainer.Click += delegate (Object o, EventArgs a) { SetColor(); };
             _colorShape.Click += delegate (Object o, EventArgs a) { SetColor(); };
             _colorName.Click += delegate (Object o, EventArgs a) { SetColor(); };
+
+            _is24hoursFormat = GetSharedPreferences(Constans.SHARED_PREFERENCES_FILE, FileCreationMode.Private)
+                .GetBoolean(GetString(Resource.String.settings_24hours_format), false);
 
             Initialization();
         }
@@ -140,7 +141,7 @@ namespace Tasker.Droid.Activities
                 if (task.DueDate != DateTime.MaxValue)
                 {
                     _dueDate = task.DueDate;
-                    _taskDueDate.Text = DateTimeConverter.DueDateToString(_dueDate);
+                    _taskDueDate.Text = DateTimeConverter.DateToString(_dueDate);
                 }
                 _remindDate = task.RemindDate;
                 InitRemindDate();
@@ -175,7 +176,7 @@ namespace Tasker.Droid.Activities
             {
                 if (_dueDate == DateTime.MaxValue)
                 {
-                    _taskRemindDate.Text = _remindDate.ToString(GetString(Resource.String.datetime_regex));
+                    _taskRemindDate.Text = DateTimeConverter.DateToString( _remindDate);
                 }
                 else
                 {
@@ -192,7 +193,7 @@ namespace Tasker.Droid.Activities
                             _taskRemindDate.Text = GetString(Resource.String.remind_dates_in1Hour);
                             break;
                         default:
-                            _taskRemindDate.Text = _remindDate.ToString(GetString(Resource.String.datetime_regex));
+                            _taskRemindDate.Text = DateTimeConverter.DateToString(_remindDate);
                             break;
                     }
                 }
@@ -322,7 +323,7 @@ namespace Tasker.Droid.Activities
                     break;
                 case TaskDueDates.NextWeek:
                     _dueDate = DateTime.Today.AddDays(7);
-                    _taskDueDate.Text = _dueDate.ToString(GetString(Resource.String.datetime_regex));
+                    _taskDueDate.Text = DateTimeConverter.DateToString(_dueDate);
                     break;
                 case TaskDueDates.Remove:
                     _dueDate = DateTime.MaxValue;
@@ -353,7 +354,7 @@ namespace Tasker.Droid.Activities
             public override void OnDateTimeSet(Date p0)
             {
                 _activity._dueDate = p0.Time.UnixTimeToDateTime();
-                _activity._taskDueDate.Text = DateTimeConverter.DueDateToString(_activity._dueDate);
+                _activity._taskDueDate.Text = DateTimeConverter.DateToString(_activity._dueDate);
                 _activity.InitRemindDate();
             }
         }

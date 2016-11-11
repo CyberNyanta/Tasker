@@ -1,8 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="datetime_regex">g</string>
-    <string name="time_regex">t</string>
-    <string name="datetime_none">none</string>
+
+    <string name="datetime_format_date">MMMM dd</string>
+    <string name="datetime_format_date_year">MMMM dd, yyyy</string>
+
+    <string name="time_regex" translatable="false">h:mm tt</string>
+
+    <string name="time_format_12" translatable="false">h:mm tt</string>
+    <string name="time_format_24" translatable="false">H:mm</string>
+
+    <string name="datetime_none">Undated</string>
     <string name="project_inbox">Inbox</string>
 
     <string name="app_name">Tasker</string>
@@ -72,7 +79,7 @@
     <string name="settings_push_notifications">Push notifications</string>
     <string name="settings_24hours_format">Use 24-hours format</string>
     <string name="settings_start_page">Start page</string>
-    <string name="settings_start_page_name">Start page name</string>
+    <string name="settings_start_page_name" translatable="false">Start page name</string>
     <string name="settings_default_views">Default views</string>
 
 

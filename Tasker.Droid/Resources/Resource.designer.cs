@@ -3230,8 +3230,8 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f080012
 			public const int abc_toolbar_collapse_description = 2131230738;
 			
-			// aapt resource value: 0x7f08001b
-			public const int app_name = 2131230747;
+			// aapt resource value: 0x7f08001e
+			public const int app_name = 2131230750;
 			
 			// aapt resource value: 0x7f080014
 			public const int appbar_scrolling_view_behavior = 2131230740;
@@ -3242,203 +3242,212 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f080016
 			public const int character_counter_pattern = 2131230742;
 			
-			// aapt resource value: 0x7f080031
-			public const int complete_task = 2131230769;
-			
-			// aapt resource value: 0x7f08001e
-			public const int complete_tasks_title = 2131230750;
-			
-			// aapt resource value: 0x7f080042
-			public const int confirm_delete = 2131230786;
-			
-			// aapt resource value: 0x7f080044
-			public const int confirm_delete_project = 2131230788;
-			
-			// aapt resource value: 0x7f080043
-			public const int confirm_delete_task = 2131230787;
-			
-			// aapt resource value: 0x7f080019
-			public const int datetime_none = 2131230745;
-			
-			// aapt resource value: 0x7f080017
-			public const int datetime_regex = 2131230743;
-			
-			// aapt resource value: 0x7f080024
-			public const int delete = 2131230756;
-			
-			// aapt resource value: 0x7f080058
-			public const int dialog_cancel = 2131230808;
-			
-			// aapt resource value: 0x7f080057
-			public const int dialog_yes = 2131230807;
-			
-			// aapt resource value: 0x7f080038
-			public const int due_dates_nextWeek = 2131230776;
-			
-			// aapt resource value: 0x7f080033
-			public const int due_dates_pick = 2131230771;
-			
-			// aapt resource value: 0x7f080039
-			public const int due_dates_remove = 2131230777;
-			
 			// aapt resource value: 0x7f080034
-			public const int due_dates_today = 2131230772;
-			
-			// aapt resource value: 0x7f080036
-			public const int due_dates_today_at = 2131230774;
-			
-			// aapt resource value: 0x7f080035
-			public const int due_dates_tomorrow = 2131230773;
-			
-			// aapt resource value: 0x7f080037
-			public const int due_dates_tomorrow_at = 2131230775;
-			
-			// aapt resource value: 0x7f080023
-			public const int edit = 2131230755;
-			
-			// aapt resource value: 0x7f08002a
-			public const int empty_items_comment_all_solve = 2131230762;
-			
-			// aapt resource value: 0x7f08002b
-			public const int empty_items_comment_no_complete = 2131230763;
-			
-			// aapt resource value: 0x7f080029
-			public const int empty_items_comment_not_added = 2131230761;
-			
-			// aapt resource value: 0x7f080048
-			public const int navigation_all = 2131230792;
-			
-			// aapt resource value: 0x7f080046
-			public const int navigation_drawer_close = 2131230790;
-			
-			// aapt resource value: 0x7f080045
-			public const int navigation_drawer_open = 2131230789;
-			
-			// aapt resource value: 0x7f080047
-			public const int navigation_inbox = 2131230791;
-			
-			// aapt resource value: 0x7f08004b
-			public const int navigation_nextWeek = 2131230795;
-			
-			// aapt resource value: 0x7f08004c
-			public const int navigation_projects = 2131230796;
-			
-			// aapt resource value: 0x7f080049
-			public const int navigation_today = 2131230793;
-			
-			// aapt resource value: 0x7f08004a
-			public const int navigation_tomorrow = 2131230794;
-			
-			// aapt resource value: 0x7f080054
-			public const int next7days = 2131230804;
-			
-			// aapt resource value: 0x7f08001f
-			public const int project = 2131230751;
-			
-			// aapt resource value: 0x7f080040
-			public const int project_create_dialog = 2131230784;
-			
-			// aapt resource value: 0x7f08003f
-			public const int project_dialog_field_hint = 2131230783;
-			
-			// aapt resource value: 0x7f080041
-			public const int project_edit_dialog = 2131230785;
-			
-			// aapt resource value: 0x7f08001a
-			public const int project_inbox = 2131230746;
-			
-			// aapt resource value: 0x7f080020
-			public const int projects = 2131230752;
-			
-			// aapt resource value: 0x7f08003b
-			public const int remind_dates_in15Minutes = 2131230779;
-			
-			// aapt resource value: 0x7f08003d
-			public const int remind_dates_in1Hour = 2131230781;
-			
-			// aapt resource value: 0x7f08003c
-			public const int remind_dates_in30Minutes = 2131230780;
-			
-			// aapt resource value: 0x7f08003a
-			public const int remind_dates_pick = 2131230778;
-			
-			// aapt resource value: 0x7f08003e
-			public const int remind_dates_remove = 2131230782;
-			
-			// aapt resource value: 0x7f080028
-			public const int remind_error = 2131230760;
-			
-			// aapt resource value: 0x7f080055
-			public const int rest = 2131230805;
-			
-			// aapt resource value: 0x7f080025
-			public const int save = 2131230757;
-			
-			// aapt resource value: 0x7f080022
-			public const int search = 2131230754;
+			public const int complete_task = 2131230772;
 			
 			// aapt resource value: 0x7f080021
-			public const int settings = 2131230753;
+			public const int complete_tasks_title = 2131230753;
 			
-			// aapt resource value: 0x7f08004e
-			public const int settings_24hours_format = 2131230798;
+			// aapt resource value: 0x7f080045
+			public const int confirm_delete = 2131230789;
 			
-			// aapt resource value: 0x7f080051
-			public const int settings_default_views = 2131230801;
+			// aapt resource value: 0x7f080047
+			public const int confirm_delete_project = 2131230791;
 			
-			// aapt resource value: 0x7f08004d
-			public const int settings_push_notifications = 2131230797;
+			// aapt resource value: 0x7f080046
+			public const int confirm_delete_task = 2131230790;
 			
-			// aapt resource value: 0x7f08004f
-			public const int settings_start_page = 2131230799;
+			// aapt resource value: 0x7f080017
+			public const int datetime_format_date = 2131230743;
 			
-			// aapt resource value: 0x7f080050
-			public const int settings_start_page_name = 2131230800;
+			// aapt resource value: 0x7f080018
+			public const int datetime_format_date_year = 2131230744;
+			
+			// aapt resource value: 0x7f08001c
+			public const int datetime_none = 2131230748;
+			
+			// aapt resource value: 0x7f080027
+			public const int delete = 2131230759;
+			
+			// aapt resource value: 0x7f08005b
+			public const int dialog_cancel = 2131230811;
+			
+			// aapt resource value: 0x7f08005a
+			public const int dialog_yes = 2131230810;
+			
+			// aapt resource value: 0x7f08003b
+			public const int due_dates_nextWeek = 2131230779;
+			
+			// aapt resource value: 0x7f080036
+			public const int due_dates_pick = 2131230774;
+			
+			// aapt resource value: 0x7f08003c
+			public const int due_dates_remove = 2131230780;
+			
+			// aapt resource value: 0x7f080037
+			public const int due_dates_today = 2131230775;
+			
+			// aapt resource value: 0x7f080039
+			public const int due_dates_today_at = 2131230777;
+			
+			// aapt resource value: 0x7f080038
+			public const int due_dates_tomorrow = 2131230776;
+			
+			// aapt resource value: 0x7f08003a
+			public const int due_dates_tomorrow_at = 2131230778;
 			
 			// aapt resource value: 0x7f080026
-			public const int show_solved = 2131230758;
+			public const int edit = 2131230758;
+			
+			// aapt resource value: 0x7f08002d
+			public const int empty_items_comment_all_solve = 2131230765;
+			
+			// aapt resource value: 0x7f08002e
+			public const int empty_items_comment_no_complete = 2131230766;
+			
+			// aapt resource value: 0x7f08002c
+			public const int empty_items_comment_not_added = 2131230764;
+			
+			// aapt resource value: 0x7f08004b
+			public const int navigation_all = 2131230795;
+			
+			// aapt resource value: 0x7f080049
+			public const int navigation_drawer_close = 2131230793;
+			
+			// aapt resource value: 0x7f080048
+			public const int navigation_drawer_open = 2131230792;
+			
+			// aapt resource value: 0x7f08004a
+			public const int navigation_inbox = 2131230794;
+			
+			// aapt resource value: 0x7f08004e
+			public const int navigation_nextWeek = 2131230798;
+			
+			// aapt resource value: 0x7f08004f
+			public const int navigation_projects = 2131230799;
+			
+			// aapt resource value: 0x7f08004c
+			public const int navigation_today = 2131230796;
+			
+			// aapt resource value: 0x7f08004d
+			public const int navigation_tomorrow = 2131230797;
+			
+			// aapt resource value: 0x7f080057
+			public const int next7days = 2131230807;
+			
+			// aapt resource value: 0x7f080022
+			public const int project = 2131230754;
+			
+			// aapt resource value: 0x7f080043
+			public const int project_create_dialog = 2131230787;
+			
+			// aapt resource value: 0x7f080042
+			public const int project_dialog_field_hint = 2131230786;
+			
+			// aapt resource value: 0x7f080044
+			public const int project_edit_dialog = 2131230788;
+			
+			// aapt resource value: 0x7f08001d
+			public const int project_inbox = 2131230749;
+			
+			// aapt resource value: 0x7f080023
+			public const int projects = 2131230755;
+			
+			// aapt resource value: 0x7f08003e
+			public const int remind_dates_in15Minutes = 2131230782;
+			
+			// aapt resource value: 0x7f080040
+			public const int remind_dates_in1Hour = 2131230784;
+			
+			// aapt resource value: 0x7f08003f
+			public const int remind_dates_in30Minutes = 2131230783;
+			
+			// aapt resource value: 0x7f08003d
+			public const int remind_dates_pick = 2131230781;
+			
+			// aapt resource value: 0x7f080041
+			public const int remind_dates_remove = 2131230785;
+			
+			// aapt resource value: 0x7f08002b
+			public const int remind_error = 2131230763;
+			
+			// aapt resource value: 0x7f080058
+			public const int rest = 2131230808;
+			
+			// aapt resource value: 0x7f080028
+			public const int save = 2131230760;
+			
+			// aapt resource value: 0x7f080025
+			public const int search = 2131230757;
+			
+			// aapt resource value: 0x7f080024
+			public const int settings = 2131230756;
+			
+			// aapt resource value: 0x7f080051
+			public const int settings_24hours_format = 2131230801;
+			
+			// aapt resource value: 0x7f080054
+			public const int settings_default_views = 2131230804;
+			
+			// aapt resource value: 0x7f080050
+			public const int settings_push_notifications = 2131230800;
+			
+			// aapt resource value: 0x7f080052
+			public const int settings_start_page = 2131230802;
+			
+			// aapt resource value: 0x7f080053
+			public const int settings_start_page_name = 2131230803;
+			
+			// aapt resource value: 0x7f080029
+			public const int show_solved = 2131230761;
 			
 			// aapt resource value: 0x7f080013
 			public const int status_bar_notification_info_overflow = 2131230739;
 			
-			// aapt resource value: 0x7f080030
-			public const int task_color = 2131230768;
+			// aapt resource value: 0x7f080033
+			public const int task_color = 2131230771;
 			
-			// aapt resource value: 0x7f080056
-			public const int task_count = 2131230806;
-			
-			// aapt resource value: 0x7f08002f
-			public const int task_description = 2131230767;
-			
-			// aapt resource value: 0x7f08001d
-			public const int task_details_title = 2131230749;
-			
-			// aapt resource value: 0x7f08002c
-			public const int task_due_date = 2131230764;
-			
-			// aapt resource value: 0x7f08001c
-			public const int task_edit_title = 2131230748;
-			
-			// aapt resource value: 0x7f08002d
-			public const int task_remind_date = 2131230765;
-			
-			// aapt resource value: 0x7f08002e
-			public const int task_title = 2131230766;
-			
-			// aapt resource value: 0x7f080018
-			public const int time_regex = 2131230744;
-			
-			// aapt resource value: 0x7f080027
-			public const int title_error = 2131230759;
-			
-			// aapt resource value: 0x7f080052
-			public const int today = 2131230802;
-			
-			// aapt resource value: 0x7f080053
-			public const int tomorrow = 2131230803;
+			// aapt resource value: 0x7f080059
+			public const int task_count = 2131230809;
 			
 			// aapt resource value: 0x7f080032
-			public const int uncomplete_task = 2131230770;
+			public const int task_description = 2131230770;
+			
+			// aapt resource value: 0x7f080020
+			public const int task_details_title = 2131230752;
+			
+			// aapt resource value: 0x7f08002f
+			public const int task_due_date = 2131230767;
+			
+			// aapt resource value: 0x7f08001f
+			public const int task_edit_title = 2131230751;
+			
+			// aapt resource value: 0x7f080030
+			public const int task_remind_date = 2131230768;
+			
+			// aapt resource value: 0x7f080031
+			public const int task_title = 2131230769;
+			
+			// aapt resource value: 0x7f08001a
+			public const int time_format_12 = 2131230746;
+			
+			// aapt resource value: 0x7f08001b
+			public const int time_format_24 = 2131230747;
+			
+			// aapt resource value: 0x7f080019
+			public const int time_regex = 2131230745;
+			
+			// aapt resource value: 0x7f08002a
+			public const int title_error = 2131230762;
+			
+			// aapt resource value: 0x7f080055
+			public const int today = 2131230805;
+			
+			// aapt resource value: 0x7f080056
+			public const int tomorrow = 2131230806;
+			
+			// aapt resource value: 0x7f080035
+			public const int uncomplete_task = 2131230773;
 			
 			static String()
 			{

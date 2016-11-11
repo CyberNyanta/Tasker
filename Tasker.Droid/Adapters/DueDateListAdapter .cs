@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Tasker.Core;
 using Tasker.Droid.AL.Utils;
+using Android.Content;
 
 namespace Tasker.Droid.Adapters
 {
@@ -36,6 +37,7 @@ namespace Tasker.Droid.Adapters
             {
                 _currentType = TaskDueDates.Remove;
             }
+
         }
 
         public override TaskDueDates this[int position]
@@ -70,7 +72,7 @@ namespace Tasker.Droid.Adapters
                     case TaskDueDates.Today:
                     case TaskDueDates.Tomorrow:
                         view.SetBackgroundResource(Resource.Color.item_selected);
-                        dateName.Text = DateTimeConverter.DueDateToString(_current);
+                        dateName.Text = DateTimeConverter.DateToString(_current);
                         break;
                     case TaskDueDates.Remove:
                         dateName.Text = _context.GetString(Resource.String.due_dates_remove);

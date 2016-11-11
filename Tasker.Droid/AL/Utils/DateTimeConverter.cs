@@ -14,35 +14,50 @@ namespace Tasker.Droid.AL.Utils
 {
     public static class DateTimeConverter
     {
-        public static string DueDateToString(DateTime dueDate)
+        public static string DateToString(DateTime dueDate)
         {
+
+            var context = Application.Context;
+            var is24hoursTimeFormate = context.GetSharedPreferences(Constans.SHARED_PREFERENCES_FILE, FileCreationMode.Private)
+                .GetBoolean(context.GetString(Resource.String.settings_24hours_format), false);
             if (dueDate != DateTime.MaxValue)
             {
                 if (dueDate == DateTime.Today)
                 {
-                    return Application.Context.GetString(Resource.String.due_dates_today);
+                    return context.GetString(Resource.String.due_dates_today);
                 }
-                if (dueDate.Date == DateTime.Today)
+                else if(dueDate.Date == DateTime.Today)
                 {
-                    return Application.Context.GetString(Resource.String.due_dates_today_at, dueDate.ToString(Application.Context.GetString(Resource.String.time_regex)));
+                    return context.GetString(Resource.String.due_dates_today_at, GetLocaleTime(dueDate, is24hoursTimeFormate));
                 }
                 else if (dueDate == DateTime.Today.AddDays(1))
                 {
-                    return Application.Context.GetString(Resource.String.due_dates_tomorrow);
+                    return context.GetString(Resource.String.due_dates_tomorrow);
                 }
                 else if (dueDate.Date == DateTime.Today.AddDays(1))
                 {
-                    return Application.Context.GetString(Resource.String.due_dates_tomorrow_at, dueDate.ToString(Application.Context.GetString(Resource.String.time_regex)));
+                    return context.GetString(Resource.String.due_dates_tomorrow_at, GetLocaleTime(dueDate, is24hoursTimeFormate));
+                }
+                else if (dueDate > DateTime.Today && dueDate < DateTime.Today.AddDays(8))
+                {
+                    return $"{dueDate.ToString(context.GetString(Resource.String.datetime_format_date))}, {GetLocaleTime(dueDate, is24hoursTimeFormate)}";
                 }
                 else
                 {
-                    return dueDate.ToString(Application.Context.GetString(Resource.String.datetime_regex));
+                    return dueDate.ToString(dueDate.Year == DateTime.Today.Year ? context.GetString(Resource.String.datetime_format_date)
+                        : context.GetString(Resource.String.datetime_format_date_year));
                 }
             }
             else
             {
-                return "";
+                return context.GetString(Resource.String.datetime_none);
             }
+        }
+
+        public static string GetLocaleTime(DateTime dueDate, bool is24hoursTimeFormate)
+        {
+            return is24hoursTimeFormate ? dueDate.ToString(Application.Context.GetString(Resource.String.time_format_24)) 
+                : dueDate.ToString(Application.Context.GetString(Resource.String.time_format_12));
         }
     }
 }

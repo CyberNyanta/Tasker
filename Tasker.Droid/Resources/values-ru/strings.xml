@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="datetime_regex">g</string>
-    <string name="time_regex">t</string>
-    <string name="datetime_none">none</string>
+
+    <string name="datetime_none">Без даты</string>
     <string name="project_inbox">Входящие</string>
 
     <string name="app_name">Tasker</string>
@@ -82,4 +81,6 @@
     <string name="task_count">Выполнено %1$s из %2$s</string>
     <string name="dialog_yes">Да</string>
     <string name="dialog_cancel">Отмена</string>
+    <string name="datetime_format_date_year">dd MMMM, yyyy</string>
+    <string name="datetime_format_date">dd MMMM</string>
 </resources>

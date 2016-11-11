@@ -35,7 +35,7 @@ namespace Tasker.Droid.AL.Utils
             var notification = new Notification.Builder(Application.Context)
                .SetContentIntent(pendingIntent2)
                .SetContentTitle(task.Title)
-               .SetContentText(task.DueDate != DateTime.MaxValue ? task.DueDate.ToString(Application.Context.GetString(Resource.String.datetime_regex)) : "")
+               .SetContentText(task.DueDate != DateTime.MaxValue ? DateTimeConverter.DateToString(task.DueDate) : "")
                .SetSmallIcon(Resource.Drawable.ic_remind_light)
                .Build();
 

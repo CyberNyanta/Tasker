@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.Graphics;
 using Tasker.Core;
 using Android.Graphics.Drawables;
+using Android.Content.Res;
 
 namespace Tasker.Droid.Adapters
 {
@@ -59,7 +60,6 @@ namespace Tasker.Droid.Adapters
             drawable.Mutate().SetColorFilter(Color.ParseColor(TaskConstants.Colors[item]),PorterDuff.Mode.Src);
 
             colorName.Text = item.ToString();
-
             view.Click -= View_Click;
             view.Click += View_Click;
             view.Tag = (int)item;

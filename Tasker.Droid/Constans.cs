@@ -16,6 +16,11 @@ namespace Tasker.Droid
     {
         public const string DATABASE_NAME = "TaskDB.db3";
         public const string SHARED_PREFERENCES_FILE = "TASKER_PREFERENCES";
+
+        public readonly static List<string> Locales = new List<string>
+        {
+           "en", "ru"
+        };
     }
 
     static class IntentExtraConstants

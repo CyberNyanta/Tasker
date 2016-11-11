@@ -15,6 +15,7 @@ using Tasker.Core.DAL.Entities;
 using Tasker.Core;
 using Tasker.Core.BL.Contracts;
 using Android.Graphics.Drawables;
+using Tasker.Droid.AL.Utils;
 
 namespace Tasker.Droid.Adapters
 {
@@ -87,7 +88,7 @@ namespace Tasker.Droid.Adapters
             {
                 case TaskRemindDates.PickDataTime:                    
                     if(_currentType==item)
-                        dateName.Text = _current.ToString(_context.GetString(Resource.String.datetime_regex));
+                        dateName.Text = DateTimeConverter.DateToString( _current);
                     else
                         dateName.Text = _context.GetString(Resource.String.remind_dates_pick);
                     break;

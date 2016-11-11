@@ -21,8 +21,7 @@ namespace Tasker.Droid.Adapters
 {
     public class TaskListAdapter : BaseAdapter<Task>
     {
-        private List<Project> _projects;
-
+        private List<Project> _projects;    
         protected Activity Context { get; set; }
         protected List<Task> TaskList { get; set; }
 
@@ -33,7 +32,8 @@ namespace Tasker.Droid.Adapters
             _projects = projects;
             //TaskList.Insert(0, null);
             TaskList.Sort((t1, t2) => DateTime.Compare(t1.DueDate, t2.DueDate));
-           // NotifyDataSetChanged();
+
+            // NotifyDataSetChanged();
         }
 
         public void Remove(int position)
@@ -113,7 +113,7 @@ namespace Tasker.Droid.Adapters
                 border.SetBackgroundColor(view.DrawingCacheBackgroundColor);
             //Set Task due date
 
-            taskDueDate.Text = DateTimeConverter.DueDateToString(item.DueDate);
+            taskDueDate.Text = DateTimeConverter.DateToString(item.DueDate);
 
 
             if (item.ProjectID != 0)
