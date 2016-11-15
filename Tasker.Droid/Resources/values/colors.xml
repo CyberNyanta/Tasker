@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
-  <color name="colorPrimary">#ffdb4c3f</color>
-  <color name="colorPrimaryDark">#a62a1f</color>
+  <color name="colorPrimary">@color/light_red</color>
+  <color name="colorPrimaryDark">@color/dark_red</color>
   <color name="colorAccent">#7F7F7F</color>
   <color name="colorBackground">#d5d5d5</color>
   <color name="colorWhite">#ffffff</color>
   <color name="colorWhiteTransparent">#82ffffff</color>
 
-  <color name="black">#000</color>
+
   <color name="demoItem">#848A2BE2</color>
   <color name="item_selected">#fff4dd</color>
 
@@ -18,4 +18,7 @@
 
   <color name="task_list_header">#fd9801</color>
 
+  <color name="black">#000</color>
+  <color name="light_red">#ffdb4c3f</color>
+  <color name="dark_red">#a62a1f</color>
 </resources>

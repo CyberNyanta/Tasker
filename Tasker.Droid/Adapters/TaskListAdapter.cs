@@ -16,6 +16,8 @@ using Tasker.Core.DAL.Entities;
 using Tasker.Core;
 using Tasker.Core.BL.Contracts;
 using Tasker.Droid.AL.Utils;
+using Android.Support.V4.Content;
+using Android.Content.Res;
 
 namespace Tasker.Droid.Adapters
 {
@@ -101,9 +103,19 @@ namespace Tasker.Droid.Adapters
             {
                 taskTitle.PaintFlags = PaintFlags.AntiAlias | PaintFlags.EmbeddedBitmapText;
                 view.Alpha = TaskConstants.TASK_BACKGROUND_ALPHA;
+                if (item.DueDate < DateTime.Today)
+                {
+                    taskDueDate.SetTextColor(new Color(ContextCompat.GetColor(Context, Resource.Color.light_red)));
+                }
+                else
+                {
+                    taskDueDate.SetTextColor(new Color(ContextCompat.GetColor(Context, Resource.Color.black)));
+                }
             }
                  
             taskTitle.Text = item.Title;
+            
+            
             //Set Task Color
             if (item.Color != TaskColors.None)
             {

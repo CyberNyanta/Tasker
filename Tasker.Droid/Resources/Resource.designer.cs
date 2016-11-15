@@ -1201,32 +1201,32 @@ namespace Tasker.Droid
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f0c0054
-			public const int abc_background_cache_hint_selector_material_dark = 2131492948;
-			
-			// aapt resource value: 0x7f0c0055
-			public const int abc_background_cache_hint_selector_material_light = 2131492949;
-			
 			// aapt resource value: 0x7f0c0056
-			public const int abc_color_highlight_material = 2131492950;
+			public const int abc_background_cache_hint_selector_material_dark = 2131492950;
+			
+			// aapt resource value: 0x7f0c0057
+			public const int abc_background_cache_hint_selector_material_light = 2131492951;
+			
+			// aapt resource value: 0x7f0c0058
+			public const int abc_color_highlight_material = 2131492952;
 			
 			// aapt resource value: 0x7f0c0000
 			public const int abc_input_method_navigation_guard = 2131492864;
 			
-			// aapt resource value: 0x7f0c0057
-			public const int abc_primary_text_disable_only_material_dark = 2131492951;
-			
-			// aapt resource value: 0x7f0c0058
-			public const int abc_primary_text_disable_only_material_light = 2131492952;
-			
 			// aapt resource value: 0x7f0c0059
-			public const int abc_primary_text_material_dark = 2131492953;
+			public const int abc_primary_text_disable_only_material_dark = 2131492953;
 			
 			// aapt resource value: 0x7f0c005a
-			public const int abc_primary_text_material_light = 2131492954;
+			public const int abc_primary_text_disable_only_material_light = 2131492954;
 			
 			// aapt resource value: 0x7f0c005b
-			public const int abc_search_url_text = 2131492955;
+			public const int abc_primary_text_material_dark = 2131492955;
+			
+			// aapt resource value: 0x7f0c005c
+			public const int abc_primary_text_material_light = 2131492956;
+			
+			// aapt resource value: 0x7f0c005d
+			public const int abc_search_url_text = 2131492957;
 			
 			// aapt resource value: 0x7f0c0001
 			public const int abc_search_url_text_normal = 2131492865;
@@ -1237,11 +1237,11 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f0c0003
 			public const int abc_search_url_text_selected = 2131492867;
 			
-			// aapt resource value: 0x7f0c005c
-			public const int abc_secondary_text_material_dark = 2131492956;
+			// aapt resource value: 0x7f0c005e
+			public const int abc_secondary_text_material_dark = 2131492958;
 			
-			// aapt resource value: 0x7f0c005d
-			public const int abc_secondary_text_material_light = 2131492957;
+			// aapt resource value: 0x7f0c005f
+			public const int abc_secondary_text_material_light = 2131492959;
 			
 			// aapt resource value: 0x7f0c0004
 			public const int accent_material_dark = 2131492868;
@@ -1249,17 +1249,17 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f0c0005
 			public const int accent_material_light = 2131492869;
 			
+			// aapt resource value: 0x7f0c004e
+			public const int action_swipe_complete = 2131492942;
+			
 			// aapt resource value: 0x7f0c004f
-			public const int action_swipe_complete = 2131492943;
+			public const int action_swipe_delete = 2131492943;
 			
 			// aapt resource value: 0x7f0c0050
-			public const int action_swipe_delete = 2131492944;
+			public const int action_swipe_schedule = 2131492944;
 			
 			// aapt resource value: 0x7f0c0051
-			public const int action_swipe_schedule = 2131492945;
-			
-			// aapt resource value: 0x7f0c0052
-			public const int action_swipe_uncomplete = 2131492946;
+			public const int action_swipe_uncomplete = 2131492945;
 			
 			// aapt resource value: 0x7f0c0006
 			public const int background_floating_material_dark = 2131492870;
@@ -1273,8 +1273,8 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f0c0009
 			public const int background_material_light = 2131492873;
 			
-			// aapt resource value: 0x7f0c004c
-			public const int black = 2131492940;
+			// aapt resource value: 0x7f0c0053
+			public const int black = 2131492947;
 			
 			// aapt resource value: 0x7f0c000a
 			public const int bright_foreground_disabled_material_dark = 2131492874;
@@ -1318,8 +1318,11 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f0c004b
 			public const int colorWhiteTransparent = 2131492939;
 			
-			// aapt resource value: 0x7f0c004d
-			public const int demoItem = 2131492941;
+			// aapt resource value: 0x7f0c0055
+			public const int dark_red = 2131492949;
+			
+			// aapt resource value: 0x7f0c004c
+			public const int demoItem = 2131492940;
 			
 			// aapt resource value: 0x7f0c003a
 			public const int design_fab_shadow_end_color = 2131492922;
@@ -1387,8 +1390,11 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f0c001b
 			public const int hint_foreground_material_light = 2131492891;
 			
-			// aapt resource value: 0x7f0c004e
-			public const int item_selected = 2131492942;
+			// aapt resource value: 0x7f0c004d
+			public const int item_selected = 2131492941;
+			
+			// aapt resource value: 0x7f0c0054
+			public const int light_red = 2131492948;
 			
 			// aapt resource value: 0x7f0c001c
 			public const int material_blue_grey_800 = 2131492892;
@@ -1474,11 +1480,11 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f0c0037
 			public const int switch_thumb_disabled_material_light = 2131492919;
 			
-			// aapt resource value: 0x7f0c005e
-			public const int switch_thumb_material_dark = 2131492958;
+			// aapt resource value: 0x7f0c0060
+			public const int switch_thumb_material_dark = 2131492960;
 			
-			// aapt resource value: 0x7f0c005f
-			public const int switch_thumb_material_light = 2131492959;
+			// aapt resource value: 0x7f0c0061
+			public const int switch_thumb_material_light = 2131492961;
 			
 			// aapt resource value: 0x7f0c0038
 			public const int switch_thumb_normal_material_dark = 2131492920;
@@ -1486,8 +1492,8 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f0c0039
 			public const int switch_thumb_normal_material_light = 2131492921;
 			
-			// aapt resource value: 0x7f0c0053
-			public const int task_list_header = 2131492947;
+			// aapt resource value: 0x7f0c0052
+			public const int task_list_header = 2131492946;
 			
 			static Color()
 			{

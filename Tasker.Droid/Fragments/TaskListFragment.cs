@@ -228,8 +228,11 @@ namespace Tasker.Droid.Fragments
 
         public override void OnPrepareOptionsMenu(IMenu menu)
         {
-            menu.Clear();         
-            Activity.MenuInflater.Inflate(Resource.Menu.main_activity_menu, menu);
+            menu.Clear();     
+            if(_taskListType.IsOpenType())
+            {
+                Activity.MenuInflater.Inflate(Resource.Menu.main_activity_menu, menu);
+            }               
             base.OnPrepareOptionsMenu(menu);
         }
 
@@ -341,7 +344,7 @@ namespace Tasker.Droid.Fragments
                     _taskListAdapter.Remove(position);
                     _isAllSoved = true;
                     _swipeActionAdapter.NotifyDataSetChanged();
-                    if (_tasks.Count == 0)
+                    if (_tasks.FindAll(x=>x.ID!=0).Count == 0)
                         OnTasksListIsEmpty();
                 }
                 else if (_taskListType.IsSolveType())
@@ -352,7 +355,7 @@ namespace Tasker.Droid.Fragments
                         _taskListAdapter.Remove(position);
                         _isAllSoved = false;
                         _swipeActionAdapter.NotifyDataSetChanged();
-                        if (_tasks.Count == 0)
+                        if (_tasks.FindAll(x => x.ID != 0).Count == 0)
                             OnTasksListIsEmpty();
                     });
                 }
