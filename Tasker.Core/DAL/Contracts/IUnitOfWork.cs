@@ -4,8 +4,8 @@ namespace Tasker.Core.DAL.Contracts
 {
     public interface IUnitOfWork
     {
-        IRepository<Project> Projects { get; }
+        IRepository<Project> ProjectsRepository { get; }
 
-        IRepository<Task> Tasks { get; }    
+        IRepository<Task> TasksRepository { get; }    
     }
 }

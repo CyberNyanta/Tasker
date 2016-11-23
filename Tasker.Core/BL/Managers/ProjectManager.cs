@@ -6,15 +6,15 @@ using Tasker.Core.DAL.Entities;
 
 namespace Tasker.Core.BL.Managers
 {
-    public class ProjectManager:IProjectManager
+    public class ProjectManager : IProjectManager
     {
         private IRepository<Task> _taskRepository;
         private IRepository<Project> _projectRepository;
 
         public ProjectManager(IUnitOfWork unitOfWork)
         {
-            _taskRepository = unitOfWork.Tasks;
-            _projectRepository = unitOfWork.Projects;
+            _taskRepository = unitOfWork.TasksRepository;
+            _projectRepository = unitOfWork.ProjectsRepository;
         }
 
         public Project Get(int id)
@@ -24,17 +24,29 @@ namespace Tasker.Core.BL.Managers
 
         public List<Project> GetAll()
         {
-            return new List<Project>(_projectRepository.GetAll());
+            var projects = _projectRepository.GetAll();
+            var list = new List<Project>();
+            if (projects != null)
+            {
+                list.AddRange(projects);
+            }
+            return list;
         }
 
         public List<Task> GetProjectTasks(int projectID)
         {
-            return new List<Task>(_taskRepository.Find(x => x.ProjectID == projectID));
+            var tasks = _taskRepository.Find(x => x.ProjectID == projectID);
+            var list = new List<Task>();
+            if (tasks != null)
+            {
+                list.AddRange(tasks);
+            }
+            return list;
         }
 
         public int SaveItem(Project item)
         {
-            return _projectRepository.Save(item);
+            return item != null ? _projectRepository.Save(item) : 0;
         }
         /// <exception cref="System.Exception"> - Thrown when delete transaction failed</exception>
         public int Delete(int id)
@@ -50,7 +62,7 @@ namespace Tasker.Core.BL.Managers
 
         public int DeleteGroup(IList<Project> group)
         {
-            foreach(var project in group)
+            foreach (var project in group)
             {
                 _taskRepository.DeleteGroupBy(x => x.ProjectID == project.ID);
             }

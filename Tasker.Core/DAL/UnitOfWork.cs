@@ -18,7 +18,7 @@ namespace Tasker.Core.DAL
             _tasksRepository = new TaskRepository(_db);
         }
 
-        public IRepository<Project> Projects
+        public IRepository<Project> ProjectsRepository
         {
             get
             {
@@ -26,7 +26,7 @@ namespace Tasker.Core.DAL
             }
         }
 
-        public IRepository<Task> Tasks
+        public IRepository<Task> TasksRepository
         {
             get
             {

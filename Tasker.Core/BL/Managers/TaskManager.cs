@@ -14,8 +14,8 @@ namespace Tasker.Core.BL.Managers
 
         public TaskManager(IUnitOfWork unitOfWork)
         {
-            _taskRepository = unitOfWork.Tasks;
-            _projectRepository = unitOfWork.Projects;
+            _taskRepository = unitOfWork.TasksRepository;
+            _projectRepository = unitOfWork.ProjectsRepository;
         }
 
         public Task Get(int id)
