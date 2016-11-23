@@ -17,7 +17,6 @@ namespace Tasker.Core.Tests.BL.Managers
     public class ProjectManagerTests
     {
         private IFixture fixture;
-        private const int LIST_SIZE = 10;
 
         [SetUp]
         public void SetUp()
@@ -102,6 +101,16 @@ namespace Tasker.Core.Tests.BL.Managers
             var id = manager.SaveItem(null);
             unitOfWork.ProjectsRepository.AssertWasNotCalled(u => u.Save(Arg<Project>.Is.Anything));
             Assert.AreEqual(id, 0);
+        }
+
+        [Test]
+        public void Delete_IsTaskRepositoryCalled()
+        {
+            var unitOfWork = GetFakeUnitOfWork();
+            var manager = new ProjectManager(unitOfWork);
+            var value = fixture.Create<int>();
+            var id = manager.Delete(value);
+            unitOfWork.ProjectsRepository.AssertWasCalled(u => u.Delete(Arg<int>.Is.Anything));                        
         }
     }
 }

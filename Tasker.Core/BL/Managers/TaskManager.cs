@@ -25,7 +25,13 @@ namespace Tasker.Core.BL.Managers
 
         public List<Task> GetAll()
         {
-            return new List<Task>(_taskRepository.GetAll());
+            var tasks = _taskRepository.GetAll();
+            var list = new List<Task>();
+            if (tasks != null)
+            {
+                list.AddRange(tasks);
+            }
+            return list;
         }
 
         public List<Task> GetAllOpen()
@@ -40,7 +46,13 @@ namespace Tasker.Core.BL.Managers
 
         public List<Task> GetProjectTasks(int projectId)
         {
-            return new List<Task>(_taskRepository.Find(x => x.ProjectID == projectId));
+            var tasks = _taskRepository.Find(x => x.ProjectID == projectId);
+            var list = new List<Task>();
+            if (tasks != null)
+            {
+                list.AddRange(tasks);
+            }
+            return list;
         }
 
         public List<Task> GetProjectOpenTasks(int projectId)
@@ -60,7 +72,13 @@ namespace Tasker.Core.BL.Managers
 
         public List<Project> GetProjects()
         {
-            return new List<Project>(_projectRepository.GetAll());
+            var projects = _projectRepository.GetAll();
+            var list = new List<Project>();
+            if (projects != null)
+            {
+                list.AddRange(projects);
+            }
+            return list;
         }
 
         public List<Task> GetForToday()

@@ -48,11 +48,12 @@ namespace Tasker.Core.BL.Managers
         {
             return item != null ? _projectRepository.Save(item) : 0;
         }
+
         /// <exception cref="System.Exception"> - Thrown when delete transaction failed</exception>
         public int Delete(int id)
         {
             _taskRepository.DeleteGroupBy(x => x.ProjectID == id);
-            return _projectRepository.Delete(id);
+            return id!=0? _projectRepository.Delete(id):0;
         }
 
         public int Delete(Project item)
