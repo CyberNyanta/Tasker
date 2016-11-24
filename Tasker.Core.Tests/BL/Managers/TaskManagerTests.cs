@@ -34,14 +34,34 @@ namespace Tasker.Core.Tests.BL.Managers
             unitOfWork.Stub(u =>u.ProjectsRepository).Return(projectRepository);
             unitOfWork.Stub(u => u.TasksRepository).Return(taskRepository);
             taskList = fixture.CreateMany<Task>(LIST_SIZE).ToList();
-            taskList[0].IsSolved = true;
-            taskList[1].IsSolved = false;
+            for (int i = 1; i < 3; i++)
+            {
+                taskList[1 * i].DueDate = DateTime.Today;
+                taskList[2 * i].DueDate = DateTime.Today.AddDays(1);
+                taskList[3 * i].DueDate = DateTime.Today.AddDays(4);
+                taskList[4 * i].DueDate = DateTime.Today.AddDays(10);
+                taskList[5 * i].DueDate = DateTime.Today.AddDays(-3);
+                for(int ii = 1; ii < 6; ii++)
+                {
+                    if (i == 1)
+                    {
+                        taskList[ii * i].IsSolved = true;
+                    }
+                    else
+                    {
+                        taskList[ii * i].IsSolved = false;
+                    }
+                }
+            
+            }           
             unitOfWork.TasksRepository.Stub(m => m.GetAll()).Return(taskList);
+            unitOfWork.TasksRepository.Stub(m => m.GetById(Arg<int>.Is.GreaterThan(0))).Return(fixture.Create<Task>());
+            unitOfWork.ProjectsRepository.Stub(m => m.GetById(Arg<int>.Is.GreaterThan(0))).Return(fixture.Create<Project>());
             return unitOfWork;
         }
 
         [Test]
-        public void GetAll_IsRepositoryCalled()
+        public void GetAll_IsTaskRepositoryCalled()
         {
             //arrange
             var unitOfWork = GetFakeUnitOfWork();
@@ -53,7 +73,7 @@ namespace Tasker.Core.Tests.BL.Managers
         }
 
         [Test]
-        public void Get_IsRepositoryCalled()
+        public void Get_IsTaskRepositoryCalled()
         {
             //arrange
             var unitOfWork = GetFakeUnitOfWork();
@@ -79,7 +99,7 @@ namespace Tasker.Core.Tests.BL.Managers
         }
 
         [Test]
-        public void GetProjectTasks_IsRepositoryCalled()
+        public void GetProjectTasks_IsTaskRepositoryCalled()
         {
             //arrange
             var unitOfWork = GetFakeUnitOfWork();
@@ -156,7 +176,7 @@ namespace Tasker.Core.Tests.BL.Managers
             //act
             var list = manager.GetProjects();
             //assert
-            unitOfWork.ProjectsRepository.AssertWasCalled(u => u.GetAll());
+            unitOfWork.ProjectsRepository.AssertWasCalled(u => u.GetAll(),o=> { var t = o.Repeat; });
         }
 
         [Test]
@@ -181,7 +201,7 @@ namespace Tasker.Core.Tests.BL.Managers
             //act
             var taskList = manager.GetForToday();
             //assert
-            var anyWrong = taskList.Find(x => x.IsSolved || x.DueDate >= DateTime.Today.AddDays(1));
+            var anyWrong = taskList.Find(x => x.DueDate >= DateTime.Today.AddDays(1));
             Assert.IsNull(anyWrong);
         }
 
@@ -205,9 +225,10 @@ namespace Tasker.Core.Tests.BL.Managers
             var unitOfWork = GetFakeUnitOfWork();
             var manager = new TaskManager(unitOfWork);
             //act
-            var taskList = manager.GetForToday();
+            var taskList = manager.GetForTomorrow();
             //assert
-            var anyWrong = taskList.Find(x => x.IsSolved || x.DueDate >= DateTime.Today.AddDays(2) && x.DueDate < DateTime.Today.AddDays(1));
+            var anyWrong = taskList.Find(x => x.DueDate >= DateTime.Today.AddDays(2)
+                        || x.DueDate < DateTime.Today.AddDays(1));
             Assert.IsNull(anyWrong);
         }
 
@@ -218,7 +239,7 @@ namespace Tasker.Core.Tests.BL.Managers
             var unitOfWork = GetFakeUnitOfWork();
             var manager = new TaskManager(unitOfWork);
             //act
-            var taskList = manager.GetForTomorrow();
+            var taskList = manager.GetForNextWeek();
             //assert
             var anySolve = taskList.Find(x => x.IsSolved);
             Assert.IsNull(anySolve);
@@ -233,8 +254,167 @@ namespace Tasker.Core.Tests.BL.Managers
             //act
             var taskList = manager.GetForNextWeek();
             //assert
-            var anyWrong = taskList.Find(x => x.IsSolved || x.DueDate >= DateTime.Today.AddDays(1));
+            var anyWrong = taskList.Find(x=> x.DueDate >= DateTime.Today.AddDays(8));
             Assert.IsNull(anyWrong);
+        }
+
+        [Test, AutoData]
+        public void SaveItem_NotZeroID_IsTaskRepositoryGetByIdCalled(Task task)
+        {
+            //arrange
+            task.ID = 1;
+            var unitOfWork = GetFakeUnitOfWork();
+            var manager = new TaskManager(unitOfWork);            
+            //act
+            var returnId = manager.SaveItem(task);
+            //assert
+            unitOfWork.TasksRepository.AssertWasCalled(u => u.GetById(1));
+        }
+
+        [Test, AutoData]
+        public void SaveItem_ZeroID_IsTaskRepositoryGetByIdNotCalled(Task task)
+        {
+            //arrange
+            task.ID = 0;
+            var unitOfWork = GetFakeUnitOfWork();           
+            var manager = new TaskManager(unitOfWork);
+            //act
+            var returnId = manager.SaveItem(task);
+            //assert
+            unitOfWork.TasksRepository.AssertWasNotCalled(u => u.GetById(Arg<int>.Is.Anything));
+        }
+
+        [Test, AutoData]
+        public void SaveItem_ZeroID_IsProjectRepositoryGetByIdCalled(Task task)
+        {
+            //arrange
+            task.ID = 0;
+            var unitOfWork = GetFakeUnitOfWork();
+            var manager = new TaskManager(unitOfWork);
+            //act
+            var returnId = manager.SaveItem(task);
+            //assert
+            unitOfWork.ProjectsRepository.AssertWasCalled(u => u.GetById(task.ProjectID), options => options.Repeat.AtLeastOnce());
+        }
+
+        [Test, AutoData]
+        public void SaveItem_NotZeroID_IsProjectRepositoryGetByIdCalled(Task task)
+        {
+            //arrange
+            task.ID = 1;
+            var unitOfWork = GetFakeUnitOfWork();
+            var manager = new TaskManager(unitOfWork);
+            //act
+            var returnId = manager.SaveItem(task);
+            //assert
+            unitOfWork.ProjectsRepository.AssertWasCalled(u => u.GetById(task.ProjectID), options => options.Repeat.AtLeastOnce());
+        }
+
+        [Test, AutoData]
+        public void SaveItem_ZeroId_IsProjectRepositorySaveCalled(Task task)
+        {
+            //arrange
+            task.ID = 0;
+            var unitOfWork = GetFakeUnitOfWork();
+            var manager = new TaskManager(unitOfWork);
+            //act
+            var returnId = manager.SaveItem(task);
+            //assert
+            unitOfWork.ProjectsRepository.AssertWasCalled(u => u.Save(Arg<Project>.Is.Anything), options => options.Repeat.AtLeastOnce());
+        }
+
+        [Test, AutoData]
+        public void SaveItem_NotZeroId_IsProjectRepositorySaveCalled(Task task)
+        {
+            //arrange
+            task.ID = 1;
+            var unitOfWork = GetFakeUnitOfWork();
+            var manager = new TaskManager(unitOfWork);
+            //act
+            var returnId = manager.SaveItem(task);
+            //assert
+            unitOfWork.ProjectsRepository.AssertWasCalled(u => u.Save(Arg<Project>.Is.Anything), options => options.Repeat.AtLeastOnce());
+        }
+
+        [Test, AutoData]
+        public void ChangeStatus_IsTaskRepositoryGetByIdCalled(Task task)
+        {
+            //arrange
+            var unitOfWork = GetFakeUnitOfWork();
+            var manager = new TaskManager(unitOfWork);
+            //act
+            var returnId = manager.SaveItem(task);
+            //assert
+            unitOfWork.TasksRepository.AssertWasCalled(u => u.GetById(Arg<int>.Is.Anything));
+        }
+        [Test, AutoData]
+        public void ChangeStatus_IsTaskRepositorySaveCalled(Task task)
+        {
+            //arrange
+            var unitOfWork = GetFakeUnitOfWork();
+            var manager = new TaskManager(unitOfWork);
+            //act
+            var returnId = manager.SaveItem(task);
+            //assert
+            unitOfWork.TasksRepository.AssertWasCalled(u => u.Save(Arg<Task>.Is.Anything));
+        }
+        [Test, AutoData]
+        public void ChangeStatus_IsProjectRepositoryGetByIdCalled(Task task)
+        {
+            //arrange
+            var unitOfWork = GetFakeUnitOfWork();
+            var manager = new TaskManager(unitOfWork);
+            //act
+            manager.ChangeStatus(task);
+            //assert
+            unitOfWork.ProjectsRepository.AssertWasCalled(u => u.GetById(task.ProjectID), options => options.Repeat.AtLeastOnce());
+        }
+
+        [Test, AutoData]
+        public void ChangeStatus_IsProjectRepositorySaveCalled(Task task)
+        {
+            //arrange
+            var unitOfWork = GetFakeUnitOfWork();
+            var manager = new TaskManager(unitOfWork);
+            //act
+            manager.ChangeStatus(task);
+            //assert
+            unitOfWork.ProjectsRepository.AssertWasCalled(u => u.Save(Arg<Project>.Is.Anything), options => options.Repeat.AtLeastOnce());
+        }
+
+        [Test, AutoData]
+        public void Delete_IsTaskRepositoryDeleteCalled(Task task)
+        {
+            //arrange
+            var unitOfWork = GetFakeUnitOfWork();
+            var manager = new TaskManager(unitOfWork);
+            //act
+            manager.Delete(task);
+            //assert
+            unitOfWork.TasksRepository.AssertWasCalled(u => u.Delete(Arg<int>.Is.Anything), options => options.Repeat.AtLeastOnce());
+        }
+        [Test, AutoData]
+        public void Delete_IsProjectRepositoryGetByIdCalled(Task task)
+        {
+            //arrange
+            var unitOfWork = GetFakeUnitOfWork();
+            var manager = new TaskManager(unitOfWork);
+            //act
+            manager.Delete(task);
+            //assert
+            unitOfWork.ProjectsRepository.AssertWasCalled(u => u.GetById(Arg<int>.Is.Anything), options => options.Repeat.AtLeastOnce());
+        }
+
+        [Test, AutoData]
+        public void Delete_IsProjectRepositorySaveCalled(Task task)
+        {
+            //arrange
+            var unitOfWork = GetFakeUnitOfWork();
+            var manager = new TaskManager(unitOfWork);
+            //act
+            manager.ChangeStatus(task);
+            //assert
+            unitOfWork.ProjectsRepository.AssertWasCalled(u => u.Save(Arg<Project>.Is.Anything), options => options.Repeat.AtLeastOnce());
         }
     }
 }

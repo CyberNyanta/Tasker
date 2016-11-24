@@ -104,7 +104,7 @@ namespace Tasker.Core.Tests.BL.Managers
         }
 
         [Test]
-        public void Delete_IsTaskRepositoryCalled()
+        public void Delete_IsRepositoryCalled()
         {
             var unitOfWork = GetFakeUnitOfWork();
             var manager = new ProjectManager(unitOfWork);
