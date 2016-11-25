@@ -73,4 +73,6 @@
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
         android:background="@color/colorBackground" />
+
+    <include layout="@layout/fragment_line_chart"/>
 </LinearLayout>
