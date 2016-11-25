@@ -157,6 +157,10 @@
       <Project>{9d9b0979-842f-4333-94d9-3571de2e111d}</Project>
       <Name>Binding_DateTimePicker</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Binding_HelloCharts\Binding_HelloCharts.csproj">
+      <Project>{f44f27d8-b190-40f9-9d0a-b373b02017c9}</Project>
+      <Name>Binding_HelloCharts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Binding_SwipeActionAdapter\Binding_SwipeActionAdapter.csproj">
       <Project>{acc82ece-7f88-4119-b3f7-7aaa2d896f96}</Project>
       <Name>Binding_SwipeActionAdapter</Name>
