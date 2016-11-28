@@ -5,17 +5,17 @@ using Tasker.Core.DAL.Entities;
 
 namespace Tasker.Core.BL.Contracts
 {
-    public interface ITaskManager : IManager<Task>
+    public interface ITaskManager : IEntityManager<Task>
     {
         List<Task> GetProjectTasks(int projectId);
 
         List<Task> GetProjectOpenTasks(int projectId);
 
-        List<Task> GetProjectSolveTasks(int projectId);
+        List<Task> GetProjectCompletedTasks(int projectId);
 
         List<Task> GetAllOpen();
 
-        List<Task> GetAllSolve();
+        List<Task> GetAllCompleted();
 
         List<Task> GetWhere(Predicate<Task> predicate);
 

@@ -13,7 +13,7 @@ namespace Tasker.Core.AL.ViewModels
         private IProjectManager _projectManager;
         private bool _isSolvedTaskDisplayed = false;
 
-        public bool IsSolvedTaskDisplayed
+        public bool IsCompletedTaskDisplayed
         {
             get { return _isSolvedTaskDisplayed; }
             set
@@ -81,9 +81,9 @@ namespace Tasker.Core.AL.ViewModels
             return _taskManager.GetProjectOpenTasks(projectId);
         }
 
-        public List<Task> GetProjectSolveTasks(int projectId)
+        public List<Task> GetProjectCompletedTasks(int projectId)
         {
-            return _taskManager.GetProjectSolveTasks(projectId);
+            return _taskManager.GetProjectCompletedTasks(projectId);
         }
 
         public List<Task> GetAllOpen()
@@ -91,9 +91,9 @@ namespace Tasker.Core.AL.ViewModels
             return _taskManager.GetAllOpen();
         }
 
-        public List<Task> GetAllSolve()
+        public List<Task> GetAllCompleted()
         {
-            return _taskManager.GetAllSolve();
+            return _taskManager.GetAllCompleted();
         }
 
         public int DeleteItem(int id)

@@ -4,7 +4,7 @@ using Tasker.Core.DAL.Contracts;
 
 namespace Tasker.Core.BL.Contracts
 {
-    public interface IManager<T> where T : IBusinessEntity
+    public interface IEntityManager<T> where T : IBusinessEntity
     {
         T Get(int id);
 

@@ -36,6 +36,10 @@
   <ItemGroup>
     <Compile Include="AL\Utils\Contracts\INotificationUtils.cs" />
     <Compile Include="AL\Utils\DateConverterExtensions.cs" />
+    <Compile Include="AL\ViewModels\Contracts\IStatisticsViewModel.cs" />
+    <Compile Include="AL\ViewModels\StatisticsViewModel.cs" />
+    <Compile Include="BL\Contracts\IStatisticsProvider.cs" />
+    <Compile Include="BL\StaticticsProvider.cs" />
     <Compile Include="GlobalConstants.cs" />
     <Compile Include="DL\IDatabasePath.cs" />
     <Compile Include="AL\Utils\ValidationExtensions.cs" />
@@ -51,7 +55,7 @@
     <Compile Include="AL\ViewModels\TaskListViewModel.cs" />
     <Compile Include="AL\ViewModels\ProjectListViewModel.cs" />
     <Compile Include="DAL\Contracts\BaseBusinessEntity.cs" />
-    <Compile Include="BL\Contracts\IManager.cs" />
+    <Compile Include="BL\Contracts\IEntityManager.cs" />
     <Compile Include="BL\Contracts\IProjectManager.cs" />
     <Compile Include="BL\Contracts\ITaskManager.cs" />
     <Compile Include="DAL\Contracts\IUnitOfWork.cs" />

@@ -45,11 +45,11 @@ namespace Tasker.Core.Tests.BL.Managers
                 {
                     if (i == 1)
                     {
-                        taskList[ii * i].IsSolved = true;
+                        taskList[ii * i].IsCompleted = true;
                     }
                     else
                     {
-                        taskList[ii * i].IsSolved = false;
+                        taskList[ii * i].IsCompleted = false;
                     }
                 }
             
@@ -118,9 +118,9 @@ namespace Tasker.Core.Tests.BL.Managers
             var unitOfWork = GetFakeUnitOfWork();
             var manager = new TaskManager(unitOfWork);
             //act
-            var taskList = manager.GetAllSolve();
+            var taskList = manager.GetAllCompleted();
             //assert
-            var countOfOpen = taskList.Find(x => !x.IsSolved);
+            var countOfOpen = taskList.Find(x => !x.IsCompleted);
             Assert.AreEqual(countOfOpen, null);
         }
 
@@ -133,7 +133,7 @@ namespace Tasker.Core.Tests.BL.Managers
             //act
             var taskList = manager.GetAllOpen();
             //assert
-            var countOfSolve = taskList.Find(x => x.IsSolved);
+            var countOfSolve = taskList.Find(x => x.IsCompleted);
             Assert.AreEqual(countOfSolve, null);
         }
 
@@ -146,9 +146,9 @@ namespace Tasker.Core.Tests.BL.Managers
             var projectId = fixture.Create<int>();
             unitOfWork.TasksRepository.Stub(m => m.Find(Arg<Func<Task, bool>>.Is.Anything)).Return(taskList);
             //act
-            var list = manager.GetProjectSolveTasks(projectId);
+            var list = manager.GetProjectCompletedTasks(projectId);
             //assert
-            var anyOpenTask = list.Find(x => !x.IsSolved);
+            var anyOpenTask = list.Find(x => !x.IsCompleted);
             Assert.IsNull(anyOpenTask);
         }
 
@@ -163,7 +163,7 @@ namespace Tasker.Core.Tests.BL.Managers
             //act
             var list = manager.GetProjectOpenTasks(projectId);
             //assert
-            var anySolveTask = list.Find(x => x.IsSolved);
+            var anySolveTask = list.Find(x => x.IsCompleted);
             Assert.IsNull(anySolveTask);
         }
 
@@ -188,7 +188,7 @@ namespace Tasker.Core.Tests.BL.Managers
             //act
             var taskList = manager.GetForToday();
             //assert
-            var countOfSolve = taskList.Find(x => x.IsSolved);
+            var countOfSolve = taskList.Find(x => x.IsCompleted);
             Assert.AreEqual(countOfSolve, null);
         }
 
@@ -214,7 +214,7 @@ namespace Tasker.Core.Tests.BL.Managers
             //act
             var taskList = manager.GetForTomorrow();
             //assert
-            var anySolve = taskList.Find(x => x.IsSolved);
+            var anySolve = taskList.Find(x => x.IsCompleted);
             Assert.IsNull(anySolve);
         }
 
@@ -241,7 +241,7 @@ namespace Tasker.Core.Tests.BL.Managers
             //act
             var taskList = manager.GetForNextWeek();
             //assert
-            var anySolve = taskList.Find(x => x.IsSolved);
+            var anySolve = taskList.Find(x => x.IsCompleted);
             Assert.IsNull(anySolve);
         }
 

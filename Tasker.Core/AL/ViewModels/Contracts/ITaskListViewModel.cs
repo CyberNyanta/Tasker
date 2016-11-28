@@ -8,7 +8,7 @@ namespace Tasker.Core.AL.ViewModels.Contracts
 {
     public interface ITaskListViewModel: IListViewModel<Task>
     {
-        bool IsSolvedTaskDisplayed { get; set; }
+        bool IsCompletedTaskDisplayed { get; set; }
 
         void ChangeStatus(Task task);
 
@@ -24,11 +24,11 @@ namespace Tasker.Core.AL.ViewModels.Contracts
 
         List<Task> GetProjectOpenTasks(int projectId);
 
-        List<Task> GetProjectSolveTasks(int projectId);
+        List<Task> GetProjectCompletedTasks(int projectId);
 
         List<Task> GetAllOpen();
 
-        List<Task> GetAllSolve();
+        List<Task> GetAllCompleted();
 
         List<Task> GetForToday();
 

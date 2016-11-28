@@ -36,12 +36,12 @@ namespace Tasker.Core.BL.Managers
 
         public List<Task> GetAllOpen()
         {
-            return GetAll().FindAll(t => !t.IsSolved);
+            return GetAll().FindAll(t => !t.IsCompleted);
         }
 
-        public List<Task> GetAllSolve()
+        public List<Task> GetAllCompleted()
         {
-            return GetAll().FindAll(t => t.IsSolved);
+            return GetAll().FindAll(t => t.IsCompleted);
         }
 
         public List<Task> GetProjectTasks(int projectId)
@@ -57,12 +57,12 @@ namespace Tasker.Core.BL.Managers
 
         public List<Task> GetProjectOpenTasks(int projectId)
         {
-            return GetProjectTasks(projectId).FindAll(t => !t.IsSolved);
+            return GetProjectTasks(projectId).FindAll(t => !t.IsCompleted);
         }
 
-        public List<Task> GetProjectSolveTasks(int projectId)
+        public List<Task> GetProjectCompletedTasks(int projectId)
         {
-            return GetProjectTasks(projectId).FindAll(t => t.IsSolved);
+            return GetProjectTasks(projectId).FindAll(t => t.IsCompleted);
         }
 
         public List<Task> GetWhere(Predicate<Task> predicate)
@@ -106,9 +106,9 @@ namespace Tasker.Core.BL.Managers
                     if(previousVersion.ProjectID != 0)
                     {
                         var previousProject = _projectRepository.GetById(previousVersion.ProjectID);
-                        if (previousVersion.IsSolved)
+                        if (previousVersion.IsCompleted)
                         {
-                            previousProject.CountOfSolveTasks--;
+                            previousProject.CountOfCompletedTasks--;
                         }
                         else
                         {
@@ -119,13 +119,13 @@ namespace Tasker.Core.BL.Managers
                     if (item.ProjectID != 0)
                     {
                         var project = _projectRepository.GetById(item.ProjectID);
-                        if (!item.IsSolved)
+                        if (!item.IsCompleted)
                         {
                             project.CountOfOpenTasks++;
                         }
                         else
                         {
-                            project.CountOfSolveTasks++;
+                            project.CountOfCompletedTasks++;
                         }
 
                         _projectRepository.Save(project);
@@ -135,13 +135,13 @@ namespace Tasker.Core.BL.Managers
             else if (item.ProjectID != 0 )
             {
                 var project = _projectRepository.GetById(item.ProjectID);
-                if (!item.IsSolved)
+                if (!item.IsCompleted)
                 {
                     project.CountOfOpenTasks++;
                 }
                 else
                 {
-                    project.CountOfSolveTasks++;
+                    project.CountOfCompletedTasks++;
                 }
                
                 _projectRepository.Save(project);
@@ -160,20 +160,21 @@ namespace Tasker.Core.BL.Managers
             if (task.ProjectID != 0)
             {
                 var project = _projectRepository.GetById(task.ProjectID);
-                if (!task.IsSolved)
+                if (!task.IsCompleted)
                 {
-                    project.CountOfSolveTasks++;
+                    task.CompletedDate = DateTime.Now;
+                    project.CountOfCompletedTasks++;
                     project.CountOfOpenTasks--;
                 }
                 else
                 {
-                    project.CountOfSolveTasks--;
+                    project.CountOfCompletedTasks--;
                     project.CountOfOpenTasks++;
                 }
                 _projectRepository.Save(project);
             }
 
-            task.IsSolved = !task.IsSolved;
+            task.IsCompleted = !task.IsCompleted;
             _taskRepository.Save(task);
         }
 
@@ -184,9 +185,9 @@ namespace Tasker.Core.BL.Managers
             {
                 var project = _projectRepository.GetById(task.ProjectID);
 
-                if (task.IsSolved)
+                if (task.IsCompleted)
                 {
-                    project.CountOfSolveTasks--;
+                    project.CountOfCompletedTasks--;
                 }
                 else
                 {

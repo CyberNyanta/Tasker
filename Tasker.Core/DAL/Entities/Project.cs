@@ -12,6 +12,6 @@ namespace Tasker.Core.DAL.Entities
 
         public int CountOfOpenTasks { get; set; }
 
-        public int CountOfSolveTasks { get; set; }
+        public int CountOfCompletedTasks { get; set; }
     }
 }
