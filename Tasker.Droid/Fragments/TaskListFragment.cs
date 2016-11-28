@@ -105,21 +105,21 @@ namespace Tasker.Droid.Fragments
             {
                 case TaskListType.AllOpen:
                     _tasks = _viewModel.GetAllOpen();
-                    _isAllSoved = _viewModel.GetAllSolve().Count > 0 ? true : false;
+                    _isAllSoved = _viewModel.GetAllCompleted().Count > 0 ? true : false;
                     break;
                 case TaskListType.AllSolve:
                     HideFAB();
-                    _tasks = _viewModel.GetAllSolve();
+                    _tasks = _viewModel.GetAllCompleted();
                     break;
                 case TaskListType.ProjectSolve:
                     HideFAB();
                     _projectId = Activity.Intent.GetIntExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
-                    _tasks = _viewModel.GetProjectSolveTasks(_projectId);
+                    _tasks = _viewModel.GetProjectCompletedTasks(_projectId);
                     break;
                 case TaskListType.ProjectOpen:
                     _projectId = Activity.Intent.GetIntExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
                     _tasks = _viewModel.GetProjectOpenTasks(_projectId);
-                    _isAllSoved = _viewModel.GetProjectSolveTasks(_projectId).Count > 0 ? true : false;
+                    _isAllSoved = _viewModel.GetProjectCompletedTasks(_projectId).Count > 0 ? true : false;
                     break;
                 case TaskListType.Today:
 
@@ -236,10 +236,10 @@ namespace Tasker.Droid.Fragments
             base.OnPrepareOptionsMenu(menu);
         }
 
-        private void SolveTask()
+        private void ComleteTask()
         {
             var task = _viewModel.GetItem(_viewModel.Id);
-            if (task.IsSolved)
+            if (task.IsCompleted)
             {
                 _viewModel.ChangeStatus(task);
             }
@@ -340,7 +340,7 @@ namespace Tasker.Droid.Fragments
                 _viewModel.Id = (int)_taskListAdapter.GetItemId(position);
                 if (direction.IsRight)
                 {
-                    SolveTask();
+                    ComleteTask();
                     _taskListAdapter.Remove(position);
                     _isAllSoved = true;
                     _swipeActionAdapter.NotifyDataSetChanged();

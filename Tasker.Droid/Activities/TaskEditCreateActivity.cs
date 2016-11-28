@@ -102,7 +102,7 @@ namespace Tasker.Droid.Activities
                     OnDeleteClick();
                     break;
                 case Resource.Id.menu_complete:
-                    item.SetTitle(_viewModel.GetItem().IsSolved ? Resource.String.complete_task : Resource.String.uncomplete_task);
+                    item.SetTitle(_viewModel.GetItem().IsCompleted ? Resource.String.complete_task : Resource.String.uncomplete_task);
                     _viewModel.ChangeStatus(_viewModel.Id);
                     break;
             }
@@ -115,7 +115,7 @@ namespace Tasker.Droid.Activities
             {
                 MenuInflater.Inflate(Resource.Menu.task_edit_menu, menu);
                 var item = menu.FindItem(Resource.Id.menu_complete);
-                item.SetTitle(_viewModel.GetItem().IsSolved ? Resource.String.uncomplete_task : Resource.String.complete_task);
+                item.SetTitle(_viewModel.GetItem().IsCompleted ? Resource.String.uncomplete_task : Resource.String.complete_task);
             }
             else
             {

@@ -94,7 +94,7 @@ namespace Tasker.Droid.Adapters
             var taskDueDate = view.FindViewById<TextView>(Resource.Id.dueDate);
             var taskProject = view.FindViewById<TextView>(Resource.Id.projectName);
                         
-            if (item.IsSolved)
+            if (item.IsCompleted)
             {
                 taskTitle.PaintFlags = PaintFlags.StrikeThruText | PaintFlags.AntiAlias | PaintFlags.EmbeddedBitmapText;
                 view.Alpha = TaskConstants.COMPLETED_TASK_BACKGROUND_ALPHA;

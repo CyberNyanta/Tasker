@@ -121,6 +121,10 @@ namespace Tasker.Droid.Activities
                     SupportActionBar.Title = GetString(Resource.String.settings);
                     SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new SettingsFragment()).Commit();
                     break;
+                case Resource.Id.navigation_statistics:
+                    SupportActionBar.Title = GetString(Resource.String.statistics);
+                    SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new StatisticsFragment()).Commit();
+                    break;
             }            
             _drawer.CloseDrawers();
             return true;

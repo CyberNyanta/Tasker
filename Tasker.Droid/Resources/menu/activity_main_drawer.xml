@@ -30,6 +30,10 @@
             android:id="@+id/navigation_settings"
 
             android:title="@string/settings" />
+        <item
+            android:id="@+id/navigation_statistics"
+
+            android:title="@string/statistics" />
     </group>
 
 </menu>

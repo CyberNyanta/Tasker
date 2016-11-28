@@ -1,32 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Android.Views.Animations;
 
 using TinyIoC;
 using Fragment = Android.Support.V4.App.Fragment;
-using FAB = Clans.Fab.FloatingActionButton;
-using Com.Wdullaer.Swipeactionadapter;
 
 using Tasker.Core.AL.ViewModels.Contracts;
-using Tasker.Core.DAL.Entities;
-using Tasker.Core.AL.Utils;
-using Tasker.Core;
-using Tasker.Droid.Activities;
 using Tasker.Droid.Adapters;
-
-using Lecho.Lib.Hellocharts.View;
-using Lecho.Lib.Hellocharts.Model;
-using Lecho.Lib.Hellocharts.Util;
-using Axis = Lecho.Lib.Hellocharts.Model.Axis;
 
 
 namespace Tasker.Droid.Fragments
@@ -43,25 +26,6 @@ namespace Tasker.Droid.Fragments
         private StartScreens _startScreen;
         private string _startScreenName;
         private int _projectId =0;
-
-
-
-        private LineChartView chart;
-        private LineChartData data;
-        private int numberOfLines = 1;
-        private int numberOfPoints = 5;
-        int[,] randomNumbersTab = new int[1, 5];
-
-        private bool hasAxes = true;
-        private bool hasAxesNames = true;
-        private bool hasLines = true;
-        private bool hasPoints = true;
-        private ValueShape shape = ValueShape.Circle;
-        private bool isFilled = false;
-        private bool hasLabels = false;
-        private bool isCubic = false;
-        private bool hasLabelForSelected = false;
-        private bool pointsHaveDifferentColor;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -92,52 +56,7 @@ namespace Tasker.Droid.Fragments
             _startScreenName = _sharedPreferences.GetString(GetString(Resource.String.settings_start_page_name), GetString(Resource.String.navigation_all));
             _startPageCurrent.Text = _startScreenName;
             _startPage.Click += (o, args)=>{ SetStartPage(); };
-            chart = view.FindViewById<LineChartView>(Resource.Id.line_chart);
-            generateData();
         }
-
-        private void generateData()
-        {
-
-            List<Line> lines = new List<Line>();
-            List<AxisValue> axisValues = new List<AxisValue>();
-            axisValues.Add(new AxisValue(0).SetLabel($"# {0}"));
-            axisValues.Add(new AxisValue(1).SetLabel($"# {1}"));
-            for (int i = 0; i < numberOfLines; ++i)
-            {
-
-                List<PointValue> values = new List<PointValue>();
-                for (int j = 0; j < numberOfPoints; ++j)
-                {
-                    values.Add(new PointValue(j, j));
-                }
-
-                Line line = new Line(values);
-                line.SetColor(ChartUtils.Colors[i]);
-                line.SetShape(shape);
-                line.SetCubic(isCubic);
-                line.SetFilled(isFilled);
-                line.SetHasLabels(hasLabels);
-                line.SetHasLabelsOnlyForSelected(hasLabelForSelected);
-                line.SetHasLines(hasLines);
-                line.SetHasPoints(hasPoints);
-                if (pointsHaveDifferentColor)
-                {
-                    line.SetPointColor(ChartUtils.Colors[(i + 1) % ChartUtils.Colors.Count]);
-                }
-                lines.Add(line);
-            }
-
-            data = new LineChartData(lines);
-            data.AxisXBottom = new Axis(axisValues).SetHasLines(true);
-            data.AxisYLeft = (new Axis().SetHasLines(true).SetMaxLabelChars(3));
-            
-
-            data.SetBaseValue(float.NegativeInfinity);
-            chart.LineChartData = data;
-
-        }
-
 
         public override void OnStop()
         {

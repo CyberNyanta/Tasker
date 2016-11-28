@@ -19,6 +19,7 @@ using System.Threading;
 using System.Globalization;
 using Java.Util;
 using System.Collections.Generic;
+using Tasker.Core.BL;
 
 namespace Tasker.Droid
 {
@@ -40,6 +41,9 @@ namespace Tasker.Droid
             container.Register<IProjectDetailsViewModel, ProjectDetailsViewModel>();
             container.Register<ITaskDetailsViewModel, TaskDetailsViewModel>();
             container.Register<INotificationUtils, NotificationUtils>();
+            container.Register<IStatisticsProvider, StatisticsProvider>();
+            container.Register<IStatisticsViewModel, StatisticsViewModel>();
+
             SetDotNetLocale(Application.Context.Resources.Configuration.Locale);
         }
 
