@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_weekly_statistics"
+        android:icon="@drawable/ic_calendar_7"
+        android:title="" />
+    <item
+        android:id="@+id/menu_month_statistics"
+        android:icon="@drawable/ic_calendar_30"
+        android:title="" />
+
+    <item
+        android:id="@+id/menu_overall_statistics"
+        android:icon="@drawable/ic_chart"
+        android:title="" />
+
+</menu>

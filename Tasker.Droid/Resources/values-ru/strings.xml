@@ -84,4 +84,6 @@
     <string name="datetime_format_date_year">dd MMMM, yyyy</string>
     <string name="datetime_format_date">dd MMMM</string>
     <string name="statistics">Статистика</string>
+    <string name="monthly">Месячный</string>
+    <string name="overall">Общий</string>
 </resources>

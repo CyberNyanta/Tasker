@@ -93,4 +93,7 @@
     <string name="dialog_yes">OK</string>
     <string name="dialog_cancel">CANCEL</string>
     <string name="statistics">Statistics</string>
+    <string name="weekly">Weekly</string>
+    <string name="monthly">Monthly</string>
+    <string name="overall">Overall</string>
 </resources>

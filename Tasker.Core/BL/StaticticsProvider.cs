@@ -21,7 +21,7 @@ namespace Tasker.Core.BL
             var array = new int[daysCount];
             for (int i = daysCount; i > 0; i--)
             {
-                array[daysCount - i] = tasks.FindAll(task => task.CompletedDate.Day == DateTime.Today.AddDays(-i-1).Day).Count;
+                array[daysCount - i] = tasks.FindAll(task => task.CompletedDate.Day == DateTime.Today.AddDays(-i+1).Day).Count;
             }
             return array;
         }

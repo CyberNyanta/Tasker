@@ -28,12 +28,15 @@ using Lecho.Lib.Hellocharts.Model;
 using Lecho.Lib.Hellocharts.Util;
 using Axis = Lecho.Lib.Hellocharts.Model.Axis;
 using Tasker.Core.AL.ViewModels;
+using BottomNavigationBar;
+using BottomNavigationBar.Listeners;
 
 namespace Tasker.Droid.Fragments
 {
-    public class StatisticsFragment : Fragment
+    public class StatisticsFragment : Fragment, IOnMenuTabClickListener
     {
         private IStatisticsViewModel _viewModel;
+        private BottomBar _bottomBar;
         private LineChartView _weekComplete;
 
         private int numberOfLines = 1;
@@ -48,7 +51,7 @@ namespace Tasker.Droid.Fragments
         private bool isFilled = false;
         private bool hasLabels = false;
         private bool isCubic = false;
-        private bool hasLabelForSelected = false;
+        private bool hasLabelForSelected = true;
         private bool pointsHaveDifferentColor;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -67,7 +70,13 @@ namespace Tasker.Droid.Fragments
         {
             base.OnViewCreated(view, savedInstanceState);
             _viewModel = TinyIoCContainer.Current.Resolve<IStatisticsViewModel>();
-            _weekComplete = view.FindViewById<LineChartView>(Resource.Id.week_complete_chart);
+            _weekComplete = view.FindViewById<LineChartView>(Resource.Id.complete_chart);
+            _bottomBar = BottomBar.Attach(view.FindViewById(Resource.Id.chart_container), savedInstanceState);
+            _bottomBar.SetItems(Resource.Menu.statistics_bottom_bar_menu);
+            _bottomBar.MapColorForTab(0, "#5D4037");
+            _bottomBar.MapColorForTab(1, "#5D4037");
+            _bottomBar.MapColorForTab(2, "#7B1FA2");
+
 
             SetWeekly();
         }
@@ -77,8 +86,11 @@ namespace Tasker.Droid.Fragments
 
             List<Line> lines = new List<Line>();
             List<AxisValue> axisValues = new List<AxisValue>();
-            axisValues.Add(new AxisValue(0).SetLabel($"# {0}"));
-            axisValues.Add(new AxisValue(1).SetLabel($"# {1}"));
+            for (int i = 0; i < 5; i++)
+            {
+                axisValues.Add(new AxisValue(i).SetLabel($"{DateTime.Today.AddDays(-6+i).ToString("d MMM")}"));
+            }
+            axisValues.Add(new AxisValue(5).SetLabel($"Yesterday"));
             for (int i = 0; i < numberOfLines; ++i)
             {
 
@@ -98,6 +110,7 @@ namespace Tasker.Droid.Fragments
                 line.SetHasLabelsOnlyForSelected(hasLabelForSelected);
                 line.SetHasLines(hasLines);
                 line.SetHasPoints(hasPoints);
+                line.SetFilled(true);
                 if (pointsHaveDifferentColor)
                 {
                     line.SetPointColor(ChartUtils.Colors[(i + 1) % ChartUtils.Colors.Count]);
@@ -109,10 +122,19 @@ namespace Tasker.Droid.Fragments
             data.AxisXBottom = new Axis(axisValues).SetHasLines(true);
             data.AxisYLeft = (new Axis().SetHasLines(true).SetMaxLabelChars(3));
 
-
             data.SetBaseValue(float.NegativeInfinity);
             _weekComplete.LineChartData = data;
+            
+        }
 
+        public void OnMenuTabSelected(int menuItemId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnMenuTabReSelected(int menuItemId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
