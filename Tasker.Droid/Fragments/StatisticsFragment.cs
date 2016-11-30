@@ -37,22 +37,12 @@ namespace Tasker.Droid.Fragments
     {
         private IStatisticsViewModel _viewModel;
         private BottomBar _bottomBar;
-        private LineChartView _weekComplete;
+        private LineChartView _lineChart;
+        private View _chartContainer;
 
-        private int numberOfLines = 1;
-        private int numberOfPoints = 5;
         int[,] randomNumbersTab = new int[1, 5];
 
-        private bool hasAxes = true;
-        private bool hasAxesNames = true;
-        private bool hasLines = true;
-        private bool hasPoints = true;
-        private ValueShape shape = ValueShape.Circle;
-        private bool isFilled = false;
-        private bool hasLabels = false;
-        private bool isCubic = false;
-        private bool hasLabelForSelected = true;
-        private bool pointsHaveDifferentColor;
+        private bool hasPoints = false;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -70,15 +60,15 @@ namespace Tasker.Droid.Fragments
         {
             base.OnViewCreated(view, savedInstanceState);
             _viewModel = TinyIoCContainer.Current.Resolve<IStatisticsViewModel>();
-            _weekComplete = view.FindViewById<LineChartView>(Resource.Id.complete_chart);
-            _bottomBar = BottomBar.Attach(view.FindViewById(Resource.Id.chart_container), savedInstanceState);
+            _lineChart = view.FindViewById<LineChartView>(Resource.Id.complete_chart);
+            _chartContainer = view.FindViewById(Resource.Id.chart_container);
+            _bottomBar = BottomBar.Attach(_chartContainer, savedInstanceState);
             _bottomBar.SetItems(Resource.Menu.statistics_bottom_bar_menu);
+            _bottomBar.SetOnMenuTabClickListener(this);
             _bottomBar.MapColorForTab(0, "#5D4037");
             _bottomBar.MapColorForTab(1, "#5D4037");
             _bottomBar.MapColorForTab(2, "#7B1FA2");
 
-
-            SetWeekly();
         }
 
         private void SetWeekly()
@@ -88,53 +78,84 @@ namespace Tasker.Droid.Fragments
             List<AxisValue> axisValues = new List<AxisValue>();
             for (int i = 0; i < 5; i++)
             {
-                axisValues.Add(new AxisValue(i).SetLabel($"{DateTime.Today.AddDays(-6+i).ToString("d MMM")}"));
+                axisValues.Add(new AxisValue(i).SetLabel($"{DateTime.Today.AddDays(-6 + i).ToString("d MMM")}"));
             }
             axisValues.Add(new AxisValue(5).SetLabel($"Yesterday"));
-            for (int i = 0; i < numberOfLines; ++i)
+
+            List<PointValue> values = new List<PointValue>();
+            var weeklyStatistics = _viewModel.GetWeeklyCompleteTaskStatistics();
+            for (int j = 0; j < weeklyStatistics.Length; j++)
             {
-
-                List<PointValue> values = new List<PointValue>();
-                var weeklyStatistics = _viewModel.GetWeeklyCompleteTaskStatistics();
-                for (int j = 0; j < weeklyStatistics.Length; j++)
-                {
-                    values.Add(new PointValue(j, weeklyStatistics[j]));
-                }
-
-                Line line = new Line(values);
-                line.SetColor(ChartUtils.Colors[i]);
-                line.SetShape(shape);
-                line.SetCubic(isCubic);
-                line.SetFilled(isFilled);
-                line.SetHasLabels(hasLabels);
-                line.SetHasLabelsOnlyForSelected(hasLabelForSelected);
-                line.SetHasLines(hasLines);
-                line.SetHasPoints(hasPoints);
-                line.SetFilled(true);
-                if (pointsHaveDifferentColor)
-                {
-                    line.SetPointColor(ChartUtils.Colors[(i + 1) % ChartUtils.Colors.Count]);
-                }
-                lines.Add(line);
+                values.Add(new PointValue(j, weeklyStatistics[j]));
             }
+
+            Line line = new Line(values);
+            line.SetColor(ChartUtils.ColorRed);
+            line.SetHasPoints(false);
+            line.SetFilled(true);
+
+            lines.Add(line);
 
             var data = new LineChartData(lines);
             data.AxisXBottom = new Axis(axisValues).SetHasLines(true);
             data.AxisYLeft = (new Axis().SetHasLines(true).SetMaxLabelChars(3));
 
             data.SetBaseValue(float.NegativeInfinity);
-            _weekComplete.LineChartData = data;
-            
+            _lineChart.LineChartData = data;
+        }
+
+        private void SetMonthly()
+        {
+
+            List<Line> lines = new List<Line>();
+            List<AxisValue> axisValues = new List<AxisValue>();
+            for (int i = 0; i < 29; i++)
+            {
+               axisValues.Add(new AxisValue(i).SetLabel($"{DateTime.Today.AddDays(-29 + i).ToString("d MMM")}"));
+            }
+            List<PointValue> values = new List<PointValue>();
+            var weeklyStatistics = _viewModel.GetMonthlyCompleteTaskStatistics();
+            for (int j = 0; j < weeklyStatistics.Length; j++)
+            {
+                values.Add(new PointValue(j, weeklyStatistics[j]));
+            }
+
+            Line line = new Line(values);
+            line.SetColor(ChartUtils.ColorRed);
+            line.SetHasPoints(false);
+            line.SetFilled(true);
+            lines.Add(line);
+
+            var data = new LineChartData(lines);
+            data.AxisXBottom = new Axis(axisValues)
+                .SetHasLines(true)
+                .SetMaxLabelChars(6);
+            data.AxisYLeft = (new Axis().SetHasLines(true).SetMaxLabelChars(3));
+
+            data.SetBaseValue(float.NegativeInfinity);
+            _lineChart.LineChartData = data;
         }
 
         public void OnMenuTabSelected(int menuItemId)
         {
-            throw new NotImplementedException();
+
+            switch (menuItemId)
+            {
+                case Resource.Id.menu_weekly_statistics:
+                    SetWeekly();
+                    break;
+                case Resource.Id.menu_monthly_statistics:
+                    SetMonthly();
+                    break;
+                case Resource.Id.menu_overall_statistics:
+
+                    break;
+            }
         }
 
         public void OnMenuTabReSelected(int menuItemId)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_calendar_7"
         android:title="" />
     <item
-        android:id="@+id/menu_month_statistics"
+        android:id="@+id/menu_monthly_statistics"
         android:icon="@drawable/ic_calendar_30"
         android:title="" />
 

@@ -96,4 +96,5 @@
     <string name="weekly">Weekly</string>
     <string name="monthly">Monthly</string>
     <string name="overall">Overall</string>
+    <string name="completed_on">Completed, %s</string>
 </resources>

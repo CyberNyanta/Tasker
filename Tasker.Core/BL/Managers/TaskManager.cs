@@ -162,7 +162,7 @@ namespace Tasker.Core.BL.Managers
                 var project = _projectRepository.GetById(task.ProjectID);
                 if (!task.IsCompleted)
                 {
-                    task.CompletedDate = DateTime.Now;
+                    
                     project.CountOfCompletedTasks++;
                     project.CountOfOpenTasks--;
                 }
@@ -173,7 +173,7 @@ namespace Tasker.Core.BL.Managers
                 }
                 _projectRepository.Save(project);
             }
-
+            task.CompletedDate = DateTime.Now;
             task.IsCompleted = !task.IsCompleted;
             _taskRepository.Save(task);
         }

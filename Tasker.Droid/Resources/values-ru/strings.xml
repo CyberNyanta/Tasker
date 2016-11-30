@@ -86,4 +86,5 @@
     <string name="statistics">Статистика</string>
     <string name="monthly">Месячный</string>
     <string name="overall">Общий</string>
+    <string name="completed_on">Сделано %s</string>
 </resources>

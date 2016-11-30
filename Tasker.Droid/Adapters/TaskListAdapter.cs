@@ -96,11 +96,15 @@ namespace Tasker.Droid.Adapters
                         
             if (item.IsCompleted)
             {
+                //Set Task due date
+                taskDueDate.Text =Context.GetString(Resource.String.completed_on, DateTimeConverter.DateToString(item.CompletedDate));
                 taskTitle.PaintFlags = PaintFlags.StrikeThruText | PaintFlags.AntiAlias | PaintFlags.EmbeddedBitmapText;
                 view.Alpha = TaskConstants.COMPLETED_TASK_BACKGROUND_ALPHA;
             }
             else
             {
+                //Set Task due date
+                taskDueDate.Text = DateTimeConverter.DateToString(item.DueDate);
                 taskTitle.PaintFlags = PaintFlags.AntiAlias | PaintFlags.EmbeddedBitmapText;
                 view.Alpha = TaskConstants.TASK_BACKGROUND_ALPHA;
                 if (item.DueDate < DateTime.Today)
@@ -123,9 +127,7 @@ namespace Tasker.Droid.Adapters
             }
             else
                 border.SetBackgroundColor(view.DrawingCacheBackgroundColor);
-            //Set Task due date
 
-            taskDueDate.Text = DateTimeConverter.DateToString(item.DueDate);
 
 
             if (item.ProjectID != 0)
