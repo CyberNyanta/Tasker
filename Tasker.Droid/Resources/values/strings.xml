@@ -97,4 +97,6 @@
     <string name="monthly">Monthly</string>
     <string name="overall">Overall</string>
     <string name="completed_on">Completed, %s</string>
+    <string name="chart_open">"Open: %s "</string>
+    <string name="chart_completed">Completed: %s</string>
 </resources>

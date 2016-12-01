@@ -38,10 +38,11 @@ namespace Tasker.Droid.Fragments
         private IStatisticsViewModel _viewModel;
         private BottomBar _bottomBar;
         private LineChartView _lineChart;
+        private PieChartView _pieChart;
         private View _chartContainer;
 
         int[,] randomNumbersTab = new int[1, 5];
-
+        
         private bool hasPoints = false;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -61,6 +62,7 @@ namespace Tasker.Droid.Fragments
             base.OnViewCreated(view, savedInstanceState);
             _viewModel = TinyIoCContainer.Current.Resolve<IStatisticsViewModel>();
             _lineChart = view.FindViewById<LineChartView>(Resource.Id.complete_chart);
+            _pieChart = view.FindViewById<PieChartView>(Resource.Id.pie_chart);
             _chartContainer = view.FindViewById(Resource.Id.chart_container);
             _bottomBar = BottomBar.Attach(_chartContainer, savedInstanceState);
             _bottomBar.SetItems(Resource.Menu.statistics_bottom_bar_menu);
@@ -73,7 +75,9 @@ namespace Tasker.Droid.Fragments
 
         private void SetWeekly()
         {
+            _lineChart.Visibility = ViewStates.Visible;
 
+            _pieChart.Visibility = ViewStates.Gone;
             List<Line> lines = new List<Line>();
             List<AxisValue> axisValues = new List<AxisValue>();
             for (int i = 0; i < 5; i++)
@@ -106,7 +110,9 @@ namespace Tasker.Droid.Fragments
 
         private void SetMonthly()
         {
+            _lineChart.Visibility = ViewStates.Visible;
 
+            _pieChart.Visibility = ViewStates.Gone;
             List<Line> lines = new List<Line>();
             List<AxisValue> axisValues = new List<AxisValue>();
             for (int i = 0; i < 29; i++)
@@ -136,6 +142,22 @@ namespace Tasker.Droid.Fragments
             _lineChart.LineChartData = data;
         }
 
+        private void SetOverall()
+        {
+            var chartData = new PieChartData();
+            var values = new List<SliceValue>();
+            var data = _viewModel.GetCompleteToOpenTaskStatistics();
+            values.Add(new SliceValue(data.Key, ChartUtils.ColorOrange).SetLabel(Context.GetString(Resource.String.chart_completed,data.Key)));
+            values.Add(new SliceValue(data.Value, ChartUtils.ColorGreen).SetLabel(Context.GetString(Resource.String.chart_open, data.Value)));
+            chartData.SetValues(values);
+            chartData.SetHasLabels(true);
+            chartData.SetHasLabelsOutside(true);
+            _lineChart.Visibility = ViewStates.Gone;        
+            _pieChart.Visibility = ViewStates.Visible;
+            _pieChart.PieChartData = chartData;
+            _pieChart.CircleFillRatio =0.6f;
+        }
+
         public void OnMenuTabSelected(int menuItemId)
         {
 
@@ -148,7 +170,7 @@ namespace Tasker.Droid.Fragments
                     SetMonthly();
                     break;
                 case Resource.Id.menu_overall_statistics:
-
+                    SetOverall();
                     break;
             }
         }

@@ -87,4 +87,6 @@
     <string name="monthly">Месячный</string>
     <string name="overall">Общий</string>
     <string name="completed_on">Сделано %s</string>
+    <string name="chart_completed">Завершенно %s</string>
+    <string name="chart_open">Открыто %s</string>
 </resources>

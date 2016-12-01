@@ -5312,6 +5312,12 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f080023
 			public const int character_counter_pattern = 2131230755;
 			
+			// aapt resource value: 0x7f08006f
+			public const int chart_completed = 2131230831;
+			
+			// aapt resource value: 0x7f08006e
+			public const int chart_open = 2131230830;
+			
 			// aapt resource value: 0x7f080041
 			public const int complete_task = 2131230785;
 			
