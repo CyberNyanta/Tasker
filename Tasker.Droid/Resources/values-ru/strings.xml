@@ -89,4 +89,6 @@
     <string name="completed_on">Сделано %s</string>
     <string name="chart_completed">Завершенно %s</string>
     <string name="chart_open">Открыто %s</string>
+    <string name="weekly">Недельная</string>
+    <string name="yesterday">Вчера</string>
 </resources>

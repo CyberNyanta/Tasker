@@ -41,14 +41,16 @@ namespace Tasker.Droid.Fragments
         private PieChartView _pieChart;
         private View _chartContainer;
 
-        int[,] randomNumbersTab = new int[1, 5];
-        
-        private bool hasPoints = false;
-
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             HasOptionsMenu = true;
             return inflater.Inflate(Resource.Layout.statistic, container, false);
+        }
+
+
+        public override void OnSaveInstanceState(Bundle savedInstanceState)
+        {
+            base.OnSaveInstanceState(savedInstanceState);
         }
 
         public override void OnPrepareOptionsMenu(IMenu menu)
@@ -67,10 +69,6 @@ namespace Tasker.Droid.Fragments
             _bottomBar = BottomBar.Attach(_chartContainer, savedInstanceState);
             _bottomBar.SetItems(Resource.Menu.statistics_bottom_bar_menu);
             _bottomBar.SetOnMenuTabClickListener(this);
-            _bottomBar.MapColorForTab(0, "#5D4037");
-            _bottomBar.MapColorForTab(1, "#5D4037");
-            _bottomBar.MapColorForTab(2, "#7B1FA2");
-
         }
 
         private void SetWeekly()
@@ -84,7 +82,7 @@ namespace Tasker.Droid.Fragments
             {
                 axisValues.Add(new AxisValue(i).SetLabel($"{DateTime.Today.AddDays(-6 + i).ToString("d MMM")}"));
             }
-            axisValues.Add(new AxisValue(5).SetLabel($"Yesterday"));
+            axisValues.Add(new AxisValue(5).SetLabel(Context.GetString(Resource.String.yesterday)));
 
             List<PointValue> values = new List<PointValue>();
             var weeklyStatistics = _viewModel.GetWeeklyCompleteTaskStatistics();

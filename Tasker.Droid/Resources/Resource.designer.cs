@@ -5543,6 +5543,9 @@ namespace Tasker.Droid
 			// aapt resource value: 0x7f08006a
 			public const int weekly = 2131230826;
 			
+			// aapt resource value: 0x7f080070
+			public const int yesterday = 2131230832;
+			
 			static String()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
