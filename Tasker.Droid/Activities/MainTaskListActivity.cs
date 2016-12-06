@@ -14,6 +14,9 @@ using Tasker.Core;
 using TinyIoC;
 using Tasker.Core.AL.ViewModels.Contracts;
 
+using Firebase.Auth;
+using Firebase.Database;
+
 namespace Tasker.Droid.Activities
 {
     [Activity (Label = "Tasker", MainLauncher = true, Theme = "@style/Tasker")]
@@ -22,7 +25,10 @@ namespace Tasker.Droid.Activities
         DrawerLayout _drawer;
         ActionBarDrawerToggle _toggle;
         private ISharedPreferences _sharedPreferences;
-
+        private FirebaseAuth mFirebaseAuth;
+        private FirebaseUser mFirebaseUser;
+        private DatabaseReference mFirebaseDatabaseReference;
+        
         protected override void OnCreate (Bundle bundle)
 		{
             base.OnCreate (bundle);
