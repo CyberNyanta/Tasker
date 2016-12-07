@@ -1,12 +1,12 @@
 ﻿using System;
 
-using SQLite;
+//using SQLite;
 
 using Tasker.Core.DAL.Contracts;
 
 namespace Tasker.Core.DAL.Entities
 {
-    [Table("Task")]
+    //[Table("Task")]
     public class Task : BaseBusinessEntity
     {
         public Task()
@@ -14,10 +14,10 @@ namespace Tasker.Core.DAL.Entities
             DueDate = DateTime.MaxValue;
             RemindDate = DateTime.MaxValue;
         }
-        [MaxLength(TaskConstants.TASK_TITLE_MAX_LENGTH)]
+//[MaxLength(TaskConstants.TASK_TITLE_MAX_LENGTH)]
         public string Title { get; set; }
 
-        [MaxLength(TaskConstants.TASK_DESCRIPTION_MAX_LENGTH)]
+        //[MaxLength(TaskConstants.TASK_DESCRIPTION_MAX_LENGTH)]
         public string Description { get; set; }
        
         public int ProjectID { get; set; }

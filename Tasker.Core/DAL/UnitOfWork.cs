@@ -39,7 +39,7 @@ namespace Tasker.Core.DAL
             base.DisposeCore();
             _projectRepository = null;
             _tasksRepository = null;            
-            _db.Dispose();
+            //_db.Dispose();
     
         }
     }

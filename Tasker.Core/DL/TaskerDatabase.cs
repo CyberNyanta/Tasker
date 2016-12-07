@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using SQLite;
+//using SQLite;
 
 using Tasker.Core.DAL.Entities;
 using Tasker.Core.DAL.Contracts;
 
 namespace Tasker.Core.DL
 {
-    public class TaskerDatabase : SQLiteConnection
+    public class TaskerDatabase //: SQLiteConnection
     {
 
         private static object locker = new object();
@@ -21,17 +21,18 @@ namespace Tasker.Core.DL
         /// <param name='path'>
         /// Path.
         /// </param>
-        public TaskerDatabase(string path) : base(path)
-        {                        
-            CreateTable<Task>();
-            CreateTable<Project>();           
+        public TaskerDatabase(string path) //: base(path)
+        {
+            //CreateTable<Task>();
+            //CreateTable<Project>();
         }
 
         public IEnumerable<T> GetItems<T>() where T : IBusinessEntity, new()
         {
             lock (locker)
             {
-                return (from i in Table<T>() select i).ToList();
+                throw new NotImplementedException();
+                //return (from i in Table<T>() select i).ToList();
             }
         }
 
@@ -39,14 +40,16 @@ namespace Tasker.Core.DL
         {
             lock (locker)
             {
-                return Table<T>().Where<T>(predicate);              
+                //return Table<T>().Where<T>(predicate);
+                throw new NotImplementedException();
             }
         }
         public T GetItem<T>(int id) where T : IBusinessEntity, new()
         {
             lock (locker)
-            {                
-                return Table<T>().First<T>(x => x.ID == id);
+            {
+                throw new NotImplementedException();
+                //return Table<T>().First<T>(x => x.ID == id);
             }
         }
 
@@ -54,29 +57,31 @@ namespace Tasker.Core.DL
         {
             lock (locker)
             {
-                if (item.ID != 0)
-                {
-                    Update(item);
-                    return item.ID;
-                }
-                else
-                {
-                    return Insert(item);
-                }
+                //if (item.ID != 0)
+                //{
+                //    Update(item);
+                //    return item.ID;
+                //}
+                //else
+                //{
+                //    return Insert(item);
+                //}
+                throw new NotImplementedException();
             }
         }
 
         public int DeleteItem<T>(int id) where T : IBusinessEntity, new()
         {
-            lock (locker)
-            {              
-                return Delete<T>( id );
-            }
+            //lock (locker)
+            //{
+            //    return Delete<T>(id);
+            //}
+            throw new NotImplementedException();
         }
 
         public int DeleteItem<T>(T item) where T : IBusinessEntity
-        {            
-            return DeleteItem(item);         
+        {
+            return DeleteItem(item);
         }
 
         /// <summary>
@@ -89,57 +94,59 @@ namespace Tasker.Core.DL
         /// Count of deleted items
         /// </returns>
         /// <exception cref="Exception">Thrown when delete transaction failed</exception>
-        public int DeleteGroupBy<T>(Func<T,bool> predicate) where T : IBusinessEntity, new()
+        public int DeleteGroupBy<T>(Func<T, bool> predicate) where T : IBusinessEntity, new()
         {
-            lock (locker)
-            {
-                var count = 0;
-                BeginTransaction();   
-                     
-                try
-                {
-                    var listOfItems = FindAll<T>(predicate).ToList();
-                    for (int i = 0; i < listOfItems.Count; i++, count++)
-                    {
-                        Delete(listOfItems[i]);
-                    }
+            //lock (locker)
+            //{
+            //    var count = 0;
+            //    BeginTransaction();
 
-                    Commit();
+            //    try
+            //    {
+            //        var listOfItems = FindAll<T>(predicate).ToList();
+            //        for (int i = 0; i < listOfItems.Count; i++, count++)
+            //        {
+            //            Delete(listOfItems[i]);
+            //        }
 
-                    return count;
-                }
-                catch (Exception ex)
-                {                    
-                    Rollback();
-                    throw;
-                }
-            }
+            //        Commit();
+
+            //        return count;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Rollback();
+            //        throw;
+            //    }
+            //}
+            throw new NotImplementedException();
         }
 
         public int DeleteGroup<T>(IList<T> group) where T : IBusinessEntity, new()
         {
-            lock (locker)
-            {
-                var count = 0;
-                BeginTransaction();
+            //lock (locker)
+            //{
+            //    var count = 0;
+            //    BeginTransaction();
 
-                try
-                {
-                    for (int i = 0; i < group.Count; i++, count++)
-                    {
-                        Delete(group[i]);
-                    }
+            //    try
+            //    {
+            //        for (int i = 0; i < group.Count; i++, count++)
+            //        {
+            //            Delete(group[i]);
+            //        }
 
-                    Commit();
+            //        Commit();
 
-                    return count;
-                }
-                catch (Exception ex)
-                {
-                    Rollback();
-                    throw;
-                }
-            }
+            //        return count;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Rollback();
+            //        throw;
+            //    }
+            //}
+            throw new NotImplementedException();
         }
     }
 }

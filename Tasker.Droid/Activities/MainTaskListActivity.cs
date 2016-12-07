@@ -19,7 +19,7 @@ using Firebase.Database;
 
 namespace Tasker.Droid.Activities
 {
-    [Activity (Label = "Tasker", MainLauncher = true, Theme = "@style/Tasker")]
+    [Activity(Label = "Tasker", MainLauncher = true, Theme = "@style/Tasker")]
     public class MainTaskListActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
         DrawerLayout _drawer;
@@ -27,12 +27,32 @@ namespace Tasker.Droid.Activities
         private ISharedPreferences _sharedPreferences;
         private FirebaseAuth mFirebaseAuth;
         private FirebaseUser mFirebaseUser;
+        private string mUsername;
+        private string mPhotoUrl;
         private DatabaseReference mFirebaseDatabaseReference;
-        
-        protected override void OnCreate (Bundle bundle)
-		{
-            base.OnCreate (bundle);
-			SetContentView (Resource.Layout.activity_main);
+
+        protected override void OnCreate(Bundle bundle)
+        {
+            base.OnCreate(bundle);
+            SetContentView(Resource.Layout.activity_main);
+            mFirebaseAuth = FirebaseAuth.Instance;
+            mFirebaseUser = mFirebaseAuth.CurrentUser;
+            if (mFirebaseUser == null)
+            {
+                // Not signed in, launch the Sign In activity
+                StartActivity(new Intent(this, typeof(SignInActivity)));
+                Finish();
+                return;
+            }
+            else
+            {
+                mUsername = mFirebaseUser.DisplayName;
+                if (mFirebaseUser.PhotoUrl != null)
+                {
+                    mPhotoUrl = mFirebaseUser.PhotoUrl.ToString();
+                }
+            }
+
             var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
             int menuIndex = 0;
@@ -45,7 +65,7 @@ namespace Tasker.Droid.Activities
             }
 
             _drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
-            _toggle = new ActionBarDrawerToggle( this, _drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
+            _toggle = new ActionBarDrawerToggle(this, _drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
             _drawer.AddDrawerListener(_toggle);
             _toggle.SyncState();
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
@@ -55,7 +75,7 @@ namespace Tasker.Droid.Activities
 
         public void StartFragment(StartScreens type)
         {
- 
+
             switch (type)
             {
                 case StartScreens.AllTask:
@@ -131,7 +151,7 @@ namespace Tasker.Droid.Activities
                     SupportActionBar.Title = GetString(Resource.String.statistics);
                     SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new StatisticsFragment()).Commit();
                     break;
-            }            
+            }
             _drawer.CloseDrawers();
             return true;
         }
