@@ -6,13 +6,14 @@ using Android.Content;
 using Android.Gms.Common;
 using Android.Gms.Common.Apis;
 using Android.Views;
-using Android.Gms.Auth.Api.SignIn;
-using Android.Support.V7.App;
 using Android.Gms.Auth.Api;
+using Android.Support.V7.App;
+using Android.Gms.Auth.Api.SignIn;
 using Android.Runtime;
 using Android.Util;
 using Android.Gms.Tasks;
 using Firebase.Auth;
+using Android.Gms.Auth.Api.SignIn;
 
 namespace Tasker.Droid.Activities
 {
@@ -42,6 +43,7 @@ namespace Tasker.Droid.Activities
             mSignInButton.SetOnClickListener(this);
 
             // Configure Google Sign In
+            var id = GetString(Resource.String.default_web_client_id);
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultSignIn)
                     .RequestIdToken(GetString(Resource.String.default_web_client_id))
                     .RequestEmail()
