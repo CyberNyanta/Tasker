@@ -1,0 +1,90 @@
+<resources>
+    <string name="datetime_none">Без даты</string>
+    <string name="project_inbox">Входящие</string>
+
+    <string name="app_name">Tasker</string>
+
+    <!--Toolbar-->
+    <string name="task_edit_title">Редактирование</string>
+    <string name="task_details_title">Описание</string>
+    <string name="complete_tasks_title">Завершённые задачи</string>
+    <string name="project">Проект</string>
+    <!--Actions-->
+    <string name="projects">Проекты</string>
+    <string name="settings">Настройки</string>
+    <string name="search">Поиск</string>
+    <string name="edit">Редактирование</string>
+    <string name="delete">Удалить</string>
+    <string name="save">Сохранить</string>
+    <string name="show_solved">Завершённые задачи</string>
+
+    <!--Errors-->
+    <string name="title_error">Название обязательно</string>
+    <string name="remind_error">Напоминание нельзя поставить на прошедшее время!</string>
+
+    <string name="empty_items_comment_not_added">Нет задач</string>
+    <string name="empty_items_comment_all_solve">Вы все выполнили!</string>
+    <string name="empty_items_comment_no_complete">Нет завершенных задач</string>
+
+    <string name="task_due_date">Крайний срок</string>
+    <string name="task_remind_date">Напоминание</string>
+    <string name="task_title">Задача</string>
+    <string name="task_description">Описание</string>
+    <string name="task_color">Цвет</string>
+    <string name="complete_task">Завершить задачу</string>
+    <string name="uncomplete_task">Перевести в активные</string>
+
+    <string name="due_dates_pick">Выбрать дату и время</string>
+    <string name="due_dates_today">@string/today</string>
+    <string name="due_dates_tomorrow">@string/tomorrow</string>
+    <string name="due_dates_today_at">Сегодня в %s</string>
+    <string name="due_dates_tomorrow_at">Завтра в %s</string>
+    <string name="due_dates_nextWeek">Следующая неделя</string>
+    <string name="due_dates_remove">Удалить</string>
+
+    <string name="remind_dates_pick">Выбрать дату и время</string>
+    <string name="remind_dates_in15Minutes">Напомнить за 15 минут</string>
+    <string name="remind_dates_in30Minutes">Напомнить за 30 минут</string>
+    <string name="remind_dates_in1Hour">Напомнить за 1 час</string>
+    <string name="remind_dates_remove">Удалить</string>
+
+    <string name="project_dialog_field_hint">Название</string>
+    <string name="project_create_dialog">Создание проекта</string>
+    <string name="project_edit_dialog">Редактирование проекта</string>
+
+    <string name="confirm_delete">Подтвердите удаление</string>
+    <string name="confirm_delete_task">Удалить эту задачу?</string>
+    <string name="confirm_delete_project">Удалить этот проект?</string>
+
+
+    <string name="navigation_inbox">@string/project_inbox</string>
+    <string name="navigation_all">Все задачи</string>
+    <string name="navigation_today">@string/today</string>
+    <string name="navigation_tomorrow">@string/tomorrow</string>
+    <string name="navigation_nextWeek">@string/next7days</string>
+    <string name="navigation_projects">@string/projects</string>
+
+    <string name="settings_push_notifications">Нотификации</string>
+    <string name="settings_24hours_format">Использовать 24-часовой формат</string>
+    <string name="settings_start_page">Стартовая страница</string>
+    <string name="settings_default_views">Экраны по умолчанию</string>
+
+    <string name="today">Сегодня</string>
+    <string name="tomorrow">Завтра</string>
+    <string name="next7days">Следующие 7 дней</string>
+    <string name="rest">Остальное</string>
+
+    <string name="task_count">Выполнено %1$s из %2$s</string>
+    <string name="dialog_yes">Да</string>
+    <string name="dialog_cancel">Отмена</string>
+    <string name="datetime_format_date_year">dd MMMM, yyyy</string>
+    <string name="datetime_format_date">dd MMMM</string>
+    <string name="statistics">Статистика</string>
+    <string name="monthly">Месячный</string>
+    <string name="overall">Общий</string>
+    <string name="completed_on">Сделано %s</string>
+    <string name="chart_completed">Завершенно %s</string>
+    <string name="chart_open">Открыто %s</string>
+    <string name="weekly">Недельная</string>
+    <string name="yesterday">Вчера</string>
+</resources>

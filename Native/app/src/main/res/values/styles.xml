@@ -6,12 +6,64 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionModeOverlay">false</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:textCursorDrawable">@null</item>
     </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="AppTheme.EditTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/editText_textSize</item>
+    </style>
+
+    <style name="AppTheme.TextViewStyleEditText" >
+        <item name="android:textColor">?attr/editTextColor</item>
+        <item name="android:background">?attr/editTextBackground</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/editText_textSize</item>
+    </style>
+
+    <style name="AppTheme.TextViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/editText_textSize</item>
+    </style>
+
+    <style name="Tasker.HintTextViewStyle" parent="AppTheme.TextViewStyle">
+        <item name="android:textSize">@dimen/hint_textSize</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:layout_marginBottom">@dimen/small_margin_negative</item>
+        <item name="android:layout_marginTop">@dimen/small_margin</item>
+    </style>
+
+    <style name="AppTheme.RadioButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:scaleX">1.5</item>
+        <item name="android:scaleY">1.5</item>
+        <item name="android:button">@drawable/abc_btn_radio_material</item>
+        <item name="android:layout_marginRight">@dimen/small_margin</item>
+    </style>
+
+
+    <style name="AppTheme.ListItem">
+        <item name="android:layout_marginTop">@dimen/list_item_marginTop</item>
+        <item name="android:padding">@dimen/list_item_padding</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 </resources>

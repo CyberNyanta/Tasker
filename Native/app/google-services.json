@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_number": "170769540086",
+    "firebase_url": "https://tasker-a9ca9.firebaseio.com",
+    "project_id": "tasker-a9ca9",
+    "storage_bucket": "tasker-a9ca9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:170769540086:android:5f74202a5d94b11e",
+        "android_client_info": {
+          "package_name": "tasker.droid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "170769540086-25it12i53k833bsg1fcl46eiau63qdpl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tasker.droid",
+            "certificate_hash": "88B21F78A1463CFCE0BA8B70DE2050F0491F6DF5"
+          }
+        },
+        {
+          "client_id": "170769540086-mnnun8jovrjg8fc7i48nk8js5nem282e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tasker.droid",
+            "certificate_hash": "6A434B05AFB81D1013404B5FA899E916D5AE7BC0"
+          }
+        },
+        {
+          "client_id": "170769540086-nb51vnd3nmu5i4dbvm6uteh1ntb88dll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU4bNhuQcGinkaGXLFIhSV1TH9Ul9MbgY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "170769540086-nb51vnd3nmu5i4dbvm6uteh1ntb88dll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:170769540086:android:87117b4a0db27653",
+        "android_client_info": {
+          "package_name": "com.cybernyanta.tasker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "170769540086-9f4j2dnc6cfd475efvqs37bctrr76amj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cybernyanta.tasker",
+            "certificate_hash": "88B21F78A1463CFCE0BA8B70DE2050F0491F6DF5"
+          }
+        },
+        {
+          "client_id": "170769540086-nb51vnd3nmu5i4dbvm6uteh1ntb88dll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU4bNhuQcGinkaGXLFIhSV1TH9Ul9MbgY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "170769540086-nb51vnd3nmu5i4dbvm6uteh1ntb88dll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
