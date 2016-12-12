@@ -87,7 +87,7 @@ namespace Tasker.Droid.Activities
                 if (result.IsSuccess)
                 {
                     // Google Sign In was successful, authenticate with Firebase
-                    GoogleSignInAccount account = result.SignInAccount;
+                    var account = result.SignInAccount;
                     FirebaseAuthWithGoogle(account);
                 }
                 else

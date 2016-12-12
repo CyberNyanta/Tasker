@@ -101,11 +101,4 @@
     <string name="chart_completed">Completed: %s</string>
     <string name="yesterday">Yesterday</string>
 
-    <string name="default_web_client_id" translatable="false">170769540086-mnnun8jovrjg8fc7i48nk8js5nem282e.apps.googleusercontent.com</string>
-    <string name="gcm_defaultSenderId" translatable="false">170769540086</string>
-    <string name="firebase_database_url" translatable="false">https://tasker-a9ca9.firebaseio.com</string>
-    <string name="google_app_id" translatable="false">1:170769540086:android:5f74202a5d94b11e</string>
-    <string name="google_api_key" translatable="false">AIzaSyCU4bNhuQcGinkaGXLFIhSV1TH9Ul9MbgY</string>
-    <string name="google_storage_bucket" translatable="false">tasker-a9ca9.appspot.com</string>
-
 </resources>

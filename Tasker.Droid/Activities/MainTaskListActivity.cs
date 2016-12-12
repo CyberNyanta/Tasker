@@ -22,22 +22,22 @@ namespace Tasker.Droid.Activities
     [Activity(Label = "Tasker", MainLauncher = true, Theme = "@style/Tasker")]
     public class MainTaskListActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
-        DrawerLayout _drawer;
-        ActionBarDrawerToggle _toggle;
+        private DrawerLayout _drawer;
+        private ActionBarDrawerToggle _toggle;
         private ISharedPreferences _sharedPreferences;
-        private FirebaseAuth mFirebaseAuth;
-        private FirebaseUser mFirebaseUser;
-        private string mUsername;
-        private string mPhotoUrl;
-        private DatabaseReference mFirebaseDatabaseReference;
+        private FirebaseAuth _firebaseAuth;
+        private FirebaseUser _firebaseUser;
+        private string _userName;
+        private string _photoUrl;
+        private DatabaseReference _firebaseDatabaseReference;
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.activity_main);
-            mFirebaseAuth = FirebaseAuth.Instance;
-            mFirebaseUser = mFirebaseAuth.CurrentUser;
-            if (mFirebaseUser == null)
+            _firebaseAuth = FirebaseAuth.Instance;
+            _firebaseUser = _firebaseAuth.CurrentUser;
+            if (_firebaseUser == null)
             {
                 // Not signed in, launch the Sign In activity
                 StartActivity(new Intent(this, typeof(SignInActivity)));
@@ -46,10 +46,10 @@ namespace Tasker.Droid.Activities
             }
             else
             {
-                mUsername = mFirebaseUser.DisplayName;
-                if (mFirebaseUser.PhotoUrl != null)
+                _userName = _firebaseUser.DisplayName;
+                if (_firebaseUser.PhotoUrl != null)
                 {
-                    mPhotoUrl = mFirebaseUser.PhotoUrl.ToString();
+                    _photoUrl = _firebaseUser.PhotoUrl.ToString();
                 }
             }
 
