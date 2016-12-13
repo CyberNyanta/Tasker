@@ -35,7 +35,7 @@ namespace Tasker.Droid.Fragments
         private TaskListType _taskListType;
         private int _projectId;
         private bool _isAllSoved;
-        private bool _is24hoursFormat;
+        private bool _is24HoursFormat;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -92,7 +92,7 @@ namespace Tasker.Droid.Fragments
         public override void OnResume()
         {
             base.OnResume();
-            _is24hoursFormat = Activity.GetSharedPreferences(Constans.SHARED_PREFERENCES_FILE, FileCreationMode.Private)
+            _is24HoursFormat = Activity.GetSharedPreferences(Constans.SHARED_PREFERENCES_FILE, FileCreationMode.Private)
                 .GetBoolean(GetString(Resource.String.settings_24hours_format),false);
             TaskInitialization();
         }
@@ -293,7 +293,7 @@ namespace Tasker.Droid.Fragments
                                                                _taskListAdapter.SaveChanges(task, position);
                                                            }))
                                                        .SetTheme(0)
-                                                       .SetIs24HourTime(_is24hoursFormat)
+                                                       .SetIs24HourTime(_is24HoursFormat)
                                                        .Build()
                                                        .Show();
                                          break;
