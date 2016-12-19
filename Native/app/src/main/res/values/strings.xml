@@ -2,7 +2,7 @@
     <string name="app_name">Tasker</string>
 
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <string name="action_settings" translatable="false">Settings</string>
     <string name="title_activity_sign_in" translatable="false">SignInActivity</string>

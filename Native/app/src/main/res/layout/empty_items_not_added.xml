@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/empty_items_container"
+    android:layout_width="match_parent"
+    android:visibility="gone"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="?actionBarSize"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/empty_items_image"
+            android:layout_width="@dimen/size_empty_items_drawable"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/empty_items" />
+
+        <TextView
+            android:id="@+id/empty_items_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/empty_items_comment_no_complete"
+            android:textSize="35dp" />
+    </LinearLayout>
+
+
+</FrameLayout>

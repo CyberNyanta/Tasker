@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/medium_margin">
+
+    <EditText
+        android:id="@+id/project_dialog_title"
+        style="@style/AppTheme.EditTextStyle"
+        android:hint="@string/project_dialog_field_hint"
+        android:maxLength="50"
+        android:layout_marginRight="@dimen/medium_margin"
+        android:layout_marginLeft="@dimen/medium_margin"/>
+</LinearLayout>
