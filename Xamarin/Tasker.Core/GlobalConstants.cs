@@ -9,11 +9,11 @@ namespace Tasker.Core
 {
     public static class TaskConstants
     {
-        public const Int32 TASK_DESCRIPTION_MAX_LENGTH = 1000;
+        public const int TASK_DESCRIPTION_MAX_LENGTH = 1000;
 
-        public const Int32 TASK_TITLE_MAX_LENGTH = 100;
+        public const int TASK_TITLE_MAX_LENGTH = 100;
 
-        public const Int32 PROJECT_TITLE_MAX_LENGTH = 50;
+        public const int PROJECT_TITLE_MAX_LENGTH = 50;
 
         public const float COMPLETED_TASK_BACKGROUND_ALPHA = 0.4f;
         public const float TASK_BACKGROUND_ALPHA = 1f;

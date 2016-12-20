@@ -1,4 +1,4 @@
-package com.cybernyanta.tasker.activities;
+package com.cybernyanta.tasker.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

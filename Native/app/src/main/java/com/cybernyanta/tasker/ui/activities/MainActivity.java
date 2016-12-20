@@ -1,29 +1,22 @@
-package com.cybernyanta.tasker.activities;
+package com.cybernyanta.tasker.ui.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 import com.cybernyanta.tasker.R;
-import com.cybernyanta.tasker.fragment.TaskListFragment;
+import com.cybernyanta.tasker.ui.fragment.TaskListFragment;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import butterknife.BindView;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,6 +28,7 @@ public class MainActivity extends BaseActivity
 
     protected SharedPreferences mSharedPreferences;
     protected GoogleApiClient mGoogleApiClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +41,9 @@ public class MainActivity extends BaseActivity
             finish();
             return;
         } else {
+            if(savedInstanceState==null){
+                FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            }
             mUsername = mFirebaseUser.getDisplayName();
             if (mFirebaseUser.getPhotoUrl() != null) {
                 mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
@@ -59,14 +56,7 @@ public class MainActivity extends BaseActivity
 
         getSupportFragmentManager().beginTransaction().replace(R.id.list_fragment, new TaskListFragment()).commit();
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -116,18 +106,35 @@ public class MainActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        switch (id)
+        {
+            case R.id.navigation_all:
+//                StartFragment(StartScreens.AllTask);
+                break;
+            case R.id.navigation_inbox:
+//                StartFragment(StartScreens.Inbox);
+                break;
+            case R.id.navigation_today:
+//                StartFragment(StartScreens.Today);
+                break;
+            case R.id.navigation_tomorrow:
+//                StartFragment(StartScreens.Tomorrow);
+                break;
+            case R.id.navigation_nextWeek:
+//                StartFragment(StartScreens.NextWeek);
+                break;
+            case R.id.navigation_projects:
+//                SupportActionBar.Title = GetString(Resource.String.navigation_projects);
+//                SupportFragmentManager.BeginTransaction().Replace(R.id.fragment, new ProjectListFragment()).Commit();
+                break;
+            case R.id.navigation_settings:
+//                SupportActionBar.Title = GetString(Resource.String.settings);
+//                SupportFragmentManager.BeginTransaction().Replace(R.id.fragment, new SettingsFragment()).Commit();
+                break;
+            case R.id.navigation_statistics:
+//                SupportActionBar.Title = GetString(Resource.String.statistics);
+//                SupportFragmentManager.BeginTransaction().Replace(R.id.fragment, new StatisticsFragment()).Commit();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -1,31 +1,29 @@
-package com.cybernyanta.tasker.fragment;
+package com.cybernyanta.tasker.ui.fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cybernyanta.tasker.R;
-import com.cybernyanta.tasker.adapters.TaskListAdapter;
 import com.cybernyanta.tasker.models.Task;
+import com.cybernyanta.tasker.ui.activities.TaskEditCreateActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +32,7 @@ import butterknife.ButterKnife;
  * Created by evgeniy.siyanko on 15.12.2016.
  */
 
-public class TaskListFragment extends Fragment {
+public class TaskListFragment extends BaseFragment implements View.OnClickListener {
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
 
@@ -69,11 +67,13 @@ public class TaskListFragment extends Fragment {
     protected RecyclerView mRecycleView;
     private LinearLayoutManager mLinearLayoutManager;
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
     }
 
     @Nullable
@@ -87,8 +87,18 @@ public class TaskListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        final FloatingActionButton mFAB = (FloatingActionButton)getActivity().findViewById(R.id.fab);
+        mFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                long count = mFirebaseAdapter.getItemCount();
+                long uid = mFirebaseAdapter.getItemId(0);
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+//                startActivity(new Intent(getActivity(), TaskEditCreateActivity.class));
+            }
+        });
+
+
 
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference().child(USERS_CHILD).child(mFirebaseUser.getUid());
 
@@ -108,7 +118,7 @@ public class TaskListFragment extends Fragment {
                                               Task model, int position) {
                 viewHolder.titleTextView.setText(model.getTitle());
                 viewHolder.dueDateTextView.setText(model.getDueDate().toString());
-
+                viewHolder.colorView.setBackgroundColor(Color.parseColor("#FF87CEFA"));
             }
         };
 
@@ -116,14 +126,14 @@ public class TaskListFragment extends Fragment {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
-                int friendlyMessageCount = mFirebaseAdapter.getItemCount();
+                int taskCount = mFirebaseAdapter.getItemCount();
                 int lastVisiblePosition =
-                        mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
+                        mLinearLayoutManager.findFirstCompletelyVisibleItemPosition();
                 // If the recycler view is initially being loaded or the
                 // user is at the bottom of the list, scroll to the bottom
                 // of the list to show the newly added message.
                 if (lastVisiblePosition == -1 ||
-                        (positionStart >= (friendlyMessageCount - 1) &&
+                        (positionStart >= (taskCount - 1) &&
                                 lastVisiblePosition == (positionStart - 1))) {
                     mRecycleView.scrollToPosition(positionStart);
                 }
@@ -132,6 +142,7 @@ public class TaskListFragment extends Fragment {
 
         mRecycleView.setLayoutManager(mLinearLayoutManager);
         mRecycleView.setAdapter(mFirebaseAdapter);
+
     }
 
     @Override
@@ -140,4 +151,13 @@ public class TaskListFragment extends Fragment {
         // mListView.setAdapter();
     }
 
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id){
+            case R.id.fab:
+
+        }
+    }
 }

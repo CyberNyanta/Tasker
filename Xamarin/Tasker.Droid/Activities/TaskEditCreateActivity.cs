@@ -47,7 +47,7 @@ namespace Tasker.Droid.Activities
         private DateTime _remindDate = DateTime.MaxValue;
         private TaskColors _taskColor;
         private int _projectId;
-        private bool _is24hoursFormat;
+        private bool _is24HoursFormat;
         #endregion
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -60,6 +60,7 @@ namespace Tasker.Droid.Activities
 
             _viewModel = TinyIoCContainer.Current.Resolve<ITaskDetailsViewModel>();
             _notificationUtils = TinyIoCContainer.Current.Resolve<INotificationUtils>();
+
             _taskTitle = FindViewById<EditText>(Resource.Id.task_title);
             _taskDescription = FindViewById<EditText>(Resource.Id.task_description);
             _taskDueDate = FindViewById<TextView>(Resource.Id.task_dueDate);
@@ -75,14 +76,14 @@ namespace Tasker.Droid.Activities
                 Title = ApplicationContext.GetString(Resource.String.project_inbox)
             });
 
-            _taskDueDate.Click += delegate (Object o, EventArgs a) { SetDueDate(); };
-            _taskRemindDate.Click += delegate (Object o, EventArgs a) { SetRemindDate(); };
-            _taskProject.Click += delegate (Object o, EventArgs a) { SetProject(); };
-            _colorContainer.Click += delegate (Object o, EventArgs a) { SetColor(); };
-            _colorShape.Click += delegate (Object o, EventArgs a) { SetColor(); };
-            _colorName.Click += delegate (Object o, EventArgs a) { SetColor(); };
+            _taskDueDate.Click += delegate (object o, EventArgs a) { SetDueDate(); };
+            _taskRemindDate.Click += delegate (object o, EventArgs a) { SetRemindDate(); };
+            _taskProject.Click += delegate (object o, EventArgs a) { SetProject(); };
+            _colorContainer.Click += delegate (object o, EventArgs a) { SetColor(); };
+            _colorShape.Click += delegate (object o, EventArgs a) { SetColor(); };
+            _colorName.Click += delegate (object o, EventArgs a) { SetColor(); };
 
-            _is24hoursFormat = GetSharedPreferences(Constans.SHARED_PREFERENCES_FILE, FileCreationMode.Private)
+            _is24HoursFormat = GetSharedPreferences(Constans.SHARED_PREFERENCES_FILE, FileCreationMode.Private)
                 .GetBoolean(GetString(Resource.String.settings_24hours_format), false);
 
             Initialization();
@@ -337,7 +338,7 @@ namespace Tasker.Droid.Activities
                                   .SetMinDate(new Date())
                                   .SetListener(new DueDateListener(this))
                                   .SetTheme(0)
-                                  .SetIs24HourTime(_is24hoursFormat)
+                                  .SetIs24HourTime(_is24HoursFormat)
                                   .Build()
                                   .Show();
                     break;
@@ -414,7 +415,7 @@ namespace Tasker.Droid.Activities
                           .SetMinDate(new Date())
                           .SetListener(new RemindDateListener(this))
                           .SetTheme(0)
-                          .SetIs24HourTime(_is24hoursFormat)
+                          .SetIs24HourTime(_is24HoursFormat)
                           .Build()
                           .Show();
         }

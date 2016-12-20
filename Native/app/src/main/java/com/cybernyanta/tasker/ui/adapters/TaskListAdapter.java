@@ -1,10 +1,7 @@
-package com.cybernyanta.tasker.adapters;
+package com.cybernyanta.tasker.ui.adapters;
 
 import android.app.Activity;
-import android.database.DataSetObserver;
-import android.support.annotation.LayoutRes;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cybernyanta.tasker.R;
@@ -38,6 +35,7 @@ public class TaskListAdapter extends FirebaseListAdapter<Task>{
         if (view==null){
             view = View.inflate(mActivity, R.layout.task_list_item, null);
         }
+
         TextView title = (TextView)view.findViewById(R.id.task_title);
         title.setText(model.getTitle());
     }

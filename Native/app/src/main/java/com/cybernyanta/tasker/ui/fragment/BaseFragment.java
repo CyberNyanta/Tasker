@@ -1,4 +1,4 @@
-package com.cybernyanta.tasker.fragment;
+package com.cybernyanta.tasker.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

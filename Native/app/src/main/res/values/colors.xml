@@ -21,4 +21,16 @@
     <color name="black">#000</color>
     <color name="light_red">#ffdb4c3f</color>
     <color name="dark_red">#a62a1f</color>
+
+    <color name="none">#FF9E9E9E</color>
+    <color name="lime">#FF00FF00</color>
+    <color name="peach">#FFFFDAB9</color>
+    <color name="aqua">#FF00FFFF</color>
+    <color name="blue">#FF87CEFA</color>
+    <color name="salmon">#FFFA8072</color>
+    <color name="teal">#FF008080</color>
+    <color name="tan">#FFD2B48C</color>
+    <color name="yellow">#FFFFFF00</color>
+    <color name="violet">#FFEE82EE</color>
+
 </resources>
