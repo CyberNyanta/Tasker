@@ -23,7 +23,7 @@ namespace Tasker.Droid.Adapters
 {
     public class TaskListAdapter : BaseAdapter<Task>
     {
-        private List<Project> _projects;    
+        private readonly List<Project> _projects;    
         protected Activity Context { get; set; }
         protected List<Task> TaskList { get; set; }
 
@@ -107,14 +107,9 @@ namespace Tasker.Droid.Adapters
                 taskDueDate.Text = DateTimeConverter.DateToString(item.DueDate);
                 taskTitle.PaintFlags = PaintFlags.AntiAlias | PaintFlags.EmbeddedBitmapText;
                 view.Alpha = TaskConstants.TASK_BACKGROUND_ALPHA;
-                if (item.DueDate < DateTime.Today)
-                {
-                    taskDueDate.SetTextColor(new Color(ContextCompat.GetColor(Context, Resource.Color.light_red)));
-                }
-                else
-                {
-                    taskDueDate.SetTextColor(new Color(ContextCompat.GetColor(Context, Resource.Color.black)));
-                }
+                taskDueDate.SetTextColor(item.DueDate < DateTime.Today
+                    ? new Color(ContextCompat.GetColor(Context, Resource.Color.light_red))
+                    : new Color(ContextCompat.GetColor(Context, Resource.Color.black)));
             }
                  
             taskTitle.Text = item.Title;

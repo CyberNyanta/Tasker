@@ -4,11 +4,13 @@ import android.graphics.Color;
 
 import java.util.Date;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 /**
  * Created by evgeniy.siyanko on 15.12.2016.
  */
 
-public class Task {
+public class Task{
 
     private String title;
     private String description;
@@ -27,6 +29,7 @@ public class Task {
         this.remindDate = remindDate;
         this.color = color;
     }
+
     public String getTitle(){
         return title;
     }
@@ -65,4 +68,5 @@ public class Task {
     public void setColor(int color){
         this.color = color;
     }
+
 }

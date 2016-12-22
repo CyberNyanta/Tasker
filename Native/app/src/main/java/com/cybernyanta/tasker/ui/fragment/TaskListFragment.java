@@ -6,8 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.cybernyanta.tasker.constants.IntentExtraConstants;
 import com.cybernyanta.tasker.R;
 import com.cybernyanta.tasker.models.Task;
+
 import com.cybernyanta.tasker.ui.activities.TaskEditCreateActivity;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.cybernyanta.tasker.ui.adapters.firebase.FirebaseRecyclerAdapter;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,11 +28,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.cybernyanta.tasker.constants.FirebaseConstants.TASKS_CHILD;
+import static com.cybernyanta.tasker.constants.FirebaseConstants.USERS_CHILD;
+
 /**
  * Created by evgeniy.siyanko on 15.12.2016.
  */
 
 public class TaskListFragment extends BaseFragment implements View.OnClickListener {
+
+    private DatabaseReference mTaskReference;
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
 
@@ -45,9 +50,11 @@ public class TaskListFragment extends BaseFragment implements View.OnClickListen
         @BindView(R.id.task_color_border)
         public View colorView;
 
+        public View root;
         public TaskViewHolder(View v) {
             super(v);
-            ButterKnife.bind(this,v);
+            ButterKnife.bind(this, v);
+            root = v;
         }
     }
 
@@ -56,9 +63,6 @@ public class TaskListFragment extends BaseFragment implements View.OnClickListen
     protected FirebaseAuth mFirebaseAuth;
     private DatabaseReference mFirebaseDatabaseReference;
     private FirebaseRecyclerAdapter<Task, TaskViewHolder> mFirebaseAdapter;
-
-    public static final String USERS_CHILD = "users";
-    public static final String TASKS_CHILD = "tasks";
 
     protected SharedPreferences mSharedPreferences;
     protected GoogleApiClient mGoogleApiClient;
@@ -91,8 +95,6 @@ public class TaskListFragment extends BaseFragment implements View.OnClickListen
         mFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                long count = mFirebaseAdapter.getItemCount();
-                long uid = mFirebaseAdapter.getItemId(0);
 
 //                startActivity(new Intent(getActivity(), TaskEditCreateActivity.class));
             }
@@ -104,21 +106,28 @@ public class TaskListFragment extends BaseFragment implements View.OnClickListen
 
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         mLinearLayoutManager.setStackFromEnd(true);
-        mRecycleView.setLayoutManager(mLinearLayoutManager);
-
         mFirebaseAdapter = new FirebaseRecyclerAdapter<Task,
                 TaskViewHolder>(
                 Task.class,
                 R.layout.task_list_item,
                 TaskViewHolder.class,
-                mFirebaseDatabaseReference.child(TASKS_CHILD)) {
+                mFirebaseDatabaseReference.child(TASKS_CHILD).equalTo("title0","title")) {
 
             @Override
             protected void populateViewHolder(TaskViewHolder viewHolder,
-                                              Task model, int position) {
+                                              Task model, final int position) {
                 viewHolder.titleTextView.setText(model.getTitle());
                 viewHolder.dueDateTextView.setText(model.getDueDate().toString());
                 viewHolder.colorView.setBackgroundColor(Color.parseColor("#FF87CEFA"));
+                viewHolder.root.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String uid = mFirebaseAdapter.getFirebaseItemId(position);
+                        Intent intent = new Intent(getContext(), TaskEditCreateActivity.class);
+                        intent.putExtra(IntentExtraConstants.TASK_ID_EXTRA, uid);
+                        startActivity(intent);
+                    }
+                });
             }
         };
 
@@ -142,7 +151,6 @@ public class TaskListFragment extends BaseFragment implements View.OnClickListen
 
         mRecycleView.setLayoutManager(mLinearLayoutManager);
         mRecycleView.setAdapter(mFirebaseAdapter);
-
     }
 
     @Override
