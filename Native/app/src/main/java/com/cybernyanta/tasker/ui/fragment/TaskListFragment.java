@@ -25,6 +25,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -77,7 +80,6 @@ public class TaskListFragment extends BaseFragment implements View.OnClickListen
         super.onCreate(savedInstanceState);
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-
     }
 
     @Nullable
@@ -103,15 +105,14 @@ public class TaskListFragment extends BaseFragment implements View.OnClickListen
 
 
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference().child(USERS_CHILD).child(mFirebaseUser.getUid());
-
         mLinearLayoutManager = new LinearLayoutManager(getContext());
-        mLinearLayoutManager.setStackFromEnd(true);
+//        mLinearLayoutManager.setStackFromEnd(true);
         mFirebaseAdapter = new FirebaseRecyclerAdapter<Task,
                 TaskViewHolder>(
                 Task.class,
                 R.layout.task_list_item,
                 TaskViewHolder.class,
-                mFirebaseDatabaseReference.child(TASKS_CHILD).equalTo("title0","title")) {
+                mFirebaseDatabaseReference.child(TASKS_CHILD)) {
 
             @Override
             protected void populateViewHolder(TaskViewHolder viewHolder,

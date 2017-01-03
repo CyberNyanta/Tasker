@@ -1,17 +1,13 @@
-package com.cybernyanta.tasker.models;
-
-import android.graphics.Color;
+package com.cybernyanta.data.model;
 
 import java.util.Date;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 /**
- * Created by evgeniy.siyanko on 15.12.2016.
+ * Created by evgeniy.siyanko on 03.01.2017.
  */
 
-public class Task{
-
+public class Task extends BaseModel {
+    private String id;
     private String title;
     private String description;
     private Date dueDate;
@@ -34,44 +30,46 @@ public class Task{
         return title;
     }
 
-    public Task setTitle(String title){
+    public void setTitle(String title){
         this.title = title;
-        return this;
     }
 
     public String getDescription(){
         return description;
     }
 
-    public Task setDescription(String description){
+    public void setDescription(String description){
         this.description = description;
-        return this;
     }
 
     public Date getDueDate(){
         return dueDate;
     }
 
-    public Task setDueDate(Date dueDate){
+    public void setDueDate(Date dueDate){
         this.dueDate = dueDate;
-        return this;
     }
 
     public Date getRemindDate(){
         return remindDate;
     }
 
-    public Task setRemindDate(Date remindDate){
+    public void setRemindDate(Date remindDate){
         this.remindDate = remindDate;
-        return this;
     }
     public int getColor(){
         return color;
     }
 
-    public Task setColor(int color){
+    public void setColor(int color){
         this.color = color;
-        return this;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
