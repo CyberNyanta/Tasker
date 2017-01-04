@@ -1,4 +1,4 @@
-package com.cybernyanta.data.model;
+package com.cybernyanta.core.model;
 
 /**
  * Created by evgeniy.siyanko on 03.01.2017.

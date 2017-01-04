@@ -1,11 +1,12 @@
-package com.cybernyanta.data.model;
+package com.cybernyanta.core.model;
 
 import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 /**
  * Created by evgeniy.siyanko on 03.01.2017.
  */
-
+@IgnoreExtraProperties
 public abstract class BaseModel {
     @Exclude
     private String id;
@@ -16,5 +17,9 @@ public abstract class BaseModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public BaseModel(){
+
     }
 }

@@ -1,4 +1,7 @@
-package com.cybernyanta.data.model;
+package com.cybernyanta.core.model;
+
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.Date;
 
@@ -7,22 +10,24 @@ import java.util.Date;
  */
 
 public class Task extends BaseModel {
-    private String id;
     private String title;
     private String description;
     private Date dueDate;
     private Date remindDate;
     private int color;
+    private boolean isCompleted;
 
     public Task(){
-
+        super();
     }
 
-    public Task(String title, String description,Date dueDate, Date remindDate,int color ){
+    public Task(String title, String description,Date dueDate, Date remindDate,boolean isCompleted, int color ){
+        super();
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.remindDate = remindDate;
+        this.isCompleted = isCompleted;
         this.color = color;
     }
 
@@ -57,6 +62,7 @@ public class Task extends BaseModel {
     public void setRemindDate(Date remindDate){
         this.remindDate = remindDate;
     }
+
     public int getColor(){
         return color;
     }
@@ -65,11 +71,11 @@ public class Task extends BaseModel {
         this.color = color;
     }
 
-    public String getId() {
-        return id;
+    public boolean isCompleted() {
+        return isCompleted;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
     }
 }

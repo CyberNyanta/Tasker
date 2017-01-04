@@ -13,9 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.cybernyanta.core.database.FirebaseArrayList;
+import com.cybernyanta.core.model.Task;
 import com.cybernyanta.tasker.constants.IntentExtraConstants;
 import com.cybernyanta.tasker.R;
-import com.cybernyanta.tasker.models.Task;
 
 import com.cybernyanta.tasker.ui.activities.TaskEditCreateActivity;
 import com.cybernyanta.tasker.ui.adapters.firebase.FirebaseRecyclerAdapter;
@@ -26,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -107,7 +109,12 @@ public class TaskListFragment extends BaseFragment implements View.OnClickListen
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference().child(USERS_CHILD).child(mFirebaseUser.getUid());
         mLinearLayoutManager = new LinearLayoutManager(getContext());
 //        mLinearLayoutManager.setStackFromEnd(true);
-        mFirebaseAdapter = new FirebaseRecyclerAdapter<Task,
+
+
+        FirebaseArrayList<Task> tasks = new FirebaseArrayList<Task>(Task.class ,mFirebaseDatabaseReference
+                .child(TASKS_CHILD));
+
+/*        mFirebaseAdapter = new FirebaseRecyclerAdapter<Task,
                 TaskViewHolder>(
                 Task.class,
                 R.layout.task_list_item,
@@ -151,7 +158,7 @@ public class TaskListFragment extends BaseFragment implements View.OnClickListen
         });
 
         mRecycleView.setLayoutManager(mLinearLayoutManager);
-        mRecycleView.setAdapter(mFirebaseAdapter);
+        mRecycleView.setAdapter(mFirebaseAdapter);*/
     }
 
     @Override
