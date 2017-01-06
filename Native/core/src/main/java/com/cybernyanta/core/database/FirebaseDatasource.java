@@ -16,13 +16,13 @@ import java.util.Objects;
  * Created by evgeniy.siyanko on 03.01.2017.
  */
 
-public class FirebaseArrayList<M extends BaseModel> extends ArrayList<M> implements ChildEventListener {
+public class FirebaseDatasource<M extends BaseModel> extends ArrayList<M> implements Datasource<M>, ChildEventListener {
 
     private final Class<M> persistentType;
     private DatabaseReference mDatabaseReference;
     private List<OnChangedListener> mListeners;
 
-    public FirebaseArrayList(Class<M> persistentType,DatabaseReference ref) {
+    public FirebaseDatasource(Class<M> persistentType,DatabaseReference ref) {
         super();
         this.persistentType = persistentType;
         mDatabaseReference = ref;
@@ -86,14 +86,24 @@ public class FirebaseArrayList<M extends BaseModel> extends ArrayList<M> impleme
         notifyCancelledListeners(error);
     }
 
+    @Deprecated
     @Override
     public M set(int index, M element) {
         String id = this.get(index).getId();
         mDatabaseReference.child(id).setValue(element);
-        element.setId(id);
         return element;
     }
 
+    public void set(M element) {
+        mDatabaseReference.child(element.getId()).setValue(element);
+    }
+
+    public M get(String id){
+        for (int i = 0; i < this.size(); i++)
+            if (Objects.equals(this.get(i).getId(), id))
+                return this.get(i);
+        return null;
+    }
     @Override
     public boolean add(M element) {
         mDatabaseReference.push().setValue(element);

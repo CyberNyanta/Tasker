@@ -13,7 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.cybernyanta.core.database.FirebaseArrayList;
+import com.cybernyanta.core.database.Datasource;
+import com.cybernyanta.core.database.FirebaseDatasource;
 import com.cybernyanta.core.model.Task;
 import com.cybernyanta.tasker.constants.IntentExtraConstants;
 import com.cybernyanta.tasker.R;
@@ -111,7 +112,7 @@ public class TaskListFragment extends BaseFragment implements View.OnClickListen
 //        mLinearLayoutManager.setStackFromEnd(true);
 
 
-        FirebaseArrayList<Task> tasks = new FirebaseArrayList<Task>(Task.class ,mFirebaseDatabaseReference
+        Datasource<Task> tasks = new FirebaseDatasource<>(Task.class ,mFirebaseDatabaseReference
                 .child(TASKS_CHILD));
 
 /*        mFirebaseAdapter = new FirebaseRecyclerAdapter<Task,
