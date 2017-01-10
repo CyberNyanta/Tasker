@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.cybernyanta.data.model.Task;
+import com.cybernyanta.core.model.Task;
 import com.cybernyanta.tasker.R;
 import com.cybernyanta.tasker.ui.adapters.firebase.FirebaseRecyclerAdapter;
 import com.google.firebase.database.Query;

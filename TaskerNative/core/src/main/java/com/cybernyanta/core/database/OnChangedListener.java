@@ -11,5 +11,5 @@ public interface OnChangedListener{
 
     void onChanged(OnChangedListener.EventType type, int index, int oldIndex);
 
-    void onCancelled(DatabaseError databaseError);
+    void onCancelled(DatabaseError databaseError); //// TODO: 10.01.2017 change DatabaseError type on another
 }

@@ -15,10 +15,14 @@ import android.widget.TextView;
 
 import com.cybernyanta.core.database.Datasource;
 import com.cybernyanta.core.database.FirebaseDatasource;
+import com.cybernyanta.core.manager.TaskManager;
 import com.cybernyanta.core.model.Task;
 import com.cybernyanta.tasker.constants.IntentExtraConstants;
 import com.cybernyanta.tasker.R;
 
+import com.cybernyanta.tasker.di.AppComponent;
+import com.cybernyanta.tasker.di.DaggerAppComponent;
+import com.cybernyanta.tasker.di.DataModule;
 import com.cybernyanta.tasker.ui.activities.TaskEditCreateActivity;
 import com.cybernyanta.tasker.ui.adapters.firebase.FirebaseRecyclerAdapter;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -30,6 +34,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +50,9 @@ import static com.cybernyanta.tasker.constants.FirebaseConstants.USERS_CHILD;
 public class TaskListFragment extends BaseFragment implements View.OnClickListener {
 
     private DatabaseReference mTaskReference;
+
+    @Inject
+    TaskManager taskManager;
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
 
@@ -100,20 +109,25 @@ public class TaskListFragment extends BaseFragment implements View.OnClickListen
         mFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                startActivity(new Intent(getActivity(), TaskEditCreateActivity.class));
+                List<Task> allOpen = taskManager.getAllOpen();
+//
             }
         });
 
 
-
+        AppComponent build = DaggerAppComponent.builder()
+                .dataModule(new DataModule())
+                .build();
+        build.injectTaskListFragment(this);
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference().child(USERS_CHILD).child(mFirebaseUser.getUid());
         mLinearLayoutManager = new LinearLayoutManager(getContext());
 //        mLinearLayoutManager.setStackFromEnd(true);
 
 
-        Datasource<Task> tasks = new FirebaseDatasource<>(Task.class ,mFirebaseDatabaseReference
-                .child(TASKS_CHILD));
+       // Datasource<Task> tasks = new FirebaseDatasource<>(Task.class ,mFirebaseDatabaseReference
+                //child(TASKS_CHILD));
+//
+
 
 /*        mFirebaseAdapter = new FirebaseRecyclerAdapter<Task,
                 TaskViewHolder>(
