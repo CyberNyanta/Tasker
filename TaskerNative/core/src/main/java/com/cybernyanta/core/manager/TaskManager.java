@@ -3,6 +3,7 @@ package com.cybernyanta.core.manager;
 import com.cybernyanta.core.database.Datasource;
 import com.cybernyanta.core.database.FirebaseDatasource;
 import com.cybernyanta.core.database.OnChangedListener;
+import com.cybernyanta.core.manager.contract.TaskManagerContract;
 import com.cybernyanta.core.model.Task;
 import com.cybernyanta.core.util.DateUtil;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * Created by evgeniy.siyanko on 04.01.2017.
  */
 
-public class TaskManager{
+public class TaskManager implements TaskManagerContract{
 
     private Datasource<Task> taskDatasource;
 

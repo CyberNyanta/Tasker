@@ -1,4 +1,4 @@
-package com.cybernyanta.tasker.ui.activities;
+package com.cybernyanta.tasker.screen.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.cybernyanta.tasker.R;
+import com.cybernyanta.tasker.screen.main.MainActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;

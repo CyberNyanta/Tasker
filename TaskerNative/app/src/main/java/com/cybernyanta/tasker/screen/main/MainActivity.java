@@ -1,4 +1,4 @@
-package com.cybernyanta.tasker.ui.activities;
+package com.cybernyanta.tasker.screen.main;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,54 +7,32 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.cybernyanta.tasker.R;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
+import com.cybernyanta.tasker.enums.TasksScreenType;
+import com.cybernyanta.tasker.screen.auth.SignInActivity;
 
-public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import javax.inject.Inject;
 
-    protected FirebaseUser mFirebaseUser;
-    protected String mUsername;
-    protected String mPhotoUrl;
-    protected FirebaseAuth mFirebaseAuth;
+public class MainActivity extends AppCompatActivity
+        implements MainContract.MainView, NavigationView.OnNavigationItemSelectedListener{
 
-    protected SharedPreferences mSharedPreferences;
-    protected GoogleApiClient mGoogleApiClient;
-
+    @Inject
+    private MainContract.MainPresenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        if (mFirebaseUser == null) {
-            // Not signed in, launch the Sign In activity
-            startActivity(new Intent(this, SignInActivity.class));
-            finish();
-            return;
-        } else {
-            if(savedInstanceState==null){
-                FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-            }
-            mUsername = mFirebaseUser.getDisplayName();
-            if (mFirebaseUser.getPhotoUrl() != null) {
-                mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
-            }
-        }
-
+        /*AppComponent build = DaggerAppComponent.builder()
+                .dataModule(new DataModule())
+                .build();
+        build.injectTaskListFragment(this);*/
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -138,5 +116,26 @@ public class MainActivity extends BaseActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void showAuthScreen() {
+        startActivity(new Intent(this, SignInActivity.class));
+        finish();
+    }
+
+    @Override
+    public void showTaskFragment(TasksScreenType tasksScreenType) {
+
+    }
+
+    @Override
+    public void setPresenter(MainContract.MainPresenter presenter) {
+
+    }
+
+    @Override
+    public void setTitle(String titlle) {
+
     }
 }

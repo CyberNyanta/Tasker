@@ -8,31 +8,30 @@ import android.graphics.Color;
  * Created by evgeniy.siyanko on 20.12.2016.
  */
 
-public enum TaskColors {
-    None, Lime, Peach, Aqua, Blue, Salmon, Teal, Tan, Yellow, Violet;
+public enum TaskColor {
+    NONE, LIME, PEACH, AQUA, BLUE, SALMON, TEAL, TAN, YELLOW, VIOLET;
 
-    public int getColor(){
-        switch (this){
-
-            case Lime:
+    public int getColor() {
+        switch (this) {
+            case LIME:
                 return Color.parseColor("#FF00FF00");
-            case Peach:
+            case PEACH:
                 return Color.parseColor("#FFFFDAB9");
-            case Aqua:
+            case AQUA:
                 return Color.parseColor("#FF00FFFF");
-            case Blue:
+            case BLUE:
                 return Color.parseColor("#FF87CEFA");
-            case Salmon:
+            case SALMON:
                 return Color.parseColor("#FFFA8072");
-            case Teal:
+            case TEAL:
                 return Color.parseColor("#FF008080");
-            case Tan:
+            case TAN:
                 return Color.parseColor("#FFD2B48C");
-            case Yellow:
+            case YELLOW:
                 return Color.parseColor("#FFFFFF00");
-            case Violet:
+            case VIOLET:
                 return Color.parseColor("#FFEE82EE");
-            case None:
+            case NONE:
             default:
                 return Color.parseColor("#FF9E9E9E");
         }

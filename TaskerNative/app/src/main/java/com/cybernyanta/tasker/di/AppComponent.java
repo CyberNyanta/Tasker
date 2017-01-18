@@ -1,7 +1,5 @@
 package com.cybernyanta.tasker.di;
 
-import com.cybernyanta.tasker.ui.fragment.TaskListFragment;
-
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -12,5 +10,5 @@ import dagger.Component;
 @Singleton
 @Component(modules = {DataModule.class})
 public interface AppComponent {
-    void injectTaskListFragment(TaskListFragment taskListFragment);
+    //void injectTaskListFragment(TaskListFragment taskListFragment);
 }
