@@ -3,11 +3,14 @@ package com.cybernyanta.tasker.screen.main;
 import android.content.Intent;
 import android.preference.PreferenceManager;
 
+import com.cybernyanta.tasker.PreferenceHelper;
 import com.cybernyanta.tasker.enums.TasksScreenType;
 import com.cybernyanta.tasker.screen.auth.SignInActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+
+import javax.inject.Inject;
 
 /**
  * Created by evgeniy.siyanko on 18.01.2017.
@@ -16,10 +19,14 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainPresenter implements MainContract.MainPresenter {
 
     private MainContract.MainView mainView;
-    protected FirebaseUser mFirebaseUser;
-    protected FirebaseAuth mFirebaseAuth;
-    protected String mUsername;
-    protected String mPhotoUrl;
+    private FirebaseUser mFirebaseUser;
+    private FirebaseAuth mFirebaseAuth;
+    private String mUsername;
+    private String mPhotoUrl;
+
+    @Inject
+    PreferenceHelper preferenceHelper;
+
 
     @Override
     public void checkAuth() {

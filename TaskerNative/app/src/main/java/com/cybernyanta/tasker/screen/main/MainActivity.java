@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity
         implements MainContract.MainView, NavigationView.OnNavigationItemSelectedListener{
 
     @Inject
-    private MainContract.MainPresenter presenter;
+    MainContract.MainPresenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
