@@ -23,10 +23,11 @@ public class MainPresenter implements MainContract.MainPresenter {
     private FirebaseAuth mFirebaseAuth;
     private String mUsername;
     private String mPhotoUrl;
+    private PreferenceHelper preferenceHelper;
 
-    @Inject
-    PreferenceHelper preferenceHelper;
-
+    public MainPresenter(PreferenceHelper preferenceHelper){
+        this.preferenceHelper = preferenceHelper;
+    }
 
     @Override
     public void checkAuth() {
@@ -45,7 +46,7 @@ public class MainPresenter implements MainContract.MainPresenter {
 
     @Override
     public TasksScreenType getStartTasksScreenType() {
-        return  null;
+        return  preferenceHelper.getStartTasksScreenType();
     }
 
     @Override

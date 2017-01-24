@@ -13,8 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.cybernyanta.tasker.R;
+import com.cybernyanta.tasker.constants.CommonConstants;
 import com.cybernyanta.tasker.enums.TasksScreenType;
 import com.cybernyanta.tasker.screen.auth.SignInActivity;
+import com.cybernyanta.tasker.screen.main.di.DaggerMainComponent;
+import com.cybernyanta.tasker.screen.main.di.MainModule;
 
 import javax.inject.Inject;
 
@@ -23,13 +26,10 @@ public class MainActivity extends AppCompatActivity
 
     @Inject
     MainContract.MainPresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*AppComponent build = DaggerAppComponent.builder()
-                .dataModule(new DataModule())
-                .build();
-        build.injectTaskListFragment(this);*/
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -42,6 +42,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        DaggerMainComponent.builder()
+                .mainModule(new MainModule(getSharedPreferences(CommonConstants.SHARED_PREFERENCES_FILE,0)))
+                .build().injectMainActivity(this);
+        presenter.bindView(this);
+        presenter.checkAuth();
     }
 
     @Override

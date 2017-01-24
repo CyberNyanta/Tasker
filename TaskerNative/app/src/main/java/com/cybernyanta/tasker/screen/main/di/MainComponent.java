@@ -13,5 +13,5 @@ import dagger.Component;
 @Singleton
 @Component(modules = {MainModule.class})
 public interface MainComponent {
-    void injectMainActivity(MainContract.MainPresenter taskListFragment);
+    void injectMainActivity(MainActivity mainActivity);
 }
