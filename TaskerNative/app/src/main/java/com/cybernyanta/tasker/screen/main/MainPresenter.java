@@ -30,16 +30,14 @@ public class MainPresenter implements MainContract.MainPresenter {
     }
 
     @Override
-    public void checkAuth() {
+    public boolean checkAuth() {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         if (mFirebaseUser == null) {
             // Not signed in, launch the Sign In activity
-
-            mainView.showAuthScreen();
-            unbindView();
+            return false;
         } else {
-            mainView.showTaskFragment(getStartTasksScreenType());
+            return true;
         }
 
     }

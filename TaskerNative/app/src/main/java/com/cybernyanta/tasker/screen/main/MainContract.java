@@ -15,7 +15,7 @@ public interface MainContract{
     }
 
     interface MainPresenter extends BasePresenter<MainView>{
-        void checkAuth();
+        boolean checkAuth();
         TasksScreenType getStartTasksScreenType();
     }
 }
