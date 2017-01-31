@@ -2,6 +2,7 @@ package com.cybernyanta.core.database;
 
 import com.cybernyanta.core.model.BaseModel;
 import com.cybernyanta.core.model.Task;
+import com.cybernyanta.core.util.DateUtil;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -10,6 +11,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,18 +19,20 @@ import java.util.Objects;
  * Created by evgeniy.siyanko on 03.01.2017.
  */
 
-public class FirebaseDatasource<M extends BaseModel> extends ArrayList<M> implements Datasource<M>, ChildEventListener {
+public class TaskDatasource extends ArrayList<Task> implements Datasource<Task>, ChildEventListener {
 
-    private final Class<M> persistentType;
     private DatabaseReference mDatabaseReference;
     private List<OnChangedListener> mListeners;
 
-    public FirebaseDatasource(Class<M> persistentType,DatabaseReference ref) {
+    public TaskDatasource(DatabaseReference ref) {
         super();
-        this.persistentType = persistentType;
         mDatabaseReference = ref;
         mDatabaseReference.addChildEventListener(this);
         mListeners = new ArrayList<>();
+//        Date date = DateUtil.addDays(new Date(), 1);
+//        Task task= new Task("now","desc",date,date,false,0);
+//
+//        add((M)task);
     }
 
     public void cleanup() {
@@ -39,14 +43,14 @@ public class FirebaseDatasource<M extends BaseModel> extends ArrayList<M> implem
     public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
         Task model = snapshot.getValue(Task.class);
         model.setId(snapshot.getKey());
-        super.add((M) model);
+        super.add(model);
         notifyChangedListeners(OnChangedListener.EventType.ADDED, this.size() - 1);
     }
 
     @Override
     public void onChildChanged(DataSnapshot snapshot, String previousChildKey) {
-        GenericTypeIndicator<M> t = new GenericTypeIndicator<M>(){};
-        M model = snapshot.getValue(t);
+        //GenericTypeIndicator<M> t = new GenericTypeIndicator<M>(){};
+        Task model = snapshot.getValue(Task.class);
         model.setId(snapshot.getKey());
         int index = -1;
         for (int i = 0; i < this.size(); i++) {
@@ -89,30 +93,30 @@ public class FirebaseDatasource<M extends BaseModel> extends ArrayList<M> implem
 
     @Deprecated
     @Override
-    public M set(int index, M element) {
+    public Task set(int index, Task element) {
         String id = this.get(index).getId();
         mDatabaseReference.child(id).setValue(element);
         return element;
     }
 
-    public void set(M element) {
+    public void set(Task element) {
         mDatabaseReference.child(element.getId()).setValue(element);
     }
 
-    public M get(String id){
+    public Task get(String id){
         for (int i = 0; i < this.size(); i++)
             if (Objects.equals(this.get(i).getId(), id))
                 return this.get(i);
         return null;
     }
     @Override
-    public boolean add(M element) {
+    public boolean add(Task element) {
         mDatabaseReference.push().setValue(element);
         return true;
     }
 
     @Override
-    public M remove(int index) {
+    public Task remove(int index) {
         mDatabaseReference.child(this.get(index).getId()).setValue(null);
         return null;
     }

@@ -1,7 +1,7 @@
 package com.cybernyanta.tasker.screen.tasks.di;
 
 import com.cybernyanta.core.database.Datasource;
-import com.cybernyanta.core.database.FirebaseDatasource;
+import com.cybernyanta.core.database.TaskDatasource;
 import com.cybernyanta.core.manager.TaskManager;
 import com.cybernyanta.core.model.Task;
 import com.cybernyanta.tasker.screen.tasks.TasksPresenter;
@@ -14,6 +14,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
+import static com.cybernyanta.tasker.constants.FirebaseConstants.TASKS_CHILD;
 import static com.cybernyanta.tasker.constants.FirebaseConstants.USERS_CHILD;
 
 /**
@@ -21,6 +22,7 @@ import static com.cybernyanta.tasker.constants.FirebaseConstants.USERS_CHILD;
  */
 @Module
 public class TasksModule {
+    static Datasource<Task> taskDatasource;
     @Provides
     @Singleton
     TaskManager provideTaskManager(Datasource<Task> taskDatasource){
@@ -29,7 +31,13 @@ public class TasksModule {
     @Provides
     @Singleton
     Datasource<Task> provideTaskDatasource(){
-        return new FirebaseDatasource<>(Task.class, FirebaseDatabase.getInstance().getReference().child(USERS_CHILD).child(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+        if(taskDatasource==null){
+            taskDatasource =new TaskDatasource(FirebaseDatabase.getInstance()
+                    .getReference().child(USERS_CHILD)
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child(TASKS_CHILD));
+        }
+        return taskDatasource;
     }
     @Provides
     @Singleton

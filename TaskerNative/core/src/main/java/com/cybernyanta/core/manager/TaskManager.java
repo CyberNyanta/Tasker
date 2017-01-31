@@ -1,7 +1,6 @@
 package com.cybernyanta.core.manager;
 
 import com.cybernyanta.core.database.Datasource;
-import com.cybernyanta.core.database.FirebaseDatasource;
 import com.cybernyanta.core.database.OnChangedListener;
 import com.cybernyanta.core.manager.contract.TaskManagerContract;
 import com.cybernyanta.core.model.Task;
@@ -52,8 +51,8 @@ public class TaskManager implements TaskManagerContract{
     }
 
     public List<Task> getForToday(){
-        List<Task> result = getAllOpen();
-        for(Task task: taskDatasource){
+        List<Task> result = new ArrayList<>();
+        for(Task task: getAllOpen()){
             if(task.getDueDate().compareTo(DateUtil.addDays(DateUtil.getTodayDate(),1))<0){
                 result.add(task);
             }
@@ -62,8 +61,8 @@ public class TaskManager implements TaskManagerContract{
     }
 
     public List<Task> getForTomorrow(){
-        List<Task> result = getAllOpen();
-        for(Task task: taskDatasource){
+        List<Task> result = new ArrayList<>();
+        for(Task task: getAllOpen()){
             if(task.getDueDate().compareTo(DateUtil.addDays(DateUtil.getTodayDate(),2))<0
                     &&task.getDueDate().compareTo(DateUtil.addDays(DateUtil.getTodayDate(),1))>=0){
                 result.add(task);
@@ -72,9 +71,9 @@ public class TaskManager implements TaskManagerContract{
         return  result;
     }
 
-    public List<Task> getTasksForNextWeek(){
-        List<Task> result = getAllOpen();
-        for(Task task: taskDatasource){
+    public List<Task> getForNextWeek(){
+        List<Task> result = new ArrayList<>();
+        for(Task task: getAllOpen()){
             if(task.getDueDate().compareTo(DateUtil.addDays(DateUtil.getTodayDate(),8))<0){
                 result.add(task);
             }

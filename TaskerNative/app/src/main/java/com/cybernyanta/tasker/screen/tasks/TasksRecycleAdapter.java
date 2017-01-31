@@ -6,7 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.cybernyanta.core.model.Task;
 import com.cybernyanta.tasker.R;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,7 +18,11 @@ import butterknife.ButterKnife;
  * Created by evgeniy.siyanko on 25.01.2017.
  */
 
-public class TasksRecycleView extends RecyclerView.Adapter<TasksRecycleView.TaskViewHolder> {
+public class TasksRecycleAdapter extends RecyclerView.Adapter<TasksRecycleAdapter.TaskViewHolder> {
+    public TasksRecycleAdapter(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.task_title)
@@ -33,6 +40,12 @@ public class TasksRecycleView extends RecyclerView.Adapter<TasksRecycleView.Task
         }
     }
 
+    private List<Task> tasks;
+
+    public void setTasks(List<Task> tasks){
+        this.tasks = tasks;
+        notifyDataSetChanged();
+    }
     @Override
     public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -42,12 +55,14 @@ public class TasksRecycleView extends RecyclerView.Adapter<TasksRecycleView.Task
 
     @Override
     public void onBindViewHolder(TaskViewHolder holder, int position) {
-
+        Task task = tasks.get(position);
+        holder.titleTextView.setText(task.getTitle());
+        holder.dueDateTextView.setText(task.getDueDate().toString());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return tasks.size();
     }
 
 

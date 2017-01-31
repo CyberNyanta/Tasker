@@ -6,6 +6,7 @@ import com.cybernyanta.core.model.Task;
 import com.cybernyanta.tasker.enums.TasksScreenType;
 
 import java.util.List;
+import java.util.concurrent.BrokenBarrierException;
 
 /**
  * Created by evgeniy.siyanko on 25.01.2017.
@@ -14,7 +15,6 @@ import java.util.List;
 public class TasksPresenter implements TasksContract.TasksPresenter {
 
     private TaskManager taskManager;
-    private List<Task> tasks;
     private TasksContract.TasksView tasksView;
 
     public TasksPresenter(TaskManager taskManager) {
@@ -23,7 +23,21 @@ public class TasksPresenter implements TasksContract.TasksPresenter {
 
     @Override
     public List<Task> getTasks(TasksScreenType tasksScreenType) {
-        return tasks;
+        switch (tasksScreenType){
+            case ALL:
+                return taskManager.getAllOpen();
+            case TODAY:
+                return taskManager.getForToday();
+            case TOMORROW:
+                return taskManager.getForTomorrow();
+            case INBOX:
+                break;
+            case NEXT_WEEK:
+                return taskManager.getForNextWeek();
+            case PROJECT_TASKS:
+                break;
+        }
+        return null;
     }
 
     @Override
@@ -39,5 +53,6 @@ public class TasksPresenter implements TasksContract.TasksPresenter {
     @Override
     public void unbindView() {
         tasksView = null;
+        taskManager.cleanup();
     }
 }

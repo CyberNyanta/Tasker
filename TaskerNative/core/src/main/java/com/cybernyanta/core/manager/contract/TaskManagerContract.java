@@ -24,7 +24,7 @@ public interface TaskManagerContract {
 
     List<Task> getForTomorrow();
 
-    List<Task> getTasksForNextWeek();
+    List<Task> getForNextWeek();
 
     void changeCompletedStatus(Task task);
 
