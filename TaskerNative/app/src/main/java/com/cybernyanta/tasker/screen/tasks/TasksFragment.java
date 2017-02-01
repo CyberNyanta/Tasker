@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
  * Created by evgeniy.siyanko on 25.01.2017.
  */
 
-public class TasksFragment extends Fragment implements TasksContract.TasksView{
+public class TasksFragment extends Fragment implements TasksContract.TasksView {
 
     @Inject
     TasksPresenter tasksPresenter;
@@ -42,13 +42,15 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView{
         DaggerTasksComponent.builder()
                 .tasksModule(new TasksModule())
                 .build().injectTasksFragment(this);
-        tasksScreenType = (TasksScreenType)getActivity().getIntent().getSerializableExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA);
+
+        TasksScreenType typeExtra = (TasksScreenType) getActivity().getIntent().getSerializableExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA);
+        tasksScreenType = typeExtra != null ? typeExtra : TasksScreenType.ALL;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.task_list, container,false);
+        return inflater.inflate(R.layout.task_list, container, false);
     }
 
     @Override
@@ -79,6 +81,6 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView{
 
     @Override
     public TasksScreenType getTasksScreenType() {
-        return  tasksScreenType;
+        return tasksScreenType;
     }
 }

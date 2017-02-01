@@ -22,7 +22,7 @@ import static com.cybernyanta.tasker.constants.FirebaseConstants.USERS_CHILD;
  */
 @Module
 public class TasksModule {
-    static Datasource<Task> taskDatasource;
+
     @Provides
     @Singleton
     TaskManager provideTaskManager(Datasource<Task> taskDatasource){
@@ -31,13 +31,10 @@ public class TasksModule {
     @Provides
     @Singleton
     Datasource<Task> provideTaskDatasource(){
-        if(taskDatasource==null){
-            taskDatasource =new TaskDatasource(FirebaseDatabase.getInstance()
-                    .getReference().child(USERS_CHILD)
-                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                    .child(TASKS_CHILD));
-        }
-        return taskDatasource;
+        return new TaskDatasource(FirebaseDatabase.getInstance()
+                .getReference().child(USERS_CHILD)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(TASKS_CHILD));
     }
     @Provides
     @Singleton
