@@ -19,20 +19,19 @@ import java.util.Objects;
  * Created by evgeniy.siyanko on 03.01.2017.
  */
 
-public class TaskDatasource extends ArrayList<Task> implements Datasource<Task>, ChildEventListener {
+public class FirebaseDatasource<M extends BaseModel> extends ArrayList<M> implements Datasource<M>, ChildEventListener {
 
     private DatabaseReference mDatabaseReference;
     private List<OnChangedListener> mListeners;
+    private Class<M> type;
 
-    public TaskDatasource(DatabaseReference ref) {
+    public FirebaseDatasource(DatabaseReference ref, Class<M> type) {
         super();
         mDatabaseReference = ref;
+        this.type = type;
         mDatabaseReference.addChildEventListener(this);
         mListeners = new ArrayList<>();
-//        Date date = DateUtil.addDays(new Date(), 1);
-//        Task task= new Task("now","desc",date,date,false,0);
-//
-//        add((M)task);
+
     }
 
     public void cleanup() {
@@ -41,7 +40,7 @@ public class TaskDatasource extends ArrayList<Task> implements Datasource<Task>,
 
     @Override
     public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-        Task model = snapshot.getValue(Task.class);
+        M model = snapshot.getValue(type);
         model.setId(snapshot.getKey());
         super.add(model);
         notifyChangedListeners(OnChangedListener.EventType.ADDED, this.size() - 1);
@@ -50,7 +49,7 @@ public class TaskDatasource extends ArrayList<Task> implements Datasource<Task>,
     @Override
     public void onChildChanged(DataSnapshot snapshot, String previousChildKey) {
         //GenericTypeIndicator<M> t = new GenericTypeIndicator<M>(){};
-        Task model = snapshot.getValue(Task.class);
+        M model = snapshot.getValue(type);
         model.setId(snapshot.getKey());
         int index = -1;
         for (int i = 0; i < this.size(); i++) {
@@ -93,30 +92,31 @@ public class TaskDatasource extends ArrayList<Task> implements Datasource<Task>,
 
     @Deprecated
     @Override
-    public Task set(int index, Task element) {
+    public M set(int index, M element) {
         String id = this.get(index).getId();
         mDatabaseReference.child(id).setValue(element);
         return element;
     }
 
-    public void set(Task element) {
+    public void set(M element) {
         mDatabaseReference.child(element.getId()).setValue(element);
     }
 
-    public Task get(String id){
+    public M get(String id) {
         for (int i = 0; i < this.size(); i++)
             if (Objects.equals(this.get(i).getId(), id))
                 return this.get(i);
         return null;
     }
+
     @Override
-    public boolean add(Task element) {
+    public boolean add(M element) {
         mDatabaseReference.push().setValue(element);
         return true;
     }
 
     @Override
-    public Task remove(int index) {
+    public M remove(int index) {
         mDatabaseReference.child(this.get(index).getId()).setValue(null);
         return null;
     }
@@ -131,7 +131,7 @@ public class TaskDatasource extends ArrayList<Task> implements Datasource<Task>,
 
     protected void notifyChangedListeners(OnChangedListener.EventType type, int index, int oldIndex) {
         if (mListeners.size() != 0) {
-            for(OnChangedListener listener:mListeners){
+            for (OnChangedListener listener : mListeners) {
                 listener.onChanged(type, index, oldIndex);
             }
         }
@@ -139,7 +139,7 @@ public class TaskDatasource extends ArrayList<Task> implements Datasource<Task>,
 
     protected void notifyCancelledListeners(DatabaseError databaseError) {
         if (mListeners.size() != 0) {
-            for(OnChangedListener listener:mListeners){
+            for (OnChangedListener listener : mListeners) {
                 listener.onCancelled(databaseError);
             }
         }

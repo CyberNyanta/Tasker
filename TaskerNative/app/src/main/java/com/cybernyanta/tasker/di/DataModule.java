@@ -5,7 +5,7 @@ package com.cybernyanta.tasker.di;
  */
 
 import com.cybernyanta.core.database.Datasource;
-import com.cybernyanta.core.database.TaskDatasource;
+import com.cybernyanta.core.database.FirebaseDatasource;
 import com.cybernyanta.core.manager.TaskManager;
 import com.cybernyanta.core.model.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,7 +49,7 @@ public class DataModule {
     @Provides
     @Singleton
     Datasource<Task> provideTaskDatasource(DatabaseReference databaseReference){
-        return new TaskDatasource(databaseReference.child(TASKS_CHILD));
+        return new FirebaseDatasource<>(databaseReference.child(TASKS_CHILD), Task.class);
     }
 
 }

@@ -1,12 +1,11 @@
 package com.cybernyanta.tasker.screen.tasks.di;
 
 import com.cybernyanta.core.database.Datasource;
-import com.cybernyanta.core.database.TaskDatasource;
+import com.cybernyanta.core.database.FirebaseDatasource;
 import com.cybernyanta.core.manager.TaskManager;
 import com.cybernyanta.core.model.Task;
 import com.cybernyanta.tasker.screen.tasks.TasksPresenter;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import javax.inject.Singleton;
@@ -31,10 +30,10 @@ public class TasksModule {
     @Provides
     @Singleton
     Datasource<Task> provideTaskDatasource(){
-        return new TaskDatasource(FirebaseDatabase.getInstance()
+        return new FirebaseDatasource<>(FirebaseDatabase.getInstance()
                 .getReference().child(USERS_CHILD)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child(TASKS_CHILD));
+                .child(TASKS_CHILD), Task.class);
     }
     @Provides
     @Singleton
