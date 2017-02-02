@@ -1,5 +1,7 @@
 package com.cybernyanta.core.manager;
 
+import android.support.annotation.Nullable;
+
 import com.cybernyanta.core.database.Datasource;
 import com.cybernyanta.core.database.OnChangedListener;
 import com.cybernyanta.core.manager.contract.TaskManagerContract;
@@ -13,7 +15,7 @@ import java.util.List;
  * Created by evgeniy.siyanko on 04.01.2017.
  */
 
-public class TaskManager implements TaskManagerContract{
+public class TaskManager implements TaskManagerContract {
 
     private Datasource<Task> taskDatasource;
 
@@ -29,20 +31,20 @@ public class TaskManager implements TaskManagerContract{
         taskDatasource.cleanup();
     }
 
-    public List<Task> getAllOpen(){
+    public List<Task> getAllOpen() {
         List<Task> result = new ArrayList<>();
-        for(Task task: taskDatasource){
-            if(!task.isCompleted()){
+        for (Task task : taskDatasource) {
+            if (!task.isCompleted()) {
                 result.add(task);
             }
         }
-        return  result;
+        return result;
     }
 
-    public List<Task> getAllCompleted(){
+    public List<Task> getAllCompleted() {
         List<Task> result = new ArrayList<>();
-        for(Task task: taskDatasource){
-            if(task.isCompleted()){
+        for (Task task : taskDatasource) {
+            if (task.isCompleted()) {
                 result.add(task);
             }
         }
@@ -50,55 +52,56 @@ public class TaskManager implements TaskManagerContract{
         return result;
     }
 
-    public List<Task> getForToday(){
+    public List<Task> getForToday() {
         List<Task> result = new ArrayList<>();
-        for(Task task: getAllOpen()){
-            if(task.getDueDate().compareTo(DateUtil.addDays(DateUtil.getTodayDate(),1))<0){
+        for (Task task : getAllOpen()) {
+            if (task.getDueDate().compareTo(DateUtil.addDays(DateUtil.getTodayDate(), 1)) < 0) {
                 result.add(task);
             }
         }
-        return  result;
+        return result;
     }
 
-    public List<Task> getForTomorrow(){
+    public List<Task> getForTomorrow() {
         List<Task> result = new ArrayList<>();
-        for(Task task: getAllOpen()){
-            if(task.getDueDate().compareTo(DateUtil.addDays(DateUtil.getTodayDate(),2))<0
-                    &&task.getDueDate().compareTo(DateUtil.addDays(DateUtil.getTodayDate(),1))>=0){
+        for (Task task : getAllOpen()) {
+            if (task.getDueDate().compareTo(DateUtil.addDays(DateUtil.getTodayDate(), 2)) < 0
+                    && task.getDueDate().compareTo(DateUtil.addDays(DateUtil.getTodayDate(), 1)) >= 0) {
                 result.add(task);
             }
         }
-        return  result;
+        return result;
     }
 
-    public List<Task> getForNextWeek(){
+    public List<Task> getForNextWeek() {
         List<Task> result = new ArrayList<>();
-        for(Task task: getAllOpen()){
-            if(task.getDueDate().compareTo(DateUtil.addDays(DateUtil.getTodayDate(),8))<0){
+        for (Task task : getAllOpen()) {
+            if (task.getDueDate().compareTo(DateUtil.addDays(DateUtil.getTodayDate(), 8)) < 0) {
                 result.add(task);
             }
         }
-        return  result;
+        return result;
     }
 
-    public void changeCompletedStatus(Task task){
+    public void changeCompletedStatus(Task task) {
         task.setCompleted(!task.isCompleted());
         taskDatasource.set(task);
     }
 
-    public void addTask(Task task){
+    public void addTask(Task task) {
         taskDatasource.add(task);
     }
 
-    public void setTask(Task task){
+    public void setTask(Task task) {
         taskDatasource.set(task);
     }
 
-    public void deleteTask(String id){
+    public void deleteTask(String id) {
         taskDatasource.remove(id);
     }
 
-    public Task getTask(String id){
+    @Nullable
+    public Task getTask(String id) {
         return taskDatasource.get(id);
     }
 

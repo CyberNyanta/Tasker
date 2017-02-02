@@ -39,7 +39,8 @@ namespace Tasker.Droid.Fragments
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            return inflater.Inflate(Resource.Layout.task_list, container, false);
+            var view = inflater.Inflate(Resource.Layout.task_list, container, false);
+            return view;
         }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)

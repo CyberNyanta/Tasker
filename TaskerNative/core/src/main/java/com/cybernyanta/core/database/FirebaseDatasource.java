@@ -40,6 +40,7 @@ public class FirebaseDatasource<M extends BaseModel> extends ArrayList<M> implem
 
     @Override
     public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
+
         M model = snapshot.getValue(type);
         model.setId(snapshot.getKey());
         super.add(model);
@@ -102,10 +103,7 @@ public class FirebaseDatasource<M extends BaseModel> extends ArrayList<M> implem
         mDatabaseReference.child(element.getId()).setValue(element);
     }
 
-    public M get(String id) {
-        for (int i = 0; i < this.size(); i++)
-            if (Objects.equals(this.get(i).getId(), id))
-                return this.get(i);
+    public M get(String id){
         return null;
     }
 

@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void setTitle(String titlle) {
+    public void setTitle(String title) {
 
     }
 }

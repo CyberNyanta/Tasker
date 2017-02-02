@@ -24,7 +24,7 @@
             android:label="@string/title_activity_sign_in"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".ui.activities.TaskEditCreateActivity"
+            android:name=".screen.taskdetail.TaskDetailActivity"
             android:label="@string/task_edit_title"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

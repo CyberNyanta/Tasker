@@ -1,7 +1,10 @@
 package com.cybernyanta.tasker.screen.tasks;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,11 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cybernyanta.core.database.OnChangedListener;
+import com.cybernyanta.core.model.Task;
 import com.cybernyanta.tasker.R;
 import com.cybernyanta.tasker.constants.IntentExtraConstants;
 import com.cybernyanta.tasker.enums.TasksScreenType;
+import com.cybernyanta.tasker.screen.taskdetail.TaskDetailActivity;
+import com.cybernyanta.tasker.screen.taskdetail.TaskDetailContract;
 import com.cybernyanta.tasker.screen.tasks.di.DaggerTasksComponent;
 import com.cybernyanta.tasker.screen.tasks.di.TasksModule;
+import com.cybernyanta.tasker.screen.tasks.recycler.OnItemClickListener;
+import com.cybernyanta.tasker.screen.tasks.recycler.TasksRecyclerAdapter;
 import com.google.firebase.database.DatabaseError;
 
 import javax.inject.Inject;
@@ -22,17 +30,22 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.cybernyanta.tasker.constants.IntentExtraConstants.TASK_EXTRA;
+import static com.cybernyanta.tasker.constants.IntentExtraConstants.TASK_ID_EXTRA;
+
 /**
  * Created by evgeniy.siyanko on 25.01.2017.
  */
 
-public class TasksFragment extends Fragment implements TasksContract.TasksView {
+public class TasksFragment extends Fragment implements TasksContract.TasksView,OnItemClickListener {
 
     @Inject
     TasksPresenter tasksPresenter;
 
     @BindView(R.id.tasks_recycleView)
     RecyclerView recyclerView;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
     TasksScreenType tasksScreenType;
 
@@ -57,9 +70,11 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        final TasksRecycleAdapter adapter = new TasksRecycleAdapter(tasksPresenter.getTasks(getTasksScreenType()));
+        final TasksRecyclerAdapter adapter = new TasksRecyclerAdapter(tasksPresenter.getTasks(getTasksScreenType()), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+
+        tasksPresenter.bindView(this);
         tasksPresenter.addOnDataSetChanged(new OnChangedListener() {
             @Override
             public void onChanged(EventType type, int index, int oldIndex) {
@@ -73,14 +88,27 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView {
         });
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        tasksPresenter.unbindView();
+    }
+
 
     @Override
-    public void setTitle(String titlle) {
+    public void setTitle(String title) {
 
     }
 
     @Override
     public TasksScreenType getTasksScreenType() {
         return tasksScreenType;
+    }
+
+    @Override
+    public void onItemClick(@NonNull View view, @NonNull Task task) {
+        Intent intent = new Intent(getContext(), TaskDetailActivity.class);
+        intent.putExtra(TASK_EXTRA, task);
+        startActivity(intent);
     }
 }

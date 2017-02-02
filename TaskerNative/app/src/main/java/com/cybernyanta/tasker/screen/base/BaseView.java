@@ -5,5 +5,5 @@ package com.cybernyanta.tasker.screen.base;
  */
 
 public interface BaseView<P extends BasePresenter> {
-    void setTitle(String titlle);
+    void setTitle(String title);
 }

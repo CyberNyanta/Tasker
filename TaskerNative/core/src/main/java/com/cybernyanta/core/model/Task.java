@@ -3,13 +3,14 @@ package com.cybernyanta.core.model;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by evgeniy.siyanko on 03.01.2017.
  */
 
-public class Task extends BaseModel {
+public class Task extends BaseModel implements Serializable {
     private String title;
     private String description;
     private Date dueDate;
