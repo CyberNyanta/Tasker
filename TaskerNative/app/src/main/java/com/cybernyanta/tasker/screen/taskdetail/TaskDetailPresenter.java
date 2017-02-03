@@ -23,17 +23,20 @@ public class TaskDetailPresenter implements TaskDetailContract.TaskDetailPresent
 
     @Override
     public void saveTask(Task task) {
-
+        if(task.getId()!=null)
+        taskManager.setTask(task);
+        else
+            taskManager.addTask(task);
     }
 
     @Override
     public void deleteTask(String id) {
-
+        taskManager.deleteTask(id);
     }
 
     @Override
     public void changeStatus(Task task) {
-
+        task.setCompleted(!task.isCompleted());
     }
 
     @Override

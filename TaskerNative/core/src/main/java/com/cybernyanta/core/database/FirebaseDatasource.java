@@ -40,7 +40,6 @@ public class FirebaseDatasource<M extends BaseModel> extends ArrayList<M> implem
 
     @Override
     public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-
         M model = snapshot.getValue(type);
         model.setId(snapshot.getKey());
         super.add(model);

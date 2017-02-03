@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,7 +57,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_edit_create);
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
-        getSupportActionBar().setTitle(getString(R.string.task_edit_title));
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         ButterKnife.bind(this);
@@ -67,6 +69,43 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (task.getId()!=null)
+        {
+            getMenuInflater().inflate(R.menu.task_edit_menu, menu);
+            MenuItem item = menu.findItem(R.id.menu_complete);
+            item.setTitle(task.isCompleted() ? R.string.uncomplete_task :  R.string.complete_task);
+        }
+        else
+        {
+            getMenuInflater().inflate(R.menu.task_create_menu, menu);
+        }
+        
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            case R.id.menu_save:
+                saveTask();
+                break;
+            case R.id.menu_delete:
+                deleteTask();
+                break;
+            case R.id.menu_complete:
+                item.setTitle(task.isCompleted() ? R.string.complete_task : R.string.uncomplete_task);
+                presenter.changeStatus(task);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void initFields() {
         task = (Task) getIntent().getSerializableExtra(TASK_EXTRA);
         if(task!=null){
@@ -74,7 +113,9 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
             description.setText(task.getDescription());
             dueDate.setText(task.getDueDate().toString());
             remindDate.setText(task.getRemindDate().toString());
-        }
+            getSupportActionBar().setTitle(getString(R.string.task_edit_title));
+        } else
+            task = new Task();
     }
 
     @Override
@@ -97,12 +138,24 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
 
     }
 
-
+    @Override
+    public void saveTask() {
+        boolean error = false;
+        if(title.getTextSize()==0){
+            title.setError(getString(R.string.title_error));
+        }else {
+            task.setTitle(title.getText().toString());
+            task.setDescription(description.getText().toString());
+            presenter.saveTask(task);
+            finish();
+        }
+    }
 
     @Override
-    public void setTitle(String title) {
-
+    public void deleteTask() {
+        presenter.deleteTask(task.getId());
     }
+
 
 
 }

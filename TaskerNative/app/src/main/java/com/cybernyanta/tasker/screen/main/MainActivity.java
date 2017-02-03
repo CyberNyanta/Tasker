@@ -189,8 +189,4 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public void setTitle(String title) {
-
-    }
 }

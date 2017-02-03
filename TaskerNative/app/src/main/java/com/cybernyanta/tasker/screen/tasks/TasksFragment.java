@@ -86,18 +86,18 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView,O
 
             }
         });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startTaskDetailsActivity(null);
+            }
+        });
     }
 
     @Override
     public void onStop() {
         super.onStop();
         tasksPresenter.unbindView();
-    }
-
-
-    @Override
-    public void setTitle(String title) {
-
     }
 
     @Override
@@ -107,8 +107,15 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView,O
 
     @Override
     public void onItemClick(@NonNull View view, @NonNull Task task) {
+        startTaskDetailsActivity(task);
+    }
+
+    private void startTaskDetailsActivity(@Nullable Task task){
         Intent intent = new Intent(getContext(), TaskDetailActivity.class);
-        intent.putExtra(TASK_EXTRA, task);
-        startActivity(intent);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        if(task!=null){
+            intent.putExtra(TASK_EXTRA, task);
+        }
+        getActivity().startActivity(intent);
     }
 }

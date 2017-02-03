@@ -9,27 +9,30 @@ import java.util.Date;
 /**
  * Created by evgeniy.siyanko on 03.01.2017.
  */
-
+@IgnoreExtraProperties
 public class Task extends BaseModel implements Serializable {
     private String title;
     private String description;
     private Date dueDate;
     private Date remindDate;
     private int color;
+    private String projectId;
     private boolean isCompleted;
 
     public Task(){
         super();
+        dueDate = new Date(Long.MAX_VALUE);
+        remindDate = new Date(Long.MAX_VALUE);
     }
 
-    public Task(String title, String description,Date dueDate, Date remindDate,boolean isCompleted, int color ){
-        super();
+    public Task(boolean isCompleted, String title, String description, Date dueDate, Date remindDate, int color, String projectId) {
+        this.isCompleted = isCompleted;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.remindDate = remindDate;
-        this.isCompleted = isCompleted;
         this.color = color;
+        this.projectId = projectId;
     }
 
     public String getTitle(){
@@ -78,5 +81,13 @@ public class Task extends BaseModel implements Serializable {
 
     public void setCompleted(boolean completed) {
         isCompleted = completed;
+    }
+
+    public String getProject() {
+        return projectId;
+    }
+
+    public void setProject(String projectId) {
+        this.projectId = projectId;
     }
 }
