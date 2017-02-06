@@ -1,6 +1,7 @@
 package com.cybernyanta.tasker.screen.taskdetail;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +16,7 @@ import com.cybernyanta.core.model.Task;
 import com.cybernyanta.tasker.R;
 import com.cybernyanta.tasker.screen.taskdetail.di.DaggerTaskDetailComponent;
 import com.cybernyanta.tasker.screen.taskdetail.di.TaskDetailModule;
+import com.google.android.gms.tasks.OnCompleteListener;
 
 import javax.inject.Inject;
 
@@ -146,8 +148,15 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         }else {
             task.setTitle(title.getText().toString());
             task.setDescription(description.getText().toString());
-            presenter.saveTask(task);
-            finish();
+            presenter.saveTask(task, new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
+                    boolean complete = task.isComplete();
+                    boolean successful = task.isSuccessful();
+
+                    finish();
+                }
+            });
         }
     }
 

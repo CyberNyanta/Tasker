@@ -2,6 +2,7 @@ package com.cybernyanta.tasker.screen.taskdetail;
 
 import com.cybernyanta.core.manager.TaskManager;
 import com.cybernyanta.core.model.Task;
+import com.google.android.gms.tasks.OnCompleteListener;
 
 /**
  * Created by evgeniy.siyanko on 02.02.2017.
@@ -29,6 +30,13 @@ public class TaskDetailPresenter implements TaskDetailContract.TaskDetailPresent
             taskManager.addTask(task);
     }
 
+    @Override
+    public void saveTask(Task task, OnCompleteListener<Void> onCompleteListener) {
+        if(task.getId()!=null)
+            taskManager.setTask(task, onCompleteListener);
+        else
+            taskManager.addTask(task, onCompleteListener);
+    }
     @Override
     public void deleteTask(String id) {
         taskManager.deleteTask(id);

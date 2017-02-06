@@ -37,7 +37,7 @@ import static com.cybernyanta.tasker.constants.IntentExtraConstants.TASK_ID_EXTR
  * Created by evgeniy.siyanko on 25.01.2017.
  */
 
-public class TasksFragment extends Fragment implements TasksContract.TasksView,OnItemClickListener {
+public class TasksFragment extends Fragment implements TasksContract.TasksView, OnItemClickListener {
 
     @Inject
     TasksPresenter tasksPresenter;
@@ -48,6 +48,8 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView,O
     FloatingActionButton fab;
 
     TasksScreenType tasksScreenType;
+
+    TasksRecyclerAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,10 +72,15 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView,O
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        final TasksRecyclerAdapter adapter = new TasksRecyclerAdapter(tasksPresenter.getTasks(getTasksScreenType()), this);
+        adapter = new TasksRecyclerAdapter(tasksPresenter.getTasks(getTasksScreenType()), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startTaskDetailsActivity(null);
+            }
+        });
         tasksPresenter.bindView(this);
         tasksPresenter.addOnDataSetChanged(new OnChangedListener() {
             @Override
@@ -86,18 +93,12 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView,O
 
             }
         });
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startTaskDetailsActivity(null);
-            }
-        });
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
         tasksPresenter.unbindView();
+        super.onDestroy();
     }
 
     @Override

@@ -1,8 +1,11 @@
 package com.cybernyanta.core.database;
 
+import android.support.annotation.NonNull;
+
 import com.cybernyanta.core.model.BaseModel;
 import com.cybernyanta.core.model.Task;
 import com.cybernyanta.core.util.DateUtil;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -108,8 +111,21 @@ public class FirebaseDatasource<M extends BaseModel> extends ArrayList<M> implem
 
     @Override
     public boolean add(M element) {
-        mDatabaseReference.push().setValue(element);
+        mDatabaseReference.push().setValue(element).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
+
+            }
+        });
         return true;
+    }
+
+    public void add(M element, OnCompleteListener<Void> onCompleteListener) {
+        mDatabaseReference.push().setValue(element).addOnCompleteListener(onCompleteListener);
+    }
+
+    public void set(M element, OnCompleteListener<Void> onCompleteListener) {
+        mDatabaseReference.child(element.getId()).setValue(element).addOnCompleteListener(onCompleteListener);
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.cybernyanta.core.database.OnChangedListener;
 import com.cybernyanta.core.manager.contract.TaskManagerContract;
 import com.cybernyanta.core.model.Task;
 import com.cybernyanta.core.util.DateUtil;
+import com.google.android.gms.tasks.OnCompleteListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +95,14 @@ public class TaskManager implements TaskManagerContract {
 
     public void setTask(Task task) {
         taskDatasource.set(task);
+    }
+
+    public void addTask(Task task, OnCompleteListener<Void> onCompleteListener) {
+        taskDatasource.add(task, onCompleteListener);
+    }
+
+    public void setTask(Task task, OnCompleteListener<Void> onCompleteListener) {
+        taskDatasource.set(task, onCompleteListener);
     }
 
     public void deleteTask(String id) {
