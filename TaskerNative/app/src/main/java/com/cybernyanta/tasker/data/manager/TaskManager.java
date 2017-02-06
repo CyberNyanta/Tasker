@@ -1,12 +1,12 @@
-package com.cybernyanta.core.manager;
+package com.cybernyanta.tasker.data.manager;
 
 import android.support.annotation.Nullable;
 
-import com.cybernyanta.core.database.Datasource;
-import com.cybernyanta.core.database.OnChangedListener;
-import com.cybernyanta.core.manager.contract.TaskManagerContract;
-import com.cybernyanta.core.model.Task;
-import com.cybernyanta.core.util.DateUtil;
+import com.cybernyanta.tasker.data.database.Datasource;
+import com.cybernyanta.tasker.data.database.OnChangedListener;
+import com.cybernyanta.tasker.data.manager.contract.TaskManagerContract;
+import com.cybernyanta.tasker.data.model.Task;
+import com.cybernyanta.tasker.data.util.DateUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public class TaskManager implements TaskManagerContract {
     public List<Task> getForToday() {
         List<Task> result = new ArrayList<>();
         for (Task task : getAllOpen()) {
-            if (task.getDueDate().compareTo(DateUtil.addDays(DateUtil.getTodayDate(), 1)) < 0) {
+            if (task.getDueDate() < DateUtil.addDays(DateUtil.getTodayEpochDate(), 1)) {
                 result.add(task);
             }
         }
@@ -66,8 +66,8 @@ public class TaskManager implements TaskManagerContract {
     public List<Task> getForTomorrow() {
         List<Task> result = new ArrayList<>();
         for (Task task : getAllOpen()) {
-            if (task.getDueDate().compareTo(DateUtil.addDays(DateUtil.getTodayDate(), 2)) < 0
-                    && task.getDueDate().compareTo(DateUtil.addDays(DateUtil.getTodayDate(), 1)) >= 0) {
+            if (task.getDueDate() < DateUtil.addDays(DateUtil.getTodayDate(), 2).getTime()
+                    && task.getDueDate() >= DateUtil.addDays(DateUtil.getTodayEpochDate(), 1)) {
                 result.add(task);
             }
         }
@@ -77,7 +77,7 @@ public class TaskManager implements TaskManagerContract {
     public List<Task> getForNextWeek() {
         List<Task> result = new ArrayList<>();
         for (Task task : getAllOpen()) {
-            if (task.getDueDate().compareTo(DateUtil.addDays(DateUtil.getTodayDate(), 8)) < 0) {
+            if (task.getDueDate() >DateUtil.addDays(DateUtil.getTodayEpochDate(), 8)) {
                 result.add(task);
             }
         }

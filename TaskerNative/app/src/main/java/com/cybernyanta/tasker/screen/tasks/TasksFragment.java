@@ -12,13 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cybernyanta.core.database.OnChangedListener;
-import com.cybernyanta.core.model.Task;
+import com.cybernyanta.tasker.data.database.OnChangedListener;
+import com.cybernyanta.tasker.data.model.Task;
 import com.cybernyanta.tasker.R;
 import com.cybernyanta.tasker.constants.IntentExtraConstants;
 import com.cybernyanta.tasker.enums.TasksScreenType;
 import com.cybernyanta.tasker.screen.taskdetail.TaskDetailActivity;
-import com.cybernyanta.tasker.screen.taskdetail.TaskDetailContract;
 import com.cybernyanta.tasker.screen.tasks.di.DaggerTasksComponent;
 import com.cybernyanta.tasker.screen.tasks.di.TasksModule;
 import com.cybernyanta.tasker.screen.tasks.recycler.OnItemClickListener;
@@ -31,7 +30,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.cybernyanta.tasker.constants.IntentExtraConstants.TASK_EXTRA;
-import static com.cybernyanta.tasker.constants.IntentExtraConstants.TASK_ID_EXTRA;
 
 /**
  * Created by evgeniy.siyanko on 25.01.2017.

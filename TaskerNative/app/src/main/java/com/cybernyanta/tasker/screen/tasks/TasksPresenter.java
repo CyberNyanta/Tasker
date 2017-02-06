@@ -1,12 +1,11 @@
 package com.cybernyanta.tasker.screen.tasks;
 
-import com.cybernyanta.core.database.OnChangedListener;
-import com.cybernyanta.core.manager.TaskManager;
-import com.cybernyanta.core.model.Task;
+import com.cybernyanta.tasker.data.database.OnChangedListener;
+import com.cybernyanta.tasker.data.manager.TaskManager;
+import com.cybernyanta.tasker.data.model.Task;
 import com.cybernyanta.tasker.enums.TasksScreenType;
 
 import java.util.List;
-import java.util.concurrent.BrokenBarrierException;
 
 /**
  * Created by evgeniy.siyanko on 25.01.2017.

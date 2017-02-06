@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.cybernyanta.core.model.Task;
+import com.cybernyanta.tasker.data.model.Task;
 import com.cybernyanta.tasker.R;
+
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +34,6 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(@NonNull Task task){
         titleTextView.setText(task.getTitle());
-        dueDateTextView.setText(task.getDueDate().toString());
+        dueDateTextView.setText(new Date(task.getDueDate()).toString());
     }
 }

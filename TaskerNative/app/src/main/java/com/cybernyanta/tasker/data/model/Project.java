@@ -1,4 +1,4 @@
-package com.cybernyanta.core.model;
+package com.cybernyanta.tasker.data.model;
 
 /**
  * Created by evgeniy.siyanko on 03.01.2017.

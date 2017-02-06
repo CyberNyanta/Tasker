@@ -1,8 +1,8 @@
-package com.cybernyanta.core.manager.contract;
+package com.cybernyanta.tasker.data.manager.contract;
 
-import com.cybernyanta.core.database.OnChangedListener;
-import com.cybernyanta.core.model.Project;
-import com.cybernyanta.core.model.Task;
+import com.cybernyanta.tasker.data.database.OnChangedListener;
+import com.cybernyanta.tasker.data.model.Project;
+import com.cybernyanta.tasker.data.model.Task;
 
 import java.util.List;
 

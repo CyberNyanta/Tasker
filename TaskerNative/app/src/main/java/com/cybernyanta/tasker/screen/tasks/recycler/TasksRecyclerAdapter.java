@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cybernyanta.core.model.Task;
+import com.cybernyanta.tasker.data.model.Task;
 import com.cybernyanta.tasker.R;
 
 import java.util.List;

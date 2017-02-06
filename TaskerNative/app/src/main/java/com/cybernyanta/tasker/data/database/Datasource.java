@@ -1,9 +1,9 @@
-package com.cybernyanta.core.database;
+package com.cybernyanta.tasker.data.database;
 
 import android.support.annotation.NonNull;
 
-import com.cybernyanta.core.model.BaseModel;
-import com.cybernyanta.core.model.Task;
+import com.cybernyanta.tasker.data.model.BaseModel;
+import com.cybernyanta.tasker.data.model.Task;
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import java.util.List;

@@ -1,10 +1,8 @@
-package com.cybernyanta.core.model;
+package com.cybernyanta.tasker.data.model;
 
-import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by evgeniy.siyanko on 03.01.2017.
@@ -13,19 +11,19 @@ import java.util.Date;
 public class Task extends BaseModel implements Serializable {
     private String title;
     private String description;
-    private Date dueDate;
-    private Date remindDate;
+    private long dueDate;
+    private long remindDate;
     private int color;
     private String projectId;
     private boolean isCompleted;
 
     public Task(){
         super();
-        dueDate = new Date(Long.MAX_VALUE);
-        remindDate = new Date(Long.MAX_VALUE);
+        dueDate = Long.MAX_VALUE;
+        remindDate = Long.MAX_VALUE;
     }
 
-    public Task(boolean isCompleted, String title, String description, Date dueDate, Date remindDate, int color, String projectId) {
+    public Task(boolean isCompleted, String title, String description, long dueDate, long remindDate, int color, String projectId) {
         this.isCompleted = isCompleted;
         this.title = title;
         this.description = description;
@@ -51,19 +49,19 @@ public class Task extends BaseModel implements Serializable {
         this.description = description;
     }
 
-    public Date getDueDate(){
+    public long getDueDate(){
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate){
+    public void setDueDate(long dueDate){
         this.dueDate = dueDate;
     }
 
-    public Date getRemindDate(){
+    public long getRemindDate(){
         return remindDate;
     }
 
-    public void setRemindDate(Date remindDate){
+    public void setRemindDate(long remindDate){
         this.remindDate = remindDate;
     }
 

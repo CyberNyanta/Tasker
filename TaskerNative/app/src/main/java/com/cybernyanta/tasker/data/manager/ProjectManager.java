@@ -1,12 +1,11 @@
-package com.cybernyanta.core.manager;
+package com.cybernyanta.tasker.data.manager;
 
-import com.cybernyanta.core.database.Datasource;
-import com.cybernyanta.core.database.OnChangedListener;
-import com.cybernyanta.core.manager.contract.ProjectManagerContract;
-import com.cybernyanta.core.model.Project;
-import com.cybernyanta.core.model.Task;
+import com.cybernyanta.tasker.data.database.Datasource;
+import com.cybernyanta.tasker.data.database.OnChangedListener;
+import com.cybernyanta.tasker.data.manager.contract.ProjectManagerContract;
+import com.cybernyanta.tasker.data.model.Project;
+import com.cybernyanta.tasker.data.model.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -1,7 +1,6 @@
 package com.cybernyanta.tasker.screen.taskdetail;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,11 +11,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cybernyanta.core.model.Task;
+import com.cybernyanta.tasker.data.model.Task;
 import com.cybernyanta.tasker.R;
 import com.cybernyanta.tasker.screen.taskdetail.di.DaggerTaskDetailComponent;
 import com.cybernyanta.tasker.screen.taskdetail.di.TaskDetailModule;
-import com.google.android.gms.tasks.OnCompleteListener;
+
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -24,7 +24,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.cybernyanta.tasker.constants.IntentExtraConstants.TASK_EXTRA;
-import static com.cybernyanta.tasker.constants.IntentExtraConstants.TASK_ID_EXTRA;
 
 /**
  * Created by evgeniy.siyanko on 02.02.2017.
@@ -113,8 +112,8 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         if(task!=null){
             title.setText(task.getTitle());
             description.setText(task.getDescription());
-            dueDate.setText(task.getDueDate().toString());
-            remindDate.setText(task.getRemindDate().toString());
+            dueDate.setText(new Date(task.getDueDate()).toString());
+            remindDate.setText(new Date(task.getRemindDate()).toString());
             getSupportActionBar().setTitle(getString(R.string.task_edit_title));
         } else
             task = new Task();

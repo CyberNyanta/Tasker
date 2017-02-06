@@ -1,4 +1,4 @@
-package com.cybernyanta.core.database;
+package com.cybernyanta.tasker.data.database;
 
 import com.google.firebase.database.DatabaseError;
 

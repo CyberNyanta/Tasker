@@ -113,15 +113,15 @@ public class MainActivity extends AppCompatActivity
                 showTaskFragment(TasksScreenType.NEXT_WEEK);
                 break;
             case R.id.navigation_projects:
-//                SupportActionBar.Title = GetString(Resource.String.navigation_projects);
+//                SupportActionBar.Title = getString(R.string.navigation_projects);
 //                SupportFragmentManager.BeginTransaction().Replace(R.id.fragment, new ProjectListFragment()).Commit();
                 break;
             case R.id.navigation_settings:
-//                SupportActionBar.Title = GetString(Resource.String.settings);
+//                SupportActionBar.Title = getString(R.string.settings);
 //                SupportFragmentManager.BeginTransaction().Replace(R.id.fragment, new SettingsFragment()).Commit();
                 break;
             case R.id.navigation_statistics:
-//                SupportActionBar.Title = GetString(Resource.String.statistics);
+//                SupportActionBar.Title = getString(R.string.statistics);
 //                SupportFragmentManager.BeginTransaction().Replace(R.id.fragment, new StatisticsFragment()).Commit();
                 break;
         }
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case PROJECT_TASKS:
                 /*var viewModel = TinyIoCContainer.Current.Resolve<IProjectDetailsViewModel>();
-    viewModel.Id = _sharedPreferences.GetInt(GetString(Resource.String.project), 0);
+    viewModel.Id = _sharedPreferences.GetInt(getString(R.string.project), 0);
     Intent.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, viewModel.Id);
     Intent.PutExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)TaskListType.ProjectOpen);
     var project = viewModel.GetItem();

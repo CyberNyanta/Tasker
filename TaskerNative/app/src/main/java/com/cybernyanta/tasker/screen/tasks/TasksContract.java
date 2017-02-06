@@ -1,7 +1,7 @@
 package com.cybernyanta.tasker.screen.tasks;
 
-import com.cybernyanta.core.database.OnChangedListener;
-import com.cybernyanta.core.model.Task;
+import com.cybernyanta.tasker.data.database.OnChangedListener;
+import com.cybernyanta.tasker.data.model.Task;
 import com.cybernyanta.tasker.enums.TasksScreenType;
 import com.cybernyanta.tasker.screen.base.BasePresenter;
 import com.cybernyanta.tasker.screen.base.BaseView;

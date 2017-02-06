@@ -1,20 +1,17 @@
-package com.cybernyanta.core.database;
+package com.cybernyanta.tasker.data.database;
 
 import android.support.annotation.NonNull;
 
-import com.cybernyanta.core.model.BaseModel;
-import com.cybernyanta.core.model.Task;
-import com.cybernyanta.core.util.DateUtil;
+import com.cybernyanta.tasker.data.model.BaseModel;
+import com.cybernyanta.tasker.data.model.Task;
+import com.cybernyanta.tasker.data.util.DateUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 

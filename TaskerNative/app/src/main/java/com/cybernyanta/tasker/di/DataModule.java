@@ -4,10 +4,10 @@ package com.cybernyanta.tasker.di;
  * Created by evgeniy.siyanko on 10.01.2017.
  */
 
-import com.cybernyanta.core.database.Datasource;
-import com.cybernyanta.core.database.FirebaseDatasource;
-import com.cybernyanta.core.manager.TaskManager;
-import com.cybernyanta.core.model.Task;
+import com.cybernyanta.tasker.data.database.Datasource;
+import com.cybernyanta.tasker.data.database.FirebaseDatasource;
+import com.cybernyanta.tasker.data.manager.TaskManager;
+import com.cybernyanta.tasker.data.model.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;

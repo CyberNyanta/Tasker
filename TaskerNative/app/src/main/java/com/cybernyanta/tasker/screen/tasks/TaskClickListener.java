@@ -3,8 +3,7 @@ package com.cybernyanta.tasker.screen.tasks;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import com.cybernyanta.core.model.Task;
-import com.cybernyanta.tasker.screen.tasks.recycler.OnItemClickListener;
+import com.cybernyanta.tasker.data.model.Task;
 
 /**
  * Created by evgeniy.siyanko on 02.02.2017.

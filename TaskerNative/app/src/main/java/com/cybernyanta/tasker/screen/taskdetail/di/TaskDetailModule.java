@@ -1,11 +1,11 @@
 package com.cybernyanta.tasker.screen.taskdetail.di;
 
-import com.cybernyanta.core.database.Datasource;
-import com.cybernyanta.core.database.FirebaseDatasource;
-import com.cybernyanta.core.manager.ProjectManager;
-import com.cybernyanta.core.manager.TaskManager;
-import com.cybernyanta.core.model.Project;
-import com.cybernyanta.core.model.Task;
+import com.cybernyanta.tasker.data.database.Datasource;
+import com.cybernyanta.tasker.data.database.FirebaseDatasource;
+import com.cybernyanta.tasker.data.manager.ProjectManager;
+import com.cybernyanta.tasker.data.manager.TaskManager;
+import com.cybernyanta.tasker.data.model.Project;
+import com.cybernyanta.tasker.data.model.Task;
 import com.cybernyanta.tasker.screen.taskdetail.TaskDetailContract;
 import com.cybernyanta.tasker.screen.taskdetail.TaskDetailPresenter;
 import com.google.firebase.auth.FirebaseAuth;

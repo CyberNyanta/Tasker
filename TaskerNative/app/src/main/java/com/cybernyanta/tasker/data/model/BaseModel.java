@@ -1,6 +1,5 @@
-package com.cybernyanta.core.model;
+package com.cybernyanta.tasker.data.model;
 
-import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;

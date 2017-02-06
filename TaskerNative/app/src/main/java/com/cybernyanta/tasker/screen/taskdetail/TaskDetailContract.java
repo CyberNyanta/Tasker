@@ -1,6 +1,6 @@
 package com.cybernyanta.tasker.screen.taskdetail;
 
-import com.cybernyanta.core.model.Task;
+import com.cybernyanta.tasker.data.model.Task;
 import com.cybernyanta.tasker.screen.base.BasePresenter;
 import com.cybernyanta.tasker.screen.base.BaseView;
 import com.google.android.gms.tasks.OnCompleteListener;
