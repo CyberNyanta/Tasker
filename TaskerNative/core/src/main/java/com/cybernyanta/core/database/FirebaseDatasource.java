@@ -129,9 +129,8 @@ public class FirebaseDatasource<M extends BaseModel> extends ArrayList<M> implem
     }
 
     @Override
-    public M remove(int index) {
-        mDatabaseReference.child(this.get(index).getId()).setValue(null);
-        return null;
+    public void remove(String id) {
+        mDatabaseReference.child(id).setValue(null);
     }
 
     public void addOnChangedListener(OnChangedListener listener) {

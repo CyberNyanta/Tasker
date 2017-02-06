@@ -148,21 +148,15 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         }else {
             task.setTitle(title.getText().toString());
             task.setDescription(description.getText().toString());
-            presenter.saveTask(task, new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
-                    boolean complete = task.isComplete();
-                    boolean successful = task.isSuccessful();
-
-                    finish();
-                }
-            });
+            presenter.saveTask(task);
+            finish();
         }
     }
 
     @Override
     public void deleteTask() {
         presenter.deleteTask(task.getId());
+        finish();
     }
 
 

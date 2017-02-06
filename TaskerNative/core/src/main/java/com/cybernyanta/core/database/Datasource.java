@@ -22,7 +22,7 @@ public interface Datasource<M extends BaseModel> extends List<M> {
 
     M get(String id);
 
-    M remove(int index);
+    void remove(String id);
 
     void add(@NonNull M element, OnCompleteListener<Void> onCompleteListener);
 
