@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.cybernyanta.tasker.data.model.Task;
 import com.cybernyanta.tasker.R;
+import com.cybernyanta.tasker.data.util.DateUtil;
 
 import java.util.Date;
 
@@ -34,6 +35,6 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(@NonNull Task task){
         titleTextView.setText(task.getTitle());
-        dueDateTextView.setText(new Date(task.getDueDate()).toString());
+        dueDateTextView.setText(DateUtil.dueDateToString(task.getDueDate(),true));
     }
 }
