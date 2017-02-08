@@ -4,23 +4,23 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
 
+import static com.cybernyanta.tasker.constants.FirebaseConstants.INBOX_ID;
+
 /**
  * Created by evgeniy.siyanko on 03.01.2017.
  */
 @IgnoreExtraProperties
 public class Task extends BaseModel implements Serializable {
-    private String title;
-    private String description;
-    private long dueDate;
-    private long remindDate;
-    private int color;
-    private String projectId;
-    private boolean isCompleted;
+    private String title = "";
+    private String description = "";
+    private long dueDate = Long.MAX_VALUE;
+    private long remindDate = Long.MAX_VALUE;
+    private int color = 0;
+    private String projectId = INBOX_ID;
+    private boolean isCompleted = false;
 
     public Task(){
         super();
-        dueDate = Long.MAX_VALUE;
-        remindDate = Long.MAX_VALUE;
     }
 
     public Task(boolean isCompleted, String title, String description, long dueDate, long remindDate, int color, String projectId) {

@@ -10,6 +10,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +22,11 @@ import java.util.Objects;
 
 public class FirebaseDatasource<M extends BaseModel> extends ArrayList<M> implements Datasource<M>, ChildEventListener {
 
-    private DatabaseReference mDatabaseReference;
+    private Query mDatabaseReference;
     private List<OnChangedListener> mListeners;
     private Class<M> type;
 
-    public FirebaseDatasource(DatabaseReference ref, Class<M> type) {
+    public FirebaseDatasource(Query ref, Class<M> type) {
         super();
         mDatabaseReference = ref;
         this.type = type;
@@ -94,12 +95,12 @@ public class FirebaseDatasource<M extends BaseModel> extends ArrayList<M> implem
     @Override
     public M set(int index, M element) {
         String id = this.get(index).getId();
-        mDatabaseReference.child(id).setValue(element);
+        mDatabaseReference.getRef().child(id).setValue(element);
         return element;
     }
 
     public void set(M element) {
-        mDatabaseReference.child(element.getId()).setValue(element);
+        mDatabaseReference.getRef().child(element.getId()).setValue(element);
     }
 
     public M get(String id){
@@ -108,7 +109,7 @@ public class FirebaseDatasource<M extends BaseModel> extends ArrayList<M> implem
 
     @Override
     public boolean add(M element) {
-        mDatabaseReference.push().setValue(element).addOnCompleteListener(new OnCompleteListener<Void>() {
+        mDatabaseReference.getRef().push().setValue(element).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
 
@@ -118,16 +119,16 @@ public class FirebaseDatasource<M extends BaseModel> extends ArrayList<M> implem
     }
 
     public void add(M element, OnCompleteListener<Void> onCompleteListener) {
-        mDatabaseReference.push().setValue(element).addOnCompleteListener(onCompleteListener);
+        mDatabaseReference.getRef().push().setValue(element).addOnCompleteListener(onCompleteListener);
     }
 
     public void set(M element, OnCompleteListener<Void> onCompleteListener) {
-        mDatabaseReference.child(element.getId()).setValue(element).addOnCompleteListener(onCompleteListener);
+        mDatabaseReference.getRef().child(element.getId()).setValue(element).addOnCompleteListener(onCompleteListener);
     }
 
     @Override
     public void remove(String id) {
-        mDatabaseReference.child(id).setValue(null);
+        mDatabaseReference.getRef().child(id).setValue(null);
     }
 
     public void addOnChangedListener(OnChangedListener listener) {

@@ -80,12 +80,22 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+ /*       switch (id){
+            case R.id.menu_show_solve_tasks:
+                Intent intent = new Intent(this.Activity, typeof(CompleteTaskListActivity));
+                intent.PutExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)(_taskListType == TaskListType.ProjectOpen ? TaskListType.ProjectSolve : TaskListType.AllSolve));
+                intent.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, _projectId);
+                StartActivity(intent);
+                break;
+            case R.id.menu_search:
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+                var intent2 = new Intent(Activity, typeof(SearchTaskListActivity));
+                intent2.PutExtra(IntentExtraConstants.IS_SEARCH_IN_PROJECT_EXTRA, (_taskListType == TaskListType.ProjectOpen ? true : false));
+                intent2.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, _projectId);
+                StartActivity(intent2);
+                break;
         }
-
+*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -148,10 +158,10 @@ public class MainActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.list_fragment, new TasksFragment()).commit();
                 break;
             case INBOX:
-                getIntent().putExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
+              /*  getIntent().putExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
                 getIntent().putExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, TasksScreenType.PROJECT_TASKS);
                 getSupportActionBar().setTitle(getString(R.string.navigation_inbox));
-                getSupportFragmentManager().beginTransaction().replace(R.id.list_fragment, new TasksFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.list_fragment, new TasksFragment()).commit();*/
                 break;
             case TODAY:
                 getIntent().putExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);

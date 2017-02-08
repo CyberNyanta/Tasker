@@ -52,12 +52,13 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView, 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DaggerTasksComponent.builder()
-                .tasksModule(new TasksModule())
-                .build().injectTasksFragment(this);
-
         TasksScreenType typeExtra = (TasksScreenType) getActivity().getIntent().getSerializableExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA);
         tasksScreenType = typeExtra != null ? typeExtra : TasksScreenType.ALL;
+        DaggerTasksComponent.builder()
+                .tasksModule(new TasksModule(tasksScreenType,""))
+                .build().injectTasksFragment(this);
+
+
     }
 
     @Nullable

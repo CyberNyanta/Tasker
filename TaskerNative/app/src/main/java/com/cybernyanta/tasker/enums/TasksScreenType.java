@@ -10,5 +10,7 @@ public enum TasksScreenType {
     TODAY,
     TOMORROW,
     NEXT_WEEK,
-    PROJECT_TASKS
+    PROJECT_TASKS,
+    PROJECT_COMPLETED_TASKS,
+    COMPLETED_TASKS
 }

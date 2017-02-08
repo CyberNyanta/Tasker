@@ -61,46 +61,48 @@ public final class DateUtil {
         return calendar.getTimeInMillis();
     }
 
-    public static String dateToString(Date date, String pattern) {
+    private static String dateToString(Date date, String pattern) {
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         format.setTimeZone(TimeZone.getDefault());
         return format.format(date);
     }
 
-    public static String dateToString(long epochTime, String pattern) {
+    private static String dateToString(long epochTime, String pattern) {
         return dateToString(new Date(epochTime), pattern);
     }
 
-    public static boolean isDateInCurrentYear(long epochTime) {
+    private static boolean isDateInCurrentYear(long epochTime) {
         Calendar calendar = Calendar.getInstance();
         int current = calendar.get(Calendar.YEAR);
         calendar.setTimeInMillis(epochTime);
         return current == calendar.get(Calendar.YEAR) ? true : false;
     }
 
+    public static boolean isDateOverdue(long epochTime) {
+        return epochTime < getTodayEpochDate();
+    }
 
-    public static String dueDateToString(long dueDate, boolean is24hoursTimeFormat) {
+
+    public static String dateToString(long dueDate, boolean is24hoursTimeFormat) {
         Context context = TaskerApplication.getContext();
-        if (dueDate != Long.MAX_VALUE) {
-            if (dueDate == getTodayEpochDate()) {
+        if (dueDate != Long.MAX_VALUE)
+            if (dueDate == getTodayEpochDate())
                 return context.getString(R.string.due_dates_today);
-            } else if (getDay(dueDate) == getTodayEpochDate()) {
+            else if (getDay(dueDate) == getTodayEpochDate())
                 return context.getString(R.string.due_dates_today_at, dateToString(dueDate,
                         context.getString(is24hoursTimeFormat ? R.string.time_format_24 : R.string.time_format_12)));
-            } else if (dueDate == addDays(getTodayEpochDate(), 1)) {
+            else if (dueDate == addDays(getTodayEpochDate(), 1))
                 return context.getString(R.string.due_dates_tomorrow);
-            } else if (getDay(dueDate) == addDays(getTodayEpochDate(), 1)) {
+            else if (getDay(dueDate) == addDays(getTodayEpochDate(), 1))
                 return context.getString(R.string.due_dates_tomorrow_at, dateToString(dueDate,
                         context.getString(is24hoursTimeFormat ? R.string.time_format_24 : R.string.time_format_12)));
-            } else if (dueDate > getTodayEpochDate() && dueDate < addDays(getTodayEpochDate(), 8)) {
+            else if (dueDate > getTodayEpochDate() && dueDate < addDays(getTodayEpochDate(), 8))
                 return dateToString(dueDate, context.getString(R.string.datetime_format_date)) + dateToString(new Date(dueDate),
                         context.getString(is24hoursTimeFormat ? R.string.time_format_24 : R.string.time_format_12));
-            } else {
+            else
                 return dateToString(dueDate, isDateInCurrentYear(dueDate) ? context.getString(R.string.datetime_format_date)
                         : context.getString(R.string.datetime_format_date_year));
-            }
-        } else {
+        else
             return context.getString(R.string.datetime_none);
-        }
     }
 }

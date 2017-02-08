@@ -9,8 +9,6 @@ import com.cybernyanta.tasker.data.model.Task;
 import com.cybernyanta.tasker.R;
 import com.cybernyanta.tasker.data.util.DateUtil;
 
-import java.util.Date;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -35,6 +33,6 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(@NonNull Task task){
         titleTextView.setText(task.getTitle());
-        dueDateTextView.setText(DateUtil.dueDateToString(task.getDueDate(),true));
+        dueDateTextView.setText(DateUtil.dateToString(task.getDueDate(),true));
     }
 }
