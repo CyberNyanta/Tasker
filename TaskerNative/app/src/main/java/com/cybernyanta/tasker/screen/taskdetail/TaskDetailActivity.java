@@ -227,7 +227,6 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         }else {
             task.setTitle(title.getText().toString());
             task.setDescription(description.getText().toString());
-            task.setDueDate(new Date().getTime());
             presenter.saveTask(task);
             finish();
         }
