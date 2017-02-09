@@ -1,11 +1,15 @@
 package com.cybernyanta.tasker.screen.taskdetail;
 
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +17,9 @@ import android.widget.TextView;
 
 import com.cybernyanta.tasker.data.model.Task;
 import com.cybernyanta.tasker.R;
+import com.cybernyanta.tasker.data.util.DateUtil;
+import com.cybernyanta.tasker.enums.TaskDueDate;
+import com.cybernyanta.tasker.screen.taskdetail.adapter.DueDateListAdapter;
 import com.cybernyanta.tasker.screen.taskdetail.di.DaggerTaskDetailComponent;
 import com.cybernyanta.tasker.screen.taskdetail.di.TaskDetailModule;
 
@@ -22,6 +29,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import us.bridgeses.slidedatetimepicker.SlideDateTimeListener;
+import us.bridgeses.slidedatetimepicker.SlideDateTimePicker;
 
 import static com.cybernyanta.tasker.constants.IntentExtraConstants.TASK_EXTRA;
 
@@ -67,6 +76,12 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
                 .build()
                 .injectTaskDetailActivity(this);
         initFields();
+        dueDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDueDate();
+            }
+        });
     }
 
     @Override
@@ -131,7 +146,72 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
 
     @Override
     public void setReminder() {
+/*        new SlideDateTimePicker.Builder(getSupportFragmentManager())
+                .setListener(listener)
+                .setInitialDate(new Date())
+                .build()
+                .show()*/
+    }
+    AlertDialog dialog;
+    @Override
+    public void setDueDate() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        dialog = builder.setCancelable(true)
+                .setAdapter(new DueDateListAdapter(this, task.getDueDate(),TaskDueDate.CUSTOM,
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                SetDueDate((TaskDueDate)v.getTag());
+                                //InitRemindDate();
+                            }
+                        }), null).show();
 
+    }
+/*    private void SetDueDate()
+    {
+
+    }*/
+
+   private void SetDueDate(TaskDueDate type)
+    {
+        switch (type)
+        {
+            case TODAY:
+                task.setDueDate(DateUtil.getTodayEpochDate());
+                dueDate.setText(getString(R.string.due_dates_today));
+                break;
+            case TOMORROW:
+                task.setDueDate(DateUtil.addDays(DateUtil.getTodayEpochDate(),1));
+                dueDate.setText(getString(R.string.due_dates_tomorrow));
+                break;
+            case NEXT_WEEK:
+                task.setDueDate(DateUtil.addDays(DateUtil.getTodayEpochDate(),8));
+                dueDate.setText(DateUtil.dateToString(task.getDueDate(),true));
+                break;
+            case REMOVED:
+                task.setDueDate(Long.MAX_VALUE);
+                dueDate.setText("");
+                break;
+            case CUSTOM:
+                SlideDateTimePicker.Builder dateTimePicker = new SlideDateTimePicker.Builder(getFragmentManager());
+                long now = new Date().getTime();
+                dateTimePicker.setInitialDate(new Date())
+                        .setMinDate(new Date())
+                        .setListener(new SlideDateTimeListener() {
+                            @Override
+                            public void onDateTimeSet(Date date) {
+                                task.setDueDate(date.getTime());
+                                dueDate.setText(DateUtil.dateToString(date.getTime(),true));
+                                //InitRemindDate();
+                            }
+                        })
+                        .setTheme(0)
+                        .setIs24HourTime(true)
+                        .build()
+                        .show();
+                break;
+        }
     }
 
     @Override
