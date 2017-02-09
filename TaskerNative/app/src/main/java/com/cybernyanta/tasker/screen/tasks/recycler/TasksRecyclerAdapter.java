@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,8 +40,9 @@ public class TasksRecyclerAdapter extends RecyclerView.Adapter<TaskViewHolder> {
     }
 
     public void setTasks(List<Task> tasks){
+        List<Task> oldTasks =  this.tasks;
         this.tasks = tasks;
-        notifyDataSetChanged();
+        DiffUtil.calculateDiff(new TasksDiffCallback(oldTasks, tasks), false).dispatchUpdatesTo(this);
     }
 
     @Override

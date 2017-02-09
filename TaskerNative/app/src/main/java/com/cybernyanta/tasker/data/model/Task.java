@@ -23,6 +23,18 @@ public class Task extends BaseModel implements Serializable {
         super();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Task task = (Task) obj;
+        return task!=null
+                && task.getId().equals(this.getId())
+                && task.getTitle().equals(this.getTitle())
+                && task.getDueDate() == this.getDueDate()
+                && task.getRemindDate() == this.getRemindDate()
+                && task.getDescription().equals(this.getDescription())
+                && task.getColor() == this.getColor();
+    }
+
     public Task(boolean isCompleted, String title, String description, long dueDate, long remindDate, int color, String projectId) {
         this.isCompleted = isCompleted;
         this.title = title;
