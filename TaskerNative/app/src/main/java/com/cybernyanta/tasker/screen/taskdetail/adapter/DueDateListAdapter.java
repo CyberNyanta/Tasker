@@ -22,16 +22,30 @@ public class DueDateListAdapter extends BaseAdapter{
 
     private final Activity context;
     private final List<TaskDueDate> dates;
-    private final long current;
+    private final long currentDate;
     private final TaskDueDate currentType;
     private final View.OnClickListener onClickListener;
 
-    public DueDateListAdapter(Activity context,long current, TaskDueDate currentType, View.OnClickListener onClickListener) {
+    public DueDateListAdapter(Activity context,long currentDate, View.OnClickListener onClickListener) {
         this.context = context;
         this.dates = Arrays.asList(TaskDueDate.values());
-        this.current = current;
-        this.currentType = currentType;
+        this.currentDate = currentDate;
         this.onClickListener = onClickListener;
+
+        if (DateUtil.getDay(currentDate) == DateUtil.getTodayEpochDate())
+        {
+            currentType = TaskDueDate.TODAY;
+        }
+        else if (DateUtil.getDay(currentDate) == DateUtil.addDays(DateUtil.getTodayEpochDate(),1))
+        {
+            currentType = TaskDueDate.TOMORROW;
+        }
+        else if (currentDate == Long.MAX_VALUE)
+        {
+            currentType = TaskDueDate.REMOVED;
+        }
+        else
+            currentType = TaskDueDate.CUSTOM;
 
     }
     //  private event EventHandler OnClick;
@@ -67,7 +81,7 @@ public class DueDateListAdapter extends BaseAdapter{
                 case TODAY:
                 case TOMORROW:
                     view.setBackgroundResource(R.color.item_selected);
-                    dateName.setText(DateUtil.dateToString(current,true));
+                    dateName.setText(DateUtil.dateToString(currentDate,true));
                     break;
                 case REMOVED:
                     dateName.setText(context.getString(R.string.due_dates_remove));

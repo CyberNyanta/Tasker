@@ -97,7 +97,7 @@ public final class DateUtil {
                 return context.getString(R.string.due_dates_tomorrow_at, dateToString(dueDate,
                         context.getString(is24hoursTimeFormat ? R.string.time_format_24 : R.string.time_format_12)));
             else if (dueDate > getTodayEpochDate() && dueDate < addDays(getTodayEpochDate(), 8))
-                return dateToString(dueDate, context.getString(R.string.datetime_format_date)) + dateToString(new Date(dueDate),
+                return dateToString(dueDate, context.getString(R.string.datetime_format_date)) +", " +dateToString(dueDate,
                         context.getString(is24hoursTimeFormat ? R.string.time_format_24 : R.string.time_format_12));
             else
                 return dateToString(dueDate, isDateInCurrentYear(dueDate) ? context.getString(R.string.datetime_format_date)

@@ -1,7 +1,5 @@
 package com.cybernyanta.tasker.screen.taskdetail;
 
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -127,8 +125,8 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         if(task!=null){
             title.setText(task.getTitle());
             description.setText(task.getDescription());
-            dueDate.setText(new Date(task.getDueDate()).toString());
-            remindDate.setText(new Date(task.getRemindDate()).toString());
+            dueDate.setText(DateUtil.dateToString(task.getDueDate(), true));
+            remindDate.setText(DateUtil.dateToString(task.getRemindDate(), true));
             getSupportActionBar().setTitle(getString(R.string.task_edit_title));
         } else
             task = new Task();
@@ -157,7 +155,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     public void setDueDate() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         dialog = builder.setCancelable(true)
-                .setAdapter(new DueDateListAdapter(this, task.getDueDate(),TaskDueDate.CUSTOM,
+                .setAdapter(new DueDateListAdapter(this, task.getDueDate(),
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -195,7 +193,6 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
                 break;
             case CUSTOM:
                 SlideDateTimePicker.Builder dateTimePicker = new SlideDateTimePicker.Builder(getFragmentManager());
-                long now = new Date().getTime();
                 dateTimePicker.setInitialDate(new Date())
                         .setMinDate(new Date())
                         .setListener(new SlideDateTimeListener() {
@@ -212,11 +209,6 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
                         .show();
                 break;
         }
-    }
-
-    @Override
-    public void setTitleError() {
-
     }
 
     @Override

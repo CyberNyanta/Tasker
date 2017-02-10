@@ -15,7 +15,6 @@ public interface TaskDetailContract {
         void setColor();
         void setReminder();
         void setDueDate();
-        void setTitleError();
         void saveTask();
         void deleteTask();
         void initFields();
