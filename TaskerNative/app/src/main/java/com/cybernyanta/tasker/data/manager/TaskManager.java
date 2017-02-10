@@ -10,6 +10,9 @@ import com.cybernyanta.tasker.data.util.DateUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -32,6 +35,15 @@ public class TaskManager implements TaskManagerContract {
         taskDatasource.cleanup();
     }
 
+    public void sortByDate(List<Task> tasks){
+        Collections.sort(tasks, new Comparator<Task>() {
+            @Override
+            public int compare(Task o1, Task o2) {
+                return Long.compare(o1.getDueDate(),o2.getDueDate());
+            }
+        });
+    }
+
     public List<Task> getAllOpen() {
         List<Task> result = new ArrayList<>();
         for (Task task : taskDatasource) {
@@ -39,6 +51,7 @@ public class TaskManager implements TaskManagerContract {
                 result.add(task);
             }
         }
+        sortByDate(result);
         return result;
     }
 
@@ -49,7 +62,7 @@ public class TaskManager implements TaskManagerContract {
                 result.add(task);
             }
         }
-
+        sortByDate(result);
         return result;
     }
 
@@ -60,7 +73,8 @@ public class TaskManager implements TaskManagerContract {
                 result.add(task);
             }
         }
-        return result;
+        sortByDate(result);
+        return  result;
     }
 
     public List<Task> getForTomorrow() {
@@ -71,6 +85,7 @@ public class TaskManager implements TaskManagerContract {
                 result.add(task);
             }
         }
+        sortByDate(result);
         return result;
     }
 
@@ -81,6 +96,7 @@ public class TaskManager implements TaskManagerContract {
                 result.add(task);
             }
         }
+        sortByDate(result);
         return result;
     }
 
