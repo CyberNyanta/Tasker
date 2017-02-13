@@ -6,6 +6,8 @@ import com.cybernyanta.tasker.data.model.Task;
 
 import java.util.List;
 
+import static com.cybernyanta.tasker.constants.TaskConstants.HEADER_ID;
+
 /**
  * Created by evgeniy.siyanko on 09.02.2017.
  */
@@ -30,13 +32,23 @@ public class TasksDiffCallback extends DiffUtil.Callback {
         return newTasks.size();
     }
 
+    //TODO need test redundant updating
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return oldTasks.get(oldItemPosition).getId().equals(newTasks.get(newItemPosition).getId());
+        if (oldTasks.get(oldItemPosition).getId().equals(newTasks.get(newItemPosition).getId())
+                && (newTasks.get(newItemPosition).getProject().equals(HEADER_ID)
+                || oldTasks.get(oldItemPosition).getProject().equals(HEADER_ID))) {
+            return !(newItemPosition + 1 == newTasks.size()
+                    || newTasks.get(newItemPosition + 1).getProject().equals(HEADER_ID));
+        } else {
+            return true;
+        }
+
     }
 
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
         return oldTasks.get(oldItemPosition).equals(newTasks.get(newItemPosition));
     }
+
 }

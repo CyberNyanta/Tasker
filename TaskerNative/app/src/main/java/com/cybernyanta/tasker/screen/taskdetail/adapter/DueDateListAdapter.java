@@ -1,16 +1,18 @@
 package com.cybernyanta.tasker.screen.taskdetail.adapter;
 
 import android.app.Activity;
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.cybernyanta.tasker.R;
-import com.cybernyanta.tasker.data.util.DateUtil;
+import com.cybernyanta.tasker.TaskerApplication;
+import com.cybernyanta.tasker.util.DateUtil;
 import com.cybernyanta.tasker.enums.TaskDueDate;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,14 +22,12 @@ import java.util.List;
 
 public class DueDateListAdapter extends BaseAdapter{
 
-    private final Activity context;
     private final List<TaskDueDate> dates;
     private final long currentDate;
     private final TaskDueDate currentType;
     private final View.OnClickListener onClickListener;
 
-    public DueDateListAdapter(Activity context,long currentDate, View.OnClickListener onClickListener) {
-        this.context = context;
+    public DueDateListAdapter(long currentDate, View.OnClickListener onClickListener) {
         this.dates = Arrays.asList(TaskDueDate.values());
         this.currentDate = currentDate;
         this.onClickListener = onClickListener;
@@ -67,11 +67,11 @@ public class DueDateListAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TaskDueDate item = dates.get(position);
-        View view;
-
-        view = context.getLayoutInflater().inflate(R.layout.date_list_item, null);
+        Context context = parent.getContext();
+        View view = LayoutInflater.from(context).inflate(R.layout.date_list_item, parent, false);
 
         TextView dateName =(TextView) view.findViewById(R.id.date_name);
+
 
         if (item == currentType)
         {

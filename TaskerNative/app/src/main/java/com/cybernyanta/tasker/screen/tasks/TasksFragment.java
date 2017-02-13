@@ -20,6 +20,7 @@ import com.cybernyanta.tasker.enums.TasksScreenType;
 import com.cybernyanta.tasker.screen.taskdetail.TaskDetailActivity;
 import com.cybernyanta.tasker.screen.tasks.di.DaggerTasksComponent;
 import com.cybernyanta.tasker.screen.tasks.di.TasksModule;
+import com.cybernyanta.tasker.screen.tasks.recycler.AllTasksRecyclerAdapter;
 import com.cybernyanta.tasker.screen.tasks.recycler.OnItemClickListener;
 import com.cybernyanta.tasker.screen.tasks.recycler.TasksRecyclerAdapter;
 import com.google.firebase.database.DatabaseError;
@@ -46,7 +47,6 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView, 
     FloatingActionButton fab;
 
     TasksScreenType tasksScreenType;
-
     TasksRecyclerAdapter adapter;
 
     @Override
@@ -55,10 +55,8 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView, 
         TasksScreenType typeExtra = (TasksScreenType) getActivity().getIntent().getSerializableExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA);
         tasksScreenType = typeExtra != null ? typeExtra : TasksScreenType.ALL;
         DaggerTasksComponent.builder()
-                .tasksModule(new TasksModule(tasksScreenType,""))
+                .tasksModule(new TasksModule(tasksScreenType, ""))
                 .build().injectTasksFragment(this);
-
-
     }
 
     @Nullable
@@ -71,7 +69,15 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView, 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        adapter = new TasksRecyclerAdapter(tasksPresenter.getTasks(getTasksScreenType()), this);
+        switch (tasksScreenType) {
+            case ALL:
+                adapter = new AllTasksRecyclerAdapter(tasksPresenter.getTasks(getTasksScreenType()), this);
+                break;
+            default:
+                adapter = new TasksRecyclerAdapter(tasksPresenter.getTasks(getTasksScreenType()), this);
+                break;
+        }
+
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         fab.setOnClickListener(new View.OnClickListener() {
@@ -110,10 +116,10 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView, 
         startTaskDetailsActivity(task);
     }
 
-    private void startTaskDetailsActivity(@Nullable Task task){
+    private void startTaskDetailsActivity(@Nullable Task task) {
         Intent intent = new Intent(getContext(), TaskDetailActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        if(task!=null){
+        if (task != null) {
             intent.putExtra(TASK_EXTRA, task);
         }
         getActivity().startActivity(intent);

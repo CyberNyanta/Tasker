@@ -6,11 +6,10 @@ import com.cybernyanta.tasker.data.database.Datasource;
 import com.cybernyanta.tasker.data.database.OnChangedListener;
 import com.cybernyanta.tasker.data.manager.contract.TaskManagerContract;
 import com.cybernyanta.tasker.data.model.Task;
-import com.cybernyanta.tasker.data.util.DateUtil;
+import com.cybernyanta.tasker.util.DateUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -92,7 +91,7 @@ public class TaskManager implements TaskManagerContract {
     public List<Task> getForNextWeek() {
         List<Task> result = new ArrayList<>();
         for (Task task : getAllOpen()) {
-            if (task.getDueDate() >DateUtil.addDays(DateUtil.getTodayEpochDate(), 8)) {
+            if (task.getDueDate() < DateUtil.addDays(DateUtil.getTodayEpochDate(), 8)) {
                 result.add(task);
             }
         }

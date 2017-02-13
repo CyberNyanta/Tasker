@@ -45,7 +45,7 @@
                 android:inputType="textMultiLine"
                 android:maxLength="1000" />
 
-            <TextView
+<!--            <TextView
                 style="@style/Tasker.HintTextViewStyle"
                 android:layout_marginBottom="0dp"
                 android:text="@string/project" />
@@ -54,7 +54,7 @@
                 android:id="@+id/task_project"
                 style="@style/AppTheme.TextViewStyle"
                 android:drawableRight="@drawable/ic_drop_dawn"
-                android:text="Inbox" />
+                android:text="Inbox" />-->
 
             <TextView
                 style="@style/Tasker.HintTextViewStyle"

@@ -1,6 +1,5 @@
-package com.cybernyanta.tasker.data.util;
+package com.cybernyanta.tasker.util;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.cybernyanta.tasker.R;
@@ -61,13 +60,13 @@ public final class DateUtil {
         return calendar.getTimeInMillis();
     }
 
-    private static String dateToString(Date date, String pattern) {
+    public static String dateToString(Date date, String pattern) {
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         format.setTimeZone(TimeZone.getDefault());
         return format.format(date);
     }
 
-    private static String dateToString(long epochTime, String pattern) {
+    public static String dateToString(long epochTime, String pattern) {
         return dateToString(new Date(epochTime), pattern);
     }
 

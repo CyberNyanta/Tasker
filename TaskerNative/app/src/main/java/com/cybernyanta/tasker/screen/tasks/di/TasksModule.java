@@ -4,7 +4,7 @@ import com.cybernyanta.tasker.data.database.Datasource;
 import com.cybernyanta.tasker.data.database.FirebaseDatasource;
 import com.cybernyanta.tasker.data.manager.TaskManager;
 import com.cybernyanta.tasker.data.model.Task;
-import com.cybernyanta.tasker.data.util.DateUtil;
+import com.cybernyanta.tasker.util.DateUtil;
 import com.cybernyanta.tasker.enums.TasksScreenType;
 import com.cybernyanta.tasker.screen.tasks.TasksPresenter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,10 +49,10 @@ public class TasksModule {
         Query query = FirebaseDatabase.getInstance()
                 .getReference().child(USERS_CHILD)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child(TASKS_CHILD); //startAt(1482152555009.0).endAt(1482152555012.0);
+                .child(TASKS_CHILD);
         switch (tasksScreenType) {
             case TODAY:
-                query.orderByChild(TASK_DUE_DATE_FIELD).endAt((double) DateUtil.addDays(DateUtil.getTodayEpochDate(), 1));
+                query.orderByChild(TASK_DUE_DATE_FIELD).startAt(0).endAt((double) DateUtil.addDays(DateUtil.getTodayEpochDate(), 1));
                 break;
             case TOMORROW:
                 query.orderByChild(TASK_DUE_DATE_FIELD).startAt((double) DateUtil.addDays(DateUtil.getTodayEpochDate(), 2))

@@ -11,6 +11,8 @@ import static com.cybernyanta.tasker.constants.FirebaseConstants.INBOX_ID;
  */
 @IgnoreExtraProperties
 public class Task extends BaseModel implements Serializable {
+
+
     private String title = "";
     private String description = "";
     private long dueDate = Long.MAX_VALUE;
@@ -23,16 +25,10 @@ public class Task extends BaseModel implements Serializable {
         super();
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        Task task = (Task) obj;
-        return task!=null
-                && task.getId().equals(this.getId())
-                && task.getTitle().equals(this.getTitle())
-                && task.getDueDate() == this.getDueDate()
-                && task.getRemindDate() == this.getRemindDate()
-                && task.getDescription().equals(this.getDescription())
-                && task.getColor() == this.getColor();
+    public Task(String id, String title, long dueDate) {
+        super(id);
+        this.dueDate = dueDate;
+        this.title = title;
     }
 
     public Task(boolean isCompleted, String title, String description, long dueDate, long remindDate, int color, String projectId) {
@@ -43,6 +39,18 @@ public class Task extends BaseModel implements Serializable {
         this.remindDate = remindDate;
         this.color = color;
         this.projectId = projectId;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Task task = (Task) obj;
+        return task!=null
+                && task.getId().equals(this.getId())
+                && task.getTitle().equals(this.getTitle())
+                && task.getDueDate() == this.getDueDate()
+                && task.getRemindDate() == this.getRemindDate()
+                && task.getDescription().equals(this.getDescription())
+                && task.getColor() == this.getColor();
     }
 
     public String getTitle(){

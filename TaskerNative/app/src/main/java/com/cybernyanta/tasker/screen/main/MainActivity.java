@@ -110,9 +110,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.navigation_all:
                 showTaskFragment(TasksScreenType.ALL);
                 break;
-            case R.id.navigation_inbox:
-                showTaskFragment(TasksScreenType.INBOX);
-                break;
+//            case R.id.navigation_inbox:
+//                showTaskFragment(TasksScreenType.INBOX);
+//                break;
             case R.id.navigation_today:
                 showTaskFragment(TasksScreenType.TODAY);
                 break;
@@ -122,18 +122,18 @@ public class MainActivity extends AppCompatActivity
             case R.id.navigation_nextWeek:
                 showTaskFragment(TasksScreenType.NEXT_WEEK);
                 break;
-            case R.id.navigation_projects:
-//                SupportActionBar.Title = getString(R.string.navigation_projects);
-//                SupportFragmentManager.BeginTransaction().Replace(R.id.fragment, new ProjectListFragment()).Commit();
-                break;
-            case R.id.navigation_settings:
-//                SupportActionBar.Title = getString(R.string.settings);
-//                SupportFragmentManager.BeginTransaction().Replace(R.id.fragment, new SettingsFragment()).Commit();
-                break;
-            case R.id.navigation_statistics:
-//                SupportActionBar.Title = getString(R.string.statistics);
-//                SupportFragmentManager.BeginTransaction().Replace(R.id.fragment, new StatisticsFragment()).Commit();
-                break;
+//            case R.id.navigation_projects:
+////                SupportActionBar.Title = getString(R.string.navigation_projects);
+////                SupportFragmentManager.BeginTransaction().Replace(R.id.fragment, new ProjectListFragment()).Commit();
+//                break;
+//            case R.id.navigation_settings:
+////                SupportActionBar.Title = getString(R.string.settings);
+////                SupportFragmentManager.BeginTransaction().Replace(R.id.fragment, new SettingsFragment()).Commit();
+//                break;
+//            case R.id.navigation_statistics:
+////                SupportActionBar.Title = getString(R.string.statistics);
+////                SupportFragmentManager.BeginTransaction().Replace(R.id.fragment, new StatisticsFragment()).Commit();
+//                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

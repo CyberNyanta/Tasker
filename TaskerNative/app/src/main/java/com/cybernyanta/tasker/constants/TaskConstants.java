@@ -14,4 +14,10 @@ public final class TaskConstants
 
     public final static float COMPLETED_TASK_BACKGROUND_ALPHA = 0.4f;
     public final static float TASK_BACKGROUND_ALPHA = 1f;
+
+    public final static String HEADER_ID = "HEADER_ID";
+
+    public final static int TASK_VIEW_TYPE = 0;
+    public final static int HEADER_VIEW_TYPE = 1;
+
 }

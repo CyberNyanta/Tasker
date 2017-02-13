@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.cybernyanta.tasker.data.model.Task;
 import com.cybernyanta.tasker.R;
-import com.cybernyanta.tasker.data.util.DateUtil;
+import com.cybernyanta.tasker.util.DateUtil;
 import com.cybernyanta.tasker.enums.TaskDueDate;
 import com.cybernyanta.tasker.screen.taskdetail.adapter.DueDateListAdapter;
 import com.cybernyanta.tasker.screen.taskdetail.di.DaggerTaskDetailComponent;
@@ -47,8 +47,8 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     TextView dueDate;
     @BindView(R.id.task_remindDate)
     TextView remindDate;
-    @BindView(R.id.task_project)
-    TextView taskProject;
+//    @BindView(R.id.task_project)
+//    TextView taskProject;
     @BindView(R.id.color_container)
     LinearLayout colorContainer;
     @BindView(R.id.color_shape)
@@ -155,7 +155,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     public void setDueDate() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         dialog = builder.setCancelable(true)
-                .setAdapter(new DueDateListAdapter(this, task.getDueDate(),
+                .setAdapter(new DueDateListAdapter(task.getDueDate(),
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

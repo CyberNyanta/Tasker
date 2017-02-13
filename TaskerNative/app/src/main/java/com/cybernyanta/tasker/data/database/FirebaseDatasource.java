@@ -3,13 +3,10 @@ package com.cybernyanta.tasker.data.database;
 import android.support.annotation.NonNull;
 
 import com.cybernyanta.tasker.data.model.BaseModel;
-import com.cybernyanta.tasker.data.model.Task;
-import com.cybernyanta.tasker.data.util.DateUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
