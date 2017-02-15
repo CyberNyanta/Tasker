@@ -24,7 +24,7 @@
     <!--Toolbar-->
     <string name="task_edit_title">Edit</string>
     <string name="task_details_title">Details</string>
-    <string name="complete_tasks_title">Complete tasks</string>
+    <string name="completed_tasks_title">Complete tasks</string>
     <string name="project">Project</string>
     <!--Actions-->
     <string name="projects">Projects</string>

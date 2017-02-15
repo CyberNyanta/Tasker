@@ -77,6 +77,10 @@ public final class DateUtil {
         return current == calendar.get(Calendar.YEAR) ? true : false;
     }
 
+    private static boolean isTimeNull(long epochTime) {
+        return epochTime == getDay(epochTime);
+    }
+
     public static boolean isDateOverdue(long epochTime) {
         return epochTime < getTodayEpochDate();
     }
@@ -95,10 +99,11 @@ public final class DateUtil {
             else if (getDay(dueDate) == addDays(getTodayEpochDate(), 1))
                 return context.getString(R.string.due_dates_tomorrow_at, dateToString(dueDate,
                         context.getString(is24hoursTimeFormat ? R.string.time_format_24 : R.string.time_format_12)));
-            else if (dueDate > getTodayEpochDate() && dueDate < addDays(getTodayEpochDate(), 8))
-                return dateToString(dueDate, context.getString(R.string.datetime_format_date)) +", " +dateToString(dueDate,
+            else if (dueDate > getTodayEpochDate() && dueDate < addDays(getTodayEpochDate(), 8)) {
+                String date = dateToString(dueDate, context.getString(R.string.datetime_format_date));
+                return isTimeNull(dueDate) ? date : date + ", " + dateToString(dueDate,
                         context.getString(is24hoursTimeFormat ? R.string.time_format_24 : R.string.time_format_12));
-            else
+            } else
                 return dateToString(dueDate, isDateInCurrentYear(dueDate) ? context.getString(R.string.datetime_format_date)
                         : context.getString(R.string.datetime_format_date_year));
         else

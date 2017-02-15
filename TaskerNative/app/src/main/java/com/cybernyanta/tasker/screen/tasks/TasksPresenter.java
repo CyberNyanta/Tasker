@@ -33,6 +33,8 @@ public class TasksPresenter implements TasksContract.TasksPresenter {
                 break;
             case NEXT_WEEK:
                 return taskManager.getForNextWeek();
+            case COMPLETED_TASKS:
+                return taskManager.getAllCompleted();
             case PROJECT_TASKS:
                 break;
         }

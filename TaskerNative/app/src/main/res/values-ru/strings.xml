@@ -7,7 +7,7 @@
     <!--Toolbar-->
     <string name="task_edit_title">Редактирование</string>
     <string name="task_details_title">Описание</string>
-    <string name="complete_tasks_title">Завершённые задачи</string>
+    <string name="completed_tasks_title">Завершённые задачи</string>
     <string name="project">Проект</string>
     <!--Actions-->
     <string name="projects">Проекты</string>

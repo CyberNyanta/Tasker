@@ -45,6 +45,7 @@ public class TaskDetailPresenter implements TaskDetailContract.TaskDetailPresent
     @Override
     public void changeStatus(Task task) {
         task.setCompleted(!task.isCompleted());
+        taskManager.setTask(task);
     }
 
     @Override

@@ -58,25 +58,6 @@ public class TasksRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         TaskViewHolder taskViewHolder = (TaskViewHolder)holder;
         taskViewHolder.bind(task);
-
-        Context context = TaskerApplication.getContext();
-        if (task.isCompleted())
-        {
-            //Set Task due date
-            taskViewHolder.dueDateTextView.setText(context.getString(R.string.completed_on, DateUtil.dateToString(task.getDueDate(), true)));
-            taskViewHolder.titleTextView.setPaintFlags( Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG | Paint.EMBEDDED_BITMAP_TEXT_FLAG);
-            holder.itemView.setAlpha(TaskConstants.COMPLETED_TASK_BACKGROUND_ALPHA);
-        }
-        else
-        {
-            //Set Task due date
-            taskViewHolder.dueDateTextView.setText(DateUtil.dateToString(task.getDueDate(), true));
-            taskViewHolder.titleTextView.setPaintFlags(Paint.ANTI_ALIAS_FLAG | Paint.EMBEDDED_BITMAP_TEXT_FLAG);
-            taskViewHolder.itemView.setAlpha(TaskConstants.TASK_BACKGROUND_ALPHA);
-            taskViewHolder.dueDateTextView.setTextColor(DateUtil.isDateOverdue(task.getDueDate())
-                    ? ContextCompat.getColor(context, R.color.light_red)
-                    : ContextCompat.getColor(context, R.color.black));
-        }
     }
 
     @Override

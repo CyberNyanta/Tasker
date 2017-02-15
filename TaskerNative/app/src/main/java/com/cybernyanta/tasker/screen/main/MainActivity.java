@@ -1,7 +1,6 @@
 package com.cybernyanta.tasker.screen.main;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +16,7 @@ import com.cybernyanta.tasker.constants.CommonConstants;
 import com.cybernyanta.tasker.constants.IntentExtraConstants;
 import com.cybernyanta.tasker.enums.TasksScreenType;
 import com.cybernyanta.tasker.screen.auth.SignInActivity;
+import com.cybernyanta.tasker.screen.completed_tasks.CompletedTasksActivity;
 import com.cybernyanta.tasker.screen.main.di.DaggerMainComponent;
 import com.cybernyanta.tasker.screen.main.di.MainModule;
 import com.cybernyanta.tasker.screen.tasks.TasksFragment;
@@ -24,7 +24,7 @@ import com.cybernyanta.tasker.screen.tasks.TasksFragment;
 import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity
-        implements MainContract.MainView, NavigationView.OnNavigationItemSelectedListener{
+        implements MainContract.MainView, NavigationView.OnNavigationItemSelectedListener {
 
     @Inject
     MainContract.MainPresenter presenter;
@@ -34,10 +34,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         DaggerMainComponent.builder()
-                .mainModule(new MainModule(getSharedPreferences(CommonConstants.SHARED_PREFERENCES_FILE,0)))
+                .mainModule(new MainModule(getSharedPreferences(CommonConstants.SHARED_PREFERENCES_FILE, 0)))
                 .build().injectMainActivity(this);
         presenter.bindView(this);
-        if(presenter.checkAuth()){
+        if (presenter.checkAuth()) {
             setContentView(R.layout.activity_main);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
             showTaskFragment(presenter.getStartTasksScreenType());
-        }else {
+        } else {
             presenter.unbindView();
             showAuthScreen();
         }
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
         return true;
     }
 
@@ -80,23 +80,27 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
- /*       switch (id){
+        switch (id) {
             case R.id.menu_show_solve_tasks:
-                Intent intent = new Intent(this.Activity, typeof(CompleteTaskListActivity));
-                intent.PutExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)(_taskListType == TaskListType.ProjectOpen ? TaskListType.ProjectSolve : TaskListType.AllSolve));
-                intent.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, _projectId);
-                StartActivity(intent);
-                break;
-            case R.id.menu_search:
+                Intent intent = new Intent(this, CompletedTasksActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                intent.PutExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)(_taskListType == TaskListType.ProjectOpen ? TaskListType.ProjectSolve : TaskListType.AllSolve));
+//                intent.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, _projectId);
+                intent.putExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
+                intent.putExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, TasksScreenType.COMPLETED_TASKS);
+                this.startActivity(intent);
+                return true;
+/*            case R.id.menu_search:
 
                 var intent2 = new Intent(Activity, typeof(SearchTaskListActivity));
                 intent2.PutExtra(IntentExtraConstants.IS_SEARCH_IN_PROJECT_EXTRA, (_taskListType == TaskListType.ProjectOpen ? true : false));
                 intent2.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, _projectId);
                 StartActivity(intent2);
-                break;
+                break;*/
+            default:
+                return super.onOptionsItemSelected(item);
         }
-*/
-        return super.onOptionsItemSelected(item);
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -105,8 +109,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        switch (id)
-        {
+        switch (id) {
             case R.id.navigation_all:
                 showTaskFragment(TasksScreenType.ALL);
                 break;
@@ -149,20 +152,19 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void showTaskFragment(TasksScreenType tasksScreenType) {
-        switch (tasksScreenType)
-        {
+        switch (tasksScreenType) {
             case ALL:
                 getIntent().putExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
                 getIntent().putExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, TasksScreenType.ALL);
                 getSupportActionBar().setTitle(getString(R.string.navigation_all));
                 getSupportFragmentManager().beginTransaction().replace(R.id.list_fragment, new TasksFragment()).commit();
                 break;
-            case INBOX:
-              /*  getIntent().putExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
+/*            case INBOX:
+              *//*  getIntent().putExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
                 getIntent().putExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, TasksScreenType.PROJECT_TASKS);
                 getSupportActionBar().setTitle(getString(R.string.navigation_inbox));
-                getSupportFragmentManager().beginTransaction().replace(R.id.list_fragment, new TasksFragment()).commit();*/
-                break;
+                getSupportFragmentManager().beginTransaction().replace(R.id.list_fragment, new TasksFragment()).commit();*//*
+                break;*/
             case TODAY:
                 getIntent().putExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
                 getIntent().putExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, TasksScreenType.TODAY);
@@ -181,21 +183,22 @@ public class MainActivity extends AppCompatActivity
                 getSupportActionBar().setTitle(getString(R.string.navigation_nextWeek));
                 getSupportFragmentManager().beginTransaction().replace(R.id.list_fragment, new TasksFragment()).commit();
                 break;
-            case PROJECT_TASKS:
-                /*var viewModel = TinyIoCContainer.Current.Resolve<IProjectDetailsViewModel>();
+/*            case PROJECT_TASKS:
+                *//*var viewModel = TinyIoCContainer.Current.Resolve<IProjectDetailsViewModel>();
     viewModel.Id = _sharedPreferences.GetInt(getString(R.string.project), 0);
     Intent.PutExtra(IntentExtraConstants.PROJECT_ID_EXTRA, viewModel.Id);
     Intent.PutExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, (int)TaskListType.ProjectOpen);
     var project = viewModel.GetItem();
     SupportActionBar.Title = project.Title;
-    SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new TaskListFragment()).Commit();*/
+    SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragment, new TaskListFragment()).Commit();*//*
 
                 getIntent().putExtra(IntentExtraConstants.PROJECT_ID_EXTRA, 0);
                 getIntent().putExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA, TasksScreenType.ALL);
                 getSupportActionBar().setTitle(getString(R.string.navigation_all));
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new TasksFragment()).commit();
 //
-                break;
+                break;*/
+
         }
     }
 

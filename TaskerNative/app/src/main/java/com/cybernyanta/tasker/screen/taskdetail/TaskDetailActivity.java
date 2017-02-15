@@ -63,7 +63,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.task_edit_create);
+        setContentView(R.layout.task_details);
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -160,7 +160,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
                             @Override
                             public void onClick(View v) {
                                 dialog.dismiss();
-                                SetDueDate((TaskDueDate)v.getTag());
+                                setDueDate((TaskDueDate)v.getTag());
                                 //InitRemindDate();
                             }
                         }), null).show();
@@ -171,7 +171,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
 
     }*/
 
-   private void SetDueDate(TaskDueDate type)
+   private void setDueDate(TaskDueDate type)
     {
         switch (type)
         {
