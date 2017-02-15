@@ -20,7 +20,7 @@ import com.cybernyanta.tasker.enums.TasksScreenType;
 import com.cybernyanta.tasker.screen.taskdetail.TaskDetailActivity;
 import com.cybernyanta.tasker.screen.tasks.di.DaggerTasksComponent;
 import com.cybernyanta.tasker.screen.tasks.di.TasksModule;
-import com.cybernyanta.tasker.screen.tasks.recycler.AllTasksRecyclerAdapter;
+import com.cybernyanta.tasker.screen.tasks.recycler.CategorizedTasksRecyclerAdapter;
 import com.cybernyanta.tasker.screen.tasks.recycler.OnItemClickListener;
 import com.cybernyanta.tasker.screen.tasks.recycler.TasksRecyclerAdapter;
 import com.google.firebase.database.DatabaseError;
@@ -46,16 +46,16 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView, 
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
-    TasksScreenType tasksScreenType;
+    TasksScreenType screenType;
     TasksRecyclerAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TasksScreenType typeExtra = (TasksScreenType) getActivity().getIntent().getSerializableExtra(IntentExtraConstants.TASK_LIST_TYPE_EXTRA);
-        tasksScreenType = typeExtra != null ? typeExtra : TasksScreenType.ALL;
+        screenType = typeExtra != null ? typeExtra : TasksScreenType.ALL;
         DaggerTasksComponent.builder()
-                .tasksModule(new TasksModule(tasksScreenType, ""))
+                .tasksModule(new TasksModule(screenType, ""))
                 .build().injectTasksFragment(this);
     }
 
@@ -69,12 +69,14 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView, 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        switch (tasksScreenType) {
+        tasksPresenter.bindView(this);
+        switch (screenType) {
             case ALL:
-                adapter = new AllTasksRecyclerAdapter(tasksPresenter.getTasks(getTasksScreenType()), this);
+            case NEXT_WEEK:
+                adapter = new CategorizedTasksRecyclerAdapter(tasksPresenter.getTasks(), this, screenType);
                 break;
             default:
-                adapter = new TasksRecyclerAdapter(tasksPresenter.getTasks(getTasksScreenType()), this);
+                adapter = new TasksRecyclerAdapter(tasksPresenter.getTasks(), this);
                 break;
         }
 
@@ -86,11 +88,10 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView, 
                 startTaskDetailsActivity(null);
             }
         });
-        tasksPresenter.bindView(this);
         tasksPresenter.addOnDataSetChanged(new OnChangedListener() {
             @Override
             public void onChanged(EventType type, int index, int oldIndex) {
-                adapter.setTasks(tasksPresenter.getTasks(tasksScreenType));
+                adapter.setTasks(tasksPresenter.getTasks());
             }
 
             @Override
@@ -106,9 +107,8 @@ public class TasksFragment extends Fragment implements TasksContract.TasksView, 
         super.onDestroy();
     }
 
-    @Override
-    public TasksScreenType getTasksScreenType() {
-        return tasksScreenType;
+    public TasksScreenType getScreenType() {
+        return screenType;
     }
 
     @Override

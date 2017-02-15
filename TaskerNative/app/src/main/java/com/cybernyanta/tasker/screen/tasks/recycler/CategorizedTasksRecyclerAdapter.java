@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.cybernyanta.tasker.R;
 import com.cybernyanta.tasker.TaskerApplication;
 import com.cybernyanta.tasker.data.model.Task;
+import com.cybernyanta.tasker.enums.TasksScreenType;
 import com.cybernyanta.tasker.util.DateUtil;
 
 import java.util.ArrayList;
@@ -23,10 +24,13 @@ import static com.cybernyanta.tasker.constants.TaskConstants.HEADER_VIEW_TYPE;
  * Created by evgeniy.siyanko on 10.02.2017.
  */
 
-public class AllTasksRecyclerAdapter extends TasksRecyclerAdapter {
+public class CategorizedTasksRecyclerAdapter extends TasksRecyclerAdapter {
 
-    public AllTasksRecyclerAdapter(List<Task> tasks, OnItemClickListener onItemClickListener) {
+    private final TasksScreenType screenType;
+
+    public CategorizedTasksRecyclerAdapter(List<Task> tasks, OnItemClickListener onItemClickListener, TasksScreenType screenType) {
         super(tasks, onItemClickListener);
+        this.screenType = screenType;
     }
 
     //TODO move somewhere, create some kind of HeaderProvider
@@ -41,15 +45,25 @@ public class AllTasksRecyclerAdapter extends TasksRecyclerAdapter {
         headers.add(new Task(context.getString(R.string.tomorrow),
                 DateUtil.dateToString(DateUtil.addDays(DateUtil.getTodayEpochDate(), 1), "E d MMM"),
                 DateUtil.addDays(DateUtil.getTodayEpochDate(), 1) - 1));
-        // Next 7 days
-        headers.add(new Task(context.getString(R.string.next7days),
-                DateUtil.dateToString(DateUtil.addDays(DateUtil.getTodayEpochDate(), 2), "d MMM")
-                        + " - " + DateUtil.dateToString(DateUtil.addDays(DateUtil.getTodayEpochDate(), 8), "d MMM"),
-                DateUtil.addDays(DateUtil.getTodayEpochDate(), 2) - 1));
-        // rest
-        headers.add(new Task(context.getString(R.string.rest),
-                "",
-                DateUtil.addDays(DateUtil.getTodayEpochDate(), 9) - 1));
+        if(screenType.equals(TasksScreenType.ALL)){
+            // Next 7 days
+            headers.add(new Task(context.getString(R.string.next7days),
+                    DateUtil.dateToString(DateUtil.addDays(DateUtil.getTodayEpochDate(), 2), "d MMM")
+                            + " - " + DateUtil.dateToString(DateUtil.addDays(DateUtil.getTodayEpochDate(), 8), "d MMM"),
+                    DateUtil.addDays(DateUtil.getTodayEpochDate(), 2) - 1));
+            // rest
+            headers.add(new Task(context.getString(R.string.rest),
+                    "",
+                    DateUtil.addDays(DateUtil.getTodayEpochDate(), 9) - 1));
+        }
+        else{
+            for(int i = 0; i < 5; i++){
+                long date = DateUtil.addDays(DateUtil.getTodayEpochDate(), 2 + i);
+                headers.add(new Task( DateUtil.dateToString(date, "EEEE"),
+                        DateUtil.dateToString(date, "d MMM"),
+                        date - 1));
+            }
+        }
         for (Task header : headers) header.setProject(HEADER_ID);
         return headers;
     }

@@ -21,8 +21,8 @@ public class TasksPresenter implements TasksContract.TasksPresenter {
     }
 
     @Override
-    public List<Task> getTasks(TasksScreenType tasksScreenType) {
-        switch (tasksScreenType){
+    public List<Task> getTasks() {
+        switch (tasksView.getScreenType()){
             case ALL:
                 return taskManager.getAllOpen();
             case TODAY:

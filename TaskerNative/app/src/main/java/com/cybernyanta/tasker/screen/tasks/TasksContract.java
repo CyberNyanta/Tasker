@@ -14,11 +14,11 @@ import java.util.List;
 
 public interface TasksContract {
     interface TasksView extends BaseView<TasksPresenter> {
-        TasksScreenType getTasksScreenType();
+        TasksScreenType getScreenType();
     }
 
     interface TasksPresenter extends BasePresenter<TasksView> {
-        List<Task> getTasks(TasksScreenType tasksScreenType);
+        List<Task> getTasks();
         void addOnDataSetChanged(OnChangedListener listener);
     }
 }
