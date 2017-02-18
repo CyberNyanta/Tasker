@@ -62,6 +62,7 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
             //Set Task due date
             dueDateTextView.setText(DateUtil.dateToString(task.getDueDate(), true));
             titleTextView.setPaintFlags(Paint.ANTI_ALIAS_FLAG | Paint.EMBEDDED_BITMAP_TEXT_FLAG);
+//            itemView.getBackground().setAlpha(255);
             itemView.setAlpha(TASK_BACKGROUND_ALPHA);
             dueDateTextView.setTextColor(DateUtil.isDateOverdue(task.getDueDate())
                     ? ContextCompat.getColor(context, R.color.light_red)

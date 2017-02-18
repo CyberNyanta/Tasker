@@ -45,8 +45,8 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     EditText description;
     @BindView(R.id.task_dueDate)
     TextView dueDate;
-    @BindView(R.id.task_remindDate)
-    TextView remindDate;
+//    @BindView(R.id.task_remindDate)
+//    TextView remindDate;
 //    @BindView(R.id.task_project)
 //    TextView taskProject;
     @BindView(R.id.color_container)
@@ -126,7 +126,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
             title.setText(task.getTitle());
             description.setText(task.getDescription());
             dueDate.setText(DateUtil.dateToString(task.getDueDate(), true));
-            remindDate.setText(DateUtil.dateToString(task.getRemindDate(), true));
+//            remindDate.setText(DateUtil.dateToString(task.getRemindDate(), true));
             getSupportActionBar().setTitle(getString(R.string.task_edit_title));
         } else
             task = new Task();
